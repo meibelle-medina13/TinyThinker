@@ -14,7 +14,7 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
   void Start()
   {
-    Panels[0].SetActive(true);
+    //Panels[0].SetActive(true);
   }
 
 
@@ -43,7 +43,7 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
   private void ToggleProgressBar()
   {
-    ProgressBar.SetActive(!ProgressBar.activeInHierarchy);
+    //ProgressBar.SetActive(!ProgressBar.activeInHierarchy);
   }
   // -------------------------------------------------- //
 
@@ -166,6 +166,10 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
   // SCORING
   // -------------------------------------------------- //
   static float starFillMultiplier;
+  static float starFillMultiplierTest = .3333333f; // test
+  static float a1_ProgressFillTest; // test
+  static float a2_ProgressFillTest; // test
+  static float a3_ProgressFillTest; // test
 
   static float assessment1 = 100;
   static float a1_ProgressFill;
@@ -192,6 +196,7 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       Debug.Log("A1: " + a1_Points);
 
       a1_ProgressFill = (a1_Points / 100) * starFillMultiplier;
+      a1_ProgressFillTest = (a1_Points / 100) * starFillMultiplierTest; // test
       a1_VacantSlots--;
 
       if (a1_VacantSlots == 0) TogglePanel();
@@ -205,6 +210,7 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       Debug.Log("A2: " + a2_Points);
 
       a2_ProgressFill = (a2_Points / 100) * starFillMultiplier;
+      a2_ProgressFillTest = (a2_Points / 100) * starFillMultiplierTest; // test
 
       if (a2_Points >= 100f) TogglePanel(); // no other trigger for now
     }
@@ -217,6 +223,7 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       Debug.Log("A3: " + a3_Points);
 
       a3_ProgressFill = (a3_Points / 100) * starFillMultiplier;
+      a3_ProgressFillTest = (a3_Points / 100) * starFillMultiplierTest; // test
       a3_VacantSlots--;
 
       if (a3_VacantSlots == 0) TogglePanel();
@@ -231,7 +238,8 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       starFillMultiplier = .5f;
 
       a1_Points -= (assessment1 / Slots.Length) / a1_VacantSlots;
-      a1_ProgressFill = (a1_Points / assessment1) * starFillMultiplier;
+      a1_ProgressFill = (a1_Points / 100) * starFillMultiplier;
+      a1_ProgressFillTest = (a1_Points / 100) * starFillMultiplierTest; // test
       Debug.Log("A1: " + a1_Points);
     }
     else if (Panels[0].transform.name == "Assessment2")
@@ -244,7 +252,8 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       if (a1_ProgressFill == .0f && a2_ProgressFill == .0f) starFillMultiplier = .5f;
 
       a3_Points -= (assessment3 / Slots.Length) / a3_VacantSlots;
-      a3_ProgressFill = (a3_Points / assessment3) * starFillMultiplier;
+      a3_ProgressFill = (a3_Points / 100) * starFillMultiplier;
+      a3_ProgressFillTest = (a3_Points / 100) * starFillMultiplierTest; // test
       Debug.Log("A3: " + a3_Points);
     }
     OnProgress();
@@ -252,16 +261,21 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
 
   public Image ProgressBarMask;
+  public Image ProgressBarMaskTest; // test
   public Sprite EarnedStar;
   public Image[] UnearnedStarImages;
+  public Image[] UnearnedStarImagesTest; // test
 
   static float totalProgressFill;
+  static float totalProgressFillTest; // test
 
   private void OnProgress()
   {
     totalProgressFill = a1_ProgressFill + a2_ProgressFill + a3_ProgressFill;
+    totalProgressFillTest = a1_ProgressFillTest + a2_ProgressFillTest + a3_ProgressFillTest; // test
 
     ProgressBarMask.fillAmount = totalProgressFill;
+    ProgressBarMaskTest.fillAmount = totalProgressFillTest; // test
 
     if (totalProgressFill == 1)
     {
@@ -278,6 +292,22 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     {
       UnearnedStarImages[0].sprite = EarnedStar;
     }
+    
+    if (totalProgressFillTest == 1) // test
+    { // test
+      UnearnedStarImagesTest[0].sprite = EarnedStar; // test
+      UnearnedStarImagesTest[1].sprite = EarnedStar; // test
+      UnearnedStarImagesTest[2].sprite = EarnedStar; // test
+    } // test
+    else if (totalProgressFillTest >= .66F && totalProgressFillTest < 1) // test
+    { // test
+      UnearnedStarImagesTest[0].sprite = EarnedStar; // test
+      UnearnedStarImagesTest[1].sprite = EarnedStar; // test
+    } // test
+    else if (totalProgressFillTest >= .33F && totalProgressFillTest < .66F) // test
+    { // test
+      UnearnedStarImagesTest[0].sprite = EarnedStar; // test
+    } // test
   }
   // -------------------------------------------------- //
 
