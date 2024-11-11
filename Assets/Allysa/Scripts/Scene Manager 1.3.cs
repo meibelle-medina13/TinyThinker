@@ -32,6 +32,7 @@ public class Theme1Level3_SceneManager : MonoBehaviour
     [Header("Assessment2")]
     public Button[] buttons;
     public Button correctButton;
+    public GameObject Glowing_Letter;
     public List<Button> DisableInteractable2;
     public AudioSource assessment2_audio;
 
@@ -96,6 +97,7 @@ public class Theme1Level3_SceneManager : MonoBehaviour
             counter++;
             scenes[counter].SetActive(true);
             UpdateButtonState(assessment1_audio, DisableInteractable1);
+            Glowing_Letter.SetActive(false);
         }
 
         else if (counter == 8)
@@ -167,7 +169,7 @@ public class Theme1Level3_SceneManager : MonoBehaviour
         }
         else
         {
-            nextScene_Button.gameObject.SetActive(true);
+            nextScene_Button.gameObject.SetActive(false);
         }
     }
 
@@ -193,7 +195,6 @@ public class Theme1Level3_SceneManager : MonoBehaviour
 
         if (Clicked == CorrectAnswer)
         {
-            
             if (placed_wrong == 0)
             {
                 nextScene_Button.gameObject.SetActive(true);
@@ -211,11 +212,6 @@ public class Theme1Level3_SceneManager : MonoBehaviour
                 {
                     SetFillAmount(1f);
                 }
-            }
-
-            else
-            {
-                nextScene_Button.gameObject.SetActive(true);
             }
         }
 
