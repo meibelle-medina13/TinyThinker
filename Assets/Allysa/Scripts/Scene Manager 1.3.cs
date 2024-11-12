@@ -1,9 +1,10 @@
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+
 
 public class Theme1Level3_SceneManager : MonoBehaviour
 {
@@ -87,7 +88,6 @@ public class Theme1Level3_SceneManager : MonoBehaviour
         {
             UpdateScene();
             Smallconfetti.SetActive(false);
-            nextScene_Button.gameObject.SetActive(false);
         }
 
         else if (counter == 6)
@@ -97,7 +97,6 @@ public class Theme1Level3_SceneManager : MonoBehaviour
             counter++;
             scenes[counter].SetActive(true);
             UpdateButtonState(assessment1_audio, DisableInteractable1);
-            Glowing_Letter.SetActive(false);
         }
 
         else if (counter == 8)
@@ -106,6 +105,7 @@ public class Theme1Level3_SceneManager : MonoBehaviour
             nextScene_Button.gameObject.SetActive(false);
             UpdateButtonState(assessment2_audio, DisableInteractable2);
             placed_wrong = 0;
+            Glowing_Letter.SetActive(false);
 
             foreach (Button button in buttons)
             {
@@ -132,6 +132,7 @@ public class Theme1Level3_SceneManager : MonoBehaviour
         {
             UpdateScene();
             scenes[7].SetActive(false);
+            nextScene_Button.gameObject.SetActive(false);
             Show_Stars();
 
             if (Background_Music2.isPlaying)
@@ -140,18 +141,11 @@ public class Theme1Level3_SceneManager : MonoBehaviour
             }
         }
 
+
+
         else
         {
             UpdateScene();
-            nextScene_Button.gameObject.SetActive(false);
-        }
-    }
-
-    public void OnAnimationEnd()
-    {
-        if (counter <= 11)
-        { 
-            nextScene_Button.gameObject.SetActive(true);
         }
     }
 
@@ -195,9 +189,15 @@ public class Theme1Level3_SceneManager : MonoBehaviour
 
         if (Clicked == CorrectAnswer)
         {
+            if (counter == 9)
+            {
+                Glowing_Letter.SetActive(true);
+            }
+
             if (placed_wrong == 0)
             {
                 nextScene_Button.gameObject.SetActive(true);
+
                 if (total_stars.fillAmount < 0.48f)
                 {
                     IncrementFillAmount(0.16f);
@@ -213,6 +213,10 @@ public class Theme1Level3_SceneManager : MonoBehaviour
                     SetFillAmount(1f);
                 }
             }
+            else
+            {
+                nextScene_Button.gameObject.SetActive(true);
+            }
         }
 
         else
@@ -223,6 +227,8 @@ public class Theme1Level3_SceneManager : MonoBehaviour
 
     void Show_Stars()
     {
+        nextScene_Button.gameObject.SetActive(false);
+
         if (total_stars.fillAmount < 0.48f)
         {
             star_display[0].SetActive(true);
@@ -259,7 +265,7 @@ public class Theme1Level3_SceneManager : MonoBehaviour
 
         if (assessment_audio.isPlaying)
         {
-            StartCoroutine(ReEnableButtonsAfterAudio(assessment_audio,buttonsToDisable));
+            StartCoroutine(ReEnableButtonsAfterAudio(assessment_audio, buttonsToDisable));
         }
     }
 
@@ -281,8 +287,15 @@ public class Theme1Level3_SceneManager : MonoBehaviour
         }
     }
 
-}
+    public void ReloadCurrentScene()
+    {
+        Scene currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(currentScene.name);
+    }
 
+    
+
+}
 
 ////void deactivate_buttons()
 ////{
