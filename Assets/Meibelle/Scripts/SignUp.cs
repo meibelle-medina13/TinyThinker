@@ -7,6 +7,10 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using System.Text.RegularExpressions;
+using System;
+using Newtonsoft.Json;
+using static OptionSelection;
+using Unity.VisualScripting;
 
 public class SignUp : MonoBehaviour
 {
@@ -20,13 +24,13 @@ public class SignUp : MonoBehaviour
     private GameObject turtle;
 
     [SerializeField]
-    private GameObject[] inputField = new GameObject[4];
+    private GameObject[] inputField = new GameObject[5];
     [SerializeField]
-    private GameObject[] label = new GameObject[4];
+    private GameObject[] label = new GameObject[5];
     [SerializeField]
-    private GameObject[] placeholder = new GameObject[4];
+    private GameObject[] placeholder = new GameObject[5];
     [SerializeField]
-    private GameObject[] text = new GameObject[4];
+    private GameObject[] text = new GameObject[5];
 
     [SerializeField]
     private GameObject[] Panels = new GameObject[3];
@@ -34,10 +38,10 @@ public class SignUp : MonoBehaviour
     [SerializeField]
     private GameObject errormessage;
 
-    int index, prev, counter, fieldCount;
+    int index, prev, counter, fieldCount, duplicate;
     bool result;
+    string message;
 
-    string defaultErrorMessage;
 
     string URL = "http://localhost:3000/users_guardian";
 
@@ -56,7 +60,6 @@ public class SignUp : MonoBehaviour
             }
         }
 
-        defaultErrorMessage = errormessage.GetComponentInChildren<TMP_Text>().text;
     }
 
     IEnumerator DelayNotice()
@@ -88,6 +91,10 @@ public class SignUp : MonoBehaviour
         {
             index = 3;
         }
+        else if (selected == "relationship")
+        {
+            index = 4;
+        }
 
         label[index].SetActive(true);
         placeholder[index].SetActive(false);
@@ -95,7 +102,7 @@ public class SignUp : MonoBehaviour
         rectTransform = text[index].GetComponent<RectTransform>();
         rectTransform.transform.localPosition = new Vector3(0, -6, 0);
 
-        if (prev != 0 && prev != 1 && prev != 2 && prev != 3)
+        if (prev != 0 && prev != 1 && prev != 2 && prev != 3 && prev != 4)
         {
             prev = index;
         }
@@ -109,6 +116,11 @@ public class SignUp : MonoBehaviour
 
         rectTransform = text[index].GetComponent<RectTransform>();
         rectTransform.transform.localPosition = new Vector3(0, 0, 0);
+
+        if (inputField[0].GetComponent<TMP_InputField>().text != "")
+        {
+            StartCoroutine(getGuardianID(inputField[0].GetComponent<TMP_InputField>().text));
+        }
     }
 
     public void OnContinue(int index)
@@ -126,21 +138,13 @@ public class SignUp : MonoBehaviour
                 Panels[index].SetActive(false);
                 Panels[index + 1].SetActive(true);
             }
-            else
-            {
-                errormessage.SetActive(true);
-            }
         }
         else if (index == 2)
         {
-            bool isEmpty = IsEmptyInputField(1);
+            bool isEmpty = IsEmptyInputField(2);
             if (isEmpty == false)
             {
                 UnityEngine.SceneManagement.SceneManager.LoadScene(1);
-            }
-            else
-            {
-                errormessage.SetActive(true);
             }
         }
     }
@@ -164,7 +168,21 @@ public class SignUp : MonoBehaviour
                     fieldCount++;
                     if (field.name == "email")
                     {
-                        email = field.GetComponent<TMP_InputField>().text;
+                        if (hasDuplicate(field.GetComponent<TMP_InputField>().text))
+                        {
+                            message = "Ang email na ibinigay ay nagamit na.";
+                            field.GetComponent<TMP_InputField>().text = "";
+                            placeholder[0].SetActive(true);
+                            fieldCount--;
+                            Debug.Log("email existing already");
+                        }
+                        else
+                        {
+                            if (duplicate == 0)
+                            {
+                                email = field.GetComponent<TMP_InputField>().text;
+                            }
+                        }
                     }
                     else if (field.name == "password")
                     {
@@ -182,8 +200,7 @@ public class SignUp : MonoBehaviour
                             int.TryParse(birthday[2], out birth_year);
                             if (2024 - birth_year < 18 || birth_month > 12 || birth_date > 31)
                             {
-                                //note: age restriction error message //
-                                errormessage.SetActive(true);
+                                message = "Ang kaarawang ibinigay ay hindi maaaring tanggapin.";
                                 field.GetComponent<TMP_InputField>().text = "";
                                 placeholder[3].SetActive(true);
                                 fieldCount--;
@@ -191,9 +208,9 @@ public class SignUp : MonoBehaviour
                         }
                         else
                         {
-                            errormessage.SetActive(true);
+                            message = "Sundin ang tamang pormat ng kaarawan.";
                             field.GetComponent<TMP_InputField>().text = "";
-                            placeholder[3].SetActive(true);
+                            placeholder[2].SetActive(true);
                             fieldCount--;
                         }
                     }
@@ -206,17 +223,21 @@ public class SignUp : MonoBehaviour
             }
             else
             {
+                showErrorMessage(message);
                 fieldCount = 0;
                 result = true;
             }
         }
-        else if (fieldnum == 1)
+        else if (fieldnum == 2)
         {
-            if (!string.IsNullOrEmpty(inputField[3].GetComponent<TMP_InputField>().text))
+            if (!string.IsNullOrEmpty(inputField[3].GetComponent<TMP_InputField>().text) && !string.IsNullOrEmpty(inputField[4].GetComponent<TMP_InputField>().text))
             {
                 result = false;
                 string nickname = inputField[3].GetComponent<TMP_InputField>().text;
                 PlayerPrefs.SetString("Name", nickname);
+
+                string relationship = inputField[4].GetComponent<TMP_InputField>().text;
+                PlayerPrefs.SetString("Relationship", relationship);
             }
             else
             {
@@ -224,6 +245,18 @@ public class SignUp : MonoBehaviour
             }
         }
         return result;
+    }
+
+    private bool hasDuplicate(string email)
+    {
+        if (duplicate == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     IEnumerator Upload(string endpoint, string email, string password, int birth_month, int birth_date, int birth_year)
@@ -245,6 +278,7 @@ public class SignUp : MonoBehaviour
             }
             else
             {
+                PlayerPrefs.SetString("Email", email);
                 Debug.Log("Received: " + www.downloadHandler.text);
             }
         }
@@ -262,10 +296,44 @@ public class SignUp : MonoBehaviour
             }
             else
             {
-                Debug.Log("Received: " + www.downloadHandler.text);
+                Debug.Log(www.downloadHandler.text);
             }
         }
     }
+
+    IEnumerator getGuardianID(string input)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/users_guardian/guardianID?email=" + input))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError(www.error);
+            }
+            else
+            {
+                Debug.Log("Received: " + www.downloadHandler.text);
+                Root json = JsonConvert.DeserializeObject<Root>(www.downloadHandler.text);
+                Debug.Log(duplicate);
+                duplicate = json.data.Count;
+            }
+        }
+    }
+
+    private void showErrorMessage(string message)
+    {
+        if (message == null || message == "")
+        {
+            message = "Kumpletuhin ang mga detalye.";   
+        }
+        string editedMessage = "PAALALA: " + message;
+        print(editedMessage);
+        errormessage.GetComponentInChildren<TMP_Text>().text = editedMessage;
+        errormessage.SetActive(true);
+        message = "";
+    }
+
     public void removeErrorMessage()
     {
         errormessage.SetActive(false);
