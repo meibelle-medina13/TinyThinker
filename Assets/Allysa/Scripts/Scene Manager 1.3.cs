@@ -8,6 +8,7 @@ using TMPro;
 
 public class Theme1Level3_SceneManager : MonoBehaviour
 {
+    public TextMeshProUGUI textWithOutline;
     public int counter = 0;
     public Image total_stars;
     public AudioSource Background_Music1;
@@ -57,6 +58,8 @@ public class Theme1Level3_SceneManager : MonoBehaviour
     public Button nextScene_Button;
     void Start()
     {
+        textWithOutline.fontMaterial.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.3f);
+        textWithOutline.fontMaterial.SetColor(ShaderUtilities.ID_OutlineColor, Color.black); 
         Background_Music1.Play();
     }
 
