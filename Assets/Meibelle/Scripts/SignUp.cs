@@ -144,7 +144,7 @@ public class SignUp : MonoBehaviour
             bool isEmpty = IsEmptyInputField(2);
             if (isEmpty == false)
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+                UnityEngine.SceneManagement.SceneManager.LoadScene(2);
             }
         }
     }
