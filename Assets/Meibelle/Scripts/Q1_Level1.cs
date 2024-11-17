@@ -5,9 +5,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
 public class Q1_Level1 : MonoBehaviour
 {
+
     [SerializeField]
     private GameObject[] scenes = new GameObject[9];
     [SerializeField]
@@ -290,19 +292,23 @@ public class Q1_Level1 : MonoBehaviour
         {
             result[4].SetActive(true);
         }
-        else if (score >= 50 && score < 75)
-        {
-            result[1].SetActive(true);
-        }
-        else if (score >= 75 && score < 100)
-        {
-            result[0].SetActive(true);
-            result[2].SetActive(true);
-        }
         else
         {
-            result[0].SetActive(true);
-            result[3].SetActive(true);
+            if (score >= 50 && score < 75)
+            {
+                result[1].SetActive(true);
+            }
+            else if (score >= 75 && score < 100)
+            {
+                result[0].SetActive(true);
+                result[2].SetActive(true);
+            }
+            else
+            {
+                result[0].SetActive(true);
+                result[3].SetActive(true);
+            }
+            StartCoroutine(GoToMap());
         }
     }
 
@@ -310,12 +316,41 @@ public class Q1_Level1 : MonoBehaviour
     {
         if (buttonType.name == "retry-button")
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(3);
-        }
-        else
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(4);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(7);
         }
     }
+
+    IEnumerator GoToMap()
+    {
+        yield return new WaitForSeconds(8f);
+        PlayerPrefs.SetInt("Current_level", 2);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(6);
+        //StartCoroutine(UpdateCurrentLevel());
+    }
+
+    //IEnumerator UpdateCurrentLevel()
+    //{
+    //    int current_level = 2;
+    //    int userID = PlayerPrefs.GetInt("Current_user");
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("userID", userID);
+    //    form.AddField("current_level", current_level);
+
+    //    using (UnityWebRequest www = UnityWebRequest.Put(URL, form))
+    //    {
+    //        yield return www.SendWebRequest();
+
+    //        if (www.result != UnityWebRequest.Result.Success)
+    //        {
+    //            Debug.LogError(www.error);
+    //        }
+    //        else
+    //        {
+    //            PlayerPrefs.SetInt("Current_level", 2);
+    //            Debug.Log("Received: " + www.downloadHandler.text);
+    //            UnityEngine.SceneManagement.SceneManager.LoadScene(6);
+    //        }
+    //    }
+    //}
 }
 
