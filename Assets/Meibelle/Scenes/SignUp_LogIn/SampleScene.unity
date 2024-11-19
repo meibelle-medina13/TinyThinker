@@ -962,6 +962,7 @@ GameObject:
   - component: {fileID: 668627086}
   - component: {fileID: 668627085}
   - component: {fileID: 668627088}
+  - component: {fileID: 668627089}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -985,8 +986,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -77.9}
-  m_SizeDelta: {x: 167.3, y: 82.5}
+  m_AnchoredPosition: {x: 0.0000076294, y: -88}
+  m_SizeDelta: {x: 308.8088, y: 105.1619}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &668627085
 MonoBehaviour:
@@ -1064,7 +1065,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fcecb258a3d923d4eacc12cc0435e5eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 231e71e76830d574e89564aa4d69c35b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1094,6 +1095,27 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!95 &668627089
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668627083}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a445930fa28f75f4d83d0eecaad7512e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &718287149
 GameObject:
   m_ObjectHideFlags: 0

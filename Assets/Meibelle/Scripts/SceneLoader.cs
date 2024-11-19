@@ -20,7 +20,7 @@ public class SceneLoader : MonoBehaviour
         progressSlider.value = 0;
         loaderUI.SetActive(true);
 
-        AsyncOperation asyncOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
+        AsyncOperation asyncOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(1);
         asyncOperation.allowSceneActivation = false;
         float progress = 0;
 

@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using UnityEngine.U2D;
 using UnityEngine.UI;
 using static OptionSelection;
 
@@ -16,9 +17,15 @@ public class SelectAccount : MonoBehaviour
     //string URL = "http://localhost:3000/users";
 
     [SerializeField]
+    private GameObject parentGameObject;
+    [SerializeField]
+    private Button AddAccount;
+
+
+    [SerializeField]
     private Sprite[] avatars = new Sprite[10];
     [SerializeField]
-    private Sprite[] container = new Sprite[2];
+    private Sprite[] account_container = new Sprite[10];
 
     public GameObject user;
     string[] username;
@@ -27,13 +34,18 @@ public class SelectAccount : MonoBehaviour
     int[] user_id;
     int[] current_theme;
     int[] current_level;
-    int no_user;
+    int no_user, guardianID;
     
 
     private void Start()
     {
         Debug.Log(user.transform.position);
-        StartCoroutine(getUsers());
+
+        AddAccount.onClick.AddListener(() => NewAccount());
+
+        string email = PlayerPrefs.GetString("Email");
+        Debug.Log(email);
+        StartCoroutine(getGuardianID(email));
     }
 
     void DisplayUsers(int num)
@@ -44,8 +56,10 @@ public class SelectAccount : MonoBehaviour
             Debug.Log(avatars[i].name);
             if (avatars[i].name == avatar_filename[0])
             {
+                Debug.Log(user.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<SpriteRenderer>().name);
+                user.GetComponentInChildren<SpriteRenderer>().sprite = account_container[i];
                 user.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<Canvas>().GetComponentInChildren<SpriteRenderer>().sprite = avatars[i];
-                user.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<Canvas>().GetComponentInChildren<TMP_Text>().text = username[0].ToUpper();
+                user.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<TMP_Text>().text = username[0].ToUpper();
                 user.GetComponent<Button>().onClick.AddListener(() => LogIn(0));
             }
         }
@@ -53,23 +67,25 @@ public class SelectAccount : MonoBehaviour
         {
             Debug.Log(i);
             GameObject Clone = Instantiate(user);
-            y = y - 70;
+            y = y - 50;
             Clone.transform.position = new Vector3(394F, y, 0f);
+            Clone.transform.SetParent(parentGameObject.transform);
             int index = i;
 
             for (int j = 0; j < avatars.Length; j++)
             {
                 if (avatars[j].name == avatar_filename[i])
                 {
+                    Clone.GetComponentInChildren<SpriteRenderer>().sprite = account_container[j];
                     Clone.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<Canvas>().GetComponentInChildren<SpriteRenderer>().sprite = avatars[j];
-                    Clone.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<Canvas>().GetComponentInChildren<TMP_Text>().text = username[i].ToUpper();
+                    Clone.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<Canvas>().GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(39, 32, 33);
+                    Clone.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<Canvas>().GetComponentInChildren<SpriteRenderer>().transform.localPosition = new Vector3(-495, -350, 90);
+                    Clone.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<TMP_Text>().text = username[i].ToUpper();
                     Clone.GetComponent<Button>().onClick.AddListener(() => LogIn(index));
                 }
             }
         }
     }
-
-
 
 
     [Serializable]
@@ -91,7 +107,8 @@ public class SelectAccount : MonoBehaviour
 
     IEnumerator getUsers()
     {
-        using (UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/users?guardian_ID=" + 1))
+        Debug.Log(guardianID);
+        using (UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/users?guardian_ID=" + guardianID))
         {
             yield return www.SendWebRequest();
 
@@ -133,6 +150,33 @@ public class SelectAccount : MonoBehaviour
         PlayerPrefs.SetInt("Current_theme", current_theme[index]);
         PlayerPrefs.SetInt("Current_level", current_level[index]);
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(5);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(6);
+    }
+
+    private void NewAccount()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(4);
+    }
+
+    IEnumerator getGuardianID(string email)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/users_guardian/guardianID?email=" + email))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError(www.error);
+            }
+            else
+            {
+                Debug.Log("Received: " + www.downloadHandler.text);
+                Root json = JsonConvert.DeserializeObject<Root>(www.downloadHandler.text);
+                guardianID = json.data[0].ID;
+                Debug.Log(json.data[0].ID);
+
+                StartCoroutine(getUsers());
+            }
+        }
     }
 }
