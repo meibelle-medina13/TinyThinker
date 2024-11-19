@@ -147,7 +147,6 @@ public class OptionSelection : MonoBehaviour
         ;
         
         StartCoroutine(Upload(nickname, age, gender, avatar_filename, current_theme, current_level, relationship, guardianID));
-
     }
 
     IEnumerator Upload(string username, int age, string gender, string avatar_filename, int current_theme, int current_level, string relation_to_guardian, int guardian_ID)
@@ -173,6 +172,7 @@ public class OptionSelection : MonoBehaviour
             else
             {
                 Debug.Log("Received: " + www.downloadHandler.text);
+                UnityEngine.SceneManagement.SceneManager.LoadScene(5);
             }
         }
     }

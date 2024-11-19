@@ -5,13 +5,14 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using System;
+using UnityEngine.UI;
 
 public class CreateAccount : MonoBehaviour
 {
     RectTransform rectTransform;
 
     [SerializeField]
-    private GameObject errorMessage;
+    private GameObject errorMessage, back_button;
 
     [SerializeField] 
     private TMP_InputField[] fields = new TMP_InputField[2];
@@ -23,6 +24,12 @@ public class CreateAccount : MonoBehaviour
     private GameObject[] text = new GameObject[2];
 
     int index, prev;
+
+    private void Start()
+    {
+        Button back = back_button.GetComponent<Button>();
+        back.onClick.AddListener(() => GoToAccountSelection());
+    }
 
     public void ShowLabel()
     {
@@ -68,7 +75,7 @@ public class CreateAccount : MonoBehaviour
         {
             PlayerPrefs.SetString("Name", username);
             PlayerPrefs.SetString("Relationship", relationship);
-            UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(3);
         }
         else
         {
@@ -84,5 +91,10 @@ public class CreateAccount : MonoBehaviour
     public void RemoveErrorMessage()
     {
         errorMessage.SetActive(false);
+    }
+
+    private void GoToAccountSelection()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(5);
     }
 }

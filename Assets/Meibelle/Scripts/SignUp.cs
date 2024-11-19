@@ -18,10 +18,10 @@ public class SignUp : MonoBehaviour
 
     [SerializeField]
     private GameObject turtle0;
-    [SerializeField]
-    private GameObject bear;
-    [SerializeField]
-    private GameObject turtle;
+    //[SerializeField]
+    //private GameObject bear;
+    //[SerializeField]
+    //private GameObject turtle;
 
     [SerializeField]
     private GameObject[] inputField = new GameObject[5];
@@ -34,6 +34,8 @@ public class SignUp : MonoBehaviour
 
     [SerializeField]
     private GameObject[] Panels = new GameObject[3];
+    [SerializeField]
+    private Button[] backButton = new Button[2];
 
     [SerializeField]
     private GameObject errormessage;
@@ -48,26 +50,30 @@ public class SignUp : MonoBehaviour
     void Start()
     {
         StartCoroutine(DelayNotice());
-        StartCoroutine(Get());
+        //StartCoroutine(Get());
 
         for (int i = 0; i < Panels.Length; i++)
         {
             int index = i;
-            Button nextButton = Panels[i].GetComponentInChildren<Button>();
-            if (nextButton != null && nextButton.name == "Button")
+            Button button = Panels[i].GetComponentInChildren<Button>();
+            if (button != null && button.name == "Button")
             {
-                nextButton.onClick.AddListener(() => OnContinue(index));
+                button.onClick.AddListener(() => OnContinue(index));
             }
+        }
+
+        for (int i = 0; i < backButton.Length; i++)
+        {
+            int index = i;
+            backButton[i].onClick.AddListener(() => GoBack(index));
         }
 
     }
 
     IEnumerator DelayNotice()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1);
         Panels[0].SetActive(true);
-        bear.SetActive(true);
-        turtle.SetActive(true);
         turtle0.SetActive(false);
     }
 
@@ -123,6 +129,19 @@ public class SignUp : MonoBehaviour
         }
     }
 
+    private void GoBack(int index)
+    {
+        if (index == 0)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+        }
+        else if (index >= 1)
+        {
+            Panels[index].SetActive(false);
+            Panels[index - 1].SetActive(true);
+        }
+    }
+
     public void OnContinue(int index)
     {
         if (index == 0)
@@ -144,7 +163,7 @@ public class SignUp : MonoBehaviour
             bool isEmpty = IsEmptyInputField(2);
             if (isEmpty == false)
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+                UnityEngine.SceneManagement.SceneManager.LoadScene(3);
             }
         }
     }
@@ -198,7 +217,7 @@ public class SignUp : MonoBehaviour
                             int.TryParse(birthday[0], out birth_month);
                             int.TryParse(birthday[1], out birth_date);
                             int.TryParse(birthday[2], out birth_year);
-                            if (2024 - birth_year < 18 || birth_month > 12 || birth_date > 31)
+                            if (2024 - birth_year < 18 || birth_month > 12 || birth_date > 31 || birth_year < 1950)
                             {
                                 message = "Ang kaarawang ibinigay ay hindi maaaring tanggapin.";
                                 field.GetComponent<TMP_InputField>().text = "";
@@ -284,22 +303,22 @@ public class SignUp : MonoBehaviour
         }
     }
 
-    IEnumerator Get()
-    {
-        using (UnityWebRequest www = UnityWebRequest.Get(URL))
-        {
-            yield return www.SendWebRequest();
+    //IEnumerator Get()
+    //{
+    //    using (UnityWebRequest www = UnityWebRequest.Get(URL))
+    //    {
+    //        yield return www.SendWebRequest();
 
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError(www.error);
-            }
-            else
-            {
-                Debug.Log(www.downloadHandler.text);
-            }
-        }
-    }
+    //        if (www.result != UnityWebRequest.Result.Success)
+    //        {
+    //            Debug.LogError(www.error);
+    //        }
+    //        else
+    //        {
+    //            Debug.Log(www.downloadHandler.text);
+    //        }
+    //    }
+    //}
 
     IEnumerator getGuardianID(string input)
     {
@@ -315,8 +334,8 @@ public class SignUp : MonoBehaviour
             {
                 Debug.Log("Received: " + www.downloadHandler.text);
                 Root json = JsonConvert.DeserializeObject<Root>(www.downloadHandler.text);
-                Debug.Log(duplicate);
                 duplicate = json.data.Count;
+                Debug.Log(duplicate);
             }
         }
     }
