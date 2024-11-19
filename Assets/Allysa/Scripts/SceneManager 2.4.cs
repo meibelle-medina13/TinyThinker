@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Theme2Level4_SceneManager : MonoBehaviour
 {
+    public TextMeshProUGUI textWithOutline2_4;
     public int scene_counter = 0;
-    public int new_backgroundCounter = 0;
     public AudioSource background_music1; 
     public AudioSource background_music2; 
     public List<GameObject> scenes;
-
-    [Header("Change Background")]
-    public Image PanelImage_holder;
-    public List<Sprite> newBackground;
 
     [Header("Filled")]
     public Image total_filled;
@@ -55,11 +52,14 @@ public class Theme2Level4_SceneManager : MonoBehaviour
     void Start()
     {
         background_music1.Play();
+        nextScene_Button.gameObject.SetActive(false);
+        textWithOutline2_4.fontMaterial.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.3f);
+        textWithOutline2_4.fontMaterial.SetColor(ShaderUtilities.ID_OutlineColor, Color.black);
     }
 
-    void Update()
+    public void Update()
     {
-        if (scene_counter == 4)
+        if (scene_counter == 7)
         {
             if (background_music1.isPlaying)
             {
@@ -70,71 +70,77 @@ public class Theme2Level4_SceneManager : MonoBehaviour
                 background_music2.Play();
             }
         }
+
+        //else if (scene_counter == 16)
+        //{
+        //    if (background_music2.isPlaying)
+        //    {
+        //        background_music2.Stop();
+        //    }
+
+        //    UpdateScene();
+        //    scenes[8].SetActive(false);
+        //    Show_Stars();
+        //    nextScene_Button.gameObject.SetActive(false);
+        //}
     }
 
     public void whenButtonClicked()
     {
-        if (scene_counter < 13)
+        if (scene_counter == 14)
         {
-            if (scene_counter == 3 || scene_counter == 6 || scene_counter == 8 || scene_counter == 10)
+            UpdateScene();
+            clickedWrong = 0;
+
+            foreach (Button button in TsoundButtons)
             {
-                UpdateScene();
-                nextScene_Button.gameObject.SetActive(false);
-                PanelImage_holder.sprite = newBackground[new_backgroundCounter];
-                new_backgroundCounter++;
-            }
-
-            else if (scene_counter == 11)
-            {
-                UpdateScene();
-                nextScene_Button.gameObject.SetActive(false);
-                clickedWrong = 0;
-
-                foreach (Button button in TsoundButtons)
-                {
-                    Button TButton = button;
-                    TButton.onClick.AddListener(() => CheckAnswer(TButton, correctTsoundButton));
-                }
-            }
-
-            else if (scene_counter == 12)
-            {
-                if (background_music2.isPlaying)
-                {
-                    background_music2.Stop();
-                }
-
-                UpdateScene();
-                scenes[5].SetActive(false);
-                Show_Stars();
-            }
-
-            else
-            {
-                UpdateScene();
-                nextScene_Button.gameObject.SetActive(false);
+                Button TButton = button;
+                TButton.onClick.AddListener(() => CheckAnswer(TButton, correctTsoundButton));
             }
         }
+
+        else if (scene_counter == 15)
+        {
+            if (background_music2.isPlaying)
+            {
+                background_music2.Stop();
+            }
+
+            UpdateScene();
+            scenes[8].SetActive(false);
+            Show_Stars();
+            nextScene_Button.gameObject.SetActive(false);
+        }
+
+
+        else
+        {
+            UpdateScene();
+            nextScene_Button.gameObject.SetActive(false);
+        }
+
     }
 
     public void OnAnimationEnd()
     {
-        if (scene_counter == 4)
+        if (scene_counter == 6)
+        {
+            nextScene_Button.gameObject.SetActive(true);
+        }
+
+
+        else if (scene_counter == 7)
         {
             UpdateScene();
             scene_counter++;
             nextScene_Button.gameObject.SetActive(false);
             scenes[scene_counter].SetActive(true);
-            PanelImage_holder.sprite = newBackground[new_backgroundCounter];
-            new_backgroundCounter++;
             UpdateButtonState();
         }
 
-        if (scene_counter == 7)
+        else if (scene_counter == 10)
         {
             UpdateScene();
-            PanelImage_holder.sprite = newBackground[new_backgroundCounter];
-            new_backgroundCounter++;
             nextScene_Button.gameObject.SetActive(false);
             clickedWrong = 0;
 
@@ -146,11 +152,9 @@ public class Theme2Level4_SceneManager : MonoBehaviour
 
         }
 
-        if (scene_counter == 9)
+        else if (scene_counter == 12)
         {
             UpdateScene();
-            PanelImage_holder.sprite = newBackground[new_backgroundCounter];
-            new_backgroundCounter++;
             nextScene_Button.gameObject.SetActive(false);
             clickedWrong = 0;
 
@@ -162,15 +166,16 @@ public class Theme2Level4_SceneManager : MonoBehaviour
         }
 
         else
-        {
-            nextScene_Button.gameObject.SetActive(true);
+                {
+            //nextScene_Button.gameObject.SetActive(true);
         }
     }
-    private void UpdateScene()
+    public void UpdateScene()
     {
         scenes[scene_counter].SetActive(false);
         scene_counter++;
         scenes[scene_counter].SetActive(true);
+        nextScene_Button.gameObject.SetActive(false);
     }
 
     public void UpdateButtonState()
@@ -221,25 +226,7 @@ public class Theme2Level4_SceneManager : MonoBehaviour
             if (clickedWrong == 0)
             {
                 nextScene_Button.gameObject.SetActive(true);
-                if (total_filled.fillAmount < 0.48f)
-                {
-                    IncrementFillAmount(0.16f);
-                }
-
-                else if (Mathf.Approximately(total_filled.fillAmount, 0.48f))
-                {
-                    SetFillAmount(0.598f);
-                }
-
-                else if (Mathf.Approximately(total_filled.fillAmount, 0.598f))
-                {
-                    SetFillAmount(0.72f);
-                }
-
-                else if (Mathf.Approximately(total_filled.fillAmount, 0.72f))
-                {
-                    SetFillAmount(1f);
-                }
+                IncrementFillAmount(0.1428571428571429f);    
             }
 
             else
@@ -256,7 +243,7 @@ public class Theme2Level4_SceneManager : MonoBehaviour
 
     void Show_Stars()
     {
-        if (total_filled.fillAmount < 0.48f)
+        if (total_filled.fillAmount < 0.4285714285714287f)
         {
             Star_Display[0].SetActive(true);
             Confetti_Sizes[0].SetActive(false);
@@ -267,22 +254,28 @@ public class Theme2Level4_SceneManager : MonoBehaviour
             originalStar_background.SetActive(false);
             Complimentary_text.text = "ULITIN!";
         }
-        else if (Mathf.Approximately(total_filled.fillAmount, 0.48f))
+        else if (total_filled.fillAmount >= 0.4285714285714287f && total_filled.fillAmount < 0.7142857142857145f)
         {
             Star_Display[1].SetActive(true);
             Confetti_Sizes[1].SetActive(false);
             Complimentary_text.text = "SUBOK";
         }
-        else if (Mathf.Approximately(total_filled.fillAmount, 0.72f))
+        else if (total_filled.fillAmount >= 0.7142857142857145f && total_filled.fillAmount < 1f)
         {
             Star_Display[2].SetActive(true);
             Complimentary_text.text = "MAGALING";
         }
-        else if (Mathf.Approximately(total_filled.fillAmount, 1f))
+        else if (total_filled.fillAmount >= 1f)
         {
             Star_Display[3].SetActive(true);
             Complimentary_text.text = "PERPEKTO";
         }
+    }
+
+    public void ReloadCurrentScene()
+    {
+        Scene currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(currentScene.name);
     }
 }
 
