@@ -93,10 +93,12 @@ public class SelectAccount : MonoBehaviour
     {
         public int ID { get; set; }
         public string username { get; set; }
+        public int age { get; set; }
         public string gender { get; set; }
         public string avatar_filename { get; set; }
         public int current_theme { get; set; }
         public int current_level { get; set; }
+        public string relation_to_guardian { get; set; }
     }
 
     public class UserRoot

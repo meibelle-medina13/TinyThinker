@@ -8,11 +8,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private AudioSource audioSource;
 
-    void Start()
-    {
-        
-    }
-
     public void ChangeAudio(AudioClip audio)
     {
         audioSource.Stop();

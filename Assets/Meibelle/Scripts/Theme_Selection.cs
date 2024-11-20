@@ -8,18 +8,26 @@ public class Theme_Selection : MonoBehaviour
     RectTransform rectTransform;
 
     [SerializeField]
-    private Button select_button, prev_button, next_button;
+    private Button select_button, prev_button, next_button, back_button;
     [SerializeField]
     private GameObject theme_container;
     [SerializeField]
     private GameObject[] themes = new GameObject[4];
     int x = 0;
+    int current_theme;
 
     private void Start()
     {
+        current_theme = PlayerPrefs.GetInt("Current_theme");
         next_button.onClick.AddListener(() => Select_Theme("next"));
         prev_button.onClick.AddListener(() => Select_Theme("prev"));
+        back_button.onClick.AddListener(() => GoToAccSelection());
         CheckCurrentTheme();
+    }
+
+    private void GoToAccSelection()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(5);
     }
 
     private void Select_Theme(string action)
@@ -62,27 +70,34 @@ public class Theme_Selection : MonoBehaviour
     private void GoToMap(int theme_num)
     {
         PlayerPrefs.SetInt("Selected Theme", theme_num);
-        UnityEngine.SceneManagement.SceneManager.LoadScene(6);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(7);
     }
 
     private void CheckCurrentTheme()
     {
         rectTransform = theme_container.GetComponent<RectTransform>();
-        if (rectTransform.transform.localPosition.x == -432)
+        select_button.interactable = true;
+        if (rectTransform.transform.localPosition.x == -432 && current_theme >= 1)
         {
             select_button.onClick.AddListener(() => GoToMap(1));
         }
-        else if (rectTransform.transform.localPosition.x == -1396)
+        else if (rectTransform.transform.localPosition.x == -1396 && current_theme >= 2)
         {
             select_button.onClick.AddListener(() => GoToMap(2));
         }
-        else if (rectTransform.transform.localPosition.x == -2360)
+        else if (rectTransform.transform.localPosition.x == -2360 && current_theme >= 3)
         {
+            //select_button.interactable = false;
             select_button.onClick.AddListener(() => GoToMap(3));
         }
-        else if (rectTransform.transform.localPosition.x == -3324)
+        else if (rectTransform.transform.localPosition.x == -3324 && current_theme == 4)
         {
+            //select_button.interactable = false;
             select_button.onClick.AddListener(() => GoToMap(4));
+        }
+        else
+        {
+            select_button.interactable = false;
         }
     }
 
