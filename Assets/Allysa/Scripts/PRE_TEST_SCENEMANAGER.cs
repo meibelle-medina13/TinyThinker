@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using static System.Net.Mime.MediaTypeNames;
 
-public class TracingAndPreTestActivity : MonoBehaviour
+public class PreTest_PostTest : MonoBehaviour
 {
-    // TracingActivity variables
+    public List<GameObject> Test_scenes;
+    public List<GameObject> Tracking_Test;
+    public static int test_counter = 0;
+    public static int Test_Score;
+    public GameObject progress_display;
+    public UnityEngine.UI.Image Fill;
+    public List<TextMeshProUGUI> textWithOutline_PreTest_PostTest;
+
     public GameObject scene;
     public GameObject pencil;
     public GameObject PencilMask;
@@ -14,31 +22,32 @@ public class TracingAndPreTestActivity : MonoBehaviour
     private Vector3 pencilState;
     private Vector3 pencilRaise = new Vector3(105, 120, 0);
     private Vector3 pencilWrite = new Vector3(85, 100, 0);
-    public Button NextButton;
-    //public int targetScene = 0;
+    public Button next;
 
     private HashSet<string> tracedPoints = new HashSet<string>();
     private int score = 0;
     public int totalTracingPoints = 0;
-    private bool isMousePressed = false;
-
-    //public AudioSource correctSound;
-
-
-    // Pre_Test variables
-    public List<GameObject> preTest_scenes;
-    public int pretest_counter = 0;
-    public Button next;
-    public int PreTest_Score;
 
     void Start()
     {
-        
+        foreach (TextMeshProUGUI text in textWithOutline_PreTest_PostTest)
+        {
+            text.fontMaterial.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.4f);
+            text.fontMaterial.SetColor(ShaderUtilities.ID_OutlineColor, Color.white);
+        }
     }
 
     void Update()
     {
-        // Handling tracing activity
+        if (test_counter > 0 && test_counter < (Test_scenes.Count - 1))
+        {
+            progress_display.SetActive(true);
+        }
+        else
+        {
+            progress_display.SetActive(false);
+        }
+
         Vector3 screenPosition = Input.mousePosition;
         screenPosition.z = Camera.main.nearClipPlane + 1;
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
@@ -59,7 +68,6 @@ public class TracingAndPreTestActivity : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            isMousePressed = false;
             mycollider.GetComponent<CircleCollider2D>().enabled = false;
             pencilState = pencilRaise;
         }
@@ -70,105 +78,78 @@ public class TracingAndPreTestActivity : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Tracing Point1") && !tracedPoints.Contains(other.gameObject.name))
+        if (other.CompareTag("Tracing Point") && !tracedPoints.Contains(other.gameObject.name))
         {
             tracedPoints.Add(other.gameObject.name);
-            //UpdateScore();
             score++;
-            //CheckCompletion();
-            Debug.Log("Grade: " + score);
+            Debug.Log("points: " + score);
         }
     }
 
-    //void CheckCompletion()
-    //{
-    //    if (targetScene == 1)
-    //    {
-    //        if (tracedPoints.Count >= totalTracingPoints)
-    //        {
-    //            //correctSound.Play();
-    //            NextButton.gameObject.SetActive(true);
-    //        }
-    //    }
-    //}
-    //void UpdateScore()
-    //{
-    //    score++;
-    //    //scoreText.text = "Score: " + score;
-    //}
-
-    public void UpdateGrade()
+    public void UpdateScore()
     {
         float percentage = (float)score / totalTracingPoints * 100;
-        //string grade = GetGrade(percentage);
-        GetGrade(percentage);
+        GetScore(percentage);
         UpdateScene();
-        //gradeText.text = "Grade: " + grade;
-        //Debug.Log("Grade: " + grade);
-
-        //if (grade == "A")
-        //{
-        //    PreTest_Score += 4;
-        //}
-        //else if (grade == "B")
-        //{
-        //    PreTest_Score += 3;
-        //}
-        //else if (grade == "C")
-        //{
-        //    PreTest_Score += 2;
-        //}
-        //else if (grade == "D")
-        //{
-        //    PreTest_Score += 1;
-        //}
+        //Debug.Log("points: " + test_counter);
     }
 
-    //string GetGrade(float percentage)
-    void GetGrade(float percentage)
+    void GetScore(float percentage)
     {
         if (percentage >= 90)
         {
-            PreTest_Score += 4;
+            Test_Score += 4;
         }
         else if (percentage >= 80)
         {
-            PreTest_Score += 3;
+            Test_Score += 3;
         }
         else if (percentage >= 70)
         {
-            PreTest_Score += 2;
+            Test_Score += 2;
         }
         else if (percentage >= 60)
         {
-            PreTest_Score += 1;
+            Test_Score ++;
         }
-        //if (percentage >= 90) return "A";
-        //if (percentage >= 80) return "B";
-        //if (percentage >= 70) return "C";
-        //if (percentage >= 60) return "D";
-        //return "F";
+        Debug.Log("Score: " + Test_Score);
     }
 
-
-    // Pre_Test methods
-    public void Onclick()
+    void IncrementFillAmount()
     {
-        // Add functionality as needed
+        if (Test_scenes.Count == 14)
+        {
+            Fill.fillAmount = Mathf.Clamp01(Fill.fillAmount + 0.0909090909090909f);
+        }
+
+        else if (Test_scenes.Count == 19)
+        {
+            Fill.fillAmount = Mathf.Clamp01(Fill.fillAmount + 0.0625f);
+        }
     }
 
     public void UpdateScene()
     {
-    
-        preTest_scenes[pretest_counter].SetActive(false);
-        pretest_counter++;
-        preTest_scenes[pretest_counter].SetActive(true);
+        Test_scenes[test_counter].SetActive(false);
+        test_counter++;
+        Test_scenes[test_counter].SetActive(true);
 
-        // Update the next button state
-        if (pretest_counter == 1)
+        if (test_counter < (Test_scenes.Count - 1))
         {
-            next.gameObject.SetActive(true);
+            Tracking_Test[test_counter].SetActive(false);
         }
-        
+
+        if (test_counter > 1)
+        {
+            IncrementFillAmount();
+        }
+
+        Debug.Log("Score: " + Test_Score);
+    }
+
+    public void Add_Point()
+    { 
+        Test_Score ++;
+        UpdateScene();
     }
 }

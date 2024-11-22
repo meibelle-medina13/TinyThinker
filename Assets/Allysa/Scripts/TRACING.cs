@@ -22,7 +22,7 @@ public class TracingActivity : MonoBehaviour
     private HashSet<string> tracedPoints = new HashSet<string>();
     private int score = 0;
     public int totalTracingPoints = 0; 
-    private bool isMousePressed = false;
+    //private bool isMousePressed = false;
 
     public AudioSource correctSound;
 
@@ -64,7 +64,7 @@ public class TracingActivity : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            isMousePressed = false;
+            //isMousePressed = false;
             mycollider.GetComponent<CircleCollider2D>().enabled = false;
             pencilState = pencilRaise;  
         }
