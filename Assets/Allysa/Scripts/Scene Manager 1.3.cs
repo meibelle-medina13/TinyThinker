@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Networking;
+using UnityEngine.SocialPlatforms.Impl;
 
 
 public class Theme1Level3_SceneManager : MonoBehaviour
@@ -228,10 +230,15 @@ public class Theme1Level3_SceneManager : MonoBehaviour
         }
     }
 
+    // ------------------------------------------------------- //
+    int delaytime;
+    // ------------------------------------------------------- //
     void Show_Stars()
     {
         nextScene_Button.gameObject.SetActive(false);
-
+        // ------------------------------ //
+        StartCoroutine(UpdateCurrentScore());
+        // ------------------------------ //
         if (total_stars.fillAmount < 0.48f)
         {
             star_display[0].SetActive(true);
@@ -249,16 +256,24 @@ public class Theme1Level3_SceneManager : MonoBehaviour
             star_display[1].SetActive(true);
             confetti_size[1].SetActive(false);
             complimentary_text.text = "SUBOK";
+            delaytime = 4;
         }
         else if (Mathf.Approximately(total_stars.fillAmount, 0.72f))
         {
             star_display[2].SetActive(true);
             complimentary_text.text = "MAGALING";
+            delaytime = 4;
         }
         else if (Mathf.Approximately(total_stars.fillAmount, 1f))
         {
             star_display[3].SetActive(true);
             complimentary_text.text = "PERPEKTO";
+            delaytime = 8;
+        }
+
+        if (total_stars.fillAmount >= 0.50f)
+        {
+            StartCoroutine(GoToMap());
         }
     }
 
@@ -296,9 +311,72 @@ public class Theme1Level3_SceneManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(currentScene.name);
     }
 
-    
+    // --------------------------------------------------- //
+
+    int userID;
+    float score;
+
+    IEnumerator GoToMap()
+    {
+        yield return new WaitForSeconds(delaytime);
+        StartCoroutine(UpdateCurrentLevel());
+    }
+
+    IEnumerator UpdateCurrentScore()
+    {
+        score = total_stars.fillAmount * 100;
+        userID = PlayerPrefs.GetInt("Current_user");
+        byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"theme_num\": 1, \"level_num\": 3, \"score\": " + score + "}");
+
+        using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/scores", rawData))
+        {
+            www.method = "PUT";
+            www.SetRequestHeader("Content-Type", "application/json");
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError(www.error);
+            }
+            else
+            {
+                Debug.Log("Received: " + www.downloadHandler.text);
+            }
+        }
+    }
+
+    IEnumerator UpdateCurrentLevel()
+    {
+        int current_level = 4;
+        byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"current_level\": " + current_level + "}");
+
+        if (score >= 50)
+        {
+            using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/users", rawData))
+            {
+                www.method = "PUT";
+                www.SetRequestHeader("Content-Type", "application/json");
+                yield return www.SendWebRequest();
+
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.LogError(www.error);
+                }
+                else
+                {
+                    PlayerPrefs.SetInt("Current_level", current_level);
+                    Debug.Log("Received: " + www.downloadHandler.text);
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+                }
+            }
+        }
+
+    }
+
 
 }
+
+
 
 ////void deactivate_buttons()
 ////{
