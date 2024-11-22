@@ -13,9 +13,11 @@ public class PreTest_PostTest : MonoBehaviour
     public List<GameObject> Tracking_Test;
     public static int test_counter = 0;
     public static int Test_Score;
+    public int Level;
     public GameObject progress_display;
     public UnityEngine.UI.Image Fill;
     public List<TextMeshProUGUI> textWithOutline_PreTest_PostTest;
+
 
     public GameObject scene;
     public GameObject pencil;

@@ -56,7 +56,13 @@ public class SceneManager : MonoBehaviour
 
     void Update()
     {
-        if (counter == 3)
+
+        if (counter == 2)
+        {
+            nextButton.gameObject.SetActive(true);
+        }
+
+        else if (counter == 3)
         {
             nextButton.gameObject.SetActive(false);
         }
