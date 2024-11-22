@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class tracing : MonoBehaviour
 {
-    public GameObject Scene4;
+    public GameObject TracingPanel;
     public GameObject Pencil;
     public GameObject PencilMask;
     public GameObject Collider;
     private Vector3 pencilState;
     private Vector3 pencilRaise = new Vector3(105, 120, 0);
     private Vector3 pencilWrite = new Vector3(85, 100, 0);
+
 
     void Start()
     {
@@ -19,37 +20,42 @@ public class tracing : MonoBehaviour
 
     void Update()
     {
-        Vector3 screenPosition = Input.mousePosition;
-        screenPosition.z = Camera.main.nearClipPlane + 1;
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
-
-        if (Input.GetMouseButton(0))
+        if (TracingPanel.activeSelf == true)
         {
-            Collider.GetComponent<CircleCollider2D>().enabled = true;
-            pencilState = pencilWrite;
+            Vector3 screenPosition = Input.mousePosition;
+            screenPosition.z = Camera.main.nearClipPlane + 1;
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
 
-            GameObject pencilMask = Instantiate(PencilMask, worldPosition, Quaternion.identity);
-            pencilMask.transform.SetParent(Scene4.transform);
-        }
-        else
-        {
-            Collider.GetComponent<CircleCollider2D>().enabled = false;
-            pencilState = pencilRaise;
-        }
+            if (Input.GetMouseButton(0))
+            {
+                Collider.GetComponent<CircleCollider2D>().enabled = true;
+                pencilState = pencilWrite;
 
-        Pencil.transform.position = worldPosition + pencilState;
-        Collider.transform.position = worldPosition;
+                GameObject pencilMask = Instantiate(PencilMask, worldPosition, Quaternion.identity);
+                pencilMask.transform.SetParent(TracingPanel.transform);
+            }
+            else
+            {
+                Collider.GetComponent<CircleCollider2D>().enabled = false;
+                pencilState = pencilRaise;
+            }
+
+            Pencil.transform.position = worldPosition + pencilState;
+            Collider.transform.position = worldPosition;
+        }
     }
 
     HashSet<string> tracedPoints = new HashSet<string>();
+    public int no_of_traced = 0;
 
-    void OnTriggerEnter2D(Collider2D collider)
+    public void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log(collider.gameObject.name);
         if (collider.CompareTag("Tracing Point") && !tracedPoints.Contains(collider.gameObject.name))
         {
             tracedPoints.Add(collider.gameObject.name);
-            Debug.Log(collider.gameObject.name);
+            no_of_traced++;
+            PlayerPrefs.SetInt("Tracing Points", no_of_traced);
+            Debug.Log(no_of_traced);
         }
     }           
 }

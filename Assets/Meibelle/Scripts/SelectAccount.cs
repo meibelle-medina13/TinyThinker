@@ -175,6 +175,7 @@ public class SelectAccount : MonoBehaviour
                 Debug.Log("Received: " + www.downloadHandler.text);
                 Root json = JsonConvert.DeserializeObject<Root>(www.downloadHandler.text);
                 guardianID = json.data[0].ID;
+                PlayerPrefs.SetInt("Guardian_ID", guardianID);
                 Debug.Log(json.data[0].ID);
 
                 StartCoroutine(getUsers());

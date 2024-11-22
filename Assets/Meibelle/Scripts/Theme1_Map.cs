@@ -9,6 +9,8 @@ using UnityEngine.UI;
 using TMPro;
 using static SelectAccount;
 using Unity.VisualScripting.Antlr3.Runtime;
+using System;
+using static Login;
 
 public class Theme1_Map : MonoBehaviour
 {
@@ -63,7 +65,9 @@ public class Theme1_Map : MonoBehaviour
 
 
 
-    int current_theme, current_level, selected_theme, color_index;
+
+
+    int user_id, guardian_id, current_theme, current_level, selected_theme, color_index;
 
     string user, gender, avatar_filename, relation_to_guardian;
     int age;
@@ -85,6 +89,8 @@ public class Theme1_Map : MonoBehaviour
         statistics.onClick.AddListener(() => ShowRestrictions());
         profile_back.onClick.AddListener(() => ShowProfilePanel());
 
+        user_id = PlayerPrefs.GetInt("Current_user");
+        guardian_id = PlayerPrefs.GetInt("Guardian_ID");
         current_theme = PlayerPrefs.GetInt("Current_theme");
         current_level = PlayerPrefs.GetInt("Current_level");
         selected_theme = PlayerPrefs.GetInt("Selected Theme");
@@ -128,7 +134,6 @@ public class Theme1_Map : MonoBehaviour
 
     private void UpdateUserProfile()
     {
-        int user_id = PlayerPrefs.GetInt("Current_user");
         StartCoroutine(getUser(user_id));
     }
 
@@ -264,7 +269,7 @@ public class Theme1_Map : MonoBehaviour
 
     private void EnterGameLevel(int level)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(level + 6);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(level + 8);
     }
 
     public void ChangeVolume()
@@ -296,12 +301,47 @@ public class Theme1_Map : MonoBehaviour
         }
         else if (number.name == "back-button")
         {
+            inputField.text = "";
             ShowRestrictions();
         }
         else if (number.name == "next-button")
         {
-            number.onClick.RemoveAllListeners();
+            StartCoroutine(VerifyBirthYear(inputField.text));
             Debug.Log(inputField.text);
+        }
+    }
+
+    IEnumerator VerifyBirthYear(string year)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("ID", guardian_id);
+        form.AddField("birth_year", year);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost:3000/users_guardian/verify_year", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError(www.error);
+            }
+            else
+            {
+                Debug.Log("Received: " + www.downloadHandler.text);
+                VerificationRoot json = JsonConvert.DeserializeObject<VerificationRoot>(www.downloadHandler.text);
+                if (json.data != "Birth year is correct")
+                {
+                    inputField.color = Color.red;
+                    yield return new WaitForSeconds(1);
+                    inputField.text = "";
+                    inputField.color = Color.black;
+                }
+                else
+                {
+                    inputField.text = "";
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(8);
+                }
+            }
         }
     }
 }
