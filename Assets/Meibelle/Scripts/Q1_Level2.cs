@@ -62,6 +62,7 @@ public class Q1_Level2 : MonoBehaviour
 
     private void Start()
     {
+        PlayerPrefs.SetInt("Tracing Points", 0);
         userID = PlayerPrefs.GetInt("Current_user");
 
         for (int i = 0; i < (scenes.Length - 1); i++)
@@ -98,6 +99,10 @@ public class Q1_Level2 : MonoBehaviour
         }
 
         tracing_button.onClick.AddListener(() => CheckAssessment1());
+    }
+    public void OpenPreview()
+    {
+        scenes[0].SetActive(true);
     }
 
     public void OnContinue(int index)
@@ -322,7 +327,7 @@ public class Q1_Level2 : MonoBehaviour
     {
         if (buttonType.name == "retry-button")
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(10);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(11);
         }
     }
 
@@ -362,7 +367,7 @@ public class Q1_Level2 : MonoBehaviour
 
     IEnumerator UpdateCurrentScore()
     {
-        byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"theme_num\": 1, \"level_num\": 1, \"score\": " + score + "}");
+        byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"theme_num\": 1, \"level_num\": 2, \"score\": " + score + "}");
 
         using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/scores", rawData))
         {

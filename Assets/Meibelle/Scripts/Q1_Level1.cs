@@ -87,6 +87,11 @@ public class Q1_Level1 : MonoBehaviour
         }
     }
 
+    public void OpenPreview()
+    {
+        scenes[0].SetActive(true);
+    }
+
     public void OnContinue(int index)
     {
         scenes[index].SetActive(false);
@@ -325,7 +330,7 @@ public class Q1_Level1 : MonoBehaviour
     {
         if (buttonType.name == "retry-button")
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(9);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(10);
         }
     }
 

@@ -25,7 +25,10 @@ public class Q2_Level1 : MonoBehaviour
     [SerializeField]
     private Image progressBar;
 
-    int assess1 = 50;
+    [SerializeField]
+    private GameObject[] result = new GameObject[5];
+
+    int assess1 = 100;
     int error;
     float score;
 
@@ -55,6 +58,11 @@ public class Q2_Level1 : MonoBehaviour
         {
             optionInitialPos[i] = assessment1Option[i].transform.position;
         }
+    }
+
+    public void OpenPreview()
+    {
+        scenes[0].SetActive(true);
     }
 
     public void OnContinue(int index)
@@ -114,6 +122,9 @@ public class Q2_Level1 : MonoBehaviour
         if (positionedMembers == 4)
         {
             confetti.SetActive(true);
+            assessments[0].SetActive(false);
+            assessments[3].SetActive(true);
+            AssessResult();
         }
     }
 
@@ -140,5 +151,35 @@ public class Q2_Level1 : MonoBehaviour
         score += currentScore;
         print("score" + score);
         progressBar.fillAmount = score / 100;
+    }
+
+    private void AssessResult()
+    {
+        //StartCoroutine(UpdateCurrentScore());
+        if (score < 50)
+        {
+            result[4].SetActive(true);
+        }
+        else
+        {
+            if (score >= 50 && score < 75)
+            {
+                result[1].SetActive(true);
+                //delaytime = 4;
+            }
+            else if (score >= 75 && score < 100)
+            {
+                //delaytime = 4;
+                result[0].SetActive(true);
+                result[2].SetActive(true);
+            }
+            else
+            {
+                //delaytime += 8;
+                result[0].SetActive(true);
+                result[3].SetActive(true);
+            }
+            //StartCoroutine(GoToMap());
+        }
     }
 }

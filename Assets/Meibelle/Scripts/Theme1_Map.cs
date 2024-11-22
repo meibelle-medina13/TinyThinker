@@ -95,6 +95,11 @@ public class Theme1_Map : MonoBehaviour
         current_level = PlayerPrefs.GetInt("Current_level");
         selected_theme = PlayerPrefs.GetInt("Selected Theme");
 
+        if (current_level == 0)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(9);
+        }
+
         for (int i = 0; i < theme1_levels.Length; i++)
         {
             Button level = theme1_levels[i].GetComponent<Button>();
@@ -269,7 +274,7 @@ public class Theme1_Map : MonoBehaviour
 
     private void EnterGameLevel(int level)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(level + 8);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(level + 9);
     }
 
     public void ChangeVolume()
