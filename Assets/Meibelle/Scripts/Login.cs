@@ -134,7 +134,7 @@ public class Login : MonoBehaviour
     }
 
 
-    public class LoginRoot
+    public class VerificationRoot
     {
         public bool success { get; set; }
         public string data { get; set; }
@@ -156,7 +156,7 @@ public class Login : MonoBehaviour
             }
             else
             {
-                LoginRoot json = JsonConvert.DeserializeObject<LoginRoot>(www.downloadHandler.text);
+                VerificationRoot json = JsonConvert.DeserializeObject<VerificationRoot>(www.downloadHandler.text);
                 if (json.data == "Login Successful!")
                 {
                     PlayerPrefs.SetString("Email", email);

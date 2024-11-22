@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
+using Newtonsoft.Json;
 
 public class Q1_Level1 : MonoBehaviour
 {
@@ -41,10 +42,12 @@ public class Q1_Level1 : MonoBehaviour
     int assess2 = 25;
     int assess3 = 25;
     int error;
+    int userID;
     float score;
 
     public void Start()
     {
+        userID = PlayerPrefs.GetInt("Current_user");
         for (int i = 0; i < (scenes.Length - 1); i++)
         {
             int index = i;
@@ -286,8 +289,11 @@ public class Q1_Level1 : MonoBehaviour
         progressBar.fillAmount = score / 100;
     }
 
+    int delaytime;
+
     private void AssessResult()
     {
+        StartCoroutine(UpdateCurrentScore());
         if (score < 50)
         {
             result[4].SetActive(true);
@@ -297,14 +303,17 @@ public class Q1_Level1 : MonoBehaviour
             if (score >= 50 && score < 75)
             {
                 result[1].SetActive(true);
+                delaytime = 4;
             }
             else if (score >= 75 && score < 100)
             {
+                delaytime = 4;
                 result[0].SetActive(true);
                 result[2].SetActive(true);
             }
             else
             {
+                delaytime += 8;
                 result[0].SetActive(true);
                 result[3].SetActive(true);
             }
@@ -316,41 +325,63 @@ public class Q1_Level1 : MonoBehaviour
     {
         if (buttonType.name == "retry-button")
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(9);
         }
     }
 
     IEnumerator GoToMap()
     {
-        yield return new WaitForSeconds(8f);
-        PlayerPrefs.SetInt("Current_level", 2);
-        UnityEngine.SceneManagement.SceneManager.LoadScene(6);
-        //StartCoroutine(UpdateCurrentLevel());
+        yield return new WaitForSeconds(delaytime);
+        StartCoroutine(UpdateCurrentLevel());
     }
 
-    //IEnumerator UpdateCurrentLevel()
-    //{
-    //    int current_level = 2;
-    //    int userID = PlayerPrefs.GetInt("Current_user");
-    //    WWWForm form = new WWWForm();
-    //    form.AddField("userID", userID);
-    //    form.AddField("current_level", current_level);
+    IEnumerator UpdateCurrentLevel()
+    {
+        int current_level = 2;
+        byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"current_level\": "+ current_level +"}");
 
-    //    using (UnityWebRequest www = UnityWebRequest.Put(URL, form))
-    //    {
-    //        yield return www.SendWebRequest();
+        if (score >= 50)
+        {
+            using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/users", rawData))
+            {
+                www.method = "PUT";
+                www.SetRequestHeader("Content-Type", "application/json");
+                yield return www.SendWebRequest();
 
-    //        if (www.result != UnityWebRequest.Result.Success)
-    //        {
-    //            Debug.LogError(www.error);
-    //        }
-    //        else
-    //        {
-    //            PlayerPrefs.SetInt("Current_level", 2);
-    //            Debug.Log("Received: " + www.downloadHandler.text);
-    //            UnityEngine.SceneManagement.SceneManager.LoadScene(6);
-    //        }
-    //    }
-    //}
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.LogError(www.error);
+                }
+                else
+                {
+                    PlayerPrefs.SetInt("Current_level", current_level);
+                    Debug.Log("Received: " + www.downloadHandler.text);
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+                }
+            }
+        }
+
+    }
+
+    IEnumerator UpdateCurrentScore()
+    {
+        byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"theme_num\": 1, \"level_num\": 1, \"score\": " + score + "}");
+
+        using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/scores", rawData))
+        {
+            www.method = "PUT";
+            www.SetRequestHeader("Content-Type", "application/json");
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError(www.error);
+            }
+            else
+            {
+                Debug.Log("Received: " + www.downloadHandler.text);
+            }
+        }
+    }
 }
 
