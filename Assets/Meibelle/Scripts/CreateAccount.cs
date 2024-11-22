@@ -3,48 +3,98 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using System;
+using UnityEngine.UI;
 
 public class CreateAccount : MonoBehaviour
 {
-    [SerializeField]
-    private TMP_InputField nicknameInputField;
-    [SerializeField]
-    private TextMeshProUGUI errorMessage;
+    RectTransform rectTransform;
 
-    public void OnSubmitNewAccount()
+    [SerializeField]
+    private GameObject errorMessage, back_button;
+
+    [SerializeField] 
+    private TMP_InputField[] fields = new TMP_InputField[2];
+    [SerializeField]
+    private GameObject[] label = new GameObject[2];
+    [SerializeField]
+    private GameObject[] placeholder = new GameObject[2];
+    [SerializeField]
+    private GameObject[] text = new GameObject[2];
+
+    int index, prev;
+
+    private void Start()
     {
-        string nickname = nicknameInputField.text;
+        Button back = back_button.GetComponent<Button>();
+        back.onClick.AddListener(() => GoToAccountSelection());
+    }
 
-        bool valid = ValidNickname(nickname);
-
-        if (valid)
+    public void ShowLabel()
+    {
+        string selected = EventSystem.current.currentSelectedGameObject.name;
+        if (selected == "Username")
         {
-            Debug.Log("Yey! Welcome " + nickname);
-            PlayerPrefs.SetString("Name", nickname);
-            UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+            index = 0;
         }
-        else
+        else if (selected == "Relationship")
         {
-            Debug.Log("Please enter a nickname");
-            errorMessage.text = "ERROR: Please enter a nickname";
+            index = 1;
+        }
+
+        label[index].SetActive(true);
+        placeholder[index].SetActive(false);
+
+        rectTransform = text[index].GetComponent<RectTransform>();
+        rectTransform.transform.localPosition = new Vector3(0, -4, 0);
+
+        if (prev != 0 && prev != 1 && prev != 2 && prev != 3 && prev != 4)
+        {
+            prev = index;
         }
     }
 
-    private bool ValidNickname(string nickname)
+    public void hideLabel()
     {
+        label[index].SetActive(false);
+        placeholder[index].SetActive(true);
 
-        if (string.IsNullOrEmpty(nickname))
+        rectTransform = text[index].GetComponent<RectTransform>();
+        rectTransform.transform.localPosition = new Vector3(0, 0, 0);
+
+    }
+
+    public void OnSubmitNewAccount()
+    {
+        string username = fields[0].text;
+        string relationship = fields[1].text;
+
+
+        if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(relationship))
         {
-            return false;
-        } 
+            PlayerPrefs.SetString("Name", username);
+            PlayerPrefs.SetString("Relationship", relationship);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(3);
+        }
         else
         {
-            return true;
+            ShowErrorMessage();
         }
+    }
+
+    private void ShowErrorMessage()
+    {
+        errorMessage.SetActive(true);
     }
 
     public void RemoveErrorMessage()
     {
-        errorMessage.text = "";
+        errorMessage.SetActive(false);
+    }
+
+    private void GoToAccountSelection()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(5);
     }
 }
