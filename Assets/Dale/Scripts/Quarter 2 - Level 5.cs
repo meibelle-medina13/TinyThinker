@@ -91,11 +91,9 @@ public class Quarter2Level5 : MonoBehaviour
 
   void OnTriggerEnter2D(Collider2D collider)
   {
-    Debug.Log(collider.gameObject.name);  
     if (collider.CompareTag("Tracing Point") && !tracedPoints.Contains(collider.gameObject.name))
     {
       tracedPoints.Add(collider.gameObject.name);
-      Debug.Log(collider.gameObject.name);
     }
   }
   // -------------------------------------------------- //
