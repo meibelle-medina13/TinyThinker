@@ -9,7 +9,7 @@ public class TracingActivity : MonoBehaviour
     public GameObject scene;
     public GameObject pencil;
     public GameObject PencilMask;
-    public GameObject mycollider;
+    public GameObject Mycollider;
     private Vector3 pencilState;
     private Vector3 pencilRaise = new Vector3(105, 120, 0);
     private Vector3 pencilWrite = new Vector3(85, 100, 0);
@@ -49,7 +49,7 @@ public class TracingActivity : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            mycollider.GetComponent<CircleCollider2D>().enabled = true;
+            Mycollider.GetComponent<CircleCollider2D>().enabled = true;
             pencilState = pencilWrite;
 
             GameObject pencilMask = Instantiate(PencilMask, worldPosition, Quaternion.identity);
@@ -58,19 +58,19 @@ public class TracingActivity : MonoBehaviour
 
         else
         {
-            mycollider.GetComponent<CircleCollider2D>().enabled = false; 
+            Mycollider.GetComponent<CircleCollider2D>().enabled = false; 
             pencilState = pencilRaise; 
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             //isMousePressed = false;
-            mycollider.GetComponent<CircleCollider2D>().enabled = false;
+            Mycollider.GetComponent<CircleCollider2D>().enabled = false;
             pencilState = pencilRaise;  
         }
 
         pencil.transform.position = worldPosition + pencilState;
-        mycollider.transform.position = worldPosition;
+        Mycollider.transform.position = worldPosition;
     }
 
     void OnTriggerEnter2D(Collider2D other)
