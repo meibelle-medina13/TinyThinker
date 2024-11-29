@@ -8,11 +8,16 @@ using TMPro;
 
 public class Theme1Level3_SceneManager : MonoBehaviour
 {
+
+    
+
+
     public TextMeshProUGUI textWithOutline;
     public int counter = 0;
     public Image total_stars;
     public AudioSource Background_Music1;
     public AudioSource Background_Music2;
+
 
     ///DROP AND DRAG  
     public int placed_wrong = 0;
