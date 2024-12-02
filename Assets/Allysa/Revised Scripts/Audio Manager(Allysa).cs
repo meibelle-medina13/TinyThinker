@@ -7,22 +7,24 @@ using UnityEngine.UI;
 
 public class Audio_Manager : MonoBehaviour
 {
-    [SerializeField] private List<AudioClip> backgroundMusic;
+    [SerializeField]
+    private List<AudioClip> backgroundMusic;
     public List<AudioClip> InstructionAudio;
-    [SerializeField] private List<PlayableDirector> playableDirector;
-    [SerializeField] private List<AudioClip> SoundEffects;
-    [SerializeField] private List<AudioClip> LetterSounds;
+    [SerializeField]
+    private List<PlayableDirector> playableDirector;
+    [SerializeField]
+    private List<AudioClip> SoundEffects;
+    [SerializeField]
+    private List<AudioClip> LetterSounds;
     private AudioSource audioSource;
-    [HideInInspector] public AudioSource audioSourceBG1;
+    private AudioSource audioSourceBG1;
     private AudioSource audioSourceBG2;
     private Quarter1_Level3 Q1_3;
-    private Quarter1_Level4 Q1_4;
 
 
     void Start()
     {
         Q1_3 = FindObjectOfType<Quarter1_Level3>();
-        Q1_4 = FindObjectOfType<Quarter1_Level4>();
     }
     public void scene_bgmusic()
     {
@@ -108,19 +110,7 @@ public class Audio_Manager : MonoBehaviour
             audioSource.Play();
         }
     }
-
-    public void Repeat_Instruction_NoTimeline(int index)
-    {
-        audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.clip = InstructionAudio[index];
-
-        if (audioSource.clip != null)
-        {
-            audioSource.Play();
-            audioSource.loop = false;
-        }
-    }
-    public void Repeat_Instruction(int index)
+    public void Repeat_Instruction(int index) 
     {
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.clip = InstructionAudio[index];
@@ -135,12 +125,11 @@ public class Audio_Manager : MonoBehaviour
         {
             playableDirector[index - 1].time = 0;
             playableDirector[index - 1].Play();
-        }
+        }  
 
         audioSource.clip = InstructionAudio[index];
         StartCoroutine(DisableButtonsWhileAudioPlays(audioSource));
     }
-
     private IEnumerator DisableButtonsWhileAudioPlays(AudioSource instruction_audio)
     {
         foreach (Button button in Q1_3.clickableButtons) 
@@ -169,9 +158,5 @@ public class Audio_Manager : MonoBehaviour
         }
     }
 
-    public void Repeat_Timeline(int index)
-    {
-        playableDirector[index].time = 0;
-        playableDirector[index].Play();
-    }
+
 }
