@@ -76,6 +76,7 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
 
     void Update()
     {
+        GameObject assessment = GameObject.Find("Assessment");
 
         if (counter == 3|| counter == 9)
         {
@@ -84,8 +85,6 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
 
         else if (counter == 11)
         {
-            GameObject assessment = GameObject.Find("Assessment");
-
             if (assessment != null && assessment.activeInHierarchy)
             {   
                 assessment.SetActive(false);            
@@ -93,21 +92,6 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
 
             CancelInvoke("UpdateScene");
             Show_Stars();
-        }
-
-        if (total_stars.fillAmount >= 0.3333333333333333f && total_stars.fillAmount < 0.6666666666666667f)
-        {
-            Image[7].SetActive(false);
-        }
-
-        else if (total_stars.fillAmount >= 0.6666666666666667f && total_stars.fillAmount < 1f)
-        {
-            Image[8].SetActive(false);
-        }
-
-        else if (Mathf.Approximately(total_stars.fillAmount, 1f))
-        {
-            Image[9].SetActive(false);
         }
     }
 
@@ -200,6 +184,11 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         }
     }
 
+    public void SetFillAmount(float amount)
+    {
+        total_stars.fillAmount = Mathf.Clamp01(amount);
+    }
+
     public void Rotate()
     {
         transform.Rotate(0f, 0f, rotationAngle);
@@ -238,6 +227,8 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void CorrectButton(Button clickedButton)
     {
+        audioManager.Correct();
+
         if (clickedButton.name == "Button_E")
         {
             Image[1].gameObject.SetActive(true);
