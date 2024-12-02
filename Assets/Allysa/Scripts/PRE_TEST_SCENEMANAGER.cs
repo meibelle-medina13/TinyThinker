@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using static System.Net.Mime.MediaTypeNames;
+using UnityEngine.Networking;
 
 public class PreTest_PostTest : MonoBehaviour
 {
@@ -11,7 +12,6 @@ public class PreTest_PostTest : MonoBehaviour
     public List<GameObject> Tracking_Test;
     public static int test_counter = 0;
     public static int Test_Score;
-    public int Level;
     public GameObject progress_display;
     public UnityEngine.UI.Image Fill;
     public List<TextMeshProUGUI> textWithOutline_PreTest_PostTest;
@@ -145,7 +145,7 @@ public class PreTest_PostTest : MonoBehaviour
         {
             IncrementFillAmount();
         }
-
+        PlayerPrefs.SetInt("Test Score", Test_Score);
         Debug.Log("Score: " + Test_Score);
     }
 
@@ -154,4 +154,71 @@ public class PreTest_PostTest : MonoBehaviour
         Test_Score ++;
         UpdateScene();
     }
+
+    //// ------------------------------------------------------------------- //
+    //int userID;
+    //public void GetTotalScore()
+    //{
+    //    Debug.Log("FInal:" + Test_Score);
+    //    userID = PlayerPrefs.GetInt("Current_user");
+    //    StartCoroutine(GoToMap());
+    //}
+
+    //// -------------------------------------------------------------------- //
+
+    //int delaytime;
+    //IEnumerator GoToMap()
+    //{
+    //    yield return new WaitForSeconds(delaytime);
+    //    StartCoroutine(UpdateCurrentLevel());
+    //}
+
+    //IEnumerator UpdateCurrentLevel()
+    //{
+    //    int current_level = 1;
+    //    byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"current_level\": " + current_level + "}");
+
+    //    if (Test_Score >= 50)
+    //    {
+    //        using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/users", rawData))
+    //        {
+    //            www.method = "PUT";
+    //            www.SetRequestHeader("Content-Type", "application/json");
+    //            yield return www.SendWebRequest();
+
+    //            if (www.result != UnityWebRequest.Result.Success)
+    //            {
+    //                Debug.LogError(www.error);
+    //            }
+    //            else
+    //            {
+    //                PlayerPrefs.SetInt("Current_level", current_level);
+    //                Debug.Log("Received: " + www.downloadHandler.text);
+    //                UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+    //            }
+    //        }
+    //    }
+
+    //}
+
+    //IEnumerator UpdateCurrentScore()
+    //{
+    //    byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"theme_num\": 1, \"level_num\": 1, \"score\": " + score + "}");
+
+    //    using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/scores", rawData))
+    //    {
+    //        www.method = "PUT";
+    //        www.SetRequestHeader("Content-Type", "application/json");
+    //        yield return www.SendWebRequest();
+
+    //        if (www.result != UnityWebRequest.Result.Success)
+    //        {
+    //            Debug.LogError(www.error);
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("Received: " + www.downloadHandler.text);
+    //        }
+    //    }
+    //}
 }
