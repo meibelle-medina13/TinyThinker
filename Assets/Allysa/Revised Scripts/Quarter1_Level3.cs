@@ -52,7 +52,7 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             if (audioManager != null)
             {
-                audioManager.scene_bgmusic(); 
+                audioManager.scene_bgmusic(0.5f); 
                 bgMusicPlayed = true; 
             } 
         } 
@@ -182,7 +182,7 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
             counter++;
             scenes[counter].SetActive(true);
             nextScene_Button.gameObject.SetActive(false);
-            audioManager.assessment_bgmusic();
+            audioManager.assessment_bgmusic(0.5f);
             audioManager.Repeat_Instruction(instruction_count);
             instruction_count++;
         }

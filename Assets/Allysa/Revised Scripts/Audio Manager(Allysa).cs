@@ -15,16 +15,20 @@ public class Audio_Manager : MonoBehaviour
     private AudioSource audioSource;
     [HideInInspector] public AudioSource audioSourceBG1;
     private AudioSource audioSourceBG2;
+
     private Quarter1_Level3 Q1_3;
     private Quarter1_Level4 Q1_4;
+    private Quarter2_Level4 Q2_4;
+
 
 
     void Start()
     {
         Q1_3 = FindObjectOfType<Quarter1_Level3>();
         Q1_4 = FindObjectOfType<Quarter1_Level4>();
+        Q2_4 = FindObjectOfType<Quarter2_Level4>();
     }
-    public void scene_bgmusic()
+    public void scene_bgmusic(float bg_volume)
     {
         audioSourceBG1 = gameObject.AddComponent<AudioSource>();
         audioSourceBG1.clip = backgroundMusic[0];
@@ -32,13 +36,13 @@ public class Audio_Manager : MonoBehaviour
         if (audioSourceBG1.clip != null)
         {
             audioSourceBG1.Play();
-            audioSourceBG1.volume = 0.5f;
+            audioSourceBG1.volume = bg_volume;
             audioSourceBG1.loop = true;
             audioSourceBG1.playOnAwake = false;
         }
     }
 
-    public void assessment_bgmusic()
+    public void assessment_bgmusic(float bg_volume)
     {
         if (audioSourceBG1.isPlaying)
         {
@@ -51,7 +55,7 @@ public class Audio_Manager : MonoBehaviour
         if (audioSourceBG2.clip != null)
         {
             audioSourceBG2.Play();
-            audioSourceBG2.volume = 0.5f;
+            audioSourceBG2.volume = bg_volume;
             audioSourceBG2.loop = true;
             audioSourceBG2.playOnAwake = false;
         }
@@ -143,19 +147,32 @@ public class Audio_Manager : MonoBehaviour
 
     private IEnumerator DisableButtonsWhileAudioPlays(AudioSource instruction_audio)
     {
-        foreach (Button button in Q1_3.clickableButtons) 
-        { 
-            button.interactable = false; 
-        } 
-        
-        while (instruction_audio.isPlaying)
+        if (Q1_3 != null)
         {
-            yield return null; 
-        } 
-        foreach (Button button in Q1_3.clickableButtons) 
-        { 
-            button.interactable = true; 
-        } 
+            foreach (Button button in Q1_3.clickableButtons)
+            { button.interactable = false; }
+        }
+
+        if (Q2_4 != null)
+        {
+            foreach (Button button in Q2_4.clickablebuttons)
+            { button.interactable = false; }
+        }
+
+        while (instruction_audio.isPlaying)
+        { yield return null; }
+
+        if (Q1_3 != null)
+        {
+            foreach (Button button in Q1_3.clickableButtons)
+            { button.interactable = true; }
+        }
+
+        if (Q2_4 != null)
+        {
+            foreach (Button button in Q2_4.clickablebuttons)
+            { button.interactable = true; }
+        }
     }
 
     public void Repeat_LetterSounds(int index)

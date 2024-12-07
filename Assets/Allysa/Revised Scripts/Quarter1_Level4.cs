@@ -33,7 +33,7 @@ public class Quarter1_Level4 : MonoBehaviour
         {
             if (audioManager2 != null)
             {
-                audioManager2.scene_bgmusic();
+                audioManager2.scene_bgmusic(0.5f);
                 bgMusicPlayed = true;
                 audioManager2.audioSourceBG1.volume = 0.39f;
                 
@@ -103,7 +103,7 @@ public class Quarter1_Level4 : MonoBehaviour
 
         else if (scene_counter == 10)
         {
-            audioManager2.assessment_bgmusic();
+            audioManager2.assessment_bgmusic(0.5f);
             NextScene_Button.gameObject.SetActive(false);
         }
     }
