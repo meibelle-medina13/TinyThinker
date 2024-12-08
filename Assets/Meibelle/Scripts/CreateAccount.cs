@@ -11,9 +11,15 @@ public class CreateAccount : MonoBehaviour
 {
     RectTransform rectTransform;
 
+    [Header("<---- ERROR MESSAGE ---->")]
     [SerializeField]
-    private GameObject errorMessage, back_button;
+    private GameObject errorMessage;
 
+    [Header("<---- BACK BUTTON ---->")]
+    [SerializeField]
+    private GameObject back_button;
+
+    [Header("<---- INPUT FIELDS ---->")]
     [SerializeField] 
     private TMP_InputField[] fields = new TMP_InputField[2];
     [SerializeField]
@@ -23,7 +29,7 @@ public class CreateAccount : MonoBehaviour
     [SerializeField]
     private GameObject[] text = new GameObject[2];
 
-    int index, prev;
+    private int index, prev;
 
     private void Start()
     {
@@ -55,7 +61,7 @@ public class CreateAccount : MonoBehaviour
         }
     }
 
-    public void hideLabel()
+    public void HideLabel()
     {
         label[index].SetActive(false);
         placeholder[index].SetActive(true);

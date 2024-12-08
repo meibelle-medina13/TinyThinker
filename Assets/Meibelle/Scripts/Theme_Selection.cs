@@ -7,22 +7,55 @@ public class Theme_Selection : MonoBehaviour
 {
     RectTransform rectTransform;
 
+    [Header("<---- BUTTONS ---->")]
     [SerializeField]
-    private Button select_button, prev_button, next_button, back_button;
+    private Button select_button, prev_button, next_button;
+
+    [Header("<---- BACK BUTTONS ---->")]
+    [SerializeField]
+    private Button showLogout;
+    [SerializeField]
+    private Button logout;
+
+    [Header("<---- HIDE LOGOUT TIMELINE ---->")]
+    [SerializeField]
+    private GameObject hideLogout;
+
+    [Header("<---- THEME CONTAINER ---->")]
     [SerializeField]
     private GameObject theme_container;
-    [SerializeField]
-    private GameObject[] themes = new GameObject[4];
-    int x = 0;
-    int current_theme;
+
+    private int x = 0;
+    private int current_theme;
 
     private void Start()
     {
         current_theme = PlayerPrefs.GetInt("Current_theme");
         next_button.onClick.AddListener(() => Select_Theme("next"));
         prev_button.onClick.AddListener(() => Select_Theme("prev"));
-        back_button.onClick.AddListener(() => GoToAccSelection());
+        showLogout.onClick.AddListener(() => ManageLogout());
         CheckCurrentTheme();
+    }
+
+    private void ManageLogout()
+    {
+        if (logout.gameObject.activeSelf)
+        {
+            hideLogout.SetActive(true);
+            StartCoroutine(HideLogout());
+        }
+        else
+        {
+            hideLogout.SetActive(false);
+            logout.gameObject.SetActive(true);
+            logout.onClick.AddListener(() => GoToAccSelection());
+        }
+    }
+
+    IEnumerator HideLogout()
+    {
+        yield return new WaitForSeconds(0.5f);
+        logout.gameObject.SetActive(false);
     }
 
     private void GoToAccSelection()
@@ -69,7 +102,7 @@ public class Theme_Selection : MonoBehaviour
 
     private void GoToMap(int theme_num)
     {
-        PlayerPrefs.SetInt("Selected Theme", theme_num);
+        PlayerPrefs.SetInt("Selected_theme", theme_num);
         UnityEngine.SceneManagement.SceneManager.LoadScene(7);
     }
 
@@ -87,12 +120,10 @@ public class Theme_Selection : MonoBehaviour
         }
         else if (rectTransform.transform.localPosition.x == -2360 && current_theme >= 3)
         {
-            //select_button.interactable = false;
             select_button.onClick.AddListener(() => GoToMap(3));
         }
         else if (rectTransform.transform.localPosition.x == -3324 && current_theme == 4)
         {
-            //select_button.interactable = false;
             select_button.onClick.AddListener(() => GoToMap(4));
         }
         else
@@ -100,5 +131,4 @@ public class Theme_Selection : MonoBehaviour
             select_button.interactable = false;
         }
     }
-
 }

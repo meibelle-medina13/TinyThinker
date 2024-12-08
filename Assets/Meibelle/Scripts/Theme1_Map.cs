@@ -1,48 +1,59 @@
-using Newtonsoft.Json;
 using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Analytics;
-using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
-using static SelectAccount;
-using Unity.VisualScripting.Antlr3.Runtime;
-using System;
-using static Login;
 
 public class Theme1_Map : MonoBehaviour
 {
+    [Header("<---- THEME LEVEL BUTTONS ---->")]
     [SerializeField]
     private GameObject[] theme1_levels = new GameObject[10];
     [SerializeField]
     private GameObject[] theme2_levels = new GameObject[10];
 
+    [Header("<---- SOUNDS AND PROFILE PANEL ---->")]
     [SerializeField]
-    private GameObject soundsPanel, profilePanel;
+    private GameObject soundsPanel;
+    [SerializeField]
+    private GameObject profilePanel;
     [SerializeField]
     private Slider volume;
 
+    [Header("<---- THEMES ---->")]
     [SerializeField]
-    private GameObject[] themes = new GameObject[2];
+    private GameObject[] themes_map = new GameObject[2];
 
+    [Header("<---- BUTTONS ---->")]
     [SerializeField]
-    private Button back_button, sounds, statistics, profile_back, profile_settings;
+    private Button back_button;
+    [SerializeField]
+    private Button sounds;
+    [SerializeField]
+    private Button statistics;
+    [SerializeField]
+    private Button profile_back;
+    [SerializeField]
+    private Button profile_settings;
 
+
+    [Header("<---- PROFILE ICON ---->")]
     [SerializeField]
-    private GameObject profile_container, profile, username, theme_progress;
+    private GameObject profile_container;
+    [SerializeField]
+    private GameObject profile;
+    [SerializeField]
+    private GameObject username;
+    [SerializeField]
+    private GameObject theme_progress;
+
+    [Header("<---- PROFILE DETAILS SPRITES ---->")]
     [SerializeField]
     private Sprite[] avatar_container = new Sprite[10];
     [SerializeField]
     private Sprite[] avatar = new Sprite[10];
     [SerializeField]
     private Sprite[] username_container = new Sprite[10];
-
-    [SerializeField]
-    private GameObject[] profileDetails = new GameObject[9];
-    [SerializeField]
-    private GameObject[] profileLabels = new GameObject[4];
     [SerializeField]
     private Sprite[] fullAvatar = new Sprite[10];
     [SerializeField]
@@ -54,6 +65,13 @@ public class Theme1_Map : MonoBehaviour
     [SerializeField]
     private Sprite[] fullProfile_container = new Sprite[10];
 
+    [Header("<---- PROFILE DETAILS ---->")]
+    [SerializeField]
+    private GameObject[] profileDetails = new GameObject[10];
+    [SerializeField]
+    private GameObject[] profileLabels = new GameObject[4];
+
+    [Header("<---- RESTRICTIONS ---->")]
     [SerializeField]
     private Button[] numbers = new Button[12];
     [SerializeField]
@@ -61,58 +79,57 @@ public class Theme1_Map : MonoBehaviour
     [SerializeField]
     private GameObject restrictions;
 
-    string[] colors = { "#5B2C6F", "#718F11", "#F33B3B", "#FF9C07", "#761500", "#7C1701", "#156784", "#115B31", "#7F2100", "#7C1701" };
+    [Header("<---- REQUEST SCRIPT ---->")]
+    [SerializeField]
+    private LEVEL_MAP_REQUESTS requestsManager;
 
-
-
-
-
-    int user_id, guardian_id, current_theme, current_level, selected_theme, color_index;
-
-    string user, gender, avatar_filename, relation_to_guardian;
-    int age;
+    private string[] colors = { "#5B2C6F", "#718F11", "#F33B3B", "#FF9C07", "#761500", "#7C1701", "#156784", "#115B31", "#7F2100", "#7C1701" };
+    private int user_id, guardian_id, current_theme, current_level, selected_theme, color_index, age;
+    private string user, gender, avatar_filename, relation_to_guardian;
 
     void Start()
     {
-        if (!PlayerPrefs.HasKey("volume"))
+        requestsManager = FindObjectOfType<LEVEL_MAP_REQUESTS>();
+
+        if (!PlayerPrefs.HasKey("Volume"))
         {
-            PlayerPrefs.SetFloat("volume", 1);
+            PlayerPrefs.SetFloat("Volume", 1);
             volume.value = 1;
         }
         else
         {
-             volume.value = PlayerPrefs.GetFloat("volume"); 
+             volume.value = PlayerPrefs.GetFloat("Volume"); 
         }
 
-        back_button.onClick.AddListener(() => GoToMap());
-        sounds.onClick.AddListener(() => ShowSoundPanel());
-        statistics.onClick.AddListener(() => ShowRestrictions());
-        profile_back.onClick.AddListener(() => ShowProfilePanel());
+        back_button.onClick.AddListener(() => GoTo_ThemeSelection());
+        sounds.onClick.AddListener(() => ShowPopUpPanel("sounds"));
+        statistics.onClick.AddListener(() => ShowPopUpPanel("statistics"));
+        profile_back.onClick.AddListener(() => ShowPopUpPanel("profile"));
 
         user_id = PlayerPrefs.GetInt("Current_user");
         guardian_id = PlayerPrefs.GetInt("Guardian_ID");
         current_theme = PlayerPrefs.GetInt("Current_theme");
         current_level = PlayerPrefs.GetInt("Current_level");
-        selected_theme = PlayerPrefs.GetInt("Selected Theme");
+        selected_theme = PlayerPrefs.GetInt("Selected_theme");
+        CheckingThemeLevel();
 
-        if (current_level == 0)
+        StartCoroutine(UpdateUserProfile());
+
+        for (int i = 0; i < numbers.Length; i++)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(9);
+            int index = i;
+            numbers[i].onClick.AddListener(() => EnterNumber(numbers[index]));
         }
+    }
 
-        for (int i = 0; i < theme1_levels.Length; i++)
-        {
-            Button level = theme1_levels[i].GetComponent<Button>();
-            int index = i+1;
-            level.onClick.AddListener(() => EnterGameLevel(index));
-        }
-
-        for (int i = 0; i < themes.Length; i++)
+    private void CheckingThemeLevel()
+    {
+        for (int i = 0; i < themes_map.Length; i++)
         {
 
-            if (selected_theme == i+1)
+            if (selected_theme == i + 1)
             {
-                themes[i].SetActive(true);
+                themes_map[i].SetActive(true);
                 if (current_theme > selected_theme)
                 {
                     EnableAllLevels();
@@ -124,45 +141,71 @@ public class Theme1_Map : MonoBehaviour
             }
             else
             {
-                themes[i].SetActive(false);
+                themes_map[i].SetActive(false);
             }
         }
 
-        UpdateUserProfile();
-
-        for (int i = 0; i < numbers.Length; i++)
+        int theme = 0;
+        if (selected_theme == 1)
         {
-            int index = i;
-            numbers[i].onClick.AddListener(() => EnterNumber(numbers[index]));
+            theme = 1;
+            if (current_level == 0)
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(9);
+            }
+            else if (current_level == 6)
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(15);
+            }
+
+            for (int i = 0; i < theme1_levels.Length; i++)
+            {
+                Button level = theme1_levels[i].GetComponent<Button>();
+                int levelnum = i + 1;
+                level.onClick.AddListener(() => EnterGameLevel(levelnum, theme));
+            }
+        }
+        
+    }
+
+    private void ShowPopUpPanel(string actionButton)
+    {
+        GameObject currentPanel = null;
+        if (actionButton == "sounds")
+        {
+            currentPanel = soundsPanel;
+        }
+        else if (actionButton == "statistics")
+        {
+            currentPanel = restrictions;
+        }
+        else if (actionButton == "profile")
+        {
+            currentPanel = profilePanel;
+        }
+
+        if (currentPanel.activeSelf == false)
+        {
+            currentPanel.SetActive(true);
+        }
+        else
+        {
+            currentPanel.SetActive(false);
         }
     }
 
-    private void UpdateUserProfile()
+    IEnumerator UpdateUserProfile()
     {
-        StartCoroutine(getUser(user_id));
-    }
+        yield return StartCoroutine(requestsManager.GetUser("/users", user_id));
 
-    IEnumerator getUser(int user_id)
-    {
-        using (UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/users?ID=" + user_id))
+        if (requestsManager.json != null)
         {
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError(www.error);
-            }
-            else
-            {
-                Debug.Log("Received: " + www.downloadHandler.text);
-                UserRoot json = JsonConvert.DeserializeObject<UserRoot>(www.downloadHandler.text);
-                user = json.data[0].username;
-                gender = json.data[0].gender;
-                age = json.data[0].age;
-                avatar_filename = json.data[0].avatar_filename;
-                relation_to_guardian = json.data[0].relation_to_guardian;
-                ChangeProfileDetails();
-            }
+            user = requestsManager.json.data[0].username;
+            gender = requestsManager.json.data[0].gender;
+            age = requestsManager.json.data[0].age;
+            avatar_filename = requestsManager.json.data[0].avatar_filename;
+            relation_to_guardian = requestsManager.json.data[0].relation_to_guardian;
+            ChangeProfileDetails();
         }
     }
 
@@ -175,12 +218,12 @@ public class Theme1_Map : MonoBehaviour
                 color_index = i;
                 profile_container.GetComponent<Image>().sprite = avatar_container[i];
                 profile.GetComponent<Image>().sprite = avatar[i];
-                profile.GetComponent<Button>().onClick.AddListener(() => ShowProfilePanel());
+                profile.GetComponent<Button>().onClick.AddListener(() => ShowPopUpPanel("profile"));
                 username.GetComponent<Image>().sprite = username_container[i];
                 username.GetComponentInChildren<TMP_Text>().text = user.FirstCharacterToUpper();
                 theme_progress.GetComponentInChildren<TMP_Text>().text = "Tema " + current_theme + ": " + "Antas " + current_level;
                 profileDetails[5].GetComponent<Image>().sprite = fullAvatar[i];
-                profileDetails[4].GetComponent<Image>().sprite = name_container[i];
+                profileDetails[9].GetComponent<Image>().sprite = name_container[i];
                 profileDetails[6].GetComponent<Image>().sprite = fullAvatar_container[i];
                 profileDetails[7].GetComponent<Image>().sprite = profileDetails_container[i];
                 profileDetails[8].GetComponent<Image>().sprite = fullProfile_container[i];
@@ -201,42 +244,7 @@ public class Theme1_Map : MonoBehaviour
         }
     }
 
-    private void ShowSoundPanel()
-    {
-        if (soundsPanel.activeSelf ==  false)
-        {
-            soundsPanel.SetActive(true);
-        }
-        else
-        {
-            soundsPanel.SetActive(false);
-        }
-    }
-
-    private void ShowProfilePanel()
-    {
-        if (profilePanel.activeSelf == false)
-        {
-            profilePanel.SetActive(true);
-        }
-        else
-        {
-            profilePanel.SetActive(false);
-        }
-    }
-
-    private void ShowRestrictions()
-    {
-        if (restrictions.activeSelf == false)
-        {
-            restrictions.SetActive(true);
-        }
-        else
-        {
-            restrictions.SetActive(false);
-        }
-    }
-    private void GoToMap()
+    private void GoTo_ThemeSelection()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(6);
     }
@@ -272,15 +280,21 @@ public class Theme1_Map : MonoBehaviour
         }
     }
 
-    private void EnterGameLevel(int level)
+    private void EnterGameLevel(int level, int theme)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(level + 9);
+        int indexFiller = 0;
+        if (theme == 1)
+        {
+            indexFiller = 9;
+        }
+        Debug.Log(indexFiller);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(level + indexFiller);
     }
 
     public void ChangeVolume()
     {
         AudioListener.volume = volume.value;
-        PlayerPrefs.SetFloat("volume", volume.value);
+        PlayerPrefs.SetFloat("Volume", volume.value);
     }
 
     private void EnterNumber(Button number)
@@ -307,46 +321,29 @@ public class Theme1_Map : MonoBehaviour
         else if (number.name == "back-button")
         {
             inputField.text = "";
-            ShowRestrictions();
+            ShowPopUpPanel("statistics");
         }
         else if (number.name == "next-button")
         {
-            StartCoroutine(VerifyBirthYear(inputField.text));
-            Debug.Log(inputField.text);
+            StartCoroutine(ValidateBirthYear());
         }
     }
 
-    IEnumerator VerifyBirthYear(string year)
+    IEnumerator ValidateBirthYear()
     {
-        WWWForm form = new WWWForm();
-        form.AddField("ID", guardian_id);
-        form.AddField("birth_year", year);
+        yield return StartCoroutine(requestsManager.VerifyBirthYear("/users_guardian/verify_year", inputField.text, guardian_id));
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost:3000/users_guardian/verify_year", form))
+        if (requestsManager.verificationJson.data != "Birth year is correct")
         {
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError(www.error);
-            }
-            else
-            {
-                Debug.Log("Received: " + www.downloadHandler.text);
-                VerificationRoot json = JsonConvert.DeserializeObject<VerificationRoot>(www.downloadHandler.text);
-                if (json.data != "Birth year is correct")
-                {
-                    inputField.color = Color.red;
-                    yield return new WaitForSeconds(1);
-                    inputField.text = "";
-                    inputField.color = Color.black;
-                }
-                else
-                {
-                    inputField.text = "";
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(8);
-                }
-            }
+            inputField.color = Color.red;
+            yield return new WaitForSeconds(1);
+            inputField.text = "";
+            inputField.color = Color.black;
+        }
+        else
+        {
+            inputField.text = "";
+            UnityEngine.SceneManagement.SceneManager.LoadScene(8);
         }
     }
 }

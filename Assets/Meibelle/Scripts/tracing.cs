@@ -13,11 +13,6 @@ public class tracing : MonoBehaviour
     private Vector3 pencilWrite = new Vector3(85, 100, 0);
 
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         if (TracingPanel.activeSelf == true)

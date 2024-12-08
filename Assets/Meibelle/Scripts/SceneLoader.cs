@@ -17,10 +17,19 @@ public class SceneLoader : MonoBehaviour
 
     public IEnumerator LoadScene_Coroutine(int index)
     {
+        AsyncOperation asyncOperation;
         progressSlider.value = 0;
         loaderUI.SetActive(true);
 
-        AsyncOperation asyncOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(1);
+        if (PlayerPrefs.HasKey("Email"))
+        {
+            asyncOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(5);
+        }
+        else
+        {
+            asyncOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(1);
+        }
+        
         asyncOperation.allowSceneActivation = false;
         float progress = 0;
 
