@@ -1,51 +1,49 @@
-using Newtonsoft.Json;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
-using UnityEngine.U2D;
 using UnityEngine.UI;
-using static OptionSelection;
 
 
 public class SelectAccount : MonoBehaviour
 {
-    //string URL = "http://localhost:3000/users";
-
+    [Header("<---- PARENT GAMEOBJECT ---->")]
     [SerializeField]
     private GameObject parentGameObject;
+
+    [Header("<---- ADD ACCOUNT ---->")]
     [SerializeField]
     private Button AddAccount;
 
-
+    [Header("<---- AVATAR/CONTAINER SPRITES ---->")]
     [SerializeField]
     private Sprite[] avatars = new Sprite[10];
     [SerializeField]
     private Sprite[] account_container = new Sprite[10];
 
+    [Header("<---- USER TEMPLATE ---->")]
     public GameObject user;
-    string[] username;
-    string[] gender;
-    string[] avatar_filename;
-    int[] user_id;
-    int[] current_theme;
-    int[] current_level;
-    int no_user, guardianID;
+
+    [Header("<---- REQUEST SCRIPT ---->")]
+    [SerializeField]
+    private SELECT_ACCOUNT_REQUESTS requestsManager;
+
+    private string[] username;
+    private string[] gender;
+    private string[] avatar_filename;
+    private int[] user_id;
+    private int[] current_theme;
+    private int[] current_level;
+    private int no_user;
     
 
     private void Start()
     {
-        Debug.Log(user.transform.position);
+        requestsManager = FindObjectOfType<SELECT_ACCOUNT_REQUESTS>();
 
         AddAccount.onClick.AddListener(() => NewAccount());
 
         string email = PlayerPrefs.GetString("Email");
-        Debug.Log(email);
-        StartCoroutine(getGuardianID(email));
+        StartCoroutine(GetAllUsers(email));
     }
 
     void DisplayUsers(int num)
@@ -53,10 +51,8 @@ public class SelectAccount : MonoBehaviour
         int y = 350;
         for (int i = 0; i < avatars.Length; i++)
         {
-            Debug.Log(avatars[i].name);
             if (avatars[i].name == avatar_filename[0])
             {
-                Debug.Log(user.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<SpriteRenderer>().name);
                 user.GetComponentInChildren<SpriteRenderer>().sprite = account_container[i];
                 user.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<Canvas>().GetComponentInChildren<SpriteRenderer>().sprite = avatars[i];
                 user.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<TMP_Text>().text = username[0].ToUpper();
@@ -65,10 +61,9 @@ public class SelectAccount : MonoBehaviour
         }
         for (int i = 1; i < num; i++)
         {
-            Debug.Log(i);
             GameObject Clone = Instantiate(user);
             y = y - 50;
-            Clone.transform.position = new Vector3(394F, y, 0f);
+            Clone.transform.position = new Vector3(394f, y, 0f);
             Clone.transform.SetParent(parentGameObject.transform);
             int index = i;
 
@@ -87,65 +82,6 @@ public class SelectAccount : MonoBehaviour
         }
     }
 
-
-    [Serializable]
-    public class UserData
-    {
-        public int ID { get; set; }
-        public string username { get; set; }
-        public int age { get; set; }
-        public string gender { get; set; }
-        public string avatar_filename { get; set; }
-        public int current_theme { get; set; }
-        public int current_level { get; set; }
-        public string relation_to_guardian { get; set; }
-    }
-
-    public class UserRoot
-    {
-        public bool success { get; set; }
-        public List<UserData> data { get; set; }
-    }
-
-    IEnumerator getUsers()
-    {
-        Debug.Log(guardianID);
-        using (UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/users?guardian_ID=" + guardianID))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError(www.error);
-            }
-            else
-            {
-                Debug.Log("Received: " + www.downloadHandler.text);
-                UserRoot json = JsonConvert.DeserializeObject<UserRoot>(www.downloadHandler.text);
-                no_user = json.data.Count;
-
-                //username.AddRange(json.data);
-                username = new string[json.data.Count];
-                gender = new string[json.data.Count];
-                user_id = new int[json.data.Count];
-                avatar_filename = new string[json.data.Count];
-                current_theme = new int[json.data.Count];
-                current_level = new int[json.data.Count];
-
-                for (int i = 0; i <  json.data.Count; i++)
-                {
-                    username[i] = json.data[i].username;
-                    gender[i] = json.data[i].gender;
-                    user_id[i] = json.data[i].ID;
-                    avatar_filename[i] = json.data[i].avatar_filename;
-                    current_theme[i] = json.data[i].current_theme;
-                    current_level[i] = json.data[i].current_level;
-                }
-                DisplayUsers(json.data.Count);
-            }
-        }
-    }
-
     private void LogIn(int index)
     {
         PlayerPrefs.SetInt("Current_user", user_id[index]);
@@ -160,25 +96,33 @@ public class SelectAccount : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(4);
     }
 
-    IEnumerator getGuardianID(string email)
+    IEnumerator GetAllUsers(string email)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/users_guardian/guardianID?email=" + email))
+        yield return StartCoroutine(requestsManager.GetGuardianID("/users_guardian/guardianID", email));
+        if (requestsManager.guardianID != 0)
         {
-            yield return www.SendWebRequest();
+            yield return StartCoroutine(requestsManager.GetUsers("/users", requestsManager.guardianID));
 
-            if (www.result != UnityWebRequest.Result.Success)
+            if (requestsManager.json != null)
             {
-                Debug.LogError(www.error);
-            }
-            else
-            {
-                Debug.Log("Received: " + www.downloadHandler.text);
-                Root json = JsonConvert.DeserializeObject<Root>(www.downloadHandler.text);
-                guardianID = json.data[0].ID;
-                PlayerPrefs.SetInt("Guardian_ID", guardianID);
-                Debug.Log(json.data[0].ID);
+                no_user = requestsManager.json.data.Count;
+                username = new string[no_user];
+                gender = new string[no_user];
+                user_id = new int[no_user];
+                avatar_filename = new string[no_user];
+                current_theme = new int[no_user];
+                current_level = new int[no_user];
 
-                StartCoroutine(getUsers());
+                for (int i = 0; i < no_user; i++)
+                {
+                    username[i] = requestsManager.json.data[i].username;
+                    gender[i] = requestsManager.json.data[i].gender;
+                    user_id[i] = requestsManager.json.data[i].ID;
+                    avatar_filename[i] = requestsManager.json.data[i].avatar_filename;
+                    current_theme[i] = requestsManager.json.data[i].current_theme;
+                    current_level[i] = requestsManager.json.data[i].current_level;
+                }
+                DisplayUsers(no_user);
             }
         }
     }

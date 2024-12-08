@@ -1,25 +1,22 @@
-using Newtonsoft.Json;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Networking;
 using UnityEngine.UI;
-using static SelectAccount;
 
 public class Login : MonoBehaviour
 {
     RectTransform rectTransform;
 
+    [Header("<---- SCENE PANELS ---->")]
     [SerializeField]
     private GameObject[] panels = new GameObject[2];
+
+    [Header("<---- SIGNUP/LOGIN BUTTONS ---->")]
     [SerializeField]
     private Button[] login_signup = new Button[2];
 
+    [Header("<---- INPUT FIELDS ---->")]
     [SerializeField]
     private GameObject[] inputField = new GameObject[2];
     [SerializeField]
@@ -29,15 +26,28 @@ public class Login : MonoBehaviour
     [SerializeField]
     private GameObject[] text = new GameObject[2];
 
+    [Header("<---- ERROR MESSAGE ---->")]
     [SerializeField]
-    private GameObject errormessage, login_button, back_button;
+    private GameObject errormessage;
 
-    int index, prev;
+    [Header("<---- BACK BUTTON ---->")]
+    [SerializeField]
+    private GameObject back_button;
 
-    string URL = "http://localhost:3000/users_guardian/login";
+    [Header("<---- LOGIN BUTTON ---->")]
+    [SerializeField]
+    private GameObject login_button;
+
+    [Header("<---- REQUEST SCRIPT ---->")]
+    [SerializeField]
+    private SIGNUP_LOGIN_REQUESTS requestsManager;
+
+    private int index, prev;
 
     private void Start()
     {
+        requestsManager = FindObjectOfType<SIGNUP_LOGIN_REQUESTS>();
+
         Button login = login_button.GetComponent<Button>();
         login.onClick.AddListener(() => LogIn());
 
@@ -52,13 +62,13 @@ public class Login : MonoBehaviour
     {
         if (destination == "To choices")
         {
-            panels[0].gameObject.SetActive(true);
-            panels[1].gameObject.SetActive(false);
+            panels[0].SetActive(true);
+            panels[1].SetActive(false);
         }
         else if (destination == "To login")
         {
-            panels[0].gameObject.SetActive(false);
-            panels[1].gameObject.SetActive(true);
+            panels[0].SetActive(false);
+            panels[1].SetActive(true);
         }
         else if (destination == "To signup")
         {
@@ -66,7 +76,7 @@ public class Login : MonoBehaviour
         }
     }
 
-    public void showLabel()
+    public void ShowLabel()
     {
         string selected = EventSystem.current.currentSelectedGameObject.name;
 
@@ -91,7 +101,7 @@ public class Login : MonoBehaviour
         }
     }
 
-    public void hideLabel()
+    public void HideLabel()
     {
         label[index].SetActive(false);
         placeholder[index].SetActive(true);
@@ -107,70 +117,38 @@ public class Login : MonoBehaviour
 
         if (email != "" && password != "")
         {
-            StartCoroutine(LoginGuardian(email, password));
+            StartCoroutine(ValidateLogin(email, password));
         }
         else
         {
-            showErrorMessage("");
+            ShowErrorMessage("");
         }
     }
 
-    private void showErrorMessage(string message)
+    private void ShowErrorMessage(string message)
     {
         if (message == null || message == "")
         {
             message = "Kumpletuhin ang mga detalye.";
         }
+
         string editedMessage = "PAALALA: " + message;
-        print(editedMessage);
         errormessage.GetComponentInChildren<TMP_Text>().text = editedMessage;
         errormessage.SetActive(true);
-        message = "";
     }
 
-    public void removeErrorMessage()
+    public void RemoveErrorMessage()
     {
         errormessage.SetActive(false);
     }
 
-
-    public class VerificationRoot
+    IEnumerator ValidateLogin(string email, string password)
     {
-        public bool success { get; set; }
-        public string data { get; set; }
-    }
+        yield return StartCoroutine(requestsManager.LoginGuardian("/users_guardian/login", email, password));
 
-    IEnumerator LoginGuardian(string email, string password)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("email", email);
-        form.AddField("password", password);
-
-        using (UnityWebRequest www = UnityWebRequest.Post(URL, form))
+        if (requestsManager.errormessage != "")
         {
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError(www.error);
-            }
-            else
-            {
-                VerificationRoot json = JsonConvert.DeserializeObject<VerificationRoot>(www.downloadHandler.text);
-                if (json.data == "Login Successful!")
-                {
-                    PlayerPrefs.SetString("Email", email);
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(5);
-                }
-                else if (json.data == "Email Not Found!")
-                {
-                    showErrorMessage("Hindi pa nakaregister ang ibinigay na email.");
-                }
-                else
-                {
-                    showErrorMessage("Mali ang ibinigay na password.");
-                }
-            }
+            ShowErrorMessage(requestsManager.errormessage);
         }
     }
 }

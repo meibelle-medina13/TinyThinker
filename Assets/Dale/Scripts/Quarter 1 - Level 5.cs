@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Text.RegularExpressions;
+using UnityEngine.Networking;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -69,15 +71,19 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     else if (starCount == 1)
     {
       OneStar.SetActive(true);
+      PlayerPrefs.SetInt("Delay Time", 4);
     }
     else if (starCount == 2)
     {
       TwoStars.SetActive(true);
+        PlayerPrefs.SetInt("Delay Time", 4);
     }
     else if (starCount == 3)
     {
       ThreeStars.SetActive(true);
+        PlayerPrefs.SetInt("Delay Time", 4);
     }
+
   }
   // -------------------------------------------------- //
 
@@ -304,7 +310,9 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       starCount = 1;
       Debug.Log("Stars: " + starCount);
     }
-  }
+    // ------------------------------------------------------------------------------------------------ //
+    PlayerPrefs.SetFloat("Level5 Score", totalProgressFill);
+    }
   // -------------------------------------------------- //
 
 
@@ -322,5 +330,5 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     if (audioSource == null && SFX == null) return;
     audioSource.PlayOneShot(SFX);
   }
-  // -------------------------------------------------- //
+    // -------------------------------------------------- //
 }

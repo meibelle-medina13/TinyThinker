@@ -6,25 +6,33 @@ using UnityEngine.Networking;
 public class ScoreScript : MonoBehaviour
 {
     int userID, Test_Score;
+    public int level;
 
     public void GetTotalScore()
     {
         Test_Score = PlayerPrefs.GetInt("Test Score");
         Debug.Log("FInal:" + Test_Score);
         userID = PlayerPrefs.GetInt("Current_user");
-        StartCoroutine(UpdateCurrentLevel());
-
+        if (level == 1)
+        {
+            StartCoroutine(UpdateCurrentLevel());
+        }
+        else if (level == 2)
+        {
+            StartCoroutine(GoToMap());
+        }
     }
 
     // -------------------------------------------------------------------- //
 
     //int delaytime;
-    //public IEnumerator GoToMap()
-    //{
-    //    yield return new WaitForSeconds(2);
-    //    Debug.Log("Go to map");
-    //    StartCoroutine(UpdateCurrentLevel());
-    //}
+    IEnumerator GoToMap()
+    {
+        yield return new WaitForSeconds(2);
+        Debug.Log("Go to map");
+        PlayerPrefs.SetInt("Current_theme", 2);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(6);
+    }
 
     IEnumerator UpdateCurrentLevel()
     {
