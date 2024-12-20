@@ -25,11 +25,16 @@ public class Theme_Selection : MonoBehaviour
     [SerializeField]
     private GameObject theme_container;
 
+    [Header("<---- LOADING PANEL ---->")]
+    [SerializeField]
+    private GameObject loadingScene;
+
     private int x = 0;
     private int current_theme;
 
     private void Start()
     {
+        loadingScene.SetActive(false);
         current_theme = PlayerPrefs.GetInt("Current_theme");
         next_button.onClick.AddListener(() => Select_Theme("next"));
         prev_button.onClick.AddListener(() => Select_Theme("prev"));
@@ -103,7 +108,19 @@ public class Theme_Selection : MonoBehaviour
     private void GoToMap(int theme_num)
     {
         PlayerPrefs.SetInt("Selected_theme", theme_num);
-        UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+        StartCoroutine(Loading());
+    }
+
+    IEnumerator Loading()
+    {
+        AsyncOperation asyncOperation;
+        asyncOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(7);
+
+        while (!asyncOperation.isDone)
+        {
+            loadingScene.SetActive(true);
+            yield return null;
+        }
     }
 
     private void CheckCurrentTheme()
