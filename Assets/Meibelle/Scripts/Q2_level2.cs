@@ -7,19 +7,21 @@ using UnityEngine.UI;
 
 public class Q2_level2 : MonoBehaviour
 {
-
+    [Header("<---- SCENE PANELS ---->")]
     [SerializeField]
     private GameObject[] scenes = new GameObject[8];
-
     [SerializeField]
     private GameObject[] assessment = new GameObject[4];
 
+    [Header("<---- ASSESSMENT1 GAMEOBJECTS ---->")]
     [SerializeField]
     private GameObject[] assessment1 = new GameObject[3];
 
+    [Header("<---- ASSESSMENT2 GAMEOBJECTS ---->")]
     [SerializeField]
     private GameObject[] assessment2 = new GameObject[3];
 
+    [Header("<---- ASSESSMENT3 GAMEOBJECTS ---->")]
     [SerializeField]
     private GameObject[] colors = new GameObject[2];
     [SerializeField]
@@ -31,126 +33,162 @@ public class Q2_level2 : MonoBehaviour
     [SerializeField]
     private Image[] redObjects = new Image[3];
 
+    [Header("<---- LESSON CONFETTI ---->")]
+    [SerializeField]
+    private GameObject Uconfetti;
+    [SerializeField]
+    private GameObject Oconfetti;
+
+    [Header("<---- PROGRESS BAR AND RESULT ---->")]
     [SerializeField]
     private Image progressBar;
     [SerializeField]
     private GameObject[] result = new GameObject[5];
 
-    int objectCounter;
-    int assess1 = 50;
-    int assess2 = 25;
-    int assess3 = 25;
-    float score;
-    int error1 = 0;
-    int error2 = 0;
+    [Header("<---- STARS IMAGE AND SPRITE ---->")]
+    [SerializeField]
+    private Image[] stars = new Image[3];
+    [SerializeField]
+    private Sprite earnedStar;
 
-    Vector3[] colorsInitialPos = new Vector3[2];
+    [Header("<---- REQUEST SCRIPT ---->")]
+    [SerializeField]
+    private THEME1_LEVEL1_REQUESTS requestsManager;
+
+    private int objectCounter;
+    private int Oo_num_of_tracing_points = 38;
+    private int Uu_num_of_tracing_points = 34;
+
+    private int assessmentScore = 100;
+    private float score;
+    private int error, userID;
+
+    private Vector3[] colorsInitialPos = new Vector3[2];
     private void Start()
     {
+        requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
+
+        userID = PlayerPrefs.GetInt("Current_user");
+
+        PlayerPrefs.SetInt("Tracing Points", 0);
         for (int i = 0; i < 7; i++)
         {
             int index = i;
             Button next = scenes[i].GetComponentInChildren<Button>();
-            next.onClick.AddListener(() => onContinue(index));
+            next.onClick.AddListener(() => OnContinue(index));
         }
-        checkAssessment1();
-        checkAssessment2();
-        checkAssessment3();
+        CheckAssessment1();
+        CheckAssessment2();
+        CheckAssessment3();
     }
 
-    private void onContinue(int index)
+    private void Update()
+    {
+        if (scenes[1].activeSelf)
+        {
+            int traced_points = PlayerPrefs.GetInt("Tracing Points");
+            if (traced_points == Oo_num_of_tracing_points)
+            {
+                Oconfetti.SetActive(true);
+            }
+        }
+        else if (scenes[4].activeSelf)
+        {
+            int traced_points = PlayerPrefs.GetInt("Tracing Points");
+            if (traced_points == Uu_num_of_tracing_points)
+            {
+                Uconfetti.SetActive(true);
+            } 
+        }
+    }
+
+    private void OnContinue(int index)
     {
         print(index);
         scenes[index].SetActive(false);
         scenes[index+1].SetActive(true);
     }
 
-    private void checkAssessment1()
+    public void OpenPreview()
+    {
+        scenes[0].SetActive(true);
+    }
+
+    private void CheckAssessment1()
     {
         foreach (GameObject group in assessment1)
         {
             foreach (Button item in group.GetComponentsInChildren<Button>())
             {
-                item.onClick.AddListener(() => validateAssessmentAns(1, item.name, group, 'o'));
+                item.onClick.AddListener(() => ValidateAssessmentAns(1, item.name, group, 'o'));
             }
         }
     }
 
-    private void checkAssessment2()
+    private void CheckAssessment2()
     {
         foreach (GameObject group in assessment2)
         {
             foreach (Button item in group.GetComponentsInChildren<Button>())
             {
-                item.onClick.AddListener(() => validateAssessmentAns(2, item.name, group, 'u'));
+                item.onClick.AddListener(() => ValidateAssessmentAns(2, item.name, group, 'u'));
             }
         }
     }
 
-    private void validateAssessmentAns(int assessNum, string name, GameObject group, char criteria)
+    private void ValidateAssessmentAns(int assessNum, string name, GameObject group, char criteria)
     {
-        float prev = 0;
 
         if ((group.name == "group1") && name[0] == criteria)
         {
-            prev = score;
             group.SetActive(false);
             if (assessNum == 1)
             {
                 assessment1[1].SetActive(true);
-                moveProgress(prev, assess1, error1, 1);
+                MoveProgress(error, 1);
             }
             else
             {
                 assessment2[1].SetActive(true);
-                moveProgress(prev, assess2, error2, 2);
+                MoveProgress(error, 2);
             }
         }
         else if ((group.name == "group2") && name[0] == criteria)
         {
-            prev = score;
             group.SetActive(false);
             if (assessNum == 1)
             {
                 assessment1[2].SetActive(true);
-                moveProgress(prev, assess1, error1, 1);
+                MoveProgress(error, 1);
             }
             else
             {
                 assessment2[2].SetActive(true);
-                moveProgress(prev, assess2, error2, 2);
+                MoveProgress(error, 2);
             }
         }
         else if ((group.name == "group3") && name[0] == criteria)
         {
-            prev = score;
             if (assessNum == 1)
             {
                 assessment[0].SetActive(false);
                 assessment[1].SetActive(true);
-                moveProgress(prev, assess1, error1, 1);
+                MoveProgress(error, 1);
             }
             else
             {
                 assessment[1].SetActive(false);
                 assessment[2].SetActive(true);
-                moveProgress(prev, assess2, error2, 2);
+                MoveProgress(error, 2);
             }
         }
         else
         {
-            if (assessNum == 1)
-            {
-                error1 += 8;
-            }
-            else
-            {
-                error2 += 4;
-            }
+            error += 6;
         }
     }
 
-    private void checkAssessment3()
+    private void CheckAssessment3()
     {
         for (int i = 0; i < 2; i++)
         {
@@ -170,38 +208,55 @@ public class Q2_level2 : MonoBehaviour
 
     public void DropRed()
     {
-        float prev = 0;
         float Distance1 = Vector3.Distance(redObjects[0].transform.position, colors[0].transform.position);
         float Distance2 = Vector3.Distance(redObjects[1].transform.position, colors[0].transform.position);
         float Distance3 = Vector3.Distance(redObjects[2].transform.position, colors[0].transform.position);
 
-        if (Distance1 < 50)
+        if (Distance1 < 100)
         {
-            prev = score;
-            redObjects[0].sprite = redSprites[0];
-            objectCounter++;
-            moveProgress(prev, assess3, error1, 3);
-            colors[0].transform.position = colorsInitialPos[0];
+            if (redObjects[0].sprite.name != redSprites[0].name)
+            {
+                MoveProgress(error, 3);
+                objectCounter++;
+                redObjects[0].sprite = redSprites[0];
+                colors[0].transform.position = colorsInitialPos[0];
+            }
+            else
+            {
+                colors[0].transform.position = colorsInitialPos[0];
+            }
         }
-        else if (Distance2 < 50)
+        else if (Distance2 < 100)
         {
-            prev = score;
-            redObjects[1].sprite = redSprites[1];
-            objectCounter++;
-            colors[0].transform.position = colorsInitialPos[0];
-            moveProgress(prev, assess3, error1, 3);
+            if (redObjects[1].sprite != redSprites[1])
+            {
+                MoveProgress(error, 3);
+                objectCounter++;
+                redObjects[1].sprite = redSprites[1];
+                colors[0].transform.position = colorsInitialPos[0];
+            }
+            else
+            {
+                colors[0].transform.position = colorsInitialPos[0];
+            }
         }
-        else if (Distance3 < 50)
+        else if (Distance3 < 100)
         {
-            prev = score;
-            redObjects[2].sprite = redSprites[2];
-            objectCounter++;
-            colors[0].transform.position = colorsInitialPos[0];
-            moveProgress(prev, assess3, error1, 3);
+            if (redObjects[2].sprite != redSprites[2])
+            {
+                MoveProgress(error, 3);
+                objectCounter++;
+                redObjects[2].sprite = redSprites[2];
+                colors[0].transform.position = colorsInitialPos[0];
+            }
+            else
+            {
+                colors[0].transform.position = colorsInitialPos[0];
+            }
         }
         else
         {
-            assess3 -= 4;
+            error += 3;
             colors[0].transform.position = colorsInitialPos[0];
         }
 
@@ -209,118 +264,180 @@ public class Q2_level2 : MonoBehaviour
         {
             scenes[7].SetActive(false);
             assessment[3].SetActive(true);
-        } 
+        }
     }
 
     public void DropBlue()
     {
-        float prev = 0;
         float Distance1 = Vector3.Distance(blueObjects[0].transform.position, colors[1].transform.position);
         float Distance2 = Vector3.Distance(blueObjects[1].transform.position, colors[1].transform.position);
         float Distance3 = Vector3.Distance(blueObjects[2].transform.position, colors[1].transform.position);
 
-        if (Distance1 < 50)
+        if (Distance1 < 100)
         {
-            prev = score;
-            blueObjects[0].sprite = blueSprites[0];
-            objectCounter++;
-            colors[1].transform.position = colorsInitialPos[1];
-            moveProgress(prev, assess3, error1, 3);
+            if (blueObjects[0].sprite.name != blueSprites[0].name)
+            {
+                MoveProgress(error, 3);
+                objectCounter++;
+                blueObjects[0].sprite = blueSprites[0];
+                colors[1].transform.position = colorsInitialPos[1];
+            }
+            else
+            {
+                colors[1].transform.position = colorsInitialPos[1];
+            }
         }
-        else if (Distance2 < 50)
+        else if (Distance2 < 100)
         {
-            prev = score;
-            blueObjects[1].sprite = blueSprites[1];
-            objectCounter++;
-            colors[1].transform.position = colorsInitialPos[1];
-            moveProgress(prev, assess3, error1, 3);
+            if (blueObjects[1].sprite.name != blueSprites[1].name)
+            {
+                MoveProgress(error, 3);
+                objectCounter++;
+                blueObjects[1].sprite = blueSprites[1];
+                colors[1].transform.position = colorsInitialPos[1];
+            }
+            else
+            {
+                colors[1].transform.position = colorsInitialPos[1];
+            }
         }
-        else if (Distance3 < 50)
+        else if (Distance3 < 100)
         {
-            prev = score;
-            blueObjects[2].sprite = blueSprites[2];
-            objectCounter++;
-            colors[1].transform.position = colorsInitialPos[1];
-            moveProgress(prev, assess3, error1, 3);
+            if (blueObjects[2].sprite.name != blueSprites[2].name)
+            {
+                MoveProgress(error, 3);
+                objectCounter++;
+                blueObjects[2].sprite = blueSprites[2];
+                colors[1].transform.position = colorsInitialPos[1];
+            }
+            else
+            {
+                colors[1].transform.position = colorsInitialPos[1];
+            }
         }
         else
         {
-            assess3 -= 4;
+            error += 3;
             colors[1].transform.position = colorsInitialPos[1];
         }
 
         if (objectCounter == 6)
         {
-            scenes[7].SetActive(false);
-            assessment[3].SetActive(true);
-            assessResult();
+            AssessResult();
+            StartCoroutine(ShowResult());
         }
     }
 
-    private void moveProgress(float prev, int current, int totalError, int assessNum)
+    IEnumerator ShowResult()
+    {
+        yield return new WaitForSeconds(1f);
+        assessment[2].SetActive(false);
+        assessment[3].SetActive(true);
+        
+    }
+
+    private void MoveProgress(int totalError, int assessNum)
     {
         float currentScore = 0;
+        float finalAssessmentScore = 0;
         if (assessNum == 1)
         {
-            float scorePerGroup = 50f / 3f;
-            if (scorePerGroup > totalError)
-            {
-                currentScore = scorePerGroup - totalError;
-            }
-            else
-            {
-                currentScore = 0;
-            }
-            error1 = 0;
+            Debug.Log(totalError);
+            float scorePerGroup = assessmentScore / 3f;
+            Debug.Log(scorePerGroup - totalError);
+            finalAssessmentScore = ((float)(scorePerGroup - totalError) / assessmentScore) * (100f / 3f);
         }
         else if (assessNum == 2)
         {
-            float scorePerGroup = 25f / 3f;
-            if (scorePerGroup > totalError)
-            {
-                currentScore = scorePerGroup - totalError;
-            }
-            else
-            {
-                currentScore = 0;
-            }
-            error2 = 0;
+            float scorePerGroup = assessmentScore / 3f;
+            finalAssessmentScore = ((float)(scorePerGroup - totalError) / assessmentScore) * (100f / 3f);
+
         }
         else if (assessNum == 3)
         {
-            if (current > 0)
-            {
-                float scorePerGroup = current / 6f;
-                currentScore = scorePerGroup;
-            }
-            else
-            {
-                currentScore = 0;
-            }
+            float scorePerGroup = assessmentScore / 6f;
+            finalAssessmentScore = ((float)(scorePerGroup - totalError) / assessmentScore) * (100f / 3f);
         }
+
+        if (finalAssessmentScore <= 0)
+        {
+            currentScore = 0;
+        }
+        else
+        {
+            currentScore = finalAssessmentScore;
+        }
+
+        error = 0;
+
         score += currentScore;
+        Debug.Log("score" + score);
         progressBar.fillAmount = score / 100;
+        if (score >= (100f / 3f) * 1 && score < (100f / 3f) * 2)
+        {
+            stars[0].sprite = earnedStar;
+        }
+        else if (score >= (100f / 3f) * 2 && score < (100f / 3f) * 3)
+        {
+            stars[0].sprite = earnedStar;
+            stars[1].sprite = earnedStar;
+        }
     }
 
-    private void assessResult()
+    private int delaytime;
+
+    private void AssessResult()
     {
-        if (score < 50)
+        int theme_num = 2;
+        int level_num = 2;
+        StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+
+        float star1 = (100f / 3f);
+        float star2 = (100f / 3f) * 2;
+        float star3 = (100f / 3f) * 3;
+
+        if (score < star1)
         {
             result[4].SetActive(true);
+            delaytime = 4;
         }
-        else if (score >= 50 && score < 75)
+        else if (score >= star1 && score < star2)
         {
             result[1].SetActive(true);
+            delaytime = 4;
         }
-        else if (score >= 75 && score < 99)
+        else if (score >= star2 && score < star3)
         {
+            delaytime = 4;
             result[0].SetActive(true);
             result[2].SetActive(true);
         }
         else
         {
+            delaytime += 8;
             result[0].SetActive(true);
             result[3].SetActive(true);
+
+            stars[0].sprite = earnedStar;
+            stars[1].sprite = earnedStar;
+            stars[2].sprite = earnedStar;
+        }
+        StartCoroutine(GoToMap());
+    }
+
+    IEnumerator GoToMap()
+    {
+        yield return new WaitForSeconds(delaytime);
+        if (score < (100f / 3f))
+        {
+            Debug.Log("GO BACK");
+            UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+        }
+        else
+        {
+            Debug.Log("SAVE");
+            int next_level = 3;
+            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
         }
     }
 }
