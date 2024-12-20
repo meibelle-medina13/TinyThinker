@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class Q2_level3 : MonoBehaviour
 {
+    [Header("<---- SCENE PANELS ---->")]
     [SerializeField]
     private GameObject[] scenes = new GameObject[13];
 
+    [Header("<---- ASSESSMENT GAMEOBJECTS ---->")]
     [SerializeField]
     private GameObject[] assessment1 = new GameObject[3];
     [SerializeField] 
@@ -16,23 +18,36 @@ public class Q2_level3 : MonoBehaviour
     [SerializeField] 
     private GameObject[] assessment3 = new GameObject[3];
 
+    [Header("<---- PROGRESS BAR AND RESULT ---->")]
     [SerializeField]
     private Image progressBar;
     [SerializeField]
     private GameObject[] result = new GameObject[5];
 
-    int counter;
-    int assess1 = 50;
-    int assess2 = 25;
-    int assess3 = 25;
+    [Header("<---- STARS IMAGE AND SPRITE ---->")]
+    [SerializeField]
+    private Image[] stars = new Image[3];
+    [SerializeField]
+    private Sprite earnedStar;
+
+    [Header("<---- REQUEST SCRIPT ---->")]
+    [SerializeField]
+    private THEME1_LEVEL1_REQUESTS requestsManager;
+
+    int counter, userID;
+    int assessmentScore = 100;
     float score;
     int error = 0;
 
     private void Start()
     {
-        checkAssessment1();
-        checkAssessment2();
-        checkAssessment3();
+        requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
+
+        userID = PlayerPrefs.GetInt("Current_user");
+
+        CheckAssessment1();
+        CheckAssessment2();
+        CheckAssessment3();
     }
 
     public void onContinue()
@@ -45,7 +60,12 @@ public class Q2_level3 : MonoBehaviour
         }
     }
 
-    private void checkAssessment1()
+    public void OpenPreview()
+    {
+        scenes[0].SetActive(true);
+    }
+
+    private void CheckAssessment1()
     {
         for (int i = 1; i <= 2; i++)
         {
@@ -65,51 +85,38 @@ public class Q2_level3 : MonoBehaviour
         {
             gameObject.SetActive(false);
             assessment1[2].SetActive(true);
-            moveProgress(prev, assess1, error, assessNum);
+            MoveProgress(error, 1);
         }
         else if (name == "right-arrow" && gameObject.name == "group2")
         {
             assessment1[0].SetActive(false);
             assessment2[0].SetActive(true);
-            moveProgress(prev, assess1, error, assessNum);
+            MoveProgress(error, 1);
         }
         else if (name == "triangle" && gameObject.name == "Assessment2")
         {
             assessment2[0].SetActive(false);
             assessment3[0].SetActive(true);
-            moveProgress(prev, assess2, error, assessNum);
+            MoveProgress(error, 2);
         }
         else if(name == "good" && gameObject.name == "group1")
         {
             assessment3[1].SetActive(false);
             assessment3[2].SetActive(true);
-            moveProgress(prev, assess3, error, assessNum);
+            MoveProgress(error, 3);
         }
         else if(name == "good" && gameObject.name == "group2")
         {
-            scenes[11].SetActive(false);
-            scenes[12].SetActive(true);
-            moveProgress(prev, assess3, error, assessNum);
-            assessResult();
+            MoveProgress(error, 3);
+            StartCoroutine(ShowResult());
         }
         else
         {
-            if(assessNum == 1)
-            {
-                error += 12;
-            }
-            else if(assessNum == 2)
-            {
-                error += 8;
-            }
-            else if(assessNum == 3)
-            {
-                error += 6;
-            }
+            error += 50;
         }
     }
 
-    private void checkAssessment2()
+    private void CheckAssessment2()
     {
         for (int i = 1; i <= 3; i++)
         {
@@ -118,7 +125,7 @@ public class Q2_level3 : MonoBehaviour
         }
     }
 
-    private void checkAssessment3()
+    private void CheckAssessment3()
     {
         for (int i = 1; i <= 2; i++)
         {
@@ -130,71 +137,116 @@ public class Q2_level3 : MonoBehaviour
         }
     }
 
-    private void moveProgress(float prev, int current, int totalError, int assessNum)
+    IEnumerator ShowResult()
+    {
+        yield return new WaitForSeconds(1);
+        scenes[11].SetActive(false);
+        scenes[12].SetActive(true);
+        AssessResult();
+    }
+
+    private void MoveProgress(int totalError, int assessNum)
     {
         float currentScore = 0;
+        float finalAssessmentScore = 0;
         if (assessNum == 1)
         {
-            float scorePerGroup = 50f / 2f;
-            if (scorePerGroup > totalError)
-            {
-                currentScore = scorePerGroup - totalError;
-            }
-            else
-            {
-                currentScore = 0;
-            }
-            error = 0;
+            float scorePerGroup = assessmentScore / 2f;
+            finalAssessmentScore = ((float)(scorePerGroup - totalError) / assessmentScore) * (100f / 3f);
         }
         else if (assessNum == 2)
         {
-            float scorePerGroup = 25f;
-            if (scorePerGroup > totalError)
-            {
-                currentScore = scorePerGroup - totalError;
-            }
-            else
-            {
-                currentScore = 0;
-            }
-            error = 0;
+            float scorePerGroup = assessmentScore / 1f;
+            finalAssessmentScore = ((float)(scorePerGroup - totalError) / assessmentScore) * (100f / 3f);
+
         }
         else if (assessNum == 3)
         {
-            float scorePerGroup = 25f / 2f;
-            if (scorePerGroup > totalError)
-            {
-                currentScore = scorePerGroup - totalError;
-            }
-            else
-            {
-                currentScore = 0;
-            }
-            error = 0;
+            float scorePerGroup = assessmentScore / 2f;
+            finalAssessmentScore = ((float)(scorePerGroup - totalError) / assessmentScore) * (100f / 3f);
         }
-        score += currentScore;
-        progressBar.fillAmount = score / 100;
-    }
 
-    private void assessResult()
-    {
-        if (score < 50)
+        if (finalAssessmentScore <= 0)
         {
-            Debug.Log("Failed!");
-        }
-        else if (score >= 50 && score < 75)
-        {
-            result[1].SetActive(true);
-        }
-        else if (score >= 75 && score < 100)
-        {
-            result[0].SetActive(true);
-            result[2].SetActive(true);
+            currentScore = 0;
         }
         else
         {
+            currentScore = finalAssessmentScore;
+        }
+
+        error = 0;
+
+        score += currentScore;
+        progressBar.fillAmount = score / 100;
+        if (score >= (100f / 3f) * 1 && score < (100f / 3f) * 2)
+        {
+            stars[0].sprite = earnedStar;
+        }
+        else if (score > 99.9f || score == (100f / 3f) * 3)
+        {
+            stars[0].sprite = earnedStar;
+            stars[1].sprite = earnedStar;
+            stars[2].sprite = earnedStar;
+        }
+        else if (score >= (100f / 3f) * 2 && score < (100f / 3f) * 3)
+        {
+            stars[0].sprite = earnedStar;
+            stars[1].sprite = earnedStar;
+            
+        }
+    }
+
+    private int delaytime;
+
+    private void AssessResult()
+    {
+        int theme_num = 2;
+        int level_num = 3;
+        StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+
+        float star1 = (100f / 3f);
+        float star2 = (100f / 3f) * 2;
+        float star3 = (100f / 3f) * 3;
+
+        if (score < star1)
+        {
+            result[4].SetActive(true);
+            delaytime = 4;
+        }
+        else if (score >= star1 && score < star2)
+        {
+            result[1].SetActive(true);
+            delaytime = 4;
+        }
+        else if (score > 99.9f || score == star3)
+        {
+            delaytime = 4;
             result[0].SetActive(true);
             result[3].SetActive(true);
+        }
+        else if (score >= star2 && score < star3)
+        {
+            delaytime += 8;
+            result[0].SetActive(true);
+            result[2].SetActive(true);
+        }
+        StartCoroutine(GoToMap());
+    }
+
+    IEnumerator GoToMap()
+    {
+        yield return new WaitForSeconds(delaytime);
+        if (score < (100f / 3f))
+        {
+            Debug.Log("GO BACK");
+            UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+        }
+        else
+        {
+            Debug.Log("SAVE");
+            int next_level = 4;
+            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
         }
     }
 }

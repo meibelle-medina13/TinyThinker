@@ -10,12 +10,14 @@ public class SwitchBGMusic : MonoBehaviour
     private GameObject currentGObject;
 
     private AudioManager audioManager;
-    void Start()
+    void Awake()
     {
-        audioManager = FindObjectOfType<AudioManager>();
+        GameObject[] levels_BGM = GameObject.FindGameObjectsWithTag("Levels_BGM");
+        //audioManager = FindObjectOfType<AudioManager>();
         if (currentGObject.activeSelf)
         {
-            audioManager.ChangeAudio(newAudio);
+            //audioManager.ChangeAudio(newAudio);
+            levels_BGM[0].GetComponent<AudioManager>().ChangeAudio(newAudio);
 
         }
     }
