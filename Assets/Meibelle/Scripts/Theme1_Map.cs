@@ -79,6 +79,24 @@ public class Theme1_Map : MonoBehaviour
     [SerializeField]
     private GameObject restrictions;
 
+    [Header("<---- EDIT PROFILE GAMEOBJECT ---->")]
+    [SerializeField]
+    private Sprite editNameContainer;
+    [SerializeField]
+    private GameObject editProfile;
+    [SerializeField]
+    private Button settingsButton;
+    [SerializeField]
+    private Button cancel;
+    //[SerializeField]
+    //private Button editName;
+
+    [Header("<---- LOADING PANEL ---->")]
+    [SerializeField]
+    private GameObject INLoadingScene;
+    [SerializeField]
+    private GameObject OUTLoadingScene;
+
     [Header("<---- REQUEST SCRIPT ---->")]
     [SerializeField]
     private LEVEL_MAP_REQUESTS requestsManager;
@@ -89,6 +107,9 @@ public class Theme1_Map : MonoBehaviour
 
     void Start()
     {
+        OUTLoadingScene.SetActive(false);
+        StartCoroutine(INLoading());
+
         requestsManager = FindObjectOfType<LEVEL_MAP_REQUESTS>();
 
         if (!PlayerPrefs.HasKey("Volume"))
@@ -165,9 +186,27 @@ public class Theme1_Map : MonoBehaviour
                 level.onClick.AddListener(() => EnterGameLevel(levelnum, theme));
             }
         }
-        
     }
 
+    IEnumerator INLoading()
+    {
+        yield return new WaitForSeconds(2f);
+        INLoadingScene.SetActive(false);
+    }
+
+    IEnumerator OUTLoading(int sceneIndex)
+    {
+        OUTLoadingScene.SetActive(true);
+        yield return new WaitForSeconds(3f);
+
+        AsyncOperation asyncOperation;
+        asyncOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneIndex);
+
+        while (!asyncOperation.isDone)
+        {
+            yield return null;
+        }
+    }
     private void ShowPopUpPanel(string actionButton)
     {
         GameObject currentPanel = null;
@@ -182,6 +221,7 @@ public class Theme1_Map : MonoBehaviour
         else if (actionButton == "profile")
         {
             currentPanel = profilePanel;
+            settingsButton.onClick.AddListener(() => EnableEditProfile());
         }
 
         if (currentPanel.activeSelf == false)
@@ -192,6 +232,21 @@ public class Theme1_Map : MonoBehaviour
         {
             currentPanel.SetActive(false);
         }
+    }
+
+    private void EnableEditProfile()
+    {
+        settingsButton.gameObject.SetActive(false);
+        editProfile.SetActive(true);
+        profile_back.gameObject.SetActive(false);
+        cancel.onClick.AddListener(() => DisableEditProfile());
+    }
+
+    private void DisableEditProfile()
+    {
+        editProfile.SetActive(false);
+        settingsButton.gameObject.SetActive(true);
+        profile_back.gameObject.SetActive(true);
     }
 
     IEnumerator UpdateUserProfile()
@@ -215,6 +270,7 @@ public class Theme1_Map : MonoBehaviour
         {
             if (avatar_filename == avatar[i].name)
             {
+                PlayerPrefs.SetString("Avatar", avatar[i].name);
                 color_index = i;
                 profile_container.GetComponent<Image>().sprite = avatar_container[i];
                 profile.GetComponent<Image>().sprite = avatar[i];
@@ -288,7 +344,8 @@ public class Theme1_Map : MonoBehaviour
             indexFiller = 9;
         }
         Debug.Log(indexFiller);
-        UnityEngine.SceneManagement.SceneManager.LoadScene(level + indexFiller);
+        //UnityEngine.SceneManagement.SceneManager.LoadScene(level + indexFiller);
+        StartCoroutine(OUTLoading(level + indexFiller));
     }
 
     public void ChangeVolume()
