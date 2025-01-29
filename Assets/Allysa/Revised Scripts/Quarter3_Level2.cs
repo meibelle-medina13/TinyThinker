@@ -8,6 +8,8 @@ using UnityEngine.Playables;
 using UnityEngine.UI;
 public class Quarter3_Level2 : MonoBehaviour
 {
+    //private static int Scene_counter = 0;
+    //public List<GameObject> scenes;
     private float rotationSpeed = 300f;
     private bool isFlipping = false;
     public List<GameObject> front_card;
@@ -41,6 +43,10 @@ public class Quarter3_Level2 : MonoBehaviour
     private int wrong_Click = 0;
 
     private Audio_Manager audioManager4;
+    private AudioSource audioSource;
+    private static bool isPlayed = false;
+    //[SerializeField] private List<AudioClip> audios;
+
 
 
     void Start()
@@ -63,9 +69,26 @@ public class Quarter3_Level2 : MonoBehaviour
                 visibleImageNames[index] = ""; 
             }
         }
+
+        audioSource = GetComponent<AudioSource>();
     }
 
-     void OnScrollChanged(int index, Vector2 position)
+    //public void UpdateScene()
+    //{
+    //    scenes[Scene_counter].SetActive(false);
+    //    Scene_counter++;
+    //    scenes[Scene_counter].SetActive(true);
+
+    //    if (Scene_counter == 3)
+    //    {
+    //        //audioSource = gameobjects[7].GetComponent<AudioSource>();
+
+    //    }
+    //}
+
+
+
+    void OnScrollChanged(int index, Vector2 position)
     {
         Image visibleImage = GetVisibleImage(scrollRects[index]);
         if (visibleImage != null)
@@ -93,9 +116,9 @@ public class Quarter3_Level2 : MonoBehaviour
     {
         if (Counter == 1)
         {
-            if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "scroll 1" &&
-                       visibleImageNames.ContainsKey(1) && visibleImageNames[1] == "scroll 3" &&
-                       visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "scroll 2")
+            if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "hospital" &&
+                       visibleImageNames.ContainsKey(1) && visibleImageNames[1] == "hospital" &&
+                       visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "hospital")
             {
                 Counter++;
                 Debug.Log("counter: " + Counter);
@@ -117,7 +140,7 @@ public class Quarter3_Level2 : MonoBehaviour
                 }
 
                 wrong_Click = 0;
-                ResumeTimeline();
+                Invoke("ResumeTimeline", 2);
                 gameobjects[12].SetActive(true);
             }
             else
@@ -130,9 +153,9 @@ public class Quarter3_Level2 : MonoBehaviour
 
         else if (Counter == 2)
         {
-            if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "scroll 3" &&
-                       visibleImageNames.ContainsKey(1) && visibleImageNames[1] == "scroll 2" &&
-                       visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "scroll 1")
+            if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "fire station" &&
+                       visibleImageNames.ContainsKey(1) && visibleImageNames[1] == "fire station" &&
+                       visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "fire station")
             {
                 Counter++;
                 Debug.Log("counter: " + Counter);
@@ -142,7 +165,7 @@ public class Quarter3_Level2 : MonoBehaviour
                     IncrementFillAmount(0.037037037037037f);
                 }
 
-                else if (wrong_Click == 1)
+                else if (wrong_Click == 2)
                 {
                     IncrementFillAmount(0.0740740740740741f);
                 }
@@ -152,7 +175,7 @@ public class Quarter3_Level2 : MonoBehaviour
                     IncrementFillAmount(0.1111111111111111f);
                 }
                 wrong_Click = 0;
-                ResumeTimeline();
+                Invoke("ResumeTimeline", 2);
                 gameobjects[13].SetActive(true);
             }
             else
@@ -164,9 +187,9 @@ public class Quarter3_Level2 : MonoBehaviour
         }
         else
         {
-            if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "scroll 2" &&
-                       visibleImageNames.ContainsKey(1) && visibleImageNames[1] == "scroll 1" &&
-                       visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "scroll 3")
+            if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "police station" &&
+                       visibleImageNames.ContainsKey(1) && visibleImageNames[1] == "police station" &&
+                       visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "police station")
             {
                 Debug.Log("done!");
                 audioManager4.Correct();
@@ -197,13 +220,55 @@ public class Quarter3_Level2 : MonoBehaviour
 
     private void Update()
     {
+        if (CompareTag("attached audio source"))
+        {
+            if (!audioSource.isPlaying && !audioSource.loop)
+            {
+                if (this.gameObject.name == "Scene4")
+                {
+                    button[0].interactable = true;
+                }
+
+                else if (this.gameObject.name == "Scene6")
+                {
+                    button[0].interactable = true;
+                    button[1].interactable = true;
+                    button[2].interactable = true;
+                }
+
+                else if (this.gameObject.name == "Scene8" && !isPlayed)
+                {
+                    hammer[1].gameObject.SetActive(true);
+                    isPlayed = true;
+                }
+
+                else if (this.gameObject.name == "Scene10")
+                {
+                    gameobjects[0].SetActive(true);
+                }
+                
+                else if (this.gameObject.name == "Assessment 2")
+                {
+                    button[0].interactable = true;
+                    button[1].interactable = true;
+                    button[2].interactable = true;
+                    button[3].interactable = true;
+                    button[4].interactable = true;
+                    button[5].interactable = true;
+                }
+            }
+
+            //Debug.Log(this.gameObject.name);
+
+        }
+
         if (CompareTag("horizontal scroll"))
         {
             if (Counter == 1)
             {
                 if (playableDirector != null && playableDirector.state == PlayState.Playing)
                 {
-                    if (playableDirector.time >= 4.7833)
+                    if (playableDirector.time >= 9.461)
                     {
                         playableDirector.Pause();
                         gameobjects[11].SetActive(false);
@@ -216,7 +281,7 @@ public class Quarter3_Level2 : MonoBehaviour
             {
                 if (playableDirector != null && playableDirector.state == PlayState.Playing)
                 {
-                    if (playableDirector.time >= 6.5333)
+                    if (playableDirector.time >= 11.7)
                     {
                         playableDirector.Pause();
                         gameobjects[12].SetActive(false);
@@ -229,7 +294,7 @@ public class Quarter3_Level2 : MonoBehaviour
             {
                 if (playableDirector != null && playableDirector.state == PlayState.Playing)
                 {
-                    if (playableDirector.time >= 9.0333)
+                    if (playableDirector.time >= 14.0324)
                     {
                         playableDirector.Pause();
                         gameobjects[13].SetActive(false);
@@ -468,22 +533,26 @@ public class Quarter3_Level2 : MonoBehaviour
                     total_matched++;
                     Debug.Log("matched!");
                     Debug.Log(total_matched);
-                    audioManager4.Correct();
+                    audioManager4.Invoke("Correct", 1);
+                    StartCoroutine(DelayedIncrementFillAmount());
 
-                    if (wrong_Click >= 2)
-                    {
-                        IncrementFillAmount(0.037037037037037f);
-                    }
+                    //if (wrong_Click >= 2)
+                    //{
+                    //    Invoke("IncrementFillAmount(0.037037037037037f)", 1);
+                    //    IncrementFillAmount(0.037037037037037f);
+                    //}
 
-                    else if (wrong_Click == 1)
-                    {
-                        IncrementFillAmount(0.0740740740740741f);
-                    }
+                    //else if (wrong_Click == 1)
+                    //{
+                    //    IncrementFillAmount(0.0740740740740741f);
+                    //}
 
-                    else
-                    {
-                        IncrementFillAmount(0.1111111111111111f);
-                    }
+                    //else
+                    //{
+                    //    IncrementFillAmount(0.1111111111111111f);
+                    //}
+
+
 
                     wrong_Click = 0;
                     break;
@@ -496,7 +565,7 @@ public class Quarter3_Level2 : MonoBehaviour
                 wrong_Click++;
                 Invoke("check_cards", 0.5f);
                 flipCount++;
-                audioManager4.Wrong();
+                audioManager4.Invoke("Wrong", 1);
             }
         }
 
@@ -505,19 +574,22 @@ public class Quarter3_Level2 : MonoBehaviour
             isFlipping = false;
         }
 
-        if (imageList[3].fillAmount >= 0.3333333333333333f && imageList[3].fillAmount < 0.6666666666666667f)
+       if (imageList.Count == 3)
         {
-            gameobjects[15].SetActive(false);
-        }
+            if (imageList[3].fillAmount >= 0.3333333333333333f && imageList[3].fillAmount < 0.6666666666666667f)
+            {
+                gameobjects[15].SetActive(false);
+            }
 
-        else if (imageList[3].fillAmount >= 0.6666666666666667f && imageList[3].fillAmount < 1f)
-        {
-            gameobjects[16].SetActive(false);
-        }
+            else if (imageList[3].fillAmount >= 0.6666666666666667f && imageList[3].fillAmount < 1f)
+            {
+                gameobjects[16].SetActive(false);
+            }
 
-        else if (Mathf.Approximately(imageList[3].fillAmount, 1f))
-        {
-            gameobjects[17].SetActive(false);
+            else if (Mathf.Approximately(imageList[3].fillAmount, 1f))
+            {
+                gameobjects[17].SetActive(false);
+            }
         }
     }
 
@@ -836,6 +908,26 @@ public class Quarter3_Level2 : MonoBehaviour
     public void IncrementFillAmount(float amount)
     {
         imageList[3].fillAmount = Mathf.Clamp01(imageList[3].fillAmount + amount);
+    }
+
+    private IEnumerator DelayedIncrementFillAmount()
+    {
+        yield return new WaitForSeconds(1f);
+
+        if (wrong_Click >= 2)
+        {
+            IncrementFillAmount(0.037037037037037f);
+        }
+
+        else if (wrong_Click == 1)
+        {
+            IncrementFillAmount(0.0740740740740741f);
+        }
+
+        else
+        {
+            IncrementFillAmount(0.1111111111111111f);
+        }
     }
 
 }
