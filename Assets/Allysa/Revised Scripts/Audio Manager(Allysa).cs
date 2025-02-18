@@ -191,4 +191,15 @@ public class Audio_Manager : MonoBehaviour
         playableDirector[index].time = 0;
         playableDirector[index].Play();
     }
+
+    public void SoundEffect(int index)
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = SoundEffects[index];
+
+        if (audioSource.clip != null)
+        {
+            audioSource.Play();
+        }
+    }
 }
