@@ -151,6 +151,8 @@ public class Quarter3_Level2 : MonoBehaviour
                 Counter++;
                 Debug.Log("counter: " + Counter);
                 audioManager4.Correct();
+                Invoke("PlaySoundEffect", 0.2f);
+
 
                 if (wrong_Click >= 2)
                 {
@@ -168,7 +170,7 @@ public class Quarter3_Level2 : MonoBehaviour
                 }
 
                 wrong_Click = 0;
-                Invoke("ResumeTimeline", 2);
+                Invoke("ResumeTimeline", 2f);
                 gameobjects[12].SetActive(true);
             }
             else
@@ -188,6 +190,7 @@ public class Quarter3_Level2 : MonoBehaviour
                 Counter++;
                 Debug.Log("counter: " + Counter);
                 audioManager4.Correct();
+                Invoke("PlaySoundEffect", 0.2f);
                 if (wrong_Click >= 2)
                 {
                     IncrementFillAmount(0.037037037037037f);
@@ -203,7 +206,7 @@ public class Quarter3_Level2 : MonoBehaviour
                     IncrementFillAmount(0.1111111111111111f);
                 }
                 wrong_Click = 0;
-                Invoke("ResumeTimeline", 2);
+                Invoke("ResumeTimeline", 2f);
                 gameobjects[13].SetActive(true);
             }
             else
@@ -220,6 +223,7 @@ public class Quarter3_Level2 : MonoBehaviour
                        visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "police station")
             {
                 audioManager4.Correct();
+                Invoke("PlaySoundEffect", 0.2f);
                 if (wrong_Click >= 2)
                 {
                     IncrementFillAmount(0.037037037037037f);
@@ -247,6 +251,23 @@ public class Quarter3_Level2 : MonoBehaviour
         }
 
     }
+
+    void PlaySoundEffect()
+    {
+        if (Counter == 2)
+        {
+            audioManager4.SoundEffect(7);
+        }
+        else if (Counter == 3)
+        {
+            audioManager4.SoundEffect(8);
+        }
+        else 
+        { 
+            audioManager4.SoundEffect(9);
+        }
+    }
+
 
     private void Update()
     {
@@ -639,7 +660,6 @@ public class Quarter3_Level2 : MonoBehaviour
                 }
             }
         }
-
     }
 
     void Delay2seconds(PlayableDirector director)
