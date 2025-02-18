@@ -9,6 +9,7 @@ using UnityEngine.Networking;
 public class PreTest_PostTest : MonoBehaviour
 {
     public int Level;
+    private Audio_Manager test_audiomanager;
     public List<GameObject> Test_scenes;
     public List<GameObject> Tracking_Test;
     public static int test_counter = 0;
@@ -27,6 +28,8 @@ public class PreTest_PostTest : MonoBehaviour
     private Vector3 pencilRaise = new Vector3(105, 120, 0);
     private Vector3 pencilWrite = new Vector3(85, 100, 0);
     public Button next;
+    private static bool bgMusicPlayed = false;
+
 
     private HashSet<string> tracedPoints = new HashSet<string>();
     private int score = 0;
@@ -34,6 +37,18 @@ public class PreTest_PostTest : MonoBehaviour
 
     void Start()
     {
+
+        test_audiomanager = FindObjectOfType<Audio_Manager>();
+
+        if (!bgMusicPlayed)
+        {
+            if (test_audiomanager != null)
+            {
+                test_audiomanager.scene_bgmusic(0.5f);
+                bgMusicPlayed = true;
+            }
+        }
+
         foreach (TextMeshProUGUI text in textWithOutline_PreTest_PostTest)
         {
             text.fontMaterial.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.4f);

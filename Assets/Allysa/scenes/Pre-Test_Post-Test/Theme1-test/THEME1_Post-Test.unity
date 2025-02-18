@@ -1073,7 +1073,6 @@ MonoBehaviour:
   - {fileID: 1614038118}
   - {fileID: 644408023}
   - {fileID: 1352491354}
-  Level: 0
   progress_display: {fileID: 140632905}
   Fill: {fileID: 1299956318}
   textWithOutline_PreTest_PostTest: []
@@ -2027,7 +2026,6 @@ MonoBehaviour:
   - {fileID: 1614038118}
   - {fileID: 644408023}
   - {fileID: 1352491354}
-  Level: 0
   progress_display: {fileID: 140632905}
   Fill: {fileID: 1299956318}
   textWithOutline_PreTest_PostTest: []
@@ -6533,9 +6531,11 @@ GameObject:
   m_Component:
   - component: {fileID: 390186371}
   - component: {fileID: 390186372}
+  - component: {fileID: 390186373}
+  - component: {fileID: 390186374}
   m_Layer: 5
   m_Name: Audio Manager
-  m_TagString: Untagged
+  m_TagString: Levels_BGM
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6566,6 +6566,26 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 390186370}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cde8894242b66ff468e3011774ac31d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundMusic:
+  - {fileID: 8300000, guid: d7094866b1c86c440a18c60a2740b241, type: 3}
+  InstructionAudio: []
+  playableDirector: []
+  SoundEffects:
+  - {fileID: 8300000, guid: a8fe465d06d125542b69b27722d93c9b, type: 3}
+  LetterSounds: []
+  audioSourceBG1: {fileID: 0}
+--- !u!114 &390186373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390186370}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cde8894242b66ff468e3011774ac31d2, type: 3}
@@ -6573,7 +6593,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundMusic:
   - {fileID: 8300000, guid: d7094866b1c86c440a18c60a2740b241, type: 3}
-  ClickSound: {fileID: 8300000, guid: 5858f21ed2113b14086db47b8ac99aab, type: 3}
+  InstructionAudio: []
+  playableDirector: []
+  SoundEffects:
+  - {fileID: 8300000, guid: a8fe465d06d125542b69b27722d93c9b, type: 3}
+  LetterSounds: []
+  audioSourceBG1: {fileID: 0}
+--- !u!114 &390186374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390186370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f42a84ba2cd1934480a9a060d6a5680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &395336273
 GameObject:
   m_ObjectHideFlags: 0
@@ -6635,7 +6672,6 @@ MonoBehaviour:
   - {fileID: 1614038118}
   - {fileID: 644408023}
   - {fileID: 1352491354}
-  Level: 0
   progress_display: {fileID: 140632905}
   Fill: {fileID: 1299956318}
   textWithOutline_PreTest_PostTest: []
@@ -7903,7 +7939,6 @@ MonoBehaviour:
   - {fileID: 1614038118}
   - {fileID: 644408023}
   - {fileID: 1352491354}
-  Level: 0
   progress_display: {fileID: 140632905}
   Fill: {fileID: 1299956318}
   textWithOutline_PreTest_PostTest: []
@@ -12034,7 +12069,6 @@ MonoBehaviour:
   - {fileID: 1614038118}
   - {fileID: 644408023}
   - {fileID: 1352491354}
-  Level: 0
   progress_display: {fileID: 140632905}
   Fill: {fileID: 1299956318}
   textWithOutline_PreTest_PostTest: []
@@ -16342,6 +16376,8 @@ RectTransform:
   - {fileID: 2084867031}
   - {fileID: 140632906}
   - {fileID: 390186371}
+  - {fileID: 1817273571}
+  - {fileID: 1823751183}
   m_Father: {fileID: 913471144}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -25800,6 +25836,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1817273572}
+        m_TargetAssemblyTypeName: ScoreScript, Assembly-CSharp
+        m_MethodName: GetTotalScore
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 42758778}
         m_TargetAssemblyTypeName: TracingAndPreTestActivity, Assembly-CSharp
         m_MethodName: UpdateGrade
@@ -26592,6 +26640,57 @@ RectTransform:
   m_AnchoredPosition: {x: -477, y: -278}
   m_SizeDelta: {x: 445.5067, y: 584.5663}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1817273570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1817273571}
+  - component: {fileID: 1817273572}
+  m_Layer: 5
+  m_Name: Next Level
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1817273571
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817273570}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 977885819}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 683, y: 384}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1817273572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817273570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 658716d778cf54e40adece32743d0920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theme: 2
+  testType: 2
+  requestsManager: {fileID: 1823751184}
 --- !u!1 &1817530350
 GameObject:
   m_ObjectHideFlags: 0
@@ -26732,6 +26831,54 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1823751182
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1823751183}
+  - component: {fileID: 1823751184}
+  m_Layer: 5
+  m_Name: Request Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1823751183
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823751182}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 977885819}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 683, y: 384}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1823751184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823751182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a691d0813e8e4244a7c8df0926f20b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1831012087
 GameObject:
   m_ObjectHideFlags: 0
@@ -29795,7 +29942,6 @@ MonoBehaviour:
   - {fileID: 1614038118}
   - {fileID: 644408023}
   - {fileID: 1352491354}
-  Level: 0
   progress_display: {fileID: 140632905}
   Fill: {fileID: 1299956318}
   textWithOutline_PreTest_PostTest:

@@ -11,7 +11,8 @@ public class tracing : MonoBehaviour
     private Vector3 pencilState;
     private Vector3 pencilRaise = new Vector3(105, 120, 0);
     private Vector3 pencilWrite = new Vector3(85, 100, 0);
-
+    public AudioSource audioSource;
+    public AudioClip wrongClip;
 
     void Update()
     {
@@ -42,10 +43,18 @@ public class tracing : MonoBehaviour
 
     HashSet<string> tracedPoints = new HashSet<string>();
     public int no_of_traced = 0;
+    int wrong_traced = 0;
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Tracing Point") && !tracedPoints.Contains(collider.gameObject.name))
+        if (collider.gameObject.name.Substring(0, 1) == "x")
+        {
+            Debug.Log("wrong");
+            wrong_traced++;
+            PlayerPrefs.SetInt("Wrong Points", wrong_traced);
+            audioSource.PlayOneShot(wrongClip);
+        }
+        else if (collider.CompareTag("Tracing Point") && !tracedPoints.Contains(collider.gameObject.name))
         {
             tracedPoints.Add(collider.gameObject.name);
             no_of_traced++;

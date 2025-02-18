@@ -12,7 +12,8 @@ public class THEME1_LEVEL1_REQUESTS : MonoBehaviour
     {
         string newURL = URL + endpoint;
 
-        if (PlayerPrefs.GetInt("Current_level") < next_level)
+        if (PlayerPrefs.GetInt("Current_level") < next_level && 
+            PlayerPrefs.GetInt("Selected_theme") == PlayerPrefs.GetInt("Current_theme"))
         {
             byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"current_level\": " + next_level + "}");
 

@@ -11952,9 +11952,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1511967018}
   - component: {fileID: 1511967017}
+  - component: {fileID: 1511967019}
   m_Layer: 0
   m_Name: Scene Manager
-  m_TagString: Untagged
+  m_TagString: Levels_BGM
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12024,6 +12025,18 @@ Transform:
   - {fileID: 1784361368}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1511967019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511967016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f42a84ba2cd1934480a9a060d6a5680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1514874369
 GameObject:
   m_ObjectHideFlags: 0
@@ -12945,7 +12958,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1608413800
 RectTransform:
   m_ObjectHideFlags: 0

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class Quarter1_Level4 : MonoBehaviour
 {
@@ -25,8 +24,14 @@ public class Quarter1_Level4 : MonoBehaviour
     public List<GameObject> clapsGameobjects;
     public List<GameObject> star_display;
 
+    [Header("<---- REQUEST SCRIPT ---->")]
+    [SerializeField]
+    private THEME1_LEVEL1_REQUESTS requestsManager;
+
     void Start()
     {
+        requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
+
         audioManager2 = FindObjectOfType<Audio_Manager>();
 
         if (!bgMusicPlayed)
@@ -63,7 +68,7 @@ public class Quarter1_Level4 : MonoBehaviour
         else if (scene_counter == 11)
         {
             audioManager2.Stop_backgroundMusic2();
-            Show_Stars();
+            //Show_Stars();
         }
 
         if (stars_bar.fillAmount >= 0.3333333333333333f && stars_bar.fillAmount < 0.6666666666666667f)
@@ -105,6 +110,11 @@ public class Quarter1_Level4 : MonoBehaviour
         {
             audioManager2.assessment_bgmusic(0.5f);
             NextScene_Button.gameObject.SetActive(false);
+        }
+        // ------------------------------------------------------------------- //
+        else if (scene_counter == 11)
+        {
+            Show_Stars();
         }
     }
 
@@ -185,6 +195,13 @@ public class Quarter1_Level4 : MonoBehaviour
     {
         NextScene_Button.gameObject.SetActive(false);
 
+        float score = stars_bar.fillAmount * 100;
+        int userID = PlayerPrefs.GetInt("Current_user");
+        int theme_num = 1;
+        int level_num = 4;
+        int delaytime = 0;
+        StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+
         if (stars_bar.fillAmount < 0.3333333333333333f)
         {
             star_display[0].SetActive(true);
@@ -195,6 +212,7 @@ public class Quarter1_Level4 : MonoBehaviour
             Image[4].SetActive(false);
             Image[5].SetActive(false);
             text[2].text = "ULITIN!";
+            delaytime = 4;
         }
 
         else if (stars_bar.fillAmount >= 0.3333333333333333f && stars_bar.fillAmount < 0.6666666666666667f)
@@ -202,18 +220,37 @@ public class Quarter1_Level4 : MonoBehaviour
             star_display[1].SetActive(true);
             Image[0].SetActive(false);
             text[2].text = "SUBOK";
+            delaytime = 4;
         }
 
         else if (stars_bar.fillAmount >= 0.6666666666666667f && stars_bar.fillAmount < 1f)
         {
             star_display[2].SetActive(true);
             text[2].text = "MAGALING";
+            delaytime = 4;
         }
 
         else if (Mathf.Approximately(stars_bar.fillAmount, 1f))
         {
             star_display[3].SetActive(true);
             text[2].text = "PERPEKTO";
+            delaytime = 8;
+        }
+
+        StartCoroutine(GoToMap(score, userID, delaytime));
+    }
+
+    IEnumerator GoToMap(float score, int userID, int delaytime)
+    {
+        yield return new WaitForSeconds(delaytime);
+        if (score < (100f / 3f))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+        }
+        else
+        {
+            int next_level = 5;
+            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
         }
     }
 }
