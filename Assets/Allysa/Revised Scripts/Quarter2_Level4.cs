@@ -42,8 +42,14 @@ public class Quarter2_Level4 : MonoBehaviour
 
     public Button NextScene_Button;
 
+    [Header("<---- REQUEST SCRIPT ---->")]
+    [SerializeField]
+    private THEME1_LEVEL1_REQUESTS requestsManager;
+
     void Start()
     {
+        requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
+
         audioManager3 = FindObjectOfType<Audio_Manager>();
 
         if (Gameobjects[0] != null)
@@ -335,6 +341,13 @@ public class Quarter2_Level4 : MonoBehaviour
     {
         NextScene_Button.gameObject.SetActive(false);
 
+        float score = fill_bar.fillAmount * 100;
+        int userID = PlayerPrefs.GetInt("Current_user");
+        int theme_num = 2;
+        int level_num = 4;
+        int delaytime = 0;
+        StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+
         if (fill_bar.fillAmount < 0.3333333333333333f)
         {
             star_display[0].SetActive(true);
@@ -345,6 +358,7 @@ public class Quarter2_Level4 : MonoBehaviour
             Gameobjects[12].SetActive(false);
             Gameobjects[13].SetActive(false);
             text[1].text = "ULITIN!";
+            delaytime = 4;
         }
 
         else if (fill_bar.fillAmount >= 0.3333333333333333f && fill_bar.fillAmount < 0.6666666666666667f)
@@ -352,18 +366,37 @@ public class Quarter2_Level4 : MonoBehaviour
             star_display[1].SetActive(true);
             Gameobjects[8].SetActive(false);
             text[1].text = "SUBOK";
+            delaytime = 4;
         }
 
         else if (fill_bar.fillAmount >= 0.6666666666666667f && fill_bar.fillAmount < 1f)
         {
             star_display[2].SetActive(true);
             text[1].text = "MAGALING";
+            delaytime = 4;
         }
 
         else if (Mathf.Approximately(fill_bar.fillAmount, 1f))
         {
             star_display[3].SetActive(true);
             text[1].text = "PERPEKTO";
+            delaytime = 8;
+        }
+
+        StartCoroutine(GoToMap(score, userID, delaytime));
+    }
+
+    IEnumerator GoToMap(float score, int userID, int delaytime)
+    {
+        yield return new WaitForSeconds(delaytime);
+        if (score < (100f / 3f))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+        }
+        else
+        {
+            int next_level = 5;
+            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
         }
     }
 }

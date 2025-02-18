@@ -291,7 +291,6 @@ MonoBehaviour:
   - {fileID: 1988881054}
   - {fileID: 1571413100}
   - {fileID: 91431285}
-  Level: 0
   progress_display: {fileID: 140632905}
   Fill: {fileID: 1299956318}
   textWithOutline_PreTest_PostTest: []
@@ -1555,7 +1554,6 @@ MonoBehaviour:
   - {fileID: 1988881054}
   - {fileID: 1571413100}
   - {fileID: 91431285}
-  Level: 0
   progress_display: {fileID: 140632905}
   Fill: {fileID: 1299956318}
   textWithOutline_PreTest_PostTest: []
@@ -6647,7 +6645,6 @@ MonoBehaviour:
   - {fileID: 1988881054}
   - {fileID: 1571413100}
   - {fileID: 91431285}
-  Level: 0
   progress_display: {fileID: 140632905}
   Fill: {fileID: 1299956318}
   textWithOutline_PreTest_PostTest: []
@@ -9060,9 +9057,10 @@ GameObject:
   m_Component:
   - component: {fileID: 390186371}
   - component: {fileID: 390186372}
+  - component: {fileID: 390186373}
   m_Layer: 5
   m_Name: Audio Manager
-  m_TagString: Untagged
+  m_TagString: Levels_BGM
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9100,7 +9098,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundMusic:
   - {fileID: 8300000, guid: d7094866b1c86c440a18c60a2740b241, type: 3}
-  ClickSound: {fileID: 8300000, guid: 5858f21ed2113b14086db47b8ac99aab, type: 3}
+  InstructionAudio: []
+  playableDirector: []
+  SoundEffects: []
+  LetterSounds: []
+  audioSourceBG1: {fileID: 0}
+--- !u!114 &390186373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390186370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f42a84ba2cd1934480a9a060d6a5680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &392038279
 GameObject:
   m_ObjectHideFlags: 0
@@ -15420,7 +15434,6 @@ MonoBehaviour:
   - {fileID: 1988881054}
   - {fileID: 1571413100}
   - {fileID: 91431285}
-  Level: 0
   progress_display: {fileID: 140632905}
   Fill: {fileID: 1299956318}
   textWithOutline_PreTest_PostTest: []
@@ -28431,7 +28444,6 @@ MonoBehaviour:
   - {fileID: 1988881054}
   - {fileID: 1571413100}
   - {fileID: 91431285}
-  Level: 0
   progress_display: {fileID: 140632905}
   Fill: {fileID: 1299956318}
   textWithOutline_PreTest_PostTest: []
@@ -37032,7 +37044,6 @@ MonoBehaviour:
   - {fileID: 1988881054}
   - {fileID: 1571413100}
   - {fileID: 91431285}
-  Level: 0
   progress_display: {fileID: 140632905}
   Fill: {fileID: 1299956318}
   textWithOutline_PreTest_PostTest: []
@@ -40469,7 +40480,6 @@ MonoBehaviour:
   - {fileID: 1988881054}
   - {fileID: 1571413100}
   - {fileID: 91431285}
-  Level: 0
   progress_display: {fileID: 140632905}
   Fill: {fileID: 1299956318}
   textWithOutline_PreTest_PostTest: []
@@ -42563,7 +42573,6 @@ MonoBehaviour:
   - {fileID: 1571413100}
   - {fileID: 91431285}
   - {fileID: 901436117}
-  Level: 0
   progress_display: {fileID: 140632905}
   Fill: {fileID: 1299956318}
   textWithOutline_PreTest_PostTest:

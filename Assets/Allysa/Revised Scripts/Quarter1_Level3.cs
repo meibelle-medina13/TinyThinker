@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using System.Reflection;
 using System.Collections;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
 {
@@ -43,8 +44,14 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
     public List<GameObject> Image;
     public List<GameObject> star_display;
 
+    [Header("<---- REQUEST SCRIPT ---->")]
+    [SerializeField]
+    private THEME1_LEVEL1_REQUESTS requestsManager;
+
     void Start()
     {
+        requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
+
         originalPosition = transform.position;
         audioManager = FindObjectOfType<Audio_Manager>();
 
@@ -92,7 +99,7 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
             }
 
             CancelInvoke("UpdateScene");
-            Show_Stars();
+            //Show_Stars();
         }
 
         if (total_stars.fillAmount >= 0.3333333333333333f && total_stars.fillAmount < 0.6666666666666667f)
@@ -197,6 +204,8 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         else if (counter == 11)
         {
             audioManager.Stop_backgroundMusic2();
+            // ------------------------------------------------------------------- //
+            Show_Stars();
         }
     }
 
@@ -268,6 +277,12 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
     void Show_Stars()
     {
         nextScene_Button.gameObject.SetActive(false);
+        float score = total_stars.fillAmount * 100;
+        int userID = PlayerPrefs.GetInt("Current_user");
+        int theme_num = 1;
+        int level_num = 3;
+        int delaytime = 0;
+        StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
 
         if (total_stars.fillAmount < 0.3333333333333333f)
         {
@@ -279,6 +294,7 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
             Image[6].SetActive(false);
             Image[7].SetActive(false);
             text[1].text = "ULITIN!";
+            delaytime = 4;
         }
 
         else if (total_stars.fillAmount >= 0.3333333333333333f && total_stars.fillAmount < 0.6666666666666667f)
@@ -286,18 +302,37 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
             star_display[1].SetActive(true);
             Image[2].SetActive(false);
             text[1].text = "SUBOK";
+            delaytime = 4;
         }
 
         else if (total_stars.fillAmount >= 0.6666666666666667f && total_stars.fillAmount < 1f)
         {
             star_display[2].SetActive(true);
             text[1].text = "MAGALING";
+            delaytime = 4;
         }
 
         else if (Mathf.Approximately(total_stars.fillAmount, 1f))
         {
             star_display[3].SetActive(true);
             text[1].text = "PERPEKTO";
+            delaytime = 8;
+        }
+
+        StartCoroutine(GoToMap(score, userID, delaytime));
+    }
+
+    IEnumerator GoToMap(float score, int userID, int delaytime)
+    {
+        yield return new WaitForSeconds(delaytime);
+        if (score < (100f / 3f))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+        }
+        else
+        {
+            int next_level = 4;
+            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
         }
     }
 }
