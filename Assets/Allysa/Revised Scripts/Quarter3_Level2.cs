@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 public class Quarter3_Level2 : MonoBehaviour
 {
+    private static int Scene_counter = 0;
+    public List<GameObject> scenes;
     private float rotationSpeed = 300f;
     private bool isFlipping = false;
     public List<GameObject> front_card;
@@ -39,8 +42,16 @@ public class Quarter3_Level2 : MonoBehaviour
     private bool isPaused = false;
 
     private int wrong_Click = 0;
+    private int object_count = 0;
 
     private Audio_Manager audioManager4;
+    private AudioSource audioSource;
+    private static bool isPlayed = false;
+    //[SerializeField] private List<AudioClip> audios;
+
+    public List<TextMeshProUGUI> text;
+    private static bool bgMusicPlayed = false;
+
 
 
     void Start()
@@ -63,9 +74,49 @@ public class Quarter3_Level2 : MonoBehaviour
                 visibleImageNames[index] = ""; 
             }
         }
+
+        audioSource = GetComponent<AudioSource>();
+
+
+        if (!bgMusicPlayed)
+        {
+            if (audioManager4 != null)
+            {
+                audioManager4.scene_bgmusic(0.76f);
+                bgMusicPlayed = true;
+            }
+        }
     }
 
-     void OnScrollChanged(int index, Vector2 position)
+    public void UpdateScene()
+    {
+        scenes[Scene_counter].SetActive(false);
+        Scene_counter++;
+        scenes[Scene_counter].SetActive(true);
+
+        if (Scene_counter == 1)
+        {
+            button[1].gameObject.SetActive(true);
+        }
+
+        else if (Scene_counter == 2 || Scene_counter == 4 || Scene_counter == 6 || Scene_counter == 8 || Scene_counter == 10)
+        {
+            button[1].gameObject.SetActive(false);
+        }
+
+        else if (Scene_counter == 11)
+        {
+            audioManager4.assessment_bgmusic(0.5f);
+        }
+
+        else if (Scene_counter == 12)
+        {
+            Scene_counter++;
+            scenes[Scene_counter].SetActive(true);
+        }
+    }
+
+    void OnScrollChanged(int index, Vector2 position)
     {
         Image visibleImage = GetVisibleImage(scrollRects[index]);
         if (visibleImage != null)
@@ -93,9 +144,9 @@ public class Quarter3_Level2 : MonoBehaviour
     {
         if (Counter == 1)
         {
-            if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "scroll 1" &&
-                       visibleImageNames.ContainsKey(1) && visibleImageNames[1] == "scroll 3" &&
-                       visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "scroll 2")
+            if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "hospital" &&
+                       visibleImageNames.ContainsKey(1) && visibleImageNames[1] == "hospital" &&
+                       visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "hospital")
             {
                 Counter++;
                 Debug.Log("counter: " + Counter);
@@ -117,7 +168,7 @@ public class Quarter3_Level2 : MonoBehaviour
                 }
 
                 wrong_Click = 0;
-                ResumeTimeline();
+                Invoke("ResumeTimeline", 2);
                 gameobjects[12].SetActive(true);
             }
             else
@@ -130,9 +181,9 @@ public class Quarter3_Level2 : MonoBehaviour
 
         else if (Counter == 2)
         {
-            if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "scroll 3" &&
-                       visibleImageNames.ContainsKey(1) && visibleImageNames[1] == "scroll 2" &&
-                       visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "scroll 1")
+            if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "fire station" &&
+                       visibleImageNames.ContainsKey(1) && visibleImageNames[1] == "fire station" &&
+                       visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "fire station")
             {
                 Counter++;
                 Debug.Log("counter: " + Counter);
@@ -142,7 +193,7 @@ public class Quarter3_Level2 : MonoBehaviour
                     IncrementFillAmount(0.037037037037037f);
                 }
 
-                else if (wrong_Click == 1)
+                else if (wrong_Click == 2)
                 {
                     IncrementFillAmount(0.0740740740740741f);
                 }
@@ -152,7 +203,7 @@ public class Quarter3_Level2 : MonoBehaviour
                     IncrementFillAmount(0.1111111111111111f);
                 }
                 wrong_Click = 0;
-                ResumeTimeline();
+                Invoke("ResumeTimeline", 2);
                 gameobjects[13].SetActive(true);
             }
             else
@@ -164,11 +215,10 @@ public class Quarter3_Level2 : MonoBehaviour
         }
         else
         {
-            if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "scroll 2" &&
-                       visibleImageNames.ContainsKey(1) && visibleImageNames[1] == "scroll 1" &&
-                       visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "scroll 3")
+            if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "police station" &&
+                       visibleImageNames.ContainsKey(1) && visibleImageNames[1] == "police station" &&
+                       visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "police station")
             {
-                Debug.Log("done!");
                 audioManager4.Correct();
                 if (wrong_Click >= 2)
                 {
@@ -184,6 +234,9 @@ public class Quarter3_Level2 : MonoBehaviour
                 {
                     IncrementFillAmount(0.1111111111111111f);
                 }
+                Invoke("UpdateScene", 1f);
+                audioManager4.Stop_backgroundMusic2();
+                Show_Stars();
             }
             else
             {
@@ -197,13 +250,52 @@ public class Quarter3_Level2 : MonoBehaviour
 
     private void Update()
     {
+        if (CompareTag("attached audio source"))
+        {
+            if (!audioSource.isPlaying && !audioSource.loop)
+            {
+                if (this.gameObject.name == "Scene4")
+                {
+                    button[0].interactable = true;
+                }
+
+                else if (this.gameObject.name == "Scene6")
+                {
+                    button[0].interactable = true;
+                    button[1].interactable = true;
+                    button[2].interactable = true;
+                }
+
+                else if (this.gameObject.name == "Scene8" && !isPlayed)
+                {
+                    hammer[1].gameObject.SetActive(true);
+                    isPlayed = true;
+                }
+
+                else if (this.gameObject.name == "Scene10")
+                {
+                    gameobjects[0].SetActive(true);
+                }
+                
+                else if (this.gameObject.name == "Assessment 2")
+                {
+                    button[0].interactable = true;
+                    button[1].interactable = true;
+                    button[2].interactable = true;
+                    button[3].interactable = true;
+                    button[4].interactable = true;
+                    button[5].interactable = true;
+                }
+            }
+        }
+
         if (CompareTag("horizontal scroll"))
         {
             if (Counter == 1)
             {
                 if (playableDirector != null && playableDirector.state == PlayState.Playing)
                 {
-                    if (playableDirector.time >= 4.7833)
+                    if (playableDirector.time >= 9.461)
                     {
                         playableDirector.Pause();
                         gameobjects[11].SetActive(false);
@@ -216,7 +308,7 @@ public class Quarter3_Level2 : MonoBehaviour
             {
                 if (playableDirector != null && playableDirector.state == PlayState.Playing)
                 {
-                    if (playableDirector.time >= 6.5333)
+                    if (playableDirector.time >= 11.7)
                     {
                         playableDirector.Pause();
                         gameobjects[12].SetActive(false);
@@ -229,7 +321,7 @@ public class Quarter3_Level2 : MonoBehaviour
             {
                 if (playableDirector != null && playableDirector.state == PlayState.Playing)
                 {
-                    if (playableDirector.time >= 9.0333)
+                    if (playableDirector.time >= 14.0324)
                     {
                         playableDirector.Pause();
                         gameobjects[13].SetActive(false);
@@ -252,13 +344,11 @@ public class Quarter3_Level2 : MonoBehaviour
 
                 if (disinpect_step == 0)
                 {
-                    animator.SetBool("new", false);
                     treatmentItemsState = initialPosition;
                     button[0].transform.position = worldPosition + treatmentItemsState;
                 }
                 else if (disinpect_step == 1)
                 {
-                    animator.SetBool("cottonwithiodine", false);
                     treatmentItemsState = initialPosition;
                     button[1].transform.position = worldPosition + treatmentItemsState;
                 }
@@ -319,8 +409,9 @@ public class Quarter3_Level2 : MonoBehaviour
                             //Debug.Log("button touched the collider on drop: " + area.name);
                             objectAnimation[0].enabled = true;
                             button[0].gameObject.SetActive(true);
-                            objectAnimation[0].SetBool("new", true); ;
-                            StartCoroutine(HandleSwipeAnimation());
+                            playableDirector.stopped += Delay2seconds;
+                            playableDirector.time = 0;
+                            playableDirector.Play();
                             treatmentFound = true;
                             break;
 
@@ -345,11 +436,11 @@ public class Quarter3_Level2 : MonoBehaviour
                     {
                         if (area.CompareTag("treatment"))
                         {
-                            //Debug.Log("button touched the collider on drop: " + area.name);
                             objectAnimation[2].enabled = true;
                             button[1].gameObject.SetActive(true);
-                            objectAnimation[2].SetBool("cottonwithiodine", true); ;
-                            StartCoroutine(HandleSwipeAnimation());
+                            playableDirector.stopped += Delay2seconds;
+                            playableDirector.time = 0;
+                            playableDirector.Play();
                             treatmentFound = true;
                             break;
                         }
@@ -371,7 +462,8 @@ public class Quarter3_Level2 : MonoBehaviour
                     {
                         if (area.CompareTag("treatment"))
                         {
-                            gameobjects[6].SetActive(true);
+                            audioManager4.SoundEffect(6);
+                            StartCoroutine(Show_confetti());
                             treatmentFound = true;
                             break;
                         }
@@ -468,23 +560,9 @@ public class Quarter3_Level2 : MonoBehaviour
                     total_matched++;
                     Debug.Log("matched!");
                     Debug.Log(total_matched);
-                    audioManager4.Correct();
-
-                    if (wrong_Click >= 2)
-                    {
-                        IncrementFillAmount(0.037037037037037f);
-                    }
-
-                    else if (wrong_Click == 1)
-                    {
-                        IncrementFillAmount(0.0740740740740741f);
-                    }
-
-                    else
-                    {
-                        IncrementFillAmount(0.1111111111111111f);
-                    }
-
+                    audioManager4.Invoke("Correct", 1);
+                    StartCoroutine(DelayedIncrementFillAmount());
+                    Invoke("matchedChecker", 2f);
                     wrong_Click = 0;
                     break;
 
@@ -496,7 +574,7 @@ public class Quarter3_Level2 : MonoBehaviour
                 wrong_Click++;
                 Invoke("check_cards", 0.5f);
                 flipCount++;
-                audioManager4.Wrong();
+                audioManager4.Invoke("Wrong", 1);
             }
         }
 
@@ -505,19 +583,82 @@ public class Quarter3_Level2 : MonoBehaviour
             isFlipping = false;
         }
 
-        if (imageList[3].fillAmount >= 0.3333333333333333f && imageList[3].fillAmount < 0.6666666666666667f)
+        //if (imageList.Count == 3)
+        // {
+        //     if (imageList[3].fillAmount >= 0.3333333333333333f && imageList[3].fillAmount < 0.6666666666666667f)
+        //     {
+        //         gameobjects[15].SetActive(false);
+        //     }
+
+        //     else if (imageList[3].fillAmount >= 0.6666666666666667f && imageList[3].fillAmount < 1f)
+        //     {
+        //         gameobjects[16].SetActive(false);
+        //     }
+
+        //     else if (Mathf.Approximately(imageList[3].fillAmount, 1f))
+        //     {
+        //         gameobjects[17].SetActive(false);
+        //     }
+        //}
+
+        if (imageList.Count > 3)
         {
-            gameobjects[15].SetActive(false);
+            if (imageList[3].fillAmount >= 0.3333333333333333f && imageList[3].fillAmount < 0.6666666666666667f)
+            {
+                if (gameobjects.Count == 3)
+                { 
+                    gameobjects[0].SetActive(false);
+                }
+                else if (gameobjects.Count == 27)
+                {
+                    gameobjects[15].SetActive(false);
+                }
+            }
+
+            else if (imageList[3].fillAmount >= 0.6666666666666667f && imageList[3].fillAmount < 1f)
+            {
+                if (gameobjects.Count == 3)
+                {
+                    gameobjects[1].SetActive(false);
+                }
+                else if (gameobjects.Count == 27)
+                {
+                    gameobjects[16].SetActive(false);
+                }
+            }
+
+            else if (Mathf.Approximately(imageList[3].fillAmount, 1f))
+            {
+                if (gameobjects.Count == 3)
+                {
+                    gameobjects[2].SetActive(false);
+                }
+                else if (gameobjects.Count == 27)
+                {
+                    gameobjects[17].SetActive(false);
+                }
+            }
         }
 
-        else if (imageList[3].fillAmount >= 0.6666666666666667f && imageList[3].fillAmount < 1f)
-        {
-            gameobjects[16].SetActive(false);
-        }
+    }
 
-        else if (Mathf.Approximately(imageList[3].fillAmount, 1f))
-        {
-            gameobjects[17].SetActive(false);
+    void Delay2seconds(PlayableDirector director)
+    {
+        Invoke("HandleSwipeAnimation", 0.2f);
+    }
+
+    private IEnumerator Show_confetti()
+    {
+        yield return new WaitForSeconds(1.2f);
+        gameobjects[6].SetActive(true);
+        button[3].gameObject.SetActive(true);
+    }
+
+    private void matchedChecker()
+    {
+        if (total_matched == 3)
+        { 
+            UpdateScene();
         }
     }
 
@@ -568,37 +709,26 @@ public class Quarter3_Level2 : MonoBehaviour
             gameobjects[4].gameObject.SetActive(true);
             hammer[0].SetActive(false);
             hammer[1].SetActive(true);
-
+            button[0].gameObject.SetActive(true);
         }
     }
 
-    private IEnumerator HandleSwipeAnimation()
+    void HandleSwipeAnimation()
     {
         if (disinpect_step == 0)
         {
-            AnimatorStateInfo stateInfo = objectAnimation[0].GetCurrentAnimatorStateInfo(0);
-            float clipLength = stateInfo.length;
-            yield return new WaitWhile(() => objectAnimation[0].GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
-            yield return new WaitForSeconds(0.2f);
-            objectAnimation[0].SetBool("new", false);
             gameobjects[6].SetActive(true);
             button[0].transform.position = treatmentItemsState;
             button[0].gameObject.SetActive(false);
             button[1].interactable = true;
-            objectAnimation[0].enabled = false;
 
             var scriptComponent1 = button[0].GetComponent<Quarter3_Level2>();
             scriptComponent1.enabled = false;
             var scriptComponent2 = button[1].GetComponent<Quarter3_Level2>();
             scriptComponent2.enabled = true;
-            objectAnimation[0].enabled = false;
         }
         else
         {
-            AnimatorStateInfo stateInfo = objectAnimation[2].GetCurrentAnimatorStateInfo(0);
-            float clipLength = stateInfo.length;
-            yield return new WaitWhile(() => objectAnimation[2].GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
-            objectAnimation[2].SetBool("cottonwithiodine", false);
             button[1].transform.position = treatmentItemsState;
             button[1].gameObject.SetActive(false);
             button[2].interactable = true;
@@ -618,9 +748,10 @@ public class Quarter3_Level2 : MonoBehaviour
         AnimatorStateInfo stateInfo = objectAnimation[1].GetCurrentAnimatorStateInfo(0);
         float clipLength = stateInfo.length;
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i != 2; i++)
         {
             yield return new WaitForSeconds(clipLength);
+            audioManager4.SoundEffect(4);
         }
 
         objectAnimation[1].SetBool("martilyo", false);
@@ -763,7 +894,7 @@ public class Quarter3_Level2 : MonoBehaviour
     public GameObject CorrectImage;
     public int CorrectAngle = 2;
     //private int currentIndex = 0;
-
+    [SerializeField] private List<PlayableDirector> playableDirector2;
     [SerializeField] private PlayableDirector playableDirector;
 
     public void Rotate()
@@ -796,20 +927,24 @@ public class Quarter3_Level2 : MonoBehaviour
 
             gameobjects[5].SetActive(true);
 
+            playableDirector.stopped += OnPlayableDirectorStopped;
             playableDirector.time = 0;
             playableDirector.Play();
-
-
-
-            //InvokeRepeating("Loading_water", 0f, 2f);
-
         }
+    }
+
+    void OnPlayableDirectorStopped(PlayableDirector director)
+    {
+        button[3].gameObject.SetActive(true);
+        playableDirector.stopped -= OnPlayableDirectorStopped; 
     }
 
     //--------------------------- falling objects
     public void Correct_object(Button obj)
     {
         obj.gameObject.SetActive(false);
+        object_count++;
+
         if (wrong_Click >= 2)
         {
             IncrementFillAmount(0.037037037037037f);
@@ -826,6 +961,7 @@ public class Quarter3_Level2 : MonoBehaviour
         }
 
         wrong_Click = 0;
+
     }
 
     public void Wrong_object()
@@ -838,4 +974,59 @@ public class Quarter3_Level2 : MonoBehaviour
         imageList[3].fillAmount = Mathf.Clamp01(imageList[3].fillAmount + amount);
     }
 
+    private IEnumerator DelayedIncrementFillAmount()
+    {
+        yield return new WaitForSeconds(1f);
+
+        if (wrong_Click >= 2)
+        {
+            IncrementFillAmount(0.037037037037037f);
+        }
+
+        else if (wrong_Click == 1)
+        {
+            IncrementFillAmount(0.0740740740740741f);
+        }
+
+        else
+        {
+            IncrementFillAmount(0.1111111111111111f);
+        }
+    }
+
+    void Show_Stars()
+    {
+        Debug.Log(this.gameObject);
+        //NextScene_Button.gameObject.SetActive(false);
+
+        if (imageList[3].fillAmount < 0.3333333333333333f)
+        {
+            gameobjects[18].SetActive(true);
+            gameobjects[22].SetActive(false);
+            gameobjects[23].SetActive(false);
+            gameobjects[24].SetActive(false);
+            gameobjects[25].SetActive(true);
+            gameobjects[26].SetActive(false);
+            text[0].text = "ULITIN!";
+        }
+
+        else if (imageList[3].fillAmount >= 0.3333333333333333f && imageList[3].fillAmount < 0.6666666666666667f)
+        {
+            gameobjects[19].SetActive(true);
+            gameobjects[24].SetActive(false);
+            text[0].text = "SUBOK";
+        }
+
+        else if (imageList[3].fillAmount >= 0.6666666666666667f && imageList[3].fillAmount < 1f)
+        {
+            gameobjects[20].SetActive(true);
+            text[0].text = "MAGALING";
+        }
+
+        else if (Mathf.Approximately(imageList[3].fillAmount, 1f))
+        {
+            gameobjects[21].SetActive(true);
+            text[0].text = "PERPEKTO";
+        }
+    }
 }
