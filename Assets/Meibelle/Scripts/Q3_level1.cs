@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEditor.PackageManager;
 using System;
 using UnityEngine.TextCore.Text;
+using UnityEngine.Playables;
+using System.Reflection;
 
 public class Q3_level1 : MonoBehaviour
 {
@@ -95,6 +97,10 @@ public class Q3_level1 : MonoBehaviour
     [SerializeField]
     private AudioClip[] audioClip = new AudioClip[4];
 
+    [Header("<---- GAME MENU ---->")]
+    [SerializeField]
+    private GameObject gameMenu;
+
     private int error;
     private int assessmentScore = 100;
     private float score;
@@ -102,9 +108,14 @@ public class Q3_level1 : MonoBehaviour
 
     private void Start()
     {
+        //DELETE
+        PlayerPrefs.DeleteKey("CurrentPanel");
+        PlayerPrefs.SetInt("Selected_theme", 1);
+        //DELETE
         PlayerPrefs.SetInt("Tracing Points", 0);
         PlayerPrefs.SetInt("Wrong Points", 0);
         PlayerPrefs.SetString("Collider", "");
+        
 
         for (int i = 0; i < (scenes.Length - 1); i++)
         {
@@ -137,6 +148,7 @@ public class Q3_level1 : MonoBehaviour
     public void OpenPreview()
     {
         scenes[0].SetActive(true);
+        PlayerPrefs.SetInt("CurrentPanel", 0);
     }
 
     public void OpenTracing(int tracingnum)
@@ -185,13 +197,71 @@ public class Q3_level1 : MonoBehaviour
                 PlayerPrefs.SetInt("Tracing Points", 0);
             }
         }
+
+        PlayableDirector playableDirector;
+
+        int index = PlayerPrefs.GetInt("CurrentPanel");
+        Debug.Log(index);
+        if (!scenes[9].activeSelf)
+        {
+            playableDirector = scenes[index].GetComponent<PlayableDirector>();
+        }
+        else
+        {
+            playableDirector = assessments[index].GetComponent<PlayableDirector>();
+        }
+
+        if (PlayerPrefs.GetString("Paused") == "True")
+        {
+            playableDirector.Pause();
+            if (tracingpanel1.activeSelf)
+            {
+                tracingpanel1.SetActive(false);
+            }
+            else if (tracingpanel2.activeSelf)
+            {
+                tracingpanel2.SetActive(false);
+            }
+            else if (tracingpanel3.activeSelf)
+            {
+                tracingpanel3.SetActive(false);
+            }
+        }
+        else if (PlayerPrefs.GetString("Paused") == "False")
+        {
+            playableDirector.Resume();
+            PlayerPrefs.DeleteKey("Paused");
+            if (playableDirector.time == 0)
+            {
+                if (scenes[1].activeSelf)
+                {
+                    tracingpanel1.SetActive(true);
+                }
+                else if (scenes[4].activeSelf)
+                {
+                    tracingpanel2.SetActive(true);
+                }
+                else if (assessments[1].activeSelf)
+                {
+                    tracingpanel3.SetActive(true);
+                }
+            }
+        }
+
     }
 
     public void OnContinue(int index)
     {
-        Debug.Log(index);
         scenes[index].SetActive(false);
         scenes[index + 1].SetActive(true);
+        if (index == 8)
+        {
+            PlayerPrefs.SetInt("CurrentPanel", 0);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("CurrentPanel", index + 1);
+        }
     }
 
     public void DragSprinker(GameObject sprinkler)
@@ -348,6 +418,7 @@ public class Q3_level1 : MonoBehaviour
         yield return new WaitForSeconds(3);
         assessments[current].SetActive(false);
         assessments[current+1].SetActive(true);
+        PlayerPrefs.SetInt("CurrentPanel", 1);
     }
 
     private void CheckAssessment2()
@@ -361,6 +432,7 @@ public class Q3_level1 : MonoBehaviour
         CheckAssessment2();
         assessments[1].SetActive(false);
         assessments[2].SetActive(true);
+        PlayerPrefs.SetInt("CurrentPanel", 2);
     }
 
     public void OpenResult()
@@ -410,7 +482,7 @@ public class Q3_level1 : MonoBehaviour
             MoveProgress(error, 3);
             audioSource.PlayOneShot(audioClip[1]);
         }
-        else if (Distance > 175 && Distance < 185 && index == 5)
+        else if (Distance > 170 && Distance < 190 && index == 5)
         {
             piece.transform.localPosition = new Vector3(-185.2f, 155.8f, 0);
             puzzleCounter++;
@@ -501,6 +573,7 @@ public class Q3_level1 : MonoBehaviour
 
     private void AssessResult()
     {
+        gameMenu.SetActive(false);
         //int theme_num = 2;
         //int level_num = 3;
         //StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
