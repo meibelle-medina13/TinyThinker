@@ -82,7 +82,7 @@ public class Quarter3_Level2 : MonoBehaviour
         {
             if (audioManager4 != null)
             {
-                audioManager4.scene_bgmusic(0.76f);
+                audioManager4.scene_bgmusic(1f);
                 bgMusicPlayed = true;
             }
         }

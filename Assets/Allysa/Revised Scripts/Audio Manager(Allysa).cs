@@ -77,6 +77,7 @@ public class Audio_Manager : MonoBehaviour
         if (audioSource.clip != null)
         {
             audioSource.Play();
+            audioSource.volume = 0.45f;
         }
     }
 
@@ -88,6 +89,7 @@ public class Audio_Manager : MonoBehaviour
         if (audioSource.clip != null)
         {
             audioSource.Play();
+            audioSource.volume = 0.45f;
         }
     }
 
@@ -99,6 +101,7 @@ public class Audio_Manager : MonoBehaviour
         if (audioSource.clip != null)
         {
             audioSource.Play();
+            audioSource.volume = 0.45f;
         }
     }
 
@@ -110,6 +113,7 @@ public class Audio_Manager : MonoBehaviour
         if (audioSource.clip != null)
         {
             audioSource.Play();
+            audioSource.volume = 0.45f;
         }
     }
 
@@ -200,6 +204,7 @@ public class Audio_Manager : MonoBehaviour
         if (audioSource.clip != null)
         {
             audioSource.Play();
+            audioSource.volume = 0.45f;
         }
     }
 }
