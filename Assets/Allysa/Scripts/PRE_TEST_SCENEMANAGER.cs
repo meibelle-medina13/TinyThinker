@@ -3,62 +3,104 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using static System.Net.Mime.MediaTypeNames;
-using UnityEngine.Networking;
+using System.Linq;
+
+//using static System.Net.Mime.MediaTypeNames;
+//using UnityEngine.Networking;
+//using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
+using UnityEngine.Playables;
+using System;
+using System.Reflection;
+
 
 public class PreTest_PostTest : MonoBehaviour
 {
     public int Level;
-    private Audio_Manager test_audiomanager;
+    //private Audio_Manager test_audiomanager;
     public List<GameObject> Test_scenes;
     public List<GameObject> Tracking_Test;
     public static int test_counter = 0;
     public static int Test_Score;
     //public int Level;
     public GameObject progress_display;
-    public UnityEngine.UI.Image Fill;
-    public List<TextMeshProUGUI> textWithOutline_PreTest_PostTest;
-
+    public Image Fill;
 
     public GameObject scene;
     public GameObject pencil;
     public GameObject PencilMask;
     public GameObject mycollider;
     private Vector3 pencilState;
-    private Vector3 pencilRaise = new Vector3(105, 120, 0);
-    private Vector3 pencilWrite = new Vector3(85, 100, 0);
-    public Button next;
-    private static bool bgMusicPlayed = false;
+    private Vector3 pencilRaise = new Vector3(125, 140, 0);
+    private Vector3 pencilWrite = new Vector3(105, 120, 0);
 
+
+    private Vector3 initialPosition = new Vector3(0, 0, 0);
+    private Vector3 gameObjectState;
+    public List<Button> button;
+    //public Button next;
 
     private HashSet<string> tracedPoints = new HashSet<string>();
     private int score = 0;
     public int totalTracingPoints = 0;
 
+    //theme3?
+    public ScrollRect[] scrollRects;
+    public Dictionary<int, string> visibleImageNames = new Dictionary<int, string>();
+    public List<Image> imageList;
+    private int Counter = 1;
+    public List<GameObject> gameObjects;
+    [SerializeField] private List<PlayableDirector> playableDirector;
+    public List<Collider2D> colliderAreas = new List<Collider2D>();
+
+
+
+
+    private float rotationSpeed = 300f;
+    private bool isFlipping = false;
+    public List<GameObject> front_card;
+    private static int flipCount = 0;
+    private GameObject target_object;
+    private static int total_faceCard = 0;
+
+    private static List<(Button, GameObject)> flippedCards = new List<(Button, GameObject)>();
+
+    private AudioSource audioSource;
+    private static int objectCounter = 0;
+    //private static bool bgMusicPlayed = false;
+
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        //test_audiomanager = FindObjectOfType<Audio_Manager>();
 
-        test_audiomanager = FindObjectOfType<Audio_Manager>();
+        //if (!bgMusicPlayed)
+        //{
+        //    if (test_audiomanager != null)
+        //    {
+        //        test_audiomanager.scene_bgmusic(0.5f);
+        //        bgMusicPlayed = true;
+        //    }
+        //}
 
-        if (!bgMusicPlayed)
+
+        //theme3
+        for (int i = 0; i < scrollRects.Length; i++)
         {
-            if (test_audiomanager != null)
+            if (scrollRects[i] != null)
             {
-                test_audiomanager.scene_bgmusic(0.5f);
-                bgMusicPlayed = true;
+                int index = i;
+                scrollRects[i].onValueChanged.AddListener((position) => OnScrollChanged(index, position));
+                visibleImageNames[0] = "hospital";
+                visibleImageNames[1] = "police station";
+                visibleImageNames[2] = "fire station";
             }
-        }
-
-        foreach (TextMeshProUGUI text in textWithOutline_PreTest_PostTest)
-        {
-            text.fontMaterial.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.4f);
-            text.fontMaterial.SetColor(ShaderUtilities.ID_OutlineColor, Color.white);
         }
     }
 
     void Update()
     {
-        Debug.Log(Level);
+        //Debug.Log(Level);
+
         if (test_counter > 0 && test_counter < (Test_scenes.Count - 1))
         {
             progress_display.SetActive(true);
@@ -74,35 +116,158 @@ public class PreTest_PostTest : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            mycollider.GetComponent<CircleCollider2D>().enabled = true;
-            pencilState = pencilWrite;
+            if (CompareTag("pencil"))
+            {
+                mycollider.GetComponent<CircleCollider2D>().enabled = true;
+                pencilState = pencilWrite;
 
-            GameObject pencilMask = Instantiate(PencilMask, worldPosition, Quaternion.identity);
-            pencilMask.transform.SetParent(scene.transform);
+                GameObject pencilMask = Instantiate(PencilMask, worldPosition, Quaternion.identity);
+                pencilMask.transform.SetParent(scene.transform);
+            }
+
+            else if (CompareTag("Draggable"))
+            {
+                gameObjectState = initialPosition;
+                gameObjects[0].transform.position = worldPosition + gameObjectState;
+            }
         }
+
         else
         {
-            mycollider.GetComponent<CircleCollider2D>().enabled = false;
-            pencilState = pencilRaise;
+            if (CompareTag("pencil"))
+            {
+                mycollider.GetComponent<CircleCollider2D>().enabled = false;
+                pencilState = pencilRaise;
+            }
+
         }
+
 
         if (Input.GetMouseButtonUp(0))
         {
-            mycollider.GetComponent<CircleCollider2D>().enabled = false;
-            pencilState = pencilRaise;
+            if (CompareTag("pencil"))
+            {
+                mycollider.GetComponent<CircleCollider2D>().enabled = false;
+                pencilState = pencilRaise;
+            }
+
+            else if (CompareTag("Draggable"))
+            {
+                gameObjectState = initialPosition;
+
+                Collider2D[] Colliders = Physics2D.OverlapPointAll(gameObjects[1].transform.position);
+
+                foreach (Collider2D area in Colliders)
+                {
+                    if (area.CompareTag("Draggable") && area.name == "plant1 collider")
+                    {
+
+                        playableDirector[1].time = 15.65f;
+                        playableDirector[1].Play();
+                    }
+
+                    else if (area.CompareTag("Draggable") && area.name == "plant2 collider")
+                    {
+                        playableDirector[1].time = 5.4f;
+                        playableDirector[1].Play();
+                    }
+                    
+                }
+            }
         }
 
-        pencil.transform.position = worldPosition + pencilState;
-        mycollider.transform.position = worldPosition;
+        if (CompareTag("pencil"))
+        {
+            pencil.transform.position = worldPosition + pencilState;
+            mycollider.transform.position = worldPosition;
+        }
+
+        //------
+
+        bool matched = false;
+
+        if (flipCount == 2)
+        {
+            foreach (var card in flippedCards)
+            {
+                bool card1Exist = flippedCards.Any(card => card.Item1.name == "card1");
+                bool card2Exist = flippedCards.Any(card => card.Item1.name == "card2");
+                bool card3Exist = flippedCards.Any(card => card.Item1.name == "card3");
+                bool card4Exist = flippedCards.Any(card => card.Item1.name == "card4");
+                bool card5Exist = flippedCards.Any(card => card.Item1.name == "card5");
+                bool card6Exist = flippedCards.Any(card => card.Item1.name == "card6");
+
+                if (card1Exist && card5Exist ||
+                    card2Exist && card3Exist ||
+                    card4Exist && card6Exist)
+                {
+                    matched = true;
+                    flipCount = 0;
+                    flippedCards.Clear();
+                    total_faceCard++;
+                    Test_Score++;
+                    Debug.Log("matched!");
+                    FaceCard_Checker();
+                    break;
+
+                }
+            }
+
+            if (!matched)
+            {
+                total_faceCard++;
+                FaceCard_Checker();
+                flipCount = 0;
+                flippedCards.Clear();
+            }
+        }
+
+        if (flipCount == 0)
+        {
+            isFlipping = false;
+        }
     }
+    
+
+    private void FaceCard_Checker()
+    {
+        if (total_faceCard == 3)
+        {
+            DelayUpdate();
+        }
+    }
+
+
+
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Tracing Point") && !tracedPoints.Contains(other.gameObject.name))
         {
-            tracedPoints.Add(other.gameObject.name);
-            score++;
-            Debug.Log("points: " + score);
+            if (scene.name == "Pre-Test 3.5" || scene.name == "Post-Test 3.5")
+            {
+                score++;
+                Debug.Log("points: " + score);
+
+                if (other.gameObject.name == "dot1 (31)" && score >= 32)
+                {
+                    Test_Score++;
+                    DelayUpdate();
+                }
+
+                else if (other.gameObject.name == "dot1 (45)" && score >= 30)
+                {
+                    DelayUpdate();
+                }
+            }
+
+            else
+            {
+                tracedPoints.Add(other.gameObject.name);
+                score++;
+                Debug.Log("points: " + score);
+            }
         }
     }
 
@@ -110,7 +275,7 @@ public class PreTest_PostTest : MonoBehaviour
     {
         float percentage = (float)score / totalTracingPoints * 100;
         GetScore(percentage);
-        UpdateScene();
+        DelayUpdate();
         //Debug.Log("points: " + test_counter);
     }
 
@@ -137,7 +302,12 @@ public class PreTest_PostTest : MonoBehaviour
 
     void IncrementFillAmount()
     {
-        if (Test_scenes.Count == 14)
+        if (Test_scenes.Count == 10)
+        {
+            Fill.fillAmount = Mathf.Clamp01(Fill.fillAmount + 0.1428571428571429f);
+        }
+
+        else if (Test_scenes.Count == 14)
         {
             Fill.fillAmount = Mathf.Clamp01(Fill.fillAmount + 0.0909090909090909f);
         }
@@ -146,6 +316,18 @@ public class PreTest_PostTest : MonoBehaviour
         {
             Fill.fillAmount = Mathf.Clamp01(Fill.fillAmount + 0.0625f);
         }
+
+    }
+
+    public void TitleUpdateScene()
+    {
+        this.gameObject.SetActive(false);
+        Test_scenes[test_counter].SetActive(true);
+    }
+
+    public void DelayUpdate()
+    {
+        Invoke("UpdateScene", 1f);
     }
 
     public void UpdateScene()
@@ -163,6 +345,7 @@ public class PreTest_PostTest : MonoBehaviour
         {
             IncrementFillAmount();
         }
+
         PlayerPrefs.SetInt("Test Score", Test_Score);
         PlayerPrefs.SetInt("Current Test", Level);
         Debug.Log("Score: " + Test_Score);
@@ -171,8 +354,270 @@ public class PreTest_PostTest : MonoBehaviour
     public void Add_Point()
     { 
         Test_Score ++;
-        UpdateScene();
+        DelayUpdate();
     }
+
+
+
+
+    ////
+    ///
+
+    void OnScrollChanged(int index, Vector2 position)
+    {
+        UnityEngine.UI.Image visibleImage = GetVisibleImage(scrollRects[index]);
+
+        if (visibleImage != null)
+        {
+            if (visibleImageNames.ContainsKey(index))
+            {
+                visibleImageNames[index] = visibleImage.gameObject.name;
+            }
+            else
+            {
+                visibleImageNames.Add(index, visibleImage.gameObject.name);
+            }
+        }
+    }
+
+    private UnityEngine.UI.Image GetVisibleImage(ScrollRect scrollRect)
+    {
+        RectTransform scrollRectTransform = scrollRect.viewport ?? scrollRect.GetComponent<RectTransform>();
+        RectTransform content = scrollRect.content;
+
+        foreach (RectTransform child in content)
+        {
+            if (RectTransformUtility.RectangleContainsScreenPoint(scrollRectTransform, child.position, null))
+            {
+                return child.GetComponent<UnityEngine.UI.Image>();
+            }
+        }
+        return null;
+    }
+    
+    public void OnSubmit()
+    {
+        if (Counter == 1)
+        {
+            if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "hospital" &&
+                       visibleImageNames.ContainsKey(1) && visibleImageNames[1] == "hospital" &&
+                       visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "hospital")
+            {
+                Counter++;
+                Debug.Log("counter: " + Counter);
+                Test_Score++;
+                playableDirector[0].Play();
+                button[0].gameObject.SetActive(false);
+                Debug.Log("score: " + Test_Score);
+            }
+            else
+            {
+                Counter++;
+                playableDirector[0].Play();
+                button[0].gameObject.SetActive(false);
+                Debug.Log("score: " + Test_Score);
+            }
+        }
+
+        else if (Counter == 2)
+        {
+            if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "fire station" &&
+                       visibleImageNames.ContainsKey(1) && visibleImageNames[1] == "fire station" &&
+                       visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "fire station")
+            {
+                Counter++;
+                Debug.Log("counter: " + Counter);
+                Test_Score++;
+                playableDirector[0].Play();
+                button[0].gameObject.SetActive(false);
+                Debug.Log("score: " + Test_Score);
+            }
+            else
+            {
+                Counter++;
+                playableDirector[0].Play();
+                button[0].gameObject.SetActive(false);
+                Debug.Log("score: " + Test_Score);
+            }
+            Debug.Log(Counter);
+        }
+
+        else if (Counter == 3)
+        {
+            if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "police station" &&
+                       visibleImageNames.ContainsKey(1) && visibleImageNames[1] == "police station" &&
+                       visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "police station")
+            {
+                Add_Point();
+            }
+            else
+            {
+                DelayUpdate();
+            }
+        }
+    }
+
+    public void PauseTimeline(int index)
+    {
+        playableDirector[index].Pause();
+        Debug.Log(playableDirector[index].name);
+
+        if (playableDirector[index].name == "Pre-test 3.1" || playableDirector[index].name == "Post-test 3.1")
+        {
+            if (Counter == 1)
+            {
+                gameObjects[3].SetActive(false);
+                button[0].gameObject.SetActive(true);
+            }
+
+            else if (Counter == 2)
+            {
+                gameObjects[1].SetActive(false);
+                button[0].gameObject.SetActive(true);
+            }
+
+            else 
+            {
+                gameObjects[2].SetActive(false);
+                button[0].gameObject.SetActive(true);
+            }
+        }
+    }
+
+    public void StartFlip(Button flipbutton)
+    {
+        if (isFlipping) return;
+
+        if (flipbutton.name == "card1")
+        {
+            target_object = front_card[0];
+        }
+        else if (flipbutton.name == "card2")
+        {
+            target_object = front_card[1];
+        }
+        else if (flipbutton.name == "card3")
+        {
+            target_object = front_card[2];
+        }
+        else if (flipbutton.name == "card4")
+        {
+            target_object = front_card[3];
+        }
+        else if (flipbutton.name == "card5")
+        {
+            target_object = front_card[4];
+        }
+        else
+        {
+            target_object = front_card[5];
+        }
+
+        StartCoroutine(FlipCard(flipbutton, target_object));
+        flippedCards.Add((flipbutton, target_object));
+    }
+
+    private IEnumerator FlipCard(Button cardbutton, GameObject picture)
+    {
+        if (isFlipping) yield break;
+
+        isFlipping = true;
+        float rotationAmount = 0f;
+        Quaternion startRotation1 = cardbutton.transform.rotation;
+        Quaternion endRotation1 = startRotation1 * Quaternion.Euler(0, 180, 0);
+
+        Quaternion startRotation2 = picture.transform.rotation;
+        Quaternion endRotation2 = startRotation2 * Quaternion.Euler(0, 180, 0);
+
+        while (rotationAmount < 1f)
+        {
+            rotationAmount += Time.deltaTime * rotationSpeed / 180f;
+            transform.rotation = Quaternion.Slerp(startRotation1, endRotation1, rotationAmount);
+            transform.rotation = Quaternion.Slerp(startRotation2, endRotation2, rotationAmount);
+
+            if (rotationAmount >= 0.5f)
+            {
+                cardbutton.gameObject.SetActive(false);
+                picture.SetActive(true);
+                flipCount++;
+            }
+            yield return null;
+        }
+
+        cardbutton.transform.rotation = endRotation1;
+        picture.transform.rotation = endRotation2;
+        isFlipping = false;
+    }
+
+
+
+    public void AfterTimeline()
+    {
+        if (this.gameObject.name == "Pre-Test 3.6" || this.gameObject.name == "Post-Test 3.6")
+        {
+            for (int j = 0; j < button.Count; j++)
+            {
+                button[j].interactable = true;
+            }
+
+
+            for (int i = 0; i < front_card.Count; i++)
+            {
+                front_card[i].SetActive(false);
+
+                front_card[i].transform.rotation = Quaternion.Euler(0, 0, 0);
+                Image image = front_card[i].GetComponent<Image>();
+
+                if (image != null)
+                {
+                    image.color = new Color32(255, 255, 255, 255);
+                }
+
+                AudioSource audioSource1 = front_card[i].GetComponent<AudioSource>();
+                if (audioSource1 != null)
+                {
+                    audioSource1.enabled = true;
+                }
+            }
+        }
+    }
+
+
+
+    public void CorrectObject()
+    {
+        Test_Score++;
+        this.gameObject.SetActive(false);
+        objectCounter++;
+        ObjectCount();
+        Debug.Log(objectCounter);
+    }
+
+    public void WrongObject()
+    {
+        this.gameObject.SetActive(false);
+        objectCounter++;
+        ObjectCount();
+        Debug.Log(objectCounter);
+    }
+
+    private void ObjectCount()
+    {
+        if (objectCounter == 3)
+        {
+            DelayUpdate();
+        }
+    }
+
+    public void EnableButton()
+    {
+        foreach (Button button in button)
+        {
+            button.interactable = true;
+        }
+    }
+ 
+
 
     //// ------------------------------------------------------------------- //
     //int userID;
