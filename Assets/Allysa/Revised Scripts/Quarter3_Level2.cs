@@ -41,8 +41,8 @@ public class Quarter3_Level2 : MonoBehaviour
     private int Counter = 1;
     private bool isPaused = false;
 
-    private int wrong_Click = 0;
-    private int object_count = 0;
+    private static int wrong_Click = 0;
+    private static int object_count = 0;
 
     private Audio_Manager audioManager4;
     private AudioSource audioSource;
@@ -51,6 +51,7 @@ public class Quarter3_Level2 : MonoBehaviour
 
     public List<TextMeshProUGUI> text;
     private static bool bgMusicPlayed = false;
+    private float fillamount;
 
 
 
@@ -71,12 +72,10 @@ public class Quarter3_Level2 : MonoBehaviour
             {
                 int index = i;
                 scrollRects[i].onValueChanged.AddListener((position) => OnScrollChanged(index, position));
-                visibleImageNames[index] = ""; 
             }
         }
 
         audioSource = GetComponent<AudioSource>();
-
 
         if (!bgMusicPlayed)
         {
@@ -118,10 +117,18 @@ public class Quarter3_Level2 : MonoBehaviour
 
     void OnScrollChanged(int index, Vector2 position)
     {
-        Image visibleImage = GetVisibleImage(scrollRects[index]);
+        UnityEngine.UI.Image visibleImage = GetVisibleImage(scrollRects[index]);
+
         if (visibleImage != null)
         {
-            visibleImageNames[index] = visibleImage.gameObject.name;
+            if (visibleImageNames.ContainsKey(index))
+            {
+                visibleImageNames[index] = visibleImage.gameObject.name;
+            }
+            else
+            {
+                visibleImageNames.Add(index, visibleImage.gameObject.name);
+            }
         }
     }
 
@@ -142,6 +149,23 @@ public class Quarter3_Level2 : MonoBehaviour
 
     public void OnSubmit()
     {
+        for (int i = 0; i < 3; i++)
+        {
+            if (!visibleImageNames.ContainsKey(i) || string.IsNullOrEmpty(visibleImageNames[i]))
+            {
+                UnityEngine.UI.Image visibleImage = GetVisibleImage(scrollRects[i]);
+                if (visibleImage != null)
+                {
+                    visibleImageNames[i] = visibleImage.gameObject.name;
+                }
+            }
+        }
+
+        foreach (var kvp in visibleImageNames)
+        {
+            Debug.Log("Key: " + kvp.Key + ", Value: " + kvp.Value);
+        }
+
         if (Counter == 1)
         {
             if (visibleImageNames.ContainsKey(0) && visibleImageNames[0] == "hospital" &&
@@ -152,18 +176,12 @@ public class Quarter3_Level2 : MonoBehaviour
                 Debug.Log("counter: " + Counter);
                 audioManager4.Correct();
                 Invoke("PlaySoundEffect", 0.2f);
-
-
-                if (wrong_Click >= 2)
+                if (wrong_Click > 0)
                 {
-                    IncrementFillAmount(0.037037037037037f);
+                    float fillamount = 0.1111111111111111f / wrong_Click;
+                    IncrementFillAmount(fillamount);
+                    wrong_Click = 0;
                 }
-
-                else if (wrong_Click == 1)
-                {
-                    IncrementFillAmount(0.0740740740740741f);
-                }
-
                 else
                 {
                     IncrementFillAmount(0.1111111111111111f);
@@ -191,16 +209,12 @@ public class Quarter3_Level2 : MonoBehaviour
                 Debug.Log("counter: " + Counter);
                 audioManager4.Correct();
                 Invoke("PlaySoundEffect", 0.2f);
-                if (wrong_Click >= 2)
+                if (wrong_Click > 0)
                 {
-                    IncrementFillAmount(0.037037037037037f);
+                    float fillamount = 0.1111111111111111f / wrong_Click;
+                    IncrementFillAmount(fillamount);
+                    wrong_Click = 0;
                 }
-
-                else if (wrong_Click == 2)
-                {
-                    IncrementFillAmount(0.0740740740740741f);
-                }
-
                 else
                 {
                     IncrementFillAmount(0.1111111111111111f);
@@ -224,23 +238,19 @@ public class Quarter3_Level2 : MonoBehaviour
             {
                 audioManager4.Correct();
                 Invoke("PlaySoundEffect", 0.2f);
-                if (wrong_Click >= 2)
+                if (wrong_Click > 0)
                 {
-                    IncrementFillAmount(0.037037037037037f);
+                    float fillamount = 0.1111111111111111f / wrong_Click;
+                    IncrementFillAmount(fillamount);
+                    wrong_Click = 0;
                 }
-
-                else if (wrong_Click == 1)
-                {
-                    IncrementFillAmount(0.0740740740740741f);
-                }
-
                 else
                 {
                     IncrementFillAmount(0.1111111111111111f);
                 }
                 Invoke("UpdateScene", 1f);
                 audioManager4.Stop_backgroundMusic2();
-                Show_Stars();
+                Invoke("Show_Stars", 1f);
             }
             else
             {
@@ -268,11 +278,22 @@ public class Quarter3_Level2 : MonoBehaviour
         }
     }
 
+   static bool audioEnabled = false;
 
     private void Update()
     {
         if (CompareTag("attached audio source"))
         {
+            if (this.gameObject.name == "Assessment 2")
+            {
+                if (playableDirector.time >= 5.2021)
+                {
+                    playableDirector.Pause();
+                    audioSource = gameObject.GetComponent<AudioSource>();
+                    audioSource.enabled = true;
+                }
+            }
+
             if (!audioSource.isPlaying && !audioSource.loop)
             {
                 if (this.gameObject.name == "Scene4")
@@ -297,15 +318,11 @@ public class Quarter3_Level2 : MonoBehaviour
                 {
                     gameobjects[0].SetActive(true);
                 }
-                
-                else if (this.gameObject.name == "Assessment 2")
+
+                else if (this.gameObject.name == "Assessment 2" && audioSource.enabled && !audioEnabled)
                 {
-                    button[0].interactable = true;
-                    button[1].interactable = true;
-                    button[2].interactable = true;
-                    button[3].interactable = true;
-                    button[4].interactable = true;
-                    button[5].interactable = true;
+                    AfterTimeline();
+                    audioEnabled = true;
                 }
             }
         }
@@ -578,13 +595,12 @@ public class Quarter3_Level2 : MonoBehaviour
                     matched = true;
                     flipCount = 0;
                     flippedCards.Clear();
-                    total_matched++;
+                    total_matched++; 
                     Debug.Log("matched!");
                     Debug.Log(total_matched);
                     audioManager4.Invoke("Correct", 1);
                     StartCoroutine(DelayedIncrementFillAmount());
                     Invoke("matchedChecker", 2f);
-                    wrong_Click = 0;
                     break;
 
                 }
@@ -694,11 +710,34 @@ public class Quarter3_Level2 : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        bool wrong = false;
+
         if (other.CompareTag("Tracing Point") && !tracedPoints.Contains(other.gameObject.name))
         {
             tracedPoints.Add(other.gameObject.name);
-            UpdateScore();
-            CheckCompletion();
+
+            if (gameobjects[7].name == "Scene10")
+            {
+                if (wrong)
+                {
+                    score = 17;
+                }
+                
+                score++;
+                Debug.Log("points: " + score);
+
+                if (other.gameObject.name == "dot1 (31)" && score >= 32)
+                {
+                    CheckCompletion();
+                    audioManager4.Correct();
+                }
+
+                else if (other.gameObject.name == "dot1 (45)" && score >= 30)
+                {
+                    audioManager4.Wrong();
+                    wrong = true;
+                }
+            }
         }
     }
 
@@ -711,11 +750,6 @@ public class Quarter3_Level2 : MonoBehaviour
             playableDirector.time = 0;
             playableDirector.Play();
         }
-    }
-
-    void UpdateScore()
-    {
-        score++;
     }
 
     private IEnumerator CheckNailCountWithDelay()
@@ -914,7 +948,7 @@ public class Quarter3_Level2 : MonoBehaviour
     public GameObject CorrectImage;
     public int CorrectAngle = 2;
     //private int currentIndex = 0;
-    [SerializeField] private List<PlayableDirector> playableDirector2;
+    //[SerializeField] private List<PlayableDirector> playableDirector2;
     [SerializeField] private PlayableDirector playableDirector;
 
     public void Rotate()
@@ -965,16 +999,12 @@ public class Quarter3_Level2 : MonoBehaviour
         obj.gameObject.SetActive(false);
         object_count++;
 
-        if (wrong_Click >= 2)
+        if (wrong_Click > 0)
         {
-            IncrementFillAmount(0.037037037037037f);
+            float fillamount = 0.1111111111111111f / wrong_Click;
+            IncrementFillAmount(fillamount);
+            wrong_Click = 0;
         }
-
-        else if (wrong_Click == 1)
-        {
-            IncrementFillAmount(0.0740740740740741f);
-        }
-
         else
         {
             IncrementFillAmount(0.1111111111111111f);
@@ -997,23 +1027,50 @@ public class Quarter3_Level2 : MonoBehaviour
     private IEnumerator DelayedIncrementFillAmount()
     {
         yield return new WaitForSeconds(1f);
-
-        if (wrong_Click >= 2)
+        Debug.Log("wrongs: " + wrong_Click);
+        if (wrong_Click > 0)
         {
-            IncrementFillAmount(0.037037037037037f);
+            float fillamount = 0.1111111111111111f / wrong_Click;
+            IncrementFillAmount(fillamount);
+            wrong_Click = 0;
         }
-
-        else if (wrong_Click == 1)
-        {
-            IncrementFillAmount(0.0740740740740741f);
-        }
-
         else
         {
             IncrementFillAmount(0.1111111111111111f);
         }
     }
 
+    public void AfterTimeline()
+    {
+        for (int j = 0; j < button.Count; j++)
+        {
+            button[j].interactable = true;
+        }
+
+        for (int i = 0; i < front_card.Count; i++)
+        {
+            front_card[i].SetActive(false);
+
+            front_card[i].transform.rotation = Quaternion.Euler(0, 0, 0);
+            Image image = front_card[i].GetComponent<Image>();
+
+            if (image != null)
+            {
+                image.color = new Color32(255, 255, 255, 255);
+            }
+
+            AudioSource audioSource1 = front_card[i].GetComponent<AudioSource>();
+            if (audioSource1 != null)
+            {
+                audioSource1.enabled = true;
+            }
+        }
+    }
+
+    public void DelayUpdate()
+    {
+        Invoke("UpdateScene", 1f);
+    }
     void Show_Stars()
     {
         Debug.Log(this.gameObject);
