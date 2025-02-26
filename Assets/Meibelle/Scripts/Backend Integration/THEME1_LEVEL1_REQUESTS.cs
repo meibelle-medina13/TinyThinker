@@ -6,7 +6,8 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class THEME1_LEVEL1_REQUESTS : MonoBehaviour
 {
-    private string URL = "https://tinythinker-server.up.railway.app";
+    //private string URL = "https://tinythinker-server.up.railway.app";
+    private string URL = "http://localhost:3000";
 
     public IEnumerator UpdateCurrentLevel(string endpoint, int next_level, int userID)
     {
@@ -16,13 +17,13 @@ public class THEME1_LEVEL1_REQUESTS : MonoBehaviour
             PlayerPrefs.GetInt("Selected_theme") == PlayerPrefs.GetInt("Current_theme"))
         {
             byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"current_level\": " + next_level + "}");
-
+            Debug.Log(userID + " : " + next_level);
             using (UnityWebRequest www = UnityWebRequest.Put(newURL, rawData))
             {
                 www.method = "PUT";
                 www.SetRequestHeader("Content-Type", "application/json");
                 yield return www.SendWebRequest();
-
+                Debug.Log(www.result);
                 if (www.result != UnityWebRequest.Result.Success)
                 {
                     Debug.LogError(www.error);

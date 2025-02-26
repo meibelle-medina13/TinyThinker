@@ -29,6 +29,8 @@ public class Level5ScoreScript : MonoBehaviour
 
     public IEnumerator GoToTest()
     {
+        delaytime = PlayerPrefs.GetInt("Delay Time");
+
         yield return new WaitForSeconds(delaytime);
         yield return StartCoroutine(UpdateCurrentScore());
 
@@ -44,7 +46,8 @@ public class Level5ScoreScript : MonoBehaviour
         int current_theme = PlayerPrefs.GetInt("Current_theme");
         byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"theme_num\": 1, \"level_num\": 5, \"score\": " + score + "}");
 
-        using (UnityWebRequest www = UnityWebRequest.Put("https://tinythinker-server.up.railway.app/scores", rawData))
+        //using (UnityWebRequest www = UnityWebRequest.Put("https://tinythinker-server.up.railway.app/scores", rawData))
+        using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/scores", rawData))
         {
             www.method = "PUT";
             www.SetRequestHeader("Content-Type", "application/json");
@@ -61,6 +64,7 @@ public class Level5ScoreScript : MonoBehaviour
                 if (score >= 33.33f && current_theme == 1)
                 {
                     PlayerPrefs.SetInt("Current_level", 0);
+                    PlayerPrefs.SetString("PostTest Status", "Not yet done");
                     UnityEngine.SceneManagement.SceneManager.LoadScene(15);
                 }
                 else

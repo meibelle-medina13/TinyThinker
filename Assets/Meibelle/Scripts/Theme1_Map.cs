@@ -174,11 +174,10 @@ public class Theme1_Map : MonoBehaviour
             {
                 UnityEngine.SceneManagement.SceneManager.LoadScene(9);
             }
-            else if (current_level == 5)
+            else if (current_level == 5 && current_theme == 1)
             {
-                if (!PlayerPrefs.HasKey("PostTest Status"))
+                if (PlayerPrefs.HasKey("PostTest Status") && PlayerPrefs.GetString("PostTest Status") == "Not yet done")
                 {
-                    PlayerPrefs.DeleteKey("PostTest Status");
                     UnityEngine.SceneManagement.SceneManager.LoadScene(15);
                 }
             }

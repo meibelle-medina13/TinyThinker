@@ -5,7 +5,8 @@ using UnityEngine.Networking;
 
 public class PREPOST_TEST_REQUESTS : MonoBehaviour
 {
-    private string URL = "https://tinythinker-server.up.railway.app";
+    //private string URL = "https://tinythinker-server.up.railway.app";
+    private string URL = "http://localhost:3000";
 
     public IEnumerator updateTestScore(string endpoint, int userID, int theme, int testType, int score)
     {
