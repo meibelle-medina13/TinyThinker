@@ -371,7 +371,7 @@ public class Q1_Level1 : MonoBehaviour
         else
         {
             int next_level = 2;
-            StartCoroutine(requestsManager.UpdateCurrentLevel("/users", next_level, userID));
+            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
         }
     }
 }

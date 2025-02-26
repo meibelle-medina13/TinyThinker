@@ -7,7 +7,8 @@ using static RESPONSE_CLASSES;
 
 public class SIGNUP_LOGIN_REQUESTS : MonoBehaviour
 {
-    private string URL = "https://tinythinker-server.up.railway.app";
+    //private string URL = "https://tinythinker-server.up.railway.app";
+    private string URL = "http://localhost:3000";
 
     public bool EmailHasDuplicates;
     public string errormessage;
