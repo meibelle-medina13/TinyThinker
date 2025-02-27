@@ -168,6 +168,7 @@ public class PreTest_PostTest : MonoBehaviour
 
                     else if (area.CompareTag("Draggable") && area.name == "plant2 collider")
                     {
+                        Test_Score++;
                         playableDirector[1].time = 5.4f;
                         playableDirector[1].Play();
                     }
@@ -208,6 +209,7 @@ public class PreTest_PostTest : MonoBehaviour
                     Test_Score++;
                     Debug.Log("matched!");
                     FaceCard_Checker();
+                    Debug.Log(Test_Score);
                     break;
 
                 }

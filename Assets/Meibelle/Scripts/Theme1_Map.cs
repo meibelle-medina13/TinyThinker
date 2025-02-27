@@ -222,11 +222,11 @@ public class Theme1_Map : MonoBehaviour
             {
                 UnityEngine.SceneManagement.SceneManager.LoadScene(23);
             }
-            else if (current_level == 5 && current_theme == 3)
+            else if (current_level == 3 && current_theme == 3)
             {
                 if (PlayerPrefs.HasKey("PostTest Status") && PlayerPrefs.GetString("PostTest Status") == "Not yet done")
                 {
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(15);
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(27);
                 }
             }
 

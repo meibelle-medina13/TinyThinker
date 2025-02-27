@@ -754,6 +754,7 @@ MonoBehaviour:
   scrollRects: []
   imageList: []
   text: []
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -1694,6 +1695,7 @@ MonoBehaviour:
   - {fileID: 298208469}
   text:
   - {fileID: 449838629}
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -3154,6 +3156,7 @@ MonoBehaviour:
   - {fileID: 298208469}
   text:
   - {fileID: 449838629}
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -4516,6 +4519,7 @@ MonoBehaviour:
   scrollRects: []
   imageList: []
   text: []
+  requestsManager: {fileID: 0}
   hammer: []
   gameobjects: []
   hammerTip: {fileID: 0}
@@ -4819,6 +4823,7 @@ MonoBehaviour:
   - {fileID: 298208469}
   text:
   - {fileID: 449838629}
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -5113,6 +5118,7 @@ MonoBehaviour:
   scrollRects: []
   imageList: []
   text: []
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -5940,7 +5946,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 377.07516, y: -89.7049}
+  m_AnchoredPosition: {x: 377.0752, y: -89.7049}
   m_SizeDelta: {x: 754.1503, y: 179.4098}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &422552448
@@ -6292,6 +6298,7 @@ MonoBehaviour:
   - {fileID: 1741532752}
   - {fileID: 298208469}
   text: []
+  requestsManager: {fileID: 0}
   hammer: []
   gameobjects:
   - {fileID: 88649111}
@@ -6726,6 +6733,7 @@ MonoBehaviour:
   - {fileID: 298208469}
   text:
   - {fileID: 449838629}
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -6958,6 +6966,7 @@ MonoBehaviour:
   - {fileID: 298208469}
   text:
   - {fileID: 449838629}
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -7617,6 +7626,7 @@ MonoBehaviour:
   scrollRects: []
   imageList: []
   text: []
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 0}
   - {fileID: 0}
@@ -8230,6 +8240,7 @@ MonoBehaviour:
   scrollRects: []
   imageList: []
   text: []
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -9884,9 +9895,10 @@ GameObject:
   m_Component:
   - component: {fileID: 752915994}
   - component: {fileID: 752915995}
+  - component: {fileID: 752915996}
   m_Layer: 5
   m_Name: 'Theme3 - Level 2 Audio Manager '
-  m_TagString: Untagged
+  m_TagString: Levels_BGM
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9940,6 +9952,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e58505ad9719d0042b0163c331b87937, type: 3}
   LetterSounds: []
   audioSourceBG1: {fileID: 0}
+--- !u!114 &752915996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752915993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f42a84ba2cd1934480a9a060d6a5680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &775830774
 GameObject:
   m_ObjectHideFlags: 0
@@ -11483,6 +11507,7 @@ MonoBehaviour:
   - {fileID: 298208469}
   text:
   - {fileID: 449838629}
+  requestsManager: {fileID: 1347630950}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -12251,7 +12276,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 377.07516, y: -89.7049}
+  m_AnchoredPosition: {x: 377.0752, y: -89.7049}
   m_SizeDelta: {x: 754.1503, y: 179.4098}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &928353659
@@ -13443,6 +13468,7 @@ MonoBehaviour:
   - {fileID: 298208469}
   text:
   - {fileID: 449838629}
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -13759,6 +13785,7 @@ MonoBehaviour:
   scrollRects: []
   imageList: []
   text: []
+  requestsManager: {fileID: 0}
   hammer: []
   gameobjects: []
   hammerTip: {fileID: 0}
@@ -14356,7 +14383,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1157263230}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 90c434e790f6f6b46a7c73f44b505bb7, type: 3}
@@ -14594,6 +14621,7 @@ MonoBehaviour:
   scrollRects: []
   imageList: []
   text: []
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -16020,6 +16048,7 @@ MonoBehaviour:
   scrollRects: []
   imageList: []
   text: []
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -16617,6 +16646,50 @@ RectTransform:
   m_AnchoredPosition: {x: 299.21588, y: 45.355682}
   m_SizeDelta: {x: 565.1328, y: 937.3293}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1347630949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1347630951}
+  - component: {fileID: 1347630950}
+  m_Layer: 0
+  m_Name: Requests Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1347630950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347630949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a652eec3b235e459b9a34bbcea8c6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1347630951
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347630949}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 773.1284, y: 328.6939, z: 86.90695}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1375837359
 GameObject:
   m_ObjectHideFlags: 0
@@ -17020,6 +17093,7 @@ MonoBehaviour:
   scrollRects: []
   imageList: []
   text: []
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -17162,6 +17236,7 @@ MonoBehaviour:
   - {fileID: 1741532752}
   - {fileID: 298208469}
   text: []
+  requestsManager: {fileID: 0}
   hammer: []
   gameobjects:
   - {fileID: 1037285054}
@@ -18034,6 +18109,7 @@ MonoBehaviour:
   scrollRects: []
   imageList: []
   text: []
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 0}
   - {fileID: 0}
@@ -18604,7 +18680,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 377.07516, y: -89.7049}
+  m_AnchoredPosition: {x: 377.0752, y: -89.7049}
   m_SizeDelta: {x: 754.1503, y: 179.4098}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1473981399
@@ -18750,6 +18826,7 @@ MonoBehaviour:
   - {fileID: 298208469}
   text:
   - {fileID: 449838629}
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -18770,10 +18847,10 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1486452080}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d2b97abab2d41d742978bc4d6a38fa26, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d236c831c266def4dab46f90372dcc57, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -19477,7 +19554,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1544182933}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 153ed0aaffae8c948a3ce585dd0c128c, type: 3}
@@ -20118,6 +20195,7 @@ MonoBehaviour:
   scrollRects: []
   imageList: []
   text: []
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -20539,6 +20617,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 709055336}
   - {fileID: 1100293430}
   - {fileID: 85830827}
   - {fileID: 905936343}
@@ -20552,7 +20631,6 @@ RectTransform:
   - {fileID: 1211063666}
   - {fileID: 819939910}
   - {fileID: 1997090861}
-  - {fileID: 709055336}
   m_Father: {fileID: 1793430490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -20644,7 +20722,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641086481}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 0a4c0a8b665ccac4f88df75d1090f6cd, type: 3}
@@ -23179,6 +23257,7 @@ MonoBehaviour:
   scrollRects: []
   imageList: []
   text: []
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 0}
   - {fileID: 0}
@@ -23279,6 +23358,7 @@ MonoBehaviour:
   - {fileID: 1741532752}
   - {fileID: 298208469}
   text: []
+  requestsManager: {fileID: 0}
   hammer: []
   gameobjects:
   - {fileID: 2003085552}
@@ -24936,6 +25016,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 752915995}
+        m_TargetAssemblyTypeName: Audio_Manager, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1997090863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26037,6 +26129,7 @@ MonoBehaviour:
   scrollRects: []
   imageList: []
   text: []
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -26340,7 +26433,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2092818027}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c4d7c0d868532d34ab04d1107ed8315d, type: 3}
@@ -26674,7 +26767,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131305235}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6d164e80892c1554e8abff46c7326b85, type: 3}
@@ -27280,6 +27373,7 @@ MonoBehaviour:
   scrollRects: []
   imageList: []
   text: []
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -27444,6 +27538,7 @@ MonoBehaviour:
   scrollRects: []
   imageList: []
   text: []
+  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -27488,4 +27583,5 @@ SceneRoots:
   - {fileID: 219378668}
   - {fileID: 877074427}
   - {fileID: 752915994}
+  - {fileID: 1347630951}
   - {fileID: 1845414941}
