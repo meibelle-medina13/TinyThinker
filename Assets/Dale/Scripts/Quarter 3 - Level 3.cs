@@ -170,18 +170,22 @@ public class Quarter3Level3 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     if (starCount == 0)
     {
       ZeroStar.SetActive(true);
+      PlayerPrefs.SetInt("Delay Time", 4);
     }
     else if (starCount == 1)
     {
       OneStar.SetActive(true);
+      PlayerPrefs.SetInt("Delay Time", 4);
     }
     else if (starCount == 2)
     {
       TwoStars.SetActive(true);
+      PlayerPrefs.SetInt("Delay Time", 4);
     }
     else if (starCount == 3)
     {
       ThreeStars.SetActive(true);
+      PlayerPrefs.SetInt("Delay Time", 8);
     }
   }
   // -------------------------------------------------- //
@@ -956,6 +960,7 @@ public class Quarter3Level3 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       starCount = 1;
       Debug.Log("Stars: " + starCount);
     }
+    PlayerPrefs.SetFloat("Theme3 Score", totalProgressFill);
   }
   // -------------------------------------------------- //
 

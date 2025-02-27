@@ -311,7 +311,7 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       Debug.Log("Stars: " + starCount);
     }
     // ------------------------------------------------------------------------------------------------ //
-    PlayerPrefs.SetFloat("Level5 Score", totalProgressFill);
+    PlayerPrefs.SetFloat("Theme1 Score", totalProgressFill);
     }
   // -------------------------------------------------- //
 

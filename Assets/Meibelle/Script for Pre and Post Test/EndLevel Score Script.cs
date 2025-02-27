@@ -4,25 +4,32 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SocialPlatforms.Impl;
 
-public class Level5ScoreScript : MonoBehaviour
+public class EndLevelScoreScript : MonoBehaviour
 {
     int userID, delaytime;
-    float Level5Score;
+    float LevelScore;
+    int theme, level;
+
 
     private void Awake()
     {
-        Level5Score = PlayerPrefs.GetFloat("Level5 Score");
-        Debug.Log("FInal:" + Level5Score);
+        //Level5Score = PlayerPrefs.GetFloat("Level5 Score");
+        if (PlayerPrefs.HasKey("Theme1 Score"))
+        {
+            LevelScore = PlayerPrefs.GetFloat("Theme1 Score");
+            theme = 1;
+            level = 5;
+
+        }
+        else if (PlayerPrefs.HasKey("Theme3 Score"))
+        {
+            LevelScore = PlayerPrefs.GetFloat("Theme3 Score");
+            theme = 3;
+            level = 3;
+        }
+        Debug.Log("FInal:" + LevelScore);
         userID = PlayerPrefs.GetInt("Current_user");
         StartCoroutine(GoToTest());
-        //if (Level5Score >= 33.33f)
-        //{
-        //    StartCoroutine(GoToTest());
-        //}
-        //else
-        //{
-        //    UnityEngine.SceneManagement.SceneManager.LoadScene(7);
-        //}
     }
 
     // -------------------------------------------------------------------- //
@@ -33,18 +40,15 @@ public class Level5ScoreScript : MonoBehaviour
 
         yield return new WaitForSeconds(delaytime);
         yield return StartCoroutine(UpdateCurrentScore());
-
-        //Debug.Log("Go to map");
-        //UnityEngine.SceneManagement.SceneManager.LoadScene(15);
     }
 
     float score;
     IEnumerator UpdateCurrentScore()
     {
-        score = Level5Score * 100;
+        score = LevelScore * 100;
         userID = PlayerPrefs.GetInt("Current_user");
         int current_theme = PlayerPrefs.GetInt("Current_theme");
-        byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"theme_num\": 1, \"level_num\": 5, \"score\": " + score + "}");
+        byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"theme_num\": " + theme + ", \"level_num\": " + level + ", \"score\": " + score + "}");
 
         //using (UnityWebRequest www = UnityWebRequest.Put("https://tinythinker-server.up.railway.app/scores", rawData))
         using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/scores", rawData))
@@ -66,6 +70,12 @@ public class Level5ScoreScript : MonoBehaviour
                     PlayerPrefs.SetInt("Current_level", 0);
                     PlayerPrefs.SetString("PostTest Status", "Not yet done");
                     UnityEngine.SceneManagement.SceneManager.LoadScene(15);
+                }
+                else if (score >= 33.33f && current_theme == 3)
+                {
+                    PlayerPrefs.SetInt("Current_level", 0);
+                    PlayerPrefs.SetString("PostTest Status", "Not yet done");
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(27);
                 }
                 else
                 {

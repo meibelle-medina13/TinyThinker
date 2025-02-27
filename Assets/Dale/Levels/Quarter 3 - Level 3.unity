@@ -13440,9 +13440,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1352584372}
   - component: {fileID: 1352584373}
+  - component: {fileID: 1352584375}
+  - component: {fileID: 1352584374}
   m_Layer: 0
   m_Name: BGM Source
-  m_TagString: Untagged
+  m_TagString: Levels_BGM
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13558,6 +13560,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1352584374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352584371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f42a84ba2cd1934480a9a060d6a5680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1352584375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352584371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5178538a415b242ae53d28f0ef4d9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 1352584373}
 --- !u!1 &1357336616
 GameObject:
   m_ObjectHideFlags: 0

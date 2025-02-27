@@ -53,10 +53,16 @@ public class Quarter3_Level2 : MonoBehaviour
     private static bool bgMusicPlayed = false;
     private float fillamount;
 
+    [Header("<---- REQUEST SCRIPT ---->")]
+    [SerializeField]
+    private THEME1_LEVEL1_REQUESTS requestsManager;
+
 
 
     void Start()
     {
+        requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
+
         audioManager4 = FindObjectOfType<Audio_Manager>();
         if (rotateButton != null && CorrectImage != null)
         {
@@ -725,13 +731,13 @@ public class Quarter3_Level2 : MonoBehaviour
             {
                 if (wrong)
                 {
-                    score = 17;
+                    score = 18;
                 }
                 
                 score++;
                 Debug.Log("points: " + score);
 
-                if (other.gameObject.name == "dot1 (31)" && score >= 32)
+                if (other.gameObject.name == "dot1 (31)" && score >= 30)
                 {
                     CheckCompletion();
                     audioManager4.Correct();
@@ -1082,6 +1088,13 @@ public class Quarter3_Level2 : MonoBehaviour
         Debug.Log(this.gameObject);
         //NextScene_Button.gameObject.SetActive(false);
 
+        float score = imageList[3].fillAmount * 100;
+        int userID = PlayerPrefs.GetInt("Current_user");
+        int theme_num = 3;
+        int level_num = 2;
+        int delaytime = 0;
+        StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+
         if (imageList[3].fillAmount < 0.3333333333333333f)
         {
             gameobjects[18].SetActive(true);
@@ -1091,6 +1104,7 @@ public class Quarter3_Level2 : MonoBehaviour
             gameobjects[25].SetActive(true);
             gameobjects[26].SetActive(false);
             text[0].text = "ULITIN!";
+            delaytime = 4;
         }
 
         else if (imageList[3].fillAmount >= 0.3333333333333333f && imageList[3].fillAmount < 0.6666666666666667f)
@@ -1098,18 +1112,37 @@ public class Quarter3_Level2 : MonoBehaviour
             gameobjects[19].SetActive(true);
             gameobjects[24].SetActive(false);
             text[0].text = "SUBOK";
+            delaytime = 4;
         }
 
         else if (imageList[3].fillAmount >= 0.6666666666666667f && imageList[3].fillAmount < 1f)
         {
             gameobjects[20].SetActive(true);
             text[0].text = "MAGALING";
+            delaytime = 4;
         }
 
         else if (Mathf.Approximately(imageList[3].fillAmount, 1f))
         {
             gameobjects[21].SetActive(true);
             text[0].text = "PERPEKTO";
+            delaytime = 8;
+        }
+
+        StartCoroutine(GoToMap(score, userID, delaytime));
+    }
+
+    IEnumerator GoToMap(float score, int userID, int delaytime)
+    {
+        yield return new WaitForSeconds(delaytime);
+        if (score < (100f / 3f))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+        }
+        else
+        {
+            int next_level = 3;
+            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
         }
     }
 }
