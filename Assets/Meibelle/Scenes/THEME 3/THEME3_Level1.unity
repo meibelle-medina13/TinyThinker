@@ -8442,6 +8442,7 @@ GameObject:
   - component: {fileID: 648413153}
   - component: {fileID: 648413152}
   - component: {fileID: 648413154}
+  - component: {fileID: 648413155}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Levels_BGM
@@ -8573,6 +8574,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 648413152}
+--- !u!114 &648413155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648413151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f42a84ba2cd1934480a9a060d6a5680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &649509207
 GameObject:
   m_ObjectHideFlags: 0
