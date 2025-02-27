@@ -12,19 +12,30 @@ public class Level5ScoreScript : MonoBehaviour
     private void Awake()
     {
         Level5Score = PlayerPrefs.GetFloat("Level5 Score");
-        StartCoroutine(UpdateCurrentScore());
         Debug.Log("FInal:" + Level5Score);
         userID = PlayerPrefs.GetInt("Current_user");
-        StartCoroutine(GoToMap());
+        StartCoroutine(GoToTest());
+        //if (Level5Score >= 33.33f)
+        //{
+        //    StartCoroutine(GoToTest());
+        //}
+        //else
+        //{
+        //    UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+        //}
     }
 
     // -------------------------------------------------------------------- //
 
-    public IEnumerator GoToMap()
+    public IEnumerator GoToTest()
     {
+        delaytime = PlayerPrefs.GetInt("Delay Time");
+
         yield return new WaitForSeconds(delaytime);
-        Debug.Log("Go to map");
-        StartCoroutine(UpdateCurrentLevel());
+        yield return StartCoroutine(UpdateCurrentScore());
+
+        //Debug.Log("Go to map");
+        //UnityEngine.SceneManagement.SceneManager.LoadScene(15);
     }
 
     float score;
@@ -32,8 +43,10 @@ public class Level5ScoreScript : MonoBehaviour
     {
         score = Level5Score * 100;
         userID = PlayerPrefs.GetInt("Current_user");
+        int current_theme = PlayerPrefs.GetInt("Current_theme");
         byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"theme_num\": 1, \"level_num\": 5, \"score\": " + score + "}");
 
+        //using (UnityWebRequest www = UnityWebRequest.Put("https://tinythinker-server.up.railway.app/scores", rawData))
         using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/scores", rawData))
         {
             www.method = "PUT";
@@ -47,35 +60,18 @@ public class Level5ScoreScript : MonoBehaviour
             else
             {
                 Debug.Log("Received: " + www.downloadHandler.text);
-            }
-        }
-    }
-
-    IEnumerator UpdateCurrentLevel()
-    {
-        int current_level = 6;
-        byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"current_level\": " + current_level + "}");
-
-        if (score >= 33)
-        {
-            using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/users", rawData))
-            {
-                www.method = "PUT";
-                www.SetRequestHeader("Content-Type", "application/json");
-                yield return www.SendWebRequest();
-
-                if (www.result != UnityWebRequest.Result.Success)
+                Debug.Log("Theme" + current_theme);
+                if (score >= 33.33f && current_theme == 1)
                 {
-                    Debug.LogError(www.error);
+                    PlayerPrefs.SetInt("Current_level", 0);
+                    PlayerPrefs.SetString("PostTest Status", "Not yet done");
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(15);
                 }
                 else
                 {
-                    PlayerPrefs.SetInt("Current_level", current_level);
-                    Debug.Log("Received: " + www.downloadHandler.text);
                     UnityEngine.SceneManagement.SceneManager.LoadScene(7);
                 }
             }
         }
-
     }
 }

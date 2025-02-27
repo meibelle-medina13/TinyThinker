@@ -6,55 +6,36 @@ using UnityEngine.Networking;
 public class ScoreScript : MonoBehaviour
 {
     int userID, Test_Score;
-    public int level;
+    public int theme, testType;
+
+    [Header("<---- REQUEST SCRIPT ---->")]
+    [SerializeField]
+    private PREPOST_TEST_REQUESTS requestsManager;
+
+    private void Start()
+    {
+        requestsManager = FindObjectOfType<PREPOST_TEST_REQUESTS>();
+    }
 
     public void GetTotalScore()
     {
         Test_Score = PlayerPrefs.GetInt("Test Score");
         Debug.Log("FInal:" + Test_Score);
         userID = PlayerPrefs.GetInt("Current_user");
-        if (level == 1)
+        //StartCoroutine(requestsManager.updateTestScore("/test_score", userID, theme, testType, Test_Score));
+
+        if (testType == 1)
         {
-            StartCoroutine(UpdateCurrentLevel());
+            StartCoroutine(requestsManager.updateTestScore("/test_score", userID, theme, testType, Test_Score));
+            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", 1, userID));
         }
-        else if (level == 2)
+        else if (testType == 2)
         {
-            StartCoroutine(GoToMap());
+            StartCoroutine(requestsManager.updateTestScore("/test_score", userID, theme-1, testType, Test_Score));
+            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", 0, userID));
+            StartCoroutine(requestsManager.UpdateCurrentTheme("/users/updateTheme", userID, theme));
         }
     }
 
     // -------------------------------------------------------------------- //
-
-    //int delaytime;
-    IEnumerator GoToMap()
-    {
-        yield return new WaitForSeconds(2);
-        Debug.Log("Go to map");
-        PlayerPrefs.SetInt("Current_theme", 2);
-        UnityEngine.SceneManagement.SceneManager.LoadScene(6);
-    }
-
-    IEnumerator UpdateCurrentLevel()
-    {
-        int current_level = 1;
-        byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"current_level\": " + current_level + "}");
-
-        using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/users", rawData))
-        {
-            www.method = "PUT";
-            www.SetRequestHeader("Content-Type", "application/json");
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError(www.error);
-            }
-            else
-            {
-                PlayerPrefs.SetInt("Current_level", current_level);
-                Debug.Log("Received: " + www.downloadHandler.text);
-                UnityEngine.SceneManagement.SceneManager.LoadScene(7);
-            }
-        }
-    }
 }

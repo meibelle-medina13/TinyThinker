@@ -170,18 +170,45 @@ public class Theme1_Map : MonoBehaviour
         if (selected_theme == 1)
         {
             theme = 1;
-            if (current_level == 0)
+            if (current_level == 0 && current_theme == 1)
             {
                 UnityEngine.SceneManagement.SceneManager.LoadScene(9);
             }
-            else if (current_level == 6)
+            else if (current_level == 5 && current_theme == 1)
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene(15);
+                if (PlayerPrefs.HasKey("PostTest Status") && PlayerPrefs.GetString("PostTest Status") == "Not yet done")
+                {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(15);
+                }
             }
 
             for (int i = 0; i < theme1_levels.Length; i++)
             {
                 Button level = theme1_levels[i].GetComponent<Button>();
+                int levelnum = i + 1;
+                level.onClick.AddListener(() => EnterGameLevel(levelnum, theme));
+            }
+        }
+        else if (selected_theme == 2)
+        {
+            Debug.Log(current_level);
+            theme = 2;
+            if (current_level == 0 && current_theme == 2)
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(16);
+            }
+            else if (current_level == 6 && current_theme == 2)
+            {
+                if (!PlayerPrefs.HasKey("PostTest Status"))
+                {
+                    PlayerPrefs.DeleteKey("PostTest Status");
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(22);
+                }
+            }
+
+            for (int i = 0; i < theme2_levels.Length; i++)
+            {
+                Button level = theme2_levels[i].GetComponent<Button>();
                 int levelnum = i + 1;
                 level.onClick.AddListener(() => EnterGameLevel(levelnum, theme));
             }
@@ -307,7 +334,7 @@ public class Theme1_Map : MonoBehaviour
 
     private void EnableAllLevels()
     { 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 5; i++)
         {
             if (selected_theme == 1)
             {
@@ -342,6 +369,10 @@ public class Theme1_Map : MonoBehaviour
         if (theme == 1)
         {
             indexFiller = 9;
+        }
+        else if (theme == 2)
+        {
+            indexFiller = 16;
         }
         Debug.Log(indexFiller);
         //UnityEngine.SceneManagement.SceneManager.LoadScene(level + indexFiller);
