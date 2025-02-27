@@ -6,8 +6,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class THEME1_LEVEL1_REQUESTS : MonoBehaviour
 {
-    //private string URL = "https://tinythinker-server.up.railway.app";
-    private string URL = "http://localhost:3000";
+    private string URL = "https://tinythinker-server.up.railway.app";
 
     public IEnumerator UpdateCurrentLevel(string endpoint, int next_level, int userID)
     {

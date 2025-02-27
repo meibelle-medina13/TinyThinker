@@ -6,8 +6,7 @@ using UnityEngine.Networking;
 
 public class SELECT_ACCOUNT_REQUESTS : MonoBehaviour
 {
-    //private string URL = "https://tinythinker-server.up.railway.app";
-    private string URL = "http://localhost:3000";
+    private string URL = "https://tinythinker-server.up.railway.app";
 
     public UserRoot json;
     public int guardianID;

@@ -6,8 +6,7 @@ using UnityEngine.Networking;
 
 public class SETUP_REQUESTS : MonoBehaviour
 {
-    //private string URL = "https://tinythinker-server.up.railway.app";
-    private string URL = "http://localhost:3000";
+    private string URL = "https://tinythinker-server.up.railway.app";   
 
     private int guardianID;
     public IEnumerator getGuardianID(string endpoint, string email)

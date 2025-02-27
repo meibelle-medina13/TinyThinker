@@ -50,8 +50,7 @@ public class EndLevelScoreScript : MonoBehaviour
         int current_theme = PlayerPrefs.GetInt("Current_theme");
         byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"theme_num\": " + theme + ", \"level_num\": " + level + ", \"score\": " + score + "}");
 
-        //using (UnityWebRequest www = UnityWebRequest.Put("https://tinythinker-server.up.railway.app/scores", rawData))
-        using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/scores", rawData))
+        using (UnityWebRequest www = UnityWebRequest.Put("https://tinythinker-server.up.railway.app/scores", rawData))
         {
             www.method = "PUT";
             www.SetRequestHeader("Content-Type", "application/json");
