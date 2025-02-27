@@ -101,7 +101,11 @@ public class Q3_level1 : MonoBehaviour
     [SerializeField]
     private GameObject gameMenu;
 
-    private int error;
+    [Header("<---- REQUEST SCRIPT ---->")]
+    [SerializeField]
+    private THEME1_LEVEL1_REQUESTS requestsManager;
+
+    private int error, delaytime, userID;
     private int assessmentScore = 100;
     private float score;
 
@@ -110,12 +114,14 @@ public class Q3_level1 : MonoBehaviour
     {
         //DELETE
         PlayerPrefs.DeleteKey("CurrentPanel");
-        PlayerPrefs.SetInt("Selected_theme", 1);
+        //PlayerPrefs.SetInt("Selected_theme", 1);
         //DELETE
         PlayerPrefs.SetInt("Tracing Points", 0);
         PlayerPrefs.SetInt("Wrong Points", 0);
         PlayerPrefs.SetString("Collider", "");
-        
+
+        requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
+
 
         for (int i = 0; i < (scenes.Length - 1); i++)
         {
@@ -574,9 +580,11 @@ public class Q3_level1 : MonoBehaviour
     private void AssessResult()
     {
         gameMenu.SetActive(false);
-        //int theme_num = 2;
-        //int level_num = 3;
-        //StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+        int theme_num = 3;
+        int level_num = 1;
+        userID = PlayerPrefs.GetInt("Current_user");
+
+        StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
 
         float star1 = (100f / 3f);
         float star2 = (100f / 3f) * 2;
@@ -585,25 +593,39 @@ public class Q3_level1 : MonoBehaviour
         if (score < star1)
         {
             result[4].SetActive(true);
-            //delaytime = 4;
+            delaytime = 4;
         }
         else if (score >= star1 && score < star2)
         {
             result[1].SetActive(true);
-            //delaytime = 4;
+            delaytime = 4;
         }
         else if (score > 99.9f || score == star3)
         {
-            //delaytime = 4;
+            delaytime = 8;
             result[0].SetActive(true);
             result[3].SetActive(true);
         }
         else if (score >= star2 && score < star3)
         {
-            //delaytime += 8;
+            delaytime = 4;
             result[0].SetActive(true);
             result[2].SetActive(true);
         }
-        //StartCoroutine(GoToMap());
+        StartCoroutine(GoToMap());
+    }
+
+    IEnumerator GoToMap()
+    {
+        yield return new WaitForSeconds(delaytime);
+        if (score < (100f / 3f))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+        }
+        else
+        {
+            int next_level = 2;
+            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+        }
     }
 }
