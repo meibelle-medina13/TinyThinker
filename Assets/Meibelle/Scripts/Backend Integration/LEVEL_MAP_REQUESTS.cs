@@ -7,8 +7,7 @@ using UnityEngine.UI;
 
 public class LEVEL_MAP_REQUESTS : MonoBehaviour
 {
-    //private string URL = "https://tinythinker-server.up.railway.app";
-    private string URL = "http://localhost:3000";
+    private string URL = "https://tinythinker-server.up.railway.app";
 
     public UserRoot json;
     public VerificationRoot verificationJson;
