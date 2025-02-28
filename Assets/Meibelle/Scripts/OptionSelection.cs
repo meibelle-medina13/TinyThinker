@@ -1,19 +1,15 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using TMPro;
-using System;
-using UnityEngine.Networking;
 using System.Text.RegularExpressions;
-using System.Collections.Generic;
-using Newtonsoft.Json;
 
 public class OptionSelection : MonoBehaviour
 {
     ToggleGroup toggleGroup;
     RectTransform rectTransform;
 
+    [Header("<---- CHILD DETAILS ---->")]
     [SerializeField]
     private GameObject childname;
     [SerializeField]
@@ -23,48 +19,51 @@ public class OptionSelection : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI relationship;
 
+    [Header("<---- OPTIONS PANEL ---->")]
     [SerializeField]
     private GameObject ageObject;
     [SerializeField]
     private GameObject genderObject;
     [SerializeField]
     private GameObject avatarObject;
-
     [SerializeField]
     public GameObject femaleObject;
     [SerializeField]
     public GameObject maleObject;
 
+    [Header("<---- CONFIRMATION PANEL ---->")]
     [SerializeField]
     private GameObject mainmenuObject;
 
+    [Header("<---- PROFILE IMAGE ---->")]
     [SerializeField]
     private Image profile;
     [SerializeField]
     private Image profileContainer;
 
+    [Header("<---- AVATAR SPRITES ---->")]
     [SerializeField]
     private Sprite[] spritesFemale = new Sprite[6];
     [SerializeField]
     private Sprite[] spritesMale = new Sprite[6];
 
+    [Header("<---- REQUEST SCRIPT ---->")]
+    [SerializeField]
+    private SETUP_REQUESTS requestsManager;
 
-    string chosen = default;
-    string nickname;
-    string selected;
-    string URL = "http://localhost:3000/users";
-    int guardianID;
-
+    private string chosen = default;
+    private string nickname;
 
     void Start()
     {
+        requestsManager = FindObjectOfType<SETUP_REQUESTS>();
+
         toggleGroup = GetComponent<ToggleGroup>();
         nickname = PlayerPrefs.GetString("Name");
         childname.GetComponentInChildren<TMP_Text>().text = nickname;
 
         string email = PlayerPrefs.GetString("Email");
-        Debug.Log(email);
-        StartCoroutine(getGuardianID(email));
+        StartCoroutine(requestsManager.getGuardianID("/users_guardian/guardianID", email));
     }
 
     public void Next()
@@ -125,8 +124,6 @@ public class OptionSelection : MonoBehaviour
                 PlayerPrefs.SetString("Age", chosen);
                 
             }
-
-            Debug.Log(toggle.name);
         }
     }
 
@@ -134,7 +131,6 @@ public class OptionSelection : MonoBehaviour
     {
         Regex pattern = new Regex("(\\d{1})");
         Match match = pattern.Match(PlayerPrefs.GetString("Age"));
-        Debug.Log(match.Value);
 
         int current_theme = 1;
         int current_level = 0;
@@ -142,71 +138,8 @@ public class OptionSelection : MonoBehaviour
         int.TryParse(match.Value, out age);
         string gender = PlayerPrefs.GetString("Gender");
         string avatar_filename = PlayerPrefs.GetString("Avatar");
-
         string relationship = PlayerPrefs.GetString("Relationship");
-        ;
-        
-        StartCoroutine(Upload(nickname, age, gender, avatar_filename, current_theme, current_level, relationship, guardianID));
-    }
 
-    IEnumerator Upload(string username, int age, string gender, string avatar_filename, int current_theme, int current_level, string relation_to_guardian, int guardian_ID)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("username", username);
-        form.AddField("age", age);
-        form.AddField("gender", gender);
-        form.AddField("avatar_filename", avatar_filename);
-        form.AddField("current_theme", current_theme);
-        form.AddField("current_level", current_level);
-        form.AddField("relation_to_guardian", relation_to_guardian);
-        form.AddField("guardian_ID", guardian_ID);
-
-        using (UnityWebRequest www = UnityWebRequest.Post(URL, form))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError(www.error);
-            }
-            else
-            {
-                Debug.Log("Received: " + www.downloadHandler.text);
-                UnityEngine.SceneManagement.SceneManager.LoadScene(5);
-            }
-        }
-    }
-
-    [Serializable]
-    public class Datum
-    {
-        public int ID { get; set; }
-    }
-
-    [Serializable]
-    public class Root
-    {
-        public bool success { get; set; }
-        public List<Datum> data { get; set; }
-    }
-
-    IEnumerator getGuardianID(string email)
-    {
-        using (UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/users_guardian/guardianID?email="+email))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError(www.error);
-            }
-            else
-            {
-                Debug.Log("Received: " + www.downloadHandler.text);
-                Root json = JsonConvert.DeserializeObject<Root>(www.downloadHandler.text);
-                guardianID = json.data[0].ID;
-                Debug.Log(json.data[0].ID);
-            }
-        }
+        StartCoroutine(requestsManager.AddUser("/users", nickname, age, gender, avatar_filename, current_theme, current_level, relationship));
     }
 }

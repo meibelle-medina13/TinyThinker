@@ -11,8 +11,8 @@ public class RotateImage : MonoBehaviour
     public GameObject CorrectImage; 
     public float rotationAngle = 90f; 
     public float angleCounter = 0;
-    public AudioSource RotateCorrectlySound;
-    public AudioSource ForEveryRotateSound;
+    //public AudioSource RotateCorrectlySound;
+    //public AudioSource ForEveryRotateSound;
     private Theme2Level4_SceneManager sceneManagerL2_4;
 
     private void Start()
@@ -29,10 +29,10 @@ public class RotateImage : MonoBehaviour
 
         if (angleCounter == CorrectAngle)
         {
-            if (RotateCorrectlySound != null)
-            {
-                RotateCorrectlySound.Play();
-            }
+            //if (RotateCorrectlySound != null)
+            //{
+                //RotateCorrectlySound.Play();
+            //}
             
             gameObject.SetActive(false);
             CorrectImage.SetActive(true);
@@ -41,7 +41,7 @@ public class RotateImage : MonoBehaviour
         }
         else
         {
-            ForEveryRotateSound.Play();
+            //ForEveryRotateSound.Play();
         }
     }
 

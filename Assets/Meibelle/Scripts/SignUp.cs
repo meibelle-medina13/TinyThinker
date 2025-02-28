@@ -1,28 +1,19 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using UnityEngine.Networking;
 using System.Text.RegularExpressions;
-using System;
-using Newtonsoft.Json;
-using static OptionSelection;
-using Unity.VisualScripting;
 
 public class SignUp : MonoBehaviour
 {
     RectTransform rectTransform;
 
+    [Header("<---- CHARACTER BEHIND ---->")]
     [SerializeField]
     private GameObject turtle0;
-    //[SerializeField]
-    //private GameObject bear;
-    //[SerializeField]
-    //private GameObject turtle;
 
+    [Header("<---- INPUT FIELDS ---->")]
     [SerializeField]
     private GameObject[] inputField = new GameObject[5];
     [SerializeField]
@@ -32,25 +23,31 @@ public class SignUp : MonoBehaviour
     [SerializeField]
     private GameObject[] text = new GameObject[5];
 
+    [Header("<---- SCENE PANELS ---->")]
     [SerializeField]
     private GameObject[] Panels = new GameObject[3];
+
+    [Header("<---- BACK BUTTONS ---->")]
     [SerializeField]
     private Button[] backButton = new Button[2];
 
+    [Header("<---- ERROR MESSAGE ---->")]
     [SerializeField]
     private GameObject errormessage;
 
-    int index, prev, counter, fieldCount, duplicate;
-    bool result;
-    string message;
+    [Header("<---- REQUEST SCRIPT ---->")]
+    [SerializeField]
+    private SIGNUP_LOGIN_REQUESTS requestsManager;
 
-
-    string URL = "http://localhost:3000/users_guardian";
+    private int index, prev, counter, fieldCount, duplicate;
+    private bool result;
+    private string message;
 
     void Start()
     {
+        requestsManager = FindObjectOfType<SIGNUP_LOGIN_REQUESTS>();
+
         StartCoroutine(DelayNotice());
-        //StartCoroutine(Get());
 
         for (int i = 0; i < Panels.Length; i++)
         {
@@ -77,7 +74,7 @@ public class SignUp : MonoBehaviour
         turtle0.SetActive(false);
     }
 
-    public void showLabel()
+    public void ShowLabel()
     {
         string selected = EventSystem.current.currentSelectedGameObject.name;
 
@@ -115,18 +112,13 @@ public class SignUp : MonoBehaviour
 
     }
 
-    public void hideLabel()
+    public void HideLabel()
     {
         label[index].SetActive(false);
         placeholder[index].SetActive(true);
 
         rectTransform = text[index].GetComponent<RectTransform>();
         rectTransform.transform.localPosition = new Vector3(0, 0, 0);
-
-        if (inputField[0].GetComponent<TMP_InputField>().text != "")
-        {
-            StartCoroutine(getGuardianID(inputField[0].GetComponent<TMP_InputField>().text));
-        }
     }
 
     private void GoBack(int index)
@@ -151,12 +143,7 @@ public class SignUp : MonoBehaviour
         }
         else if (index == 1)
         {
-            bool isEmpty = IsEmptyInputField(3);
-            if (isEmpty == false)
-            {
-                Panels[index].SetActive(false);
-                Panels[index + 1].SetActive(true);
-            }
+            StartCoroutine(ValidateInputs());
         }
         else if (index == 2)
         {
@@ -165,6 +152,21 @@ public class SignUp : MonoBehaviour
             {
                 UnityEngine.SceneManagement.SceneManager.LoadScene(3);
             }
+        }
+    }
+
+    IEnumerator ValidateInputs()
+    {
+        if (inputField[0].GetComponent<TMP_InputField>().text != "")
+        {
+            yield return StartCoroutine(requestsManager.CheckEmailDuplicates("/users_guardian/guardianID", inputField[0].GetComponent<TMP_InputField>().text));
+        }
+
+        bool isEmpty = IsEmptyInputField(3);
+        if (isEmpty == false)
+        {
+            Panels[1].SetActive(false);
+            Panels[2].SetActive(true);
         }
     }
 
@@ -178,16 +180,14 @@ public class SignUp : MonoBehaviour
 
         if (fieldnum == 3)
         {
-
             foreach (GameObject field in inputField)
             {
-
                 if (!string.IsNullOrEmpty(field.GetComponent<TMP_InputField>().text))
                 {
                     fieldCount++;
                     if (field.name == "email")
                     {
-                        if (hasDuplicate(field.GetComponent<TMP_InputField>().text))
+                        if (requestsManager.EmailHasDuplicates)
                         {
                             message = "Ang email na ibinigay ay nagamit na.";
                             field.GetComponent<TMP_InputField>().text = "";
@@ -197,10 +197,7 @@ public class SignUp : MonoBehaviour
                         }
                         else
                         {
-                            if (duplicate == 0)
-                            {
-                                email = field.GetComponent<TMP_InputField>().text;
-                            }
+                            email = field.GetComponent<TMP_InputField>().text;
                         }
                     }
                     else if (field.name == "password")
@@ -217,7 +214,7 @@ public class SignUp : MonoBehaviour
                             int.TryParse(birthday[0], out birth_month);
                             int.TryParse(birthday[1], out birth_date);
                             int.TryParse(birthday[2], out birth_year);
-                            if (2024 - birth_year < 18 || birth_month > 12 || birth_date > 31 || birth_year < 1950)
+                            if (2024 - birth_year < 10 || birth_month > 12 || birth_date > 31 || birth_year < 1950)
                             {
                                 message = "Ang kaarawang ibinigay ay hindi maaaring tanggapin.";
                                 field.GetComponent<TMP_InputField>().text = "";
@@ -237,14 +234,15 @@ public class SignUp : MonoBehaviour
             }
             if (fieldCount == 3)
             {
-                StartCoroutine(Upload("/users_guardian", email, password, birth_month, birth_date, birth_year));
+                StartCoroutine(requestsManager.AddGuardian("/users_guardian", email, password, birth_month, birth_date, birth_year));
                 result = false;
             }
             else
             {
-                showErrorMessage(message);
+                ShowErrorMessage(message);
                 fieldCount = 0;
                 result = true;
+                message = "";
             }
         }
         else if (fieldnum == 2)
@@ -260,100 +258,26 @@ public class SignUp : MonoBehaviour
             }
             else
             {
+                ShowErrorMessage(message);
                 result = true;
+                message = "";
             }
         }
         return result;
     }
 
-    private bool hasDuplicate(string email)
-    {
-        if (duplicate == 0)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    IEnumerator Upload(string endpoint, string email, string password, int birth_month, int birth_date, int birth_year)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("email", email);
-        form.AddField("password", password);
-        form.AddField("birth_month", birth_month);
-        form.AddField("birth_date", birth_date);
-        form.AddField("birth_year", birth_year);
-
-        using (UnityWebRequest www = UnityWebRequest.Post(URL, form))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError(www.error);
-            }
-            else
-            {
-                PlayerPrefs.SetString("Email", email);
-                Debug.Log("Received: " + www.downloadHandler.text);
-            }
-        }
-    }
-
-    //IEnumerator Get()
-    //{
-    //    using (UnityWebRequest www = UnityWebRequest.Get(URL))
-    //    {
-    //        yield return www.SendWebRequest();
-
-    //        if (www.result != UnityWebRequest.Result.Success)
-    //        {
-    //            Debug.LogError(www.error);
-    //        }
-    //        else
-    //        {
-    //            Debug.Log(www.downloadHandler.text);
-    //        }
-    //    }
-    //}
-
-    IEnumerator getGuardianID(string input)
-    {
-        using (UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/users_guardian/guardianID?email=" + input))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError(www.error);
-            }
-            else
-            {
-                Debug.Log("Received: " + www.downloadHandler.text);
-                Root json = JsonConvert.DeserializeObject<Root>(www.downloadHandler.text);
-                duplicate = json.data.Count;
-                Debug.Log(duplicate);
-            }
-        }
-    }
-
-    private void showErrorMessage(string message)
+    private void ShowErrorMessage(string message)
     {
         if (message == null || message == "")
         {
             message = "Kumpletuhin ang mga detalye.";   
         }
         string editedMessage = "PAALALA: " + message;
-        print(editedMessage);
         errormessage.GetComponentInChildren<TMP_Text>().text = editedMessage;
         errormessage.SetActive(true);
-        message = "";
     }
 
-    public void removeErrorMessage()
+    public void RemoveErrorMessage()
     {
         errormessage.SetActive(false);
     }

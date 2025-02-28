@@ -5,16 +5,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Text.RegularExpressions;
+using UnityEngine.Networking;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
   // SWITCHING PANELS
   // -------------------------------------------------- //
   public GameObject[] Panels;
+  [SerializeField] private AudioSource LevelAudioSource;
+  [SerializeField] private AudioClip LevelBGM;
 
   void Start()
   {
-    //Panels[0].SetActive(true);
+    Panels[0].SetActive(true);
+    PlayBGM(LevelAudioSource, LevelBGM);
   }
 
 
@@ -43,7 +48,42 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
   private void ToggleProgressBar()
   {
-    //ProgressBar.SetActive(!ProgressBar.activeInHierarchy);
+    ProgressBar.SetActive(!ProgressBar.activeInHierarchy);
+  }
+
+
+  public GameObject Result;
+  public GameObject ZeroStar;
+  public GameObject OneStar;
+  public GameObject TwoStars;
+  public GameObject ThreeStars;
+  static int starCount;
+
+  private void ToggleResult()
+  {
+    Panels[0].SetActive(!Panels[0].activeInHierarchy);
+    Result.SetActive(!Result.activeInHierarchy);
+
+    if (starCount == 0)
+    {
+      ZeroStar.SetActive(true);
+    }
+    else if (starCount == 1)
+    {
+      OneStar.SetActive(true);
+      PlayerPrefs.SetInt("Delay Time", 4);
+    }
+    else if (starCount == 2)
+    {
+      TwoStars.SetActive(true);
+        PlayerPrefs.SetInt("Delay Time", 4);
+    }
+    else if (starCount == 3)
+    {
+      ThreeStars.SetActive(true);
+        PlayerPrefs.SetInt("Delay Time", 4);
+    }
+
   }
   // -------------------------------------------------- //
 
@@ -53,8 +93,12 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
   private Vector3 offset;
   public GameObject Shape;
   public GameObject Pencil;
-  public GameObject PencilMaskPrefab;
-  bool isDragging, isDropped, isDrawing;
+  public GameObject PencilMask;
+  public GameObject Collider;
+  private Vector3 pencilState;
+  private Vector3 pencilRaise = new Vector3(105, 120, 0);
+  private Vector3 pencilWrite = new Vector3(85, 100, 0);
+  bool isDragging, isDropped;
 
   void Update()
   {
@@ -67,15 +111,24 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     {
       Vector3 screenPosition = Input.mousePosition;
       screenPosition.z = Camera.main.nearClipPlane + 1;
-
       Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
 
-      Pencil.transform.position = worldPosition;
+      if (Input.GetMouseButton(0))
+      {
+        Collider.GetComponent<CircleCollider2D>().enabled = true;
+        pencilState = pencilWrite;
 
-      if (!isDrawing) return;
-      offset = new Vector3(110, 130, 0);
-      GameObject pencilMask = Instantiate(PencilMaskPrefab, (worldPosition - offset), Quaternion.identity);
-      pencilMask.transform.SetParent(Panels[0].transform);
+        GameObject pencilMask = Instantiate(PencilMask, worldPosition, Quaternion.identity);
+        pencilMask.transform.SetParent(Panels[0].transform);
+      }
+      else
+      {
+        Collider.GetComponent<CircleCollider2D>().enabled = false;
+        pencilState = pencilRaise;
+      }
+
+      Pencil.transform.position = worldPosition + pencilState;
+      Collider.transform.position = worldPosition;
     }
   }
 
@@ -97,12 +150,7 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       Shape.transform.SetAsLastSibling();
       ShapeImage.raycastTarget = false;
 
-      ShapeAudioSource.PlayOneShot(ShapeSFX);
-    }
-    else if (Panels[0].transform.name == "Assessment2")
-    {
-      isDrawing = true;
-      Pencil.GetComponent<CircleCollider2D>().enabled = true;
+      PlaySFX(ShapeAudioSource, ShapeSFX);
     }
   }
 
@@ -124,7 +172,7 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
           Shape.transform.position = Slots[i].transform.position;
 
           AddPoints();
-          ShapeAudioSource.PlayOneShot(Correct);
+          PlaySFX(ShapeAudioSource, Correct);
           return;
         }
         else if (
@@ -133,7 +181,7 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         )
         {
           SubPoints();
-          ShapeAudioSource.PlayOneShot(Wrong);
+          PlaySFX(ShapeAudioSource, Wrong);
         }
       }
 
@@ -142,21 +190,16 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       Shape.transform.SetSiblingIndex(siblingIndex);
       ShapeImage.raycastTarget = true;
     }
-    else if (Panels[0].transform.name == "Assessment2")
-    {
-      isDrawing = false;
-      Pencil.GetComponent<CircleCollider2D>().enabled = false;
-    }
   }
 
 
   HashSet<string> tracedPoints = new HashSet<string>();
 
-  public void OnTriggerEnter2D(Collider2D collider2D)
+  void OnTriggerEnter2D(Collider2D collider)
   {
-    if (collider2D.CompareTag("Tracing Point") && !tracedPoints.Contains(collider2D.gameObject.name))
+    if (collider.CompareTag("Tracing Point") && !tracedPoints.Contains(collider.gameObject.name))
     {
-      tracedPoints.Add(collider2D.gameObject.name);
+      tracedPoints.Add(collider.gameObject.name);
       AddPoints();
     }
   }
@@ -165,68 +208,53 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
   // SCORING
   // -------------------------------------------------- //
-  static float starFillMultiplier;
-  static float starFillMultiplierTest = .3333333f; // test
-  static float a1_ProgressFillTest; // test
-  static float a2_ProgressFillTest; // test
-  static float a3_ProgressFillTest; // test
+  static float starFillMultiplier = .33333f;
 
-  static float assessment1 = 100;
+  static float assessment1 = 100f;
   static float a1_ProgressFill;
   static float a1_Points;
-  static float a1_VacantSlots = 4;
+  static float a1_VacantSlots = 4f;
 
-  static float assessment2 = 100;
+  static float assessment2 = 100f;
   static float a2_ProgressFill;
   static float a2_Points;
-  static float a2_TracingPoints = 19;
+  static float a2_TracingPoints = 28f;
 
-  static float assessment3 = 100;
+  static float assessment3 = 100f;
   static float a3_ProgressFill;
   static float a3_Points;
-  static float a3_VacantSlots = 4;
+  static float a3_VacantSlots = 4f;
 
   private void AddPoints()
   {
     if (Panels[0].transform.name == "Assessment1")
     {
-      starFillMultiplier = .5f;
-
       a1_Points += assessment1 / Slots.Length;
       Debug.Log("A1: " + a1_Points);
 
-      a1_ProgressFill = (a1_Points / 100) * starFillMultiplier;
-      a1_ProgressFillTest = (a1_Points / 100) * starFillMultiplierTest; // test
+      a1_ProgressFill = (a1_Points / 100f) * starFillMultiplier;
       a1_VacantSlots--;
 
       if (a1_VacantSlots == 0) TogglePanel();
     }
     else if (Panels[0].transform.name == "Assessment2")
     {
-      starFillMultiplier = .25f;
-      if (a1_ProgressFill == .0f) starFillMultiplier = .5f;
-
       a2_Points += assessment2 / a2_TracingPoints;
       Debug.Log("A2: " + a2_Points);
 
-      a2_ProgressFill = (a2_Points / 100) * starFillMultiplier;
-      a2_ProgressFillTest = (a2_Points / 100) * starFillMultiplierTest; // test
+      a2_ProgressFill = (a2_Points / 100f) * starFillMultiplier; // not 100
 
-      if (a2_Points >= 100f) TogglePanel(); // no other trigger for now
+      if (a2_TracingPoints == tracedPoints.Count) TogglePanel();
     }
     else if (Panels[0].transform.name == "Assessment3")
     {
-      starFillMultiplier = .25f;
-      if (a1_ProgressFill == .0f && a2_ProgressFill == .0f) starFillMultiplier = .5f;
-
       a3_Points += assessment3 / Slots.Length;
       Debug.Log("A3: " + a3_Points);
 
-      a3_ProgressFill = (a3_Points / 100) * starFillMultiplier;
-      a3_ProgressFillTest = (a3_Points / 100) * starFillMultiplierTest; // test
+      a3_ProgressFill = (a3_Points / 100f) * starFillMultiplier;
       a3_VacantSlots--;
 
-      if (a3_VacantSlots == 0) TogglePanel();
+      if (a3_VacantSlots == 0) ToggleResult();
     }
     OnProgress();
   }
@@ -235,25 +263,14 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
   {
     if (Panels[0].transform.name == "Assessment1")
     {
-      starFillMultiplier = .5f;
-
       a1_Points -= (assessment1 / Slots.Length) / a1_VacantSlots;
-      a1_ProgressFill = (a1_Points / 100) * starFillMultiplier;
-      a1_ProgressFillTest = (a1_Points / 100) * starFillMultiplierTest; // test
+      a1_ProgressFill = (a1_Points / 100f) * starFillMultiplier;
       Debug.Log("A1: " + a1_Points);
-    }
-    else if (Panels[0].transform.name == "Assessment2")
-    {
-      // empty
     }
     else if (Panels[0].transform.name == "Assessment3")
     {
-      starFillMultiplier = .25f;
-      if (a1_ProgressFill == .0f && a2_ProgressFill == .0f) starFillMultiplier = .5f;
-
       a3_Points -= (assessment3 / Slots.Length) / a3_VacantSlots;
-      a3_ProgressFill = (a3_Points / 100) * starFillMultiplier;
-      a3_ProgressFillTest = (a3_Points / 100) * starFillMultiplierTest; // test
+      a3_ProgressFill = (a3_Points / 100f) * starFillMultiplier;
       Debug.Log("A3: " + a3_Points);
     }
     OnProgress();
@@ -261,63 +278,57 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
 
   public Image ProgressBarMask;
-  public Image ProgressBarMaskTest; // test
   public Sprite EarnedStar;
   public Image[] UnearnedStarImages;
-  public Image[] UnearnedStarImagesTest; // test
 
   static float totalProgressFill;
-  static float totalProgressFillTest; // test
 
   private void OnProgress()
   {
     totalProgressFill = a1_ProgressFill + a2_ProgressFill + a3_ProgressFill;
-    totalProgressFillTest = a1_ProgressFillTest + a2_ProgressFillTest + a3_ProgressFillTest; // test
 
     ProgressBarMask.fillAmount = totalProgressFill;
-    ProgressBarMaskTest.fillAmount = totalProgressFillTest; // test
 
-    if (totalProgressFill == 1)
+    if (totalProgressFill == 1f)
     {
       UnearnedStarImages[0].sprite = EarnedStar;
       UnearnedStarImages[1].sprite = EarnedStar;
       UnearnedStarImages[2].sprite = EarnedStar;
+      starCount = 3;
+      Debug.Log("Stars: " + starCount);
     }
-    else if (totalProgressFill >= .75F && totalProgressFill < 1)
+    else if (totalProgressFill >= .66666f && totalProgressFill < 1)
     {
       UnearnedStarImages[0].sprite = EarnedStar;
       UnearnedStarImages[1].sprite = EarnedStar;
+      starCount = 2;
+      Debug.Log("Stars: " + starCount);
     }
-    else if (totalProgressFill >= .5F && totalProgressFill < .75F)
+    else if (totalProgressFill >= .33333f && totalProgressFill < .66666f)
     {
       UnearnedStarImages[0].sprite = EarnedStar;
+      starCount = 1;
+      Debug.Log("Stars: " + starCount);
     }
-    
-    if (totalProgressFillTest == 1) // test
-    { // test
-      UnearnedStarImagesTest[0].sprite = EarnedStar; // test
-      UnearnedStarImagesTest[1].sprite = EarnedStar; // test
-      UnearnedStarImagesTest[2].sprite = EarnedStar; // test
-    } // test
-    else if (totalProgressFillTest >= .66F && totalProgressFillTest < 1) // test
-    { // test
-      UnearnedStarImagesTest[0].sprite = EarnedStar; // test
-      UnearnedStarImagesTest[1].sprite = EarnedStar; // test
-    } // test
-    else if (totalProgressFillTest >= .33F && totalProgressFillTest < .66F) // test
-    { // test
-      UnearnedStarImagesTest[0].sprite = EarnedStar; // test
-    } // test
-  }
+    // ------------------------------------------------------------------------------------------------ //
+    PlayerPrefs.SetFloat("Theme1 Score", totalProgressFill);
+    }
   // -------------------------------------------------- //
 
 
   // PLAYING BGM AND SFX
   // -------------------------------------------------- //
+  public void PlayBGM(AudioSource audioSource, AudioClip BGM)
+  {
+    if (audioSource == null && BGM == null) return;
+    audioSource.clip = BGM;
+    audioSource.Play();
+  }
+
   public void PlaySFX(AudioSource audioSource, AudioClip SFX)
   {
     if (audioSource == null && SFX == null) return;
     audioSource.PlayOneShot(SFX);
   }
-  // -------------------------------------------------- //
+    // -------------------------------------------------- //
 }

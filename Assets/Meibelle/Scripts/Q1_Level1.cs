@@ -10,18 +10,20 @@ using Newtonsoft.Json;
 
 public class Q1_Level1 : MonoBehaviour
 {
-
+    [Header("<---- SCENE PANELS ---->")]
     [SerializeField]
     private GameObject[] scenes = new GameObject[9];
     [SerializeField]
     private GameObject[] assessments = new GameObject[4];
 
+    [Header("<---- EXERCISES GAMEOBJECTS ---->")]
     [SerializeField]
     private GameObject[] exercise1 = new GameObject[4];
     [SerializeField] 
     private GameObject[] exercise2 = new GameObject[7];
     Vector3[] candlesInitialPos = new Vector3[4];
 
+    [Header("<---- ASSESSMENTS GAMEOBJECTS ---->")]
     [SerializeField]
     private Button[] assessment1Button = new Button[3];
     [SerializeField]
@@ -33,20 +35,33 @@ public class Q1_Level1 : MonoBehaviour
     [SerializeField]
     private GameObject[] assessmentConfetti = new GameObject[3];
 
+    [Header("<---- PROGRESS BAR AND RESULT ---->")]
     [SerializeField]
     private Image progressBar;
     [SerializeField]
     private GameObject[] result = new GameObject[5];
 
-    int assess1 = 50;
-    int assess2 = 25;
-    int assess3 = 25;
-    int error;
-    int userID;
-    float score;
+    [Header("<---- STARS IMAGE AND SPRITE ---->")]
+    [SerializeField]
+    private Image[] stars = new Image[3];
+    [SerializeField]
+    private Sprite earnedStar;
+
+    [Header("<---- REQUEST SCRIPT ---->")]
+    [SerializeField]
+    private THEME1_LEVEL1_REQUESTS requestsManager;
+
+    private int assess1 = 100;
+    private int assess2 = 100;
+    private int assess3 = 100;
+    private int error;
+    private int userID;
+    private float score;
 
     public void Start()
     {
+        requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
+
         userID = PlayerPrefs.GetInt("Current_user");
         for (int i = 0; i < (scenes.Length - 1); i++)
         {
@@ -85,6 +100,11 @@ public class Q1_Level1 : MonoBehaviour
             string text = button.name;
             button.onClick.AddListener(() => CheckAssessment3(text));
         }
+    }
+
+    public void OpenPreview()
+    {
+        scenes[0].SetActive(true);
     }
 
     public void OnContinue(int index)
@@ -201,7 +221,7 @@ public class Q1_Level1 : MonoBehaviour
         }
         else
         {
-            error += 8;
+            error += 16;
         }
     }
 
@@ -215,7 +235,7 @@ public class Q1_Level1 : MonoBehaviour
         }
         else
         {
-            error += 12;
+            error += 50;
         }
     }
 
@@ -229,7 +249,7 @@ public class Q1_Level1 : MonoBehaviour
         }
         else
         {
-            error += 12;
+            error += 50;
         }
     }
 
@@ -248,38 +268,38 @@ public class Q1_Level1 : MonoBehaviour
         float currentScore = 0;
         if (assessNum == 1)
         {
-            float scorePerGroup = assess1 / 3f;
-            print(scorePerGroup);
-            if (scorePerGroup > totalError)
+            float a1 = ((float)(((float)assess1/3) - totalError)/assess1) * (100f / 3f);
+            if (a1 <= 0)
             {
-                currentScore = scorePerGroup - totalError;
-                print(currentScore);
+                currentScore = 0;
             }
             else
             {
-                currentScore = 0;
+                currentScore = a1;
             }
         }
         else if (assessNum == 2) 
         {
-            if (assess2 > totalError)
+            float a2 = ((float) (assess2 - totalError) / assess2) * (100f  / 3f);
+            if (a2 <= 0)
             {
-                currentScore = assess2 - totalError;
+                currentScore = 0;
             }
             else
             {
-                currentScore = 0;
+                currentScore = a2;
             }
         }
         else if (assessNum == 3)
         {
-            if (assess3 > totalError)
+            float a3 = ((float)(assess3 - totalError) / assess3) * (100f / 3f);
+            if (a3 <= 0)
             {
-                currentScore = assess3 - totalError;
+                currentScore = 0;
             }
             else
             {
-                currentScore = 0;
+                currentScore = a3;
             }
         }
         error = 0;
@@ -287,100 +307,71 @@ public class Q1_Level1 : MonoBehaviour
         score += currentScore;
         print("score" + score);
         progressBar.fillAmount = score / 100;
+        if (score >= (100f / 3f) * 1 && score < (100f / 3f) * 2)
+        {
+            Debug.Log("Star1");
+            stars[0].sprite = earnedStar;
+        }
+        else if (score >= (100f/3f) * 2 && score < (100f / 3f) * 3)
+        {
+            stars[0].sprite = earnedStar;
+            stars[1].sprite = earnedStar;
+        }
+        else if (score == (100f / 3f) * 3) {
+            stars[0].sprite = earnedStar;
+            stars[1].sprite = earnedStar;
+            stars[2].sprite = earnedStar;
+        }
     }
 
-    int delaytime;
+    private int delaytime;
 
     private void AssessResult()
     {
-        StartCoroutine(UpdateCurrentScore());
-        if (score < 50)
+        int theme_num = 1;
+        int level_num = 1;
+        StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+
+        float star1 = (100f / 3f);
+        float star2 = (100f / 3f) * 2;
+        float star3 = (100f / 3f) * 3;
+
+        if (score < star1)
         {
             result[4].SetActive(true);
+            delaytime = 4;
+        }
+        else if (score >= star1 && score < star2)
+        {
+            result[1].SetActive(true);
+            delaytime = 4;
+        }
+        else if (score >= star2 && score < star3)
+        {
+            delaytime = 4;
+            result[0].SetActive(true);
+            result[2].SetActive(true);
         }
         else
         {
-            if (score >= 50 && score < 75)
-            {
-                result[1].SetActive(true);
-                delaytime = 4;
-            }
-            else if (score >= 75 && score < 100)
-            {
-                delaytime = 4;
-                result[0].SetActive(true);
-                result[2].SetActive(true);
-            }
-            else
-            {
-                delaytime += 8;
-                result[0].SetActive(true);
-                result[3].SetActive(true);
-            }
-            StartCoroutine(GoToMap());
+            delaytime += 8;
+            result[0].SetActive(true);
+            result[3].SetActive(true);
         }
-    }
-
-    public void ResultButton(Button buttonType)
-    {
-        if (buttonType.name == "retry-button")
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(9);
-        }
+        StartCoroutine(GoToMap());
     }
 
     IEnumerator GoToMap()
     {
         yield return new WaitForSeconds(delaytime);
-        StartCoroutine(UpdateCurrentLevel());
-    }
-
-    IEnumerator UpdateCurrentLevel()
-    {
-        int current_level = 2;
-        byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"current_level\": "+ current_level +"}");
-
-        if (score >= 50)
+        if (score < (100f / 3f))
         {
-            using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/users", rawData))
-            {
-                www.method = "PUT";
-                www.SetRequestHeader("Content-Type", "application/json");
-                yield return www.SendWebRequest();
-
-                if (www.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.LogError(www.error);
-                }
-                else
-                {
-                    PlayerPrefs.SetInt("Current_level", current_level);
-                    Debug.Log("Received: " + www.downloadHandler.text);
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(7);
-                }
-            }
+            UnityEngine.SceneManagement.SceneManager.LoadScene(7);
         }
-
-    }
-
-    IEnumerator UpdateCurrentScore()
-    {
-        byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"theme_num\": 1, \"level_num\": 1, \"score\": " + score + "}");
-
-        using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/scores", rawData))
+        else
         {
-            www.method = "PUT";
-            www.SetRequestHeader("Content-Type", "application/json");
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError(www.error);
-            }
-            else
-            {
-                Debug.Log("Received: " + www.downloadHandler.text);
-            }
+            int next_level = 2;
+            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
         }
     }
 }
