@@ -23,7 +23,9 @@ public class GameMenuManager : MonoBehaviour
     [SerializeField]
     private Button[] exit = new Button[2];
 
-    [Header("<---- SPRITES ---->")]
+    [Header("<---- GAME OBJECT AND SPRITES ---->")]
+    [SerializeField]
+    private Button[] settingsBG = new Button[2];
     [SerializeField]
     private Sprite[] mute = new Sprite[4];
 
@@ -32,6 +34,12 @@ public class GameMenuManager : MonoBehaviour
     private AudioSource bgMusic;
     [SerializeField]
     private AudioSource voiceOver;
+    [SerializeField]
+    private AudioSource SFX;
+
+    [Header("<---- AUDIO CLIP ---->")]
+    [SerializeField]
+    private AudioClip buttonClick;
 
     void Start()
     {
@@ -63,6 +71,7 @@ public class GameMenuManager : MonoBehaviour
 
     private void OpenMenuPanel(int index)
     {
+        SFX.PlayOneShot(buttonClick);
 
         if (menu_panels[index].activeSelf)
         {
@@ -86,6 +95,8 @@ public class GameMenuManager : MonoBehaviour
 
     private void PausedFunctions(int index)
     {
+        SFX.PlayOneShot(buttonClick);
+
         if (index == 0)
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
@@ -103,18 +114,21 @@ public class GameMenuManager : MonoBehaviour
 
     private void SettingsFunctions(int index)
     {
+        SFX.PlayOneShot(buttonClick);
+
         if (index == 0)
         {
-            Debug.Log(bgMusic.name);
             if (bgMusic.volume != 0)
             {
                 bgMusic.volume = 0;
-                settings[index].GetComponent<Image>().sprite = mute[0];
+                settingsBG[index].GetComponent<Image>().sprite = mute[0];
+                settingsBG[index].interactable = false;
             }
             else
             {
                 bgMusic.volume = 0.45f;
-                settings[index].GetComponent<Image>().sprite = mute[2];
+                settingsBG[index].GetComponent<Image>().sprite = mute[2];
+                settingsBG[index].interactable = true;
             }
         }
         else if (index == 1)
@@ -122,12 +136,14 @@ public class GameMenuManager : MonoBehaviour
             if (voiceOver.volume != 0)
             {
                 voiceOver.volume = 0;
-                settings[index].GetComponent<Image>().sprite = mute[1];
+                settingsBG[index].GetComponent<Image>().sprite = mute[1];
+                settingsBG[index].interactable = false;
             }
             else
             {
                 voiceOver.volume = 1;
-                settings[index].GetComponent<Image>().sprite = mute[3];
+                settingsBG[index].GetComponent<Image>().sprite = mute[3];
+                settingsBG[index].interactable = true;
             }
         }
         else
@@ -138,6 +154,8 @@ public class GameMenuManager : MonoBehaviour
 
     private void ExitFunctions(int index)
     {
+        SFX.PlayOneShot(buttonClick);
+
         if (index == 0)
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(5);

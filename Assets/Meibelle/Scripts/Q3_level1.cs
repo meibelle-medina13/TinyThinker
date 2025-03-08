@@ -59,6 +59,8 @@ public class Q3_level1 : MonoBehaviour
     [SerializeField]
     private GameObject[] timelines = new GameObject[2];
     [SerializeField]
+    private GameObject[] assess1_colliders = new GameObject[2];
+    [SerializeField]
     private GameObject assess1Confetti;
     private int characterCounter;
 
@@ -72,9 +74,13 @@ public class Q3_level1 : MonoBehaviour
     [Header("<---- ASSESSMENT 3 ---->")]
     [SerializeField]
     private GameObject[] puzzlePieces = new GameObject[7];
+    [SerializeField]
+    private GameObject[] puzzleBG = new GameObject[7];
     private Vector3[] piecesInitialPos = new Vector3[7];
     [SerializeField]
     private GameObject puzzlePattern;
+    [SerializeField]
+    private GameObject[] assess3_colliders = new GameObject[7];
     [SerializeField]
     private GameObject confetti3;
     private int puzzleCounter;
@@ -194,7 +200,6 @@ public class Q3_level1 : MonoBehaviour
         }
         else if (scenes[4].activeSelf)
         {
-            Debug.Log("scene4");
             if (PlayerPrefs.GetInt("Tracing Points") == 16)
             {
                 maraIcon2.SetActive(true);
@@ -206,7 +211,6 @@ public class Q3_level1 : MonoBehaviour
         PlayableDirector playableDirector;
 
         int index = PlayerPrefs.GetInt("CurrentPanel");
-        Debug.Log(index);
         if (!scenes[9].activeSelf)
         {
             playableDirector = scenes[index].GetComponent<PlayableDirector>();
@@ -346,9 +350,7 @@ public class Q3_level1 : MonoBehaviour
     public void DropLeaf(GameObject leaf)
     {
         float Distance = Vector3.Distance(leaf.transform.position, driedLeaves.transform.position);
-        Debug.Log(leaf.name.Substring(10, 1));
         int index = int.Parse(leaf.name.Substring(10, 1));
-        Debug.Log("Distance: " + Distance);
         if (Distance <= 250)
         {
             leaf.transform.position = Input.mousePosition;
@@ -377,18 +379,18 @@ public class Q3_level1 : MonoBehaviour
 
     public void DropCharacter(GameObject character)
     {
-        float Distance1 = Vector3.Distance(character.transform.position, setting[0].transform.position);
-        float Distance2 = Vector3.Distance(character.transform.position, setting[1].transform.position);
-        
-        if (character.name == "mr-marley" && Distance1 <= 100)
+        string colliderName = PlayerPrefs.GetString("Collider");
+        if (character.name == "mr-marley" && colliderName == "garden_collider")
         {
+            PlayerPrefs.SetString("Collider", "");
             timelines[0].SetActive(true);
             MoveProgress(error, 1);
             characterCounter++;
             audioSource.PlayOneShot(audioClip[1]);
         }
-        else if (character.name == "mrs-loti" && Distance2 <= 100)
+        else if (character.name == "mrs-loti" && colliderName == "backyard_collider")
         {
+            PlayerPrefs.SetString("Collider", "");
             timelines[1].SetActive(true);
             MoveProgress(error, 1);
             characterCounter++;
@@ -400,11 +402,13 @@ public class Q3_level1 : MonoBehaviour
             {
                 character.transform.position = charInitialPos[0];
                 error += 50;
+                assess1_colliders[0].SetActive(true);
             }
             else
             {
                 character.transform.position = charInitialPos[1];
                 error += 50;
+                assess1_colliders[1].SetActive(true);
             }
             audioSource.PlayOneShot(audioClip[2]);
         }
@@ -419,7 +423,6 @@ public class Q3_level1 : MonoBehaviour
 
     IEnumerator OpenAssessment2(int current)
     {
-        Debug.Log("working");
         yield return new WaitForSeconds(3);
         assessments[current].SetActive(false);
         assessments[current+1].SetActive(true);
@@ -455,55 +458,61 @@ public class Q3_level1 : MonoBehaviour
 
     public void DropPuzzle(GameObject piece)
     {
+        string colliderName = PlayerPrefs.GetString("Collider");
         int index = int.Parse(piece.name.Substring(6, 1));
 
-        float Distance = Vector3.Distance(piece.transform.position, puzzlePattern.transform.position);
-        Debug.Log(Distance);
-        if (Distance > 170 && Distance < 185 && index == 1)
+        if (colliderName == "p1" && index == 1)
         {
-            piece.transform.localPosition = new Vector3(-211.5f, 0.31f, 0);
+            piece.SetActive(false);
+            puzzleBG[index - 1].SetActive(true);
             puzzleCounter++;
             MoveProgress(error, 3);
             audioSource.PlayOneShot(audioClip[1]);
         }
-        else if (Distance > 110 && Distance < 120 && index == 2)
+        else if (colliderName == "p2" && index == 2)
         {
-            piece.transform.localPosition = new Vector3(-393, 139, 0);
+            piece.SetActive(false);
+            puzzleBG[index - 1].SetActive(true);
             puzzleCounter++;
             MoveProgress(error, 3);
             audioSource.PlayOneShot(audioClip[1]);
         }
-        else if (Distance > 175 && Distance < 185 && index == 3)
+        else if (colliderName == "p3" && index == 3)
         {
-            piece.transform.localPosition = new Vector3(-475, 151.2f, 0);
+            piece.SetActive(false);
+            puzzleBG[index - 1].SetActive(true);
             puzzleCounter++;
             MoveProgress(error, 3);
             audioSource.PlayOneShot(audioClip[1]);
         }
-        else if (Distance > 105 && Distance < 115 && index == 4)
+        else if (colliderName == "p4" && index == 4)
         {
-            piece.transform.localPosition = new Vector3(-289.4f, 150.7f, 0);
+            piece.SetActive(false);
+            puzzleBG[index - 1].SetActive(true);
             puzzleCounter++;
             MoveProgress(error, 3);
             audioSource.PlayOneShot(audioClip[1]);
         }
-        else if (Distance > 170 && Distance < 190 && index == 5)
+        else if (colliderName == "p5" && index == 5)
         {
-            piece.transform.localPosition = new Vector3(-185.2f, 155.8f, 0);
+            piece.SetActive(false);
+            puzzleBG[index - 1].SetActive(true);
             puzzleCounter++;
             MoveProgress(error, 3);
             audioSource.PlayOneShot(audioClip[1]);
         }
-        else if (Distance > 180 && Distance < 195 && index == 6)
+        else if (colliderName == "p6" && index == 6)
         {
-            piece.transform.localPosition = new Vector3(-473, 41.7f, 0);
+            piece.SetActive(false);
+            puzzleBG[index - 1].SetActive(true);
             puzzleCounter++;
             MoveProgress(error, 3);
             audioSource.PlayOneShot(audioClip[1]);
         }
-        else if (Distance > 115 && Distance < 130 && index == 7)
+        else if (colliderName == "p7" && index == 7)
         {
-            piece.transform.localPosition = new Vector3(-326, 22.9f, 0);
+            piece.SetActive(false);
+            puzzleBG[index - 1].SetActive(true);
             puzzleCounter++;
             MoveProgress(error, 3);
             audioSource.PlayOneShot(audioClip[1]);
@@ -515,8 +524,17 @@ public class Q3_level1 : MonoBehaviour
             audioSource.PlayOneShot(audioClip[2]);
         }
 
+        for (int i = 0; i < assess3_colliders.Length; i++)
+        {
+            assess3_colliders[i].SetActive(true);
+        }
+
         if (puzzleCounter == 7)
         {
+            for (int i = 0; i < puzzleBG.Length; i++)
+            {
+                puzzleBG[i].SetActive(false);
+            }
             confetti3.SetActive(true);
             audioSource.PlayOneShot(audioClip[3]);
         }
