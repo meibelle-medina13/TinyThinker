@@ -6,9 +6,18 @@ using UnityEngine;
 
 public class OnTrigger : MonoBehaviour
 {
+    private void Start()
+    {
+        PlayerPrefs.DeleteKey("Collider");
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<Rigidbody2D>() == null)
+        if (gameObject.name == "star" || gameObject.name == "final star")
+        {
+            gameObject.SetActive(false);
+            PlayerPrefs.SetString("Collider", gameObject.name);
+        }
+        else if (collision.gameObject.GetComponent<Rigidbody2D>() == null)
         {
             collision.gameObject.SetActive(false);
             PlayerPrefs.SetString("Collider", collision.gameObject.name);
