@@ -42,7 +42,7 @@ public class tracing : MonoBehaviour
     }
 
     HashSet<string> tracedPoints = new HashSet<string>();
-    public int no_of_traced = 0;
+    int no_of_traced = 0;
     int wrong_traced = 0;
 
     public void OnTriggerEnter2D(Collider2D collider)
