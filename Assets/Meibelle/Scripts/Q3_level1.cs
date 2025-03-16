@@ -119,7 +119,6 @@ public class Q3_level1 : MonoBehaviour
     {
         //DELETE
         PlayerPrefs.DeleteKey("CurrentPanel");
-        //PlayerPrefs.SetInt("Selected_theme", 1);
         //DELETE
         PlayerPrefs.SetInt("Tracing Points", 0);
         PlayerPrefs.SetInt("Wrong Points", 0);

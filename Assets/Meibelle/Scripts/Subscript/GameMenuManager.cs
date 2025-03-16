@@ -99,7 +99,7 @@ public class GameMenuManager : MonoBehaviour
 
         if (index == 0)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         }
         else if (index == 1)
         {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
@@ -50,8 +51,11 @@ public class Quarter3_Level2 : MonoBehaviour
     //[SerializeField] private List<AudioClip> audios;
 
     public List<TextMeshProUGUI> text;
-    private static bool bgMusicPlayed = false;
+    //private static bool bgMusicPlayed = false;
     private float fillamount;
+
+    public GameObject tracingPath;
+    public GameObject gameMenu;
 
     [Header("<---- REQUEST SCRIPT ---->")]
     [SerializeField]
@@ -86,14 +90,14 @@ public class Quarter3_Level2 : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
 
-        if (!bgMusicPlayed)
-        {
-            if (audioManager4 != null)
-            {
-                audioManager4.scene_bgmusic(1f);
-                bgMusicPlayed = true;
-            }
-        }
+        //if (!bgMusicPlayed)
+        //{
+        //    if (audioManager4 != null)
+        //    {
+        //        audioManager4.scene_bgmusic(1f);
+        //        bgMusicPlayed = true;
+        //    }
+        //}
     }
 
     public void UpdateScene()
@@ -112,16 +116,17 @@ public class Quarter3_Level2 : MonoBehaviour
             button[1].gameObject.SetActive(false);
         }
 
-        else if (Scene_counter == 11)
-        {
-            audioManager4.assessment_bgmusic(0.5f);
-        }
+        //else if (Scene_counter == 11)
+        //{
+        //    audioManager4.assessment_bgmusic(0.5f);
+        //}
 
         else if (Scene_counter == 12)
         {
             Scene_counter++;
             scenes[Scene_counter].SetActive(true);
         }
+
     }
 
     void OnScrollChanged(int index, Vector2 position)
@@ -260,7 +265,7 @@ public class Quarter3_Level2 : MonoBehaviour
                     IncrementFillAmount(0.1111111111111111f);
                 }
                 Invoke("UpdateScene", 1f);
-                audioManager4.Stop_backgroundMusic2();
+                //audioManager4.Stop_backgroundMusic2();
                 Invoke("Show_Stars", 1f);
             }
             else
@@ -687,6 +692,57 @@ public class Quarter3_Level2 : MonoBehaviour
             }
         }
 
+        PlayableDirector PanelPlayableDirector;
+        //int index = PlayerPrefs.GetInt("CurrentPanel");
+        //Debug.Log(index);
+        //if (!scenes[index].activeSelf) {
+        //}
+        int index = 0;
+        string objectName = gameObject.name;
+        string tlName = null;
+        if (objectName[..5] == "Scene" && scenes.Count > 0)
+        {
+            for (int i = 0; i < scenes.Count; i++)
+            {
+                if (scenes[i].activeSelf)
+                {
+                    index = i+1;
+                    if (index != 13)
+                    {
+                        break;
+                    }
+                }
+            }
+            
+            tlName = "scene" + index + "_timeline";
+            Debug.Log(tlName);
+            if (index < 17)
+            {
+                GameObject timeline = scenes[index-1].transform.Find(tlName).gameObject;
+                PanelPlayableDirector = timeline.GetComponent<PlayableDirector>();
+                if (PlayerPrefs.GetString("Paused") == "True")
+                {
+                    PanelPlayableDirector.Pause();
+                    if (index == 10)
+                    {
+                        tracingPath.SetActive(false);
+                    }
+                }
+                else if (PlayerPrefs.GetString("Paused") == "False")
+                {
+                    PanelPlayableDirector.Resume();
+                    PlayerPrefs.DeleteKey("Paused");
+                    if (index == 10)
+                    {
+                        tracingPath.SetActive(true);
+                    }
+                }
+            }
+            else
+            {
+                gameMenu.SetActive(false);
+            }
+        }
     }
 
     void Delay2seconds(PlayableDirector director)

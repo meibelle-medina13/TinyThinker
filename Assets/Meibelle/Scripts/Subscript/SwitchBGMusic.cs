@@ -18,7 +18,6 @@ public class SwitchBGMusic : MonoBehaviour
         {
             //audioManager.ChangeAudio(newAudio);
             levels_BGM[0].GetComponent<AudioManager>().ChangeAudio(newAudio);
-
         }
     }
 
