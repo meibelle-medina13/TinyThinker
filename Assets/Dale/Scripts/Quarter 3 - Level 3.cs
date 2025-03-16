@@ -15,6 +15,9 @@ public class Quarter3Level3 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
   // SWITCHING PANELS
   // -------------------------------------------------- //
   public GameObject[] Panels;
+  public GameObject tracingObject;
+  public GameObject assess2BG;
+  public GameObject[] moleHole;
 
   void Start()
   {
@@ -105,6 +108,68 @@ public class Quarter3Level3 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       WhackAHammer.transform.position = worldPosition;
       WhackACollider.transform.position = worldPosition + new Vector3(-10, -30, 0);
     }
+
+    if (GetActivePanel() != "Result")
+    {
+      PlayableDirector playableDirector;
+      int index = PlayerPrefs.GetInt("CurrentPanel");
+      playableDirector = Panels[index].GetComponent<PlayableDirector>();
+
+      if (PlayerPrefs.GetString("Paused") == "True")
+      {
+        playableDirector.Pause();
+        if (GetActivePanel() == "Scene4") tracingObject.SetActive(false);
+
+        if (GetActivePanel() == "Assessment2")
+        {
+          if (moleHole.Length > 0)
+          {
+            foreach (GameObject hole in moleHole)
+            {
+              hole.SetActive(false);
+            }
+          }
+        }
+
+        if (GetActivePanel() == "Assessment3")
+        {
+          if (cloudDaysButton.Length > 0)
+          {
+            foreach (GameObject day in cloudDaysButton)
+            {
+              day.SetActive(false);
+            }
+          }
+        }
+      }
+      else
+      {
+        playableDirector.Resume();
+        if (GetActivePanel() == "Scene4") tracingObject.SetActive(true);
+
+        if (GetActivePanel() == "Assessment2")
+        {
+          if (moleHole.Length > 0)
+          {
+            foreach (GameObject hole in moleHole)
+            {
+              hole.SetActive(true);
+            }
+          }
+        }
+
+        if (GetActivePanel() == "Assessment3")
+        {
+          if (cloudDaysButton.Length > 0)
+          {
+            foreach (GameObject day in cloudDaysButton)
+            {
+              day.SetActive(true);
+            }
+          }
+        }
+      }
+    }
   }
 
 
@@ -142,7 +207,11 @@ public class Quarter3Level3 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
   {
     for (int i = 0; i < Panels.Length; i++)
     {
-      if (Panels[i].activeInHierarchy) return Panels[i].transform.name;
+      if (Panels[i].activeInHierarchy)
+      {
+        PlayerPrefs.SetInt("CurrentPanel", i);
+        return Panels[i].transform.name;
+      }
     }
     return "None";
   }
@@ -883,7 +952,11 @@ public class Quarter3Level3 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       PlaySFX("correct");
       OnProgress();
 
-      if (a3_PlayerScore == a3_CorrectAnswers) ToggleResult();
+      if (a3_PlayerScore == a3_CorrectAnswers)
+      {
+        GameObject.Find("Assessment3").SetActive(false);
+        ToggleResult();
+      }
     }
   }
 
