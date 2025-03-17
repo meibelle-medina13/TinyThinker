@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class PreTest_PostTest4 : MonoBehaviour
@@ -25,16 +26,18 @@ public class PreTest_PostTest4 : MonoBehaviour
     private Vector3 pencilState;
     private Vector3 offset;
 
+    public List<Collider2D> setting_colliders;
+    public List<GameObject> attachedobject;
+    public List<Button> button;
     private HashSet<string> tracedPoints = new HashSet<string>();
     private int score = 0;
     public int totalTracingPoints = 0;
 
     private int object_counter = 0;
-    public List<Collider2D> setting_colliders;
-    public List<GameObject> attachedobject;
     private Transform draggable;
     private Vector3 draggableObjectState;
     private static bool increment = false;
+
 
     private AudioSource audioSource;
     private static bool bgMusicPlayed = false;
@@ -333,6 +336,11 @@ public class PreTest_PostTest4 : MonoBehaviour
 
     public void UpdateScene()
     {
+        foreach (Button button in button)
+        {
+            button.interactable = false;
+        }
+
         Test_scenes[test_counter].SetActive(false);
         test_counter++;
         Test_scenes[test_counter].SetActive(true);
@@ -380,9 +388,10 @@ public class PreTest_PostTest4 : MonoBehaviour
         DelayUpdate();
     }
 
-    public void CountObjects(GameObject objectClicked)
+    public void CountObjects(Button objectClicked)
     {
         object_counter++;
+        objectClicked.interactable = false;
 
         if (objectClicked.name == "damo")
         {
@@ -426,5 +435,13 @@ public class PreTest_PostTest4 : MonoBehaviour
     public void DisableScene(GameObject disableScene)
     {
         disableScene.SetActive(false);
+    }
+
+    public void EnableButton()
+    {
+        foreach (Button button in button)
+        {
+            button.interactable = true;
+        }
     }
 }
