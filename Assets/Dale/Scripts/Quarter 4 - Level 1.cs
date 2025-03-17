@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ using UnityEngine.UI;
 public class Quarter4Level1 : MonoBehaviour
 {
   public GameObject[] Panels;
+  public GameObject GameMenu;
 
   [Header("<---- TIMELINE ---->")]
   [SerializeField] private TimelineAsset scene9Timelines;
@@ -38,6 +40,9 @@ public class Quarter4Level1 : MonoBehaviour
   [Header("<---- SFX CLIPS ---->")]
   [SerializeField] private AudioClip[] SFXClips;
   [SerializeField] private AudioSource SFXSource;
+
+  [Header("<---- TRACING GAMEOBJECTS ---->")]
+  [SerializeField] private GameObject[] tracingObjects;
 
   private int assessmentScore = 100;
   private int error = 0;
@@ -124,7 +129,7 @@ public class Quarter4Level1 : MonoBehaviour
         }
         else
         {
-          ToggleNextPanel();
+          Invoke(nameof(ToggleNextPanel), 1.5f);
         }
       }
     }
@@ -149,6 +154,116 @@ public class Quarter4Level1 : MonoBehaviour
         PlaySFX(SFXClips[0]);
         PlayerPrefs.DeleteKey("Falling");
       }
+    }
+
+    if (GetActivePanel().name != "Result")
+    {
+      PlayableDirector playableDirector;
+      playableDirector = GetActivePanel().GetComponent<PlayableDirector>();
+      if (PlayerPrefs.GetString("Paused") == "True")
+      {
+        playableDirector.Pause();
+        if (GetActivePanel().name == "Scene4")
+        {
+          Animator animatorBoat = GameObject.Find("ride").GetComponent<Animator>();
+          Animator animatorWave = GameObject.Find("wave").GetComponent<Animator>();
+          animatorBoat.speed = 0f;
+          animatorWave.speed = 0f;
+        }
+        else if (GetActivePanel().name == "Scene7")
+        {
+          Animator animatorRain = GameObject.Find("scene7 rain").GetComponent<Animator>();
+          AudioSource audioRain = GameObject.Find("scene7 rain").GetComponent<AudioSource>();
+          animatorRain.speed = 0f;
+          audioRain.Pause();
+          if (tracingObjects[0].activeSelf) tracingObjects[1].SetActive(false);
+        }
+        else if (GetActivePanel().name == "Scene8")
+        {
+          if (tracingObjects[2].activeSelf) tracingObjects[3].SetActive(false);
+          Animator animatorSmoke = GameObject.Find("campfire - smoking").GetComponent<Animator>();
+          animatorSmoke.speed = 0f;
+        }
+        else if (GetActivePanel().name == "Scene9")
+        {
+          if (tracingObjects[4].activeSelf) tracingObjects[5].SetActive(false);
+          if (playableDirector.playableAsset.name == "Scene9")
+          {
+            Animator animatorBurning = GameObject.Find("campfire - burning").GetComponent<Animator>();
+            animatorBurning.speed = 0f;
+          }
+          else if (playableDirector.playableAsset.name == "Scene9 - Part2")
+          {
+            Animator animatorBurning = GameObject.Find("campfire - burning out").GetComponent<Animator>();
+            animatorBurning.speed = 0f;
+          }
+        }
+        else if (GetActivePanel().name == "Scene11")
+        {
+          GameObject worm = GameObject.Find("worm inside");
+          Color wormColor = worm.GetComponent<SpriteRenderer>().color;
+          wormColor.a = 0f;
+          worm.GetComponent<SpriteRenderer>().color = wormColor;
+        }
+        else if (GetActivePanel().name == "Scene12")
+        {
+          if (tracingObjects[6].activeSelf) tracingObjects[7].SetActive(false);
+        }
+      }
+      else if (PlayerPrefs.GetString("Paused") == "False")
+      {
+        playableDirector.Resume();
+        if (GetActivePanel().name == "Scene4")
+        {
+          Animator animatorBoat = GameObject.Find("ride").GetComponent<Animator>();
+          Animator animatorWave = GameObject.Find("wave").GetComponent<Animator>();
+          animatorBoat.speed = 1f;
+          animatorWave.speed = 1f;
+        }
+        else if (GetActivePanel().name == "Scene7")
+        {
+          Animator animatorRain = GameObject.Find("scene7 rain").GetComponent<Animator>();
+          AudioSource audioRain = GameObject.Find("scene7 rain").GetComponent<AudioSource>();
+          animatorRain.speed = 1f;
+          audioRain.UnPause();
+          if (tracingObjects[0].activeSelf) tracingObjects[1].SetActive(true);
+        }
+        else if (GetActivePanel().name == "Scene8")
+        {
+          if (tracingObjects[2].activeSelf) tracingObjects[3].SetActive(true);
+          Animator animatorSmoke = GameObject.Find("campfire - smoking").GetComponent<Animator>();
+          animatorSmoke.speed = 1f;
+        }
+        else if (GetActivePanel().name == "Scene9")
+        {
+          if (tracingObjects[4].activeSelf) tracingObjects[5].SetActive(true);
+          if (playableDirector.playableAsset.name == "Scene9")
+          {
+            Animator animatorBurning = GameObject.Find("campfire - burning").GetComponent<Animator>();
+            animatorBurning.speed = 1f;
+          }
+          else if (playableDirector.playableAsset.name == "Scene9 - Part2")
+          {
+            Animator animatorBurning = GameObject.Find("campfire - burning out").GetComponent<Animator>();
+            animatorBurning.speed = 1f;
+          }
+        }
+        else if (GetActivePanel().name == "Scene11")
+        {
+          GameObject worm = GameObject.Find("worm inside");
+          Color wormColor = worm.GetComponent<SpriteRenderer>().color;
+          wormColor.a = 1f;
+          worm.GetComponent<SpriteRenderer>().color = wormColor;
+        }
+        else if (GetActivePanel().name == "Scene12")
+        {
+          if (tracingObjects[6].activeSelf) tracingObjects[7].SetActive(true);
+        }
+      }
+    }
+    else
+    {
+      GameMenu.SetActive(false);
     }
   }
 
