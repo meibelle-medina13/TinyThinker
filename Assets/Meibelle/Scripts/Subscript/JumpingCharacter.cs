@@ -14,6 +14,7 @@ public class JumpingCharacter : MonoBehaviour
 
   private void Start()
   {
+    PlayerPrefs.DeleteKey("Collider");
     characterRB = GetComponent<Rigidbody2D>();
     parent = gameObject.transform.parent.gameObject;
     jumpForce = 200f;
