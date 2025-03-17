@@ -108,9 +108,12 @@ public class PreTest_PostTest1 : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        tracedPoints.Add(other.gameObject.name);
-        score++;
-        Debug.Log("points: " + score);
+        if (other.CompareTag("Tracing Point") && !tracedPoints.Contains(other.gameObject.name))
+        {
+            tracedPoints.Add(other.gameObject.name);
+            score++;
+            Debug.Log("points: " + score);
+        }
     }
 
     public void UpdateScore()
