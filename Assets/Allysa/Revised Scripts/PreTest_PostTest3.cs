@@ -260,7 +260,43 @@ public class PreTest_PostTest3 : MonoBehaviour
                     DelayUpdate();
                 }
             }
+
+            else
+            {
+                tracedPoints.Add(other.gameObject.name);
+                score++;
+                Debug.Log("points: " + score);
+            }
         }
+    }
+
+    public void UpdateScore()
+    {
+        float percentage = (float)score / totalTracingPoints * 100;
+        GetScore(percentage);
+        DelayUpdate();
+        //Debug.Log("points: " + test_counter);
+    }
+
+    void GetScore(float percentage)
+    {
+        if (percentage >= 90)
+        {
+            Test_Score += 4;
+        }
+        else if (percentage >= 80)
+        {
+            Test_Score += 3;
+        }
+        else if (percentage >= 70)
+        {
+            Test_Score += 2;
+        }
+        else if (percentage >= 60)
+        {
+            Test_Score++;
+        }
+        Debug.Log("Score: " + Test_Score);
     }
 
     void IncrementFillAmount()
