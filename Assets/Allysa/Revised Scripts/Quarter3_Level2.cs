@@ -41,7 +41,7 @@ public class Quarter3_Level2 : MonoBehaviour
     private int Counter = 1;
     private bool isPaused = false;
 
-    private static int wrong_Click = 0;
+    private static int wrong_Click = 1;
     private static int object_count = 0;
 
     private Audio_Manager audioManager4;

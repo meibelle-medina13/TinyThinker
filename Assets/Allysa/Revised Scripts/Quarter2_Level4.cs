@@ -145,7 +145,7 @@ public class Quarter2_Level4 : MonoBehaviour
         if (other.CompareTag("Tracing Point") && !tracedPoints.Contains(other.gameObject.name))
         {
             tracedPoints.Add(other.gameObject.name);
-            UpdateScore();
+            score++;
             CheckCompletion();
         }
     }
@@ -160,10 +160,6 @@ public class Quarter2_Level4 : MonoBehaviour
                 NextScene_Button.gameObject.SetActive(true);
             }
         }
-    }
-    void UpdateScore()
-    {
-        score++;
     }
 
     public void UpdateGrade()
