@@ -10,6 +10,9 @@ public class PreTest_PostTest4 : MonoBehaviour
     public int Level;
     private Audio_Manager test_audiomanager;
     public List<GameObject> Test_scenes;
+    public List<GameObject> Test_timelines;
+    public GameObject Title_timeline;
+    public List<GameObject> Tracing_objects;
     public List<GameObject> Tracking_Test;
     public static int test_counter = 0;
     public static int Test_Score;
@@ -47,18 +50,14 @@ public class PreTest_PostTest4 : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         test_audiomanager = FindObjectOfType<Audio_Manager>();
 
-        if (!bgMusicPlayed)
+        if (gameObject.name == "Pre-Test_SceneManager" || gameObject.name == "Post-Test_SceneManager")
         {
-            if (test_audiomanager != null)
-            {
-                test_audiomanager.scene_bgmusic(0.5f);
-                bgMusicPlayed = true;
-            }
+            PlayerPrefs.DeleteKey("CurrentPanel");
         }
-
     }
     void Update()
     {
+        Debug.Log(PlayerPrefs.GetInt("CurrentPanel"));
         if (test_counter > 0 && test_counter < 13)
         {
             progress_display.SetActive(true);
@@ -101,7 +100,10 @@ public class PreTest_PostTest4 : MonoBehaviour
 
             if (CompareTag("Draggable"))
             {
-                draggable.transform.position = worldPosition + offset;
+                if (draggable != null)
+                {
+                    draggable.transform.position = worldPosition + offset;
+                }
             }
         }
 
@@ -125,133 +127,137 @@ public class PreTest_PostTest4 : MonoBehaviour
 
             if (CompareTag("Draggable"))
             {
-                draggable.position = worldPosition + draggableObjectState;
-                test_audiomanager.Rotate();
-
-                Collider2D[] Colliders = Physics2D.OverlapPointAll(draggable.transform.position);
-
-                foreach (Collider2D area in Colliders)
+                if (draggable != null)
                 {
-                    if (setting_colliders.Contains(area))
+
+                    draggable.position = worldPosition + draggableObjectState;
+                    test_audiomanager.Rotate();
+
+                    Collider2D[] Colliders = Physics2D.OverlapPointAll(draggable.transform.position);
+
+                    foreach (Collider2D area in Colliders)
                     {
-                        if (area.name == "setting 1" && draggable.name == "baka")
+                        if (setting_colliders.Contains(area))
                         {
-                            draggable.gameObject.SetActive(false);
-                            attachedobject[6].SetActive(true);
-                            CheckInactiveGameObjects();
-
-                            if (!increment)
+                            if (area.name == "setting 1" && draggable.name == "baka")
                             {
-                                Test_Score++;
-                                increment = true;
-                            }
-                        }
+                                draggable.gameObject.SetActive(false);
+                                attachedobject[6].SetActive(true);
+                                CheckInactiveGameObjects();
 
-                        else if (area.name == "setting 1" && draggable.name == "baboy")
-                        {
-
-                            draggable.gameObject.SetActive(false);
-                            attachedobject[5].SetActive(true);
-                            CheckInactiveGameObjects();
-                            break;
-                        }
-
-                        else if (area.name == "setting 1" && draggable.name == "palaka")
-                        {
-                            draggable.gameObject.SetActive(false);
-                            attachedobject[4].SetActive(true);
-                            CheckInactiveGameObjects();
-                            break;
-                        }
-
-                        else if (area.name == "setting 1" && draggable.name == "teri")
-                        {
-                            draggable.gameObject.SetActive(false);
-                            attachedobject[7].SetActive(true);
-                            CheckInactiveGameObjects();
-                            break;
-                        }
-
-                        else if (area.name == "setting 2" && draggable.name == "baboy")
-                        {
-                            draggable.gameObject.SetActive(false);
-                            attachedobject[9].SetActive(true);
-                            CheckInactiveGameObjects();
-
-                            if (!increment)
-                            {
-                                Test_Score++;
-                                increment = true;
-                            }
-                        }
-
-                        else if (area.name == "setting 2" && draggable.name == "baka")
-                        {
-                            draggable.gameObject.SetActive(false);
-                            attachedobject[10].SetActive(true);
-                            CheckInactiveGameObjects();
-                            break;
-                        }
-
-                        else if (area.name == "setting 2" && draggable.name == "palaka")
-                        {
-                            draggable.gameObject.SetActive(false);
-                            attachedobject[8].SetActive(true);
-                            CheckInactiveGameObjects();
-                            break;
-                        }
-
-                        else if (area.name == "setting 2" && draggable.name == "teri")
-                        {
-                            draggable.gameObject.SetActive(false);
-                            attachedobject[11].SetActive(true);
-                            CheckInactiveGameObjects();
-                            break;
-                        }
-
-                        else if (area.name == "setting 3" && draggable.name == "palaka")
-                        {
-                            draggable.gameObject.SetActive(false);
-                            attachedobject[12].SetActive(true);
-                            CheckInactiveGameObjects();
-
-                            if (!increment)
-                            {
-                                Test_Score++;
-                                increment = true;
-                            }
-                        }
-
-                        else if (area.name == "setting 3" && draggable.name == "teri")
-                        {
-                            draggable.gameObject.SetActive(false);
-                            attachedobject[15].SetActive(true);
-                            CheckInactiveGameObjects();
-
-                            if (!increment)
-                            {
-                                Test_Score++;
-                                increment = true;
+                                if (!increment)
+                                {
+                                    Test_Score++;
+                                    increment = true;
+                                }
                             }
 
-                            Debug.Log("score: " + Test_Score);
-                            break;
-                        }
+                            else if (area.name == "setting 1" && draggable.name == "baboy")
+                            {
 
-                        else if (area.name == "setting 3" && draggable.name == "baka")
-                        {
-                            draggable.gameObject.SetActive(false);
-                            attachedobject[17].SetActive(true);
-                            CheckInactiveGameObjects();
-                            break;
-                        }
+                                draggable.gameObject.SetActive(false);
+                                attachedobject[5].SetActive(true);
+                                CheckInactiveGameObjects();
+                                break;
+                            }
 
-                        else if (area.name == "setting 3" && draggable.name == "baboy")
-                        {
-                            draggable.gameObject.SetActive(false);
-                            attachedobject[16].SetActive(true);
-                            CheckInactiveGameObjects();
-                            break;
+                            else if (area.name == "setting 1" && draggable.name == "palaka")
+                            {
+                                draggable.gameObject.SetActive(false);
+                                attachedobject[4].SetActive(true);
+                                CheckInactiveGameObjects();
+                                break;
+                            }
+
+                            else if (area.name == "setting 1" && draggable.name == "teri")
+                            {
+                                draggable.gameObject.SetActive(false);
+                                attachedobject[7].SetActive(true);
+                                CheckInactiveGameObjects();
+                                break;
+                            }
+
+                            else if (area.name == "setting 2" && draggable.name == "baboy")
+                            {
+                                draggable.gameObject.SetActive(false);
+                                attachedobject[9].SetActive(true);
+                                CheckInactiveGameObjects();
+
+                                if (!increment)
+                                {
+                                    Test_Score++;
+                                    increment = true;
+                                }
+                            }
+
+                            else if (area.name == "setting 2" && draggable.name == "baka")
+                            {
+                                draggable.gameObject.SetActive(false);
+                                attachedobject[10].SetActive(true);
+                                CheckInactiveGameObjects();
+                                break;
+                            }
+
+                            else if (area.name == "setting 2" && draggable.name == "palaka")
+                            {
+                                draggable.gameObject.SetActive(false);
+                                attachedobject[8].SetActive(true);
+                                CheckInactiveGameObjects();
+                                break;
+                            }
+
+                            else if (area.name == "setting 2" && draggable.name == "teri")
+                            {
+                                draggable.gameObject.SetActive(false);
+                                attachedobject[11].SetActive(true);
+                                CheckInactiveGameObjects();
+                                break;
+                            }
+
+                            else if (area.name == "setting 3" && draggable.name == "palaka")
+                            {
+                                draggable.gameObject.SetActive(false);
+                                attachedobject[12].SetActive(true);
+                                CheckInactiveGameObjects();
+
+                                if (!increment)
+                                {
+                                    Test_Score++;
+                                    increment = true;
+                                }
+                            }
+
+                            else if (area.name == "setting 3" && draggable.name == "teri")
+                            {
+                                draggable.gameObject.SetActive(false);
+                                attachedobject[15].SetActive(true);
+                                CheckInactiveGameObjects();
+
+                                if (!increment)
+                                {
+                                    Test_Score++;
+                                    increment = true;
+                                }
+
+                                Debug.Log("score: " + Test_Score);
+                                break;
+                            }
+
+                            else if (area.name == "setting 3" && draggable.name == "baka")
+                            {
+                                draggable.gameObject.SetActive(false);
+                                attachedobject[17].SetActive(true);
+                                CheckInactiveGameObjects();
+                                break;
+                            }
+
+                            else if (area.name == "setting 3" && draggable.name == "baboy")
+                            {
+                                draggable.gameObject.SetActive(false);
+                                attachedobject[16].SetActive(true);
+                                CheckInactiveGameObjects();
+                                break;
+                            }
                         }
                     }
                 }
@@ -261,6 +267,58 @@ public class PreTest_PostTest4 : MonoBehaviour
         {
             pencil.transform.position = worldPosition + pencilState;
             mycollider.transform.position = worldPosition;
+        }
+
+        int index = 0;
+
+        if (gameObject.name == "Pre-Test_SceneManager" || gameObject.name == "Post-Test_SceneManager")
+        {
+
+            PlayableDirector playableDirector;
+
+            if (PlayerPrefs.HasKey("CurrentPanel"))
+            {
+                index = PlayerPrefs.GetInt("CurrentPanel");
+                Debug.Log("Panel" +PlayerPrefs.GetInt("CurrentPanel"));
+                playableDirector = Test_timelines[index].GetComponent<PlayableDirector>();
+            }
+            else
+            {
+                playableDirector = Title_timeline.GetComponent<PlayableDirector>();
+            }
+
+            if (PlayerPrefs.GetString("Paused") == "True")
+            {
+                playableDirector.Pause();
+                if (Test_scenes[index].name == "Pre-Test 3" || Test_scenes[index+4].name == "Post-Test 3")
+                {
+                    Tracing_objects[0].SetActive(false);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 5" || Test_scenes[index+4].name == "Post-Test 5")
+                {
+                    Tracing_objects[1].SetActive(false);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 7" || Test_scenes[index+4].name == "Post-Test 7")
+                {
+                    Tracing_objects[2].SetActive(false);
+                }
+            }
+            else
+            {
+                playableDirector.Resume();
+                if (Test_scenes[index].name == "Pre-Test 3" || Test_scenes[index+4].name == "Post-Test 3")
+                {
+                    Tracing_objects[0].SetActive(true);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 5" || Test_scenes[index+4].name == "Post-Test 5")
+                {
+                    Tracing_objects[1].SetActive(true);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 7" || Test_scenes[index+4].name == "Post-Test 7")
+                {
+                    Tracing_objects[2].SetActive(true);
+                }
+            }
         }
     }
 
@@ -327,6 +385,7 @@ public class PreTest_PostTest4 : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         Test_scenes[test_counter].SetActive(true);
+        PlayerPrefs.SetInt("CurrentPanel", test_counter);
     }
 
     public void DelayUpdate()
@@ -344,6 +403,24 @@ public class PreTest_PostTest4 : MonoBehaviour
         Test_scenes[test_counter].SetActive(false);
         test_counter++;
         Test_scenes[test_counter].SetActive(true);
+        Debug.Log("test counter" + test_counter);
+        PlayerPrefs.SetInt("CurrentPanel", test_counter);
+
+        if (test_counter == 7 && Test_scenes[test_counter].name == "Post-Test 5")
+        {
+            PlayerPrefs.SetInt("CurrentPanel", 3);
+        }
+        else if (test_counter > 7 && Test_scenes[test_counter].name[..9] == "Post-Test")
+        {
+            PlayerPrefs.SetInt("CurrentPanel", test_counter-4);
+        }
+        else if (test_counter == 13 && Test_scenes[test_counter].name == "Pre-Test 9")
+        {
+            PlayerPrefs.SetInt("CurrentPanel", 9);
+        }
+
+
+        Debug.Log("Update Scene"+ test_counter);
 
         if (test_counter < (Test_scenes.Count - 1))
         {
@@ -366,6 +443,7 @@ public class PreTest_PostTest4 : MonoBehaviour
         {
             test_counter++;
             Test_scenes[test_counter].SetActive(true);
+            Debug.Log("test counter"+test_counter);
         }
 
         else
@@ -373,6 +451,11 @@ public class PreTest_PostTest4 : MonoBehaviour
             Test_scenes[test_counter].SetActive(false);
             test_counter++;
             Test_scenes[test_counter].SetActive(true);
+            Debug.Log("test counter" + test_counter);
+            if (test_counter == 13)
+            {
+                PlayerPrefs.SetInt("CurrentPanel", 9);
+            }
         }
     }
 
