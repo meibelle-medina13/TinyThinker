@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class Quarter4_Level3 : MonoBehaviour
 {
-    private static int Scene_counter = 11;
+    private static int Scene_counter = 0;
     public List<GameObject> scenes;
     public GameObject Nxtbutton;
 
@@ -36,21 +37,23 @@ public class Quarter4_Level3 : MonoBehaviour
     private float incrementAmount;
     public TextMeshProUGUI text;
 
-    private static bool bgMusicPlayed = false;
+    public GameObject gameMenu;
+    public GameObject[] tracingObjects;
+    //private static bool bgMusicPlayed = false;
 
 
     void Start()
     {
         audioManager_theme4 = FindObjectOfType<Audio_Manager>();
 
-        if (!bgMusicPlayed)
-        {
-            if (audioManager_theme4 != null)
-            {
-                audioManager_theme4.scene_bgmusic(0.084f);
-                bgMusicPlayed = true;
-            }
-        }
+        //if (!bgMusicPlayed)
+        //{
+        //    if (audioManager_theme4 != null)
+        //    {
+        //        audioManager_theme4.scene_bgmusic(0.084f);
+        //        bgMusicPlayed = true;
+        //    }
+        //}
     }
 
     public void DelayUpdate()
@@ -74,7 +77,7 @@ public class Quarter4_Level3 : MonoBehaviour
             Nxtbutton.SetActive(false);
             Scene_counter++;
             scenes[Scene_counter].SetActive(true);
-            audioManager_theme4.assessment_bgmusic(0.5f);
+            //audioManager_theme4.assessment_bgmusic(0.5f);
         }
 
         if (Scene_counter == 16)
@@ -85,7 +88,7 @@ public class Quarter4_Level3 : MonoBehaviour
 
         if (Scene_counter == 21)
         {
-            audioManager_theme4.Stop_backgroundMusic2();
+            //audioManager_theme4.Stop_backgroundMusic2();
             scenes[13].SetActive(false);
             scenes[16].SetActive(false);
             Show_Stars();
@@ -126,7 +129,10 @@ public class Quarter4_Level3 : MonoBehaviour
 
             if (CompareTag("Draggable"))
             {
-                draggable.position = worldPosition + offset;
+                if (draggable != null)
+                {
+                    draggable.position = worldPosition + offset;
+                }
             }
         }
 
@@ -149,93 +155,96 @@ public class Quarter4_Level3 : MonoBehaviour
 
             if (CompareTag("Draggable"))
             {
-                draggable.position = worldPosition + draggableObjectState;
-
-                Collider2D[] Colliders = Physics2D.OverlapPointAll(draggable.transform.position);
-
-                foreach (Collider2D area in Colliders)
+                if (draggable != null)
                 {
-                    if (ListofColliders.Contains(area))
+                    draggable.position = worldPosition + draggableObjectState;
+
+                    Collider2D[] Colliders = Physics2D.OverlapPointAll(draggable.transform.position);
+
+                    foreach (Collider2D area in Colliders)
                     {
-                        if (area.name == "setting 1" && draggable.name == "baka" || area.name == "Bb container" && draggable.name == "baboy")
+                        if (ListofColliders.Contains(area))
                         {
-                            audioManager_theme4.Correct();
-                            draggable.gameObject.SetActive(false);
-                            gameobjects[0].SetActive(true);
-                            fillCorrect();
-                            CheckInactiveGameObjects();
-                            Debug.Log("CORRECT!");
-                            break;
-                        }
-
-                        else if(area.name == "setting 2" && draggable.name == "baboy" || area.name == "Bb container" && draggable.name == "baka")
-                        {
-                            audioManager_theme4.Correct();
-                            draggable.gameObject.SetActive(false);
-                            gameobjects[1].SetActive(true);
-                            fillCorrect();
-                            CheckInactiveGameObjects();
-                            Debug.Log("CORRECT!");
-                            break;
-                        }
-
-                        else if(area.name == "setting 3" && draggable.name == "palaka" || area.name == "Pp container " && draggable.name == "palaka")
-                        {
-                            audioManager_theme4.Correct();
-                            draggable.gameObject.SetActive(false);
-                            gameobjects[2].SetActive(true);
-                            fillCorrect();
-                            CheckInactiveGameObjects();
-                            Debug.Log("CORRECT!");
-                            break;
-                        }
-
-                        else if (area.name == "setting 3" && draggable.name == "teri" || area.name == "Pp container " && draggable.name == "teri")
-                        {
-                            audioManager_theme4.Correct();
-                            draggable.gameObject.SetActive(false);
-                            gameobjects[3].SetActive(true);
-                            fillCorrect();
-                            CheckInactiveGameObjects();
-                            Debug.Log("CORRECT!");
-                            break;
-                        }
-
-
-                        else
-                        {
-                            if (!increment_wrongAnswer)
+                            if (area.name == "setting 1" && draggable.name == "baka" || area.name == "Bb container" && draggable.name == "baboy")
                             {
-                                wrongAnswer++;
-                                increment_wrongAnswer = true;
+                                audioManager_theme4.Correct();
+                                draggable.gameObject.SetActive(false);
+                                gameobjects[0].SetActive(true);
+                                fillCorrect();
+                                CheckInactiveGameObjects();
+                                Debug.Log("CORRECT!");
+                                break;
                             }
 
-                            audioManager_theme4.Wrong();
-
-                            if (draggable.name == "palaka")
+                            else if (area.name == "setting 2" && draggable.name == "baboy" || area.name == "Bb container" && draggable.name == "baka")
                             {
-                                draggable.transform.position = new Vector3(695, 128, 90);
+                                audioManager_theme4.Correct();
+                                draggable.gameObject.SetActive(false);
+                                gameobjects[1].SetActive(true);
+                                fillCorrect();
+                                CheckInactiveGameObjects();
+                                Debug.Log("CORRECT!");
+                                break;
                             }
 
-                            else if (draggable.name == "baboy")
+                            else if (area.name == "setting 3" && draggable.name == "palaka" || area.name == "Pp container " && draggable.name == "palaka")
                             {
-                                draggable.transform.position = new Vector3(831, 171, 90);
+                                audioManager_theme4.Correct();
+                                draggable.gameObject.SetActive(false);
+                                gameobjects[2].SetActive(true);
+                                fillCorrect();
+                                CheckInactiveGameObjects();
+                                Debug.Log("CORRECT!");
+                                break;
                             }
 
-                            else if (draggable.name == "rabo")
+                            else if (area.name == "setting 3" && draggable.name == "teri" || area.name == "Pp container " && draggable.name == "teri")
                             {
-                                draggable.transform.position = new Vector3(1000, 183, 90);
+                                audioManager_theme4.Correct();
+                                draggable.gameObject.SetActive(false);
+                                gameobjects[3].SetActive(true);
+                                fillCorrect();
+                                CheckInactiveGameObjects();
+                                Debug.Log("CORRECT!");
+                                break;
                             }
+
 
                             else
                             {
-                                draggable.transform.position = new Vector3(1168, 169, 90);
-                            }
+                                if (!increment_wrongAnswer)
+                                {
+                                    wrongAnswer++;
+                                    increment_wrongAnswer = true;
+                                }
 
-                            Debug.Log("wrong!");
-                            break;
+                                audioManager_theme4.Wrong();
+
+                                if (draggable.name == "palaka")
+                                {
+                                    draggable.transform.position = new Vector3(695, 128, 90);
+                                }
+
+                                else if (draggable.name == "baboy")
+                                {
+                                    draggable.transform.position = new Vector3(831, 171, 90);
+                                }
+
+                                else if (draggable.name == "rabo")
+                                {
+                                    draggable.transform.position = new Vector3(1000, 183, 90);
+                                }
+
+                                else
+                                {
+                                    draggable.transform.position = new Vector3(1168, 169, 90);
+                                }
+
+                                Debug.Log("wrong!");
+                                break;
+                            }
                         }
-                    } 
+                    }
                 }
             }
         }
@@ -245,8 +254,99 @@ public class Quarter4_Level3 : MonoBehaviour
             gameobjects[3].transform.position = worldPosition + pencilState;
             gameobjects[0].transform.position = worldPosition;
         }
-    }
 
+        PlayableDirector PanelPlayableDirector;
+        //int index = PlayerPrefs.GetInt("CurrentPanel");
+        //Debug.Log(index);
+        //if (!scenes[index].activeSelf) {
+        //}
+        int index = 0;
+        string objectName = gameObject.name;
+        string tlName = null;
+        if (objectName == "Scene Manager" && scenes.Count > 0)
+        {
+            for (int i = 0; i < scenes.Count; i++)
+            {
+                if (scenes[i].activeSelf)
+                {
+                    index = i + 1;
+                    if (index != 14 && index != 17)
+                    {
+                        Debug.Log(index);
+                        break;
+                    }
+                }
+            }
+
+            tlName = "scene 4." + (index);
+            Debug.Log(tlName);
+            if (index < 22)
+            {
+                if (scenes[index - 1].name == "Scene 5")
+                {
+                    if (PlayerPrefs.GetString("Paused") == "True")
+                    {
+                        tracingObjects[0].SetActive(false);
+                    }
+                    else
+                    {
+                        tracingObjects[0].SetActive(true);
+                    }
+                }
+                else if (scenes[index - 1].name == "Scene 8")
+                {
+                    if (PlayerPrefs.GetString("Paused") == "True")
+                    {
+                        tracingObjects[1].SetActive(false);
+                    }
+                    else
+                    {
+                        tracingObjects[1].SetActive(true);
+                    }
+                }
+                else
+                {
+                    if (index-1 >= 14)
+                    {
+                        tlName = "assessment" + (index-14);
+                        if (index-1 == 17)
+                        {
+                            tlName = "assessment3_baboy";
+                        }
+                        else if (index-1 == 18)
+                        {
+                            tlName = "assessment3_baka";
+                        }
+                        else if (index - 1 == 19)
+                        {
+                            tlName = "assessment3_teri";
+                        }
+                        else if (index - 1 == 20)
+                        {
+                            tlName = "assessment3_palaka";
+                        }
+                        Debug.Log(tlName);
+                        Debug.Log(scenes[index-1].name);
+                    }   
+                    GameObject timeline = scenes[index-1].transform.Find(tlName).gameObject;
+                    PanelPlayableDirector = timeline.GetComponent<PlayableDirector>();
+                    if (PlayerPrefs.GetString("Paused") == "True")
+                    {
+                        PanelPlayableDirector.Pause();
+                    }
+                    else if (PlayerPrefs.GetString("Paused") == "False")
+                    {
+                        PanelPlayableDirector.Resume();
+                        PlayerPrefs.DeleteKey("Paused");
+                    }
+                }
+            }
+            else
+            {
+                gameMenu.SetActive(false);
+            }
+        }
+    }
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Tracing Point") && !tracedPoints.Contains(other.gameObject.name))

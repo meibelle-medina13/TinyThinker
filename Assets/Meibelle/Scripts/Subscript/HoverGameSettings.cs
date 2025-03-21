@@ -58,15 +58,18 @@ public class HoverGameSettings : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void Update()
     {
-        if(PlayerPrefs.HasKey("Showing"))
+        if (gameObject.name != "settings")
         {
-            if (PlayerPrefs.GetString("Showing") == "false")
+            if(PlayerPrefs.HasKey("Showing"))
             {
-                for (int i = 0; i < themes.Length; i++)
+                if (PlayerPrefs.GetString("Showing") == "false")
                 {
-                    if (themes[i].activeInHierarchy)
+                    for (int i = 0; i < themes.Length; i++)
                     {
-                        themes[i].SetActive(false);
+                        if (themes[i].activeInHierarchy)
+                        {
+                            themes[i].SetActive(false);
+                        }
                     }
                 }
             }
