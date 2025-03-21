@@ -375,6 +375,7 @@ public class Quarter4_Level3 : MonoBehaviour
 
         if (gameobjects[0].activeSelf && gameobjects[1].activeSelf && gameobjects[2].activeSelf && gameobjects[3].activeSelf)
         {
+            IncrementFillAmount(0.000001f);
             DelayUpdate();
         }
         else
