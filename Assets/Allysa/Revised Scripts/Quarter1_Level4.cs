@@ -191,6 +191,11 @@ public class Quarter1_Level4 : MonoBehaviour
         Wrong_click++;
     }
 
+    public void DelayUpdate()
+    {
+        Invoke("UpdateScene", 1f);
+    }
+
     void Show_Stars()
     {
         NextScene_Button.gameObject.SetActive(false);
@@ -211,7 +216,6 @@ public class Quarter1_Level4 : MonoBehaviour
             Image[3].SetActive(true);
             Image[4].SetActive(false);
             Image[5].SetActive(false);
-            text[2].text = "ULITIN!";
             delaytime = 4;
         }
 
@@ -219,21 +223,18 @@ public class Quarter1_Level4 : MonoBehaviour
         {
             star_display[1].SetActive(true);
             Image[0].SetActive(false);
-            text[2].text = "SUBOK";
             delaytime = 4;
         }
 
         else if (stars_bar.fillAmount >= 0.6666666666666667f && stars_bar.fillAmount < 1f)
         {
             star_display[2].SetActive(true);
-            text[2].text = "MAGALING";
             delaytime = 4;
         }
 
         else if (Mathf.Approximately(stars_bar.fillAmount, 1f))
         {
             star_display[3].SetActive(true);
-            text[2].text = "PERPEKTO";
             delaytime = 8;
         }
 

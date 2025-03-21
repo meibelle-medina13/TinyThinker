@@ -378,6 +378,7 @@ public class Quarter4_Level3 : MonoBehaviour
             IncrementFillAmount(0.000001f);
             DelayUpdate();
         }
+
         else
         {
             Debug.Log("not yet complete");
@@ -464,6 +465,7 @@ public class Quarter4_Level3 : MonoBehaviour
 
                 Debug.Log("wrong: " + wrongAnswer);
                 IncrementFillAmount((0.0833333333333333f - (incrementAmount * wrongAnswer)));
+                progressFillChecker();
                 increment = true;
                 increment_wrongAnswer = false;
                 wrongAnswer = 0;
@@ -490,26 +492,22 @@ public class Quarter4_Level3 : MonoBehaviour
             gameobjects[9].SetActive(false);
             gameobjects[25].SetActive(true);
             //gameobjects[26].SetActive(false);
-            text.text = "ULITIN!";
         }
 
         else if (Fill.fillAmount >= 0.3333333333333333f && Fill.fillAmount < 0.6666666666666667f)
         {
             gameobjects[4].SetActive(true);
             gameobjects[9].SetActive(false);
-            text.text = "SUBOK";
         }
 
         else if (Fill.fillAmount >= 0.6666666666666667f && Fill.fillAmount < 1f)
         {
             gameobjects[5].SetActive(true);
-            text.text = "MAGALING";
         }
 
         else if (Mathf.Approximately(Fill.fillAmount, 1f))
         {
             gameobjects[6].SetActive(true);
-            text.text = "PERPEKTO";
         }
     }
 }
