@@ -339,22 +339,22 @@ public class Q1_Level1 : MonoBehaviour
         if (score < star1)
         {
             result[4].SetActive(true);
-            delaytime = 4;
+            delaytime = 8;
         }
         else if (score >= star1 && score < star2)
         {
             result[1].SetActive(true);
-            delaytime = 4;
+            delaytime = 12;
         }
         else if (score >= star2 && score < star3)
         {
-            delaytime = 4;
+            delaytime = 12;
             result[0].SetActive(true);
             result[2].SetActive(true);
         }
         else
         {
-            delaytime += 8;
+            delaytime += 20;
             result[0].SetActive(true);
             result[3].SetActive(true);
         }

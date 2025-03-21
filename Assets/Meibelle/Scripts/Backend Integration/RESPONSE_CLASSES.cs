@@ -45,4 +45,32 @@ public class RESPONSE_CLASSES : MonoBehaviour
         public bool success { get; set; }
         public List<UserData> data { get; set; }
     }
+
+    //GET LEVEL SCORES
+    [Serializable]
+    public class ScoreData
+    {
+        public int level_num { get; set; }
+        public int scores { get; set; }
+    }
+
+    public class ScoreRoot
+    {
+        public bool success { get; set; }
+        public List<ScoreData> data { get; set; }
+    }
+
+    //GET QUARTER/THEME STATUS
+    [Serializable]
+    public class QuarterData
+    {
+        public int theme_num { get; set; }
+        public int status { get; set; }
+    }
+
+    public class QuarterRoot
+    {
+        public bool success { get; set; }
+        public List<QuarterData> data { get; set; }
+    }
 }
