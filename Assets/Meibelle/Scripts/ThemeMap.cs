@@ -20,13 +20,59 @@ public class ThemeMap : MonoBehaviour
     [SerializeField] private GameObject[] usedStickers = new GameObject[8];
     Vector3[] stickerInitialPos = new Vector3[8];
 
+    [Header("<---- THEME BUTTONS AND LOCK ---->")]
+    [SerializeField] private GameObject[] buttons = new GameObject[4];
+    [SerializeField] private Sprite lockButton;
+    [SerializeField] private Sprite selectButton;
+
+    [Header("<---- REQUEST SCRIPT ---->")]
+    [SerializeField] private THEME_REQUEST requestsManager;
+
+    int current_theme;
+
     void Start()
     {
+        requestsManager = FindObjectOfType<THEME_REQUEST>();
+
+        current_theme = PlayerPrefs.GetInt("Current_theme");
+
         loadingScene.SetActive(false);
 
         for (int i = 0; i < availableStickers.Length; i++)
         {
             stickerInitialPos[i] = availableStickers[i].transform.position;
+        }
+
+        StartCoroutine(CheckQuarterAvailability());
+    }
+
+    IEnumerator CheckQuarterAvailability()
+    {
+        yield return StartCoroutine(requestsManager.GetQuarterStatus("/quarter_status"));
+
+        if (requestsManager.json != null)
+        {
+            for (int i = 0; i < requestsManager.json.data.Count; i++)
+            {
+                if (requestsManager.json.data[i].status == 0)
+                {
+                    buttons[i].GetComponent<Image>().sprite = lockButton;
+                    buttons[i].GetComponentInChildren<Button>().interactable = false;
+                }
+                else
+                {
+                    if (current_theme >= i+1)
+                    {
+                        buttons[i].GetComponent<Image>().sprite = selectButton;
+                        buttons[i].GetComponentInChildren<Button>().interactable = true;
+                    }
+                    else
+                    {
+                        buttons[i].GetComponent<Image>().sprite = lockButton;
+                        buttons[i].GetComponentInChildren<Button>().interactable = false;
+                    }
+                }
+            }
         }
     }
 

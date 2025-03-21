@@ -239,22 +239,22 @@ public class Quarter3Level3 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     if (starCount == 0)
     {
       ZeroStar.SetActive(true);
-      PlayerPrefs.SetInt("Delay Time", 4);
+      PlayerPrefs.SetInt("Delay Time", 7);
     }
     else if (starCount == 1)
     {
       OneStar.SetActive(true);
-      PlayerPrefs.SetInt("Delay Time", 4);
+      PlayerPrefs.SetInt("Delay Time", 10);
     }
     else if (starCount == 2)
     {
       TwoStars.SetActive(true);
-      PlayerPrefs.SetInt("Delay Time", 4);
+      PlayerPrefs.SetInt("Delay Time", 15);
     }
     else if (starCount == 3)
     {
       ThreeStars.SetActive(true);
-      PlayerPrefs.SetInt("Delay Time", 8);
+      PlayerPrefs.SetInt("Delay Time", 20);
     }
   }
   // -------------------------------------------------- //
