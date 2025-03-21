@@ -43,7 +43,6 @@ public class PreTest_PostTest4 : MonoBehaviour
 
 
     private AudioSource audioSource;
-    private static bool bgMusicPlayed = false;
 
     void Start()
     {
