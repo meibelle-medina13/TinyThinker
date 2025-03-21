@@ -774,6 +774,46 @@ PlayableDirector:
     value: {fileID: 2126287490}
   - key: {fileID: -515150676731166905, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
     value: {fileID: 828944920}
+  - key: {fileID: -3320384352296173761, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 1635941829}
+  - key: {fileID: 5297565218762448807, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 390455043}
+  - key: {fileID: -1895697787801163453, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 682787834}
+  - key: {fileID: -6577521998748685416, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 1635137931}
+  - key: {fileID: 4814461179701238834, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 360475072}
+  - key: {fileID: 3148815626655803286, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 608399741}
+  - key: {fileID: -3138672360388925774, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 1506941943}
+  - key: {fileID: -7390670789425049240, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 203365431}
+  - key: {fileID: -2584627115579705963, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 1474091610}
+  - key: {fileID: 1483184193737443658, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 1455777086}
+  - key: {fileID: 596517119760859, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 640579294}
+  - key: {fileID: -1424888247375043857, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 154813521}
+  - key: {fileID: 4911773898827574188, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 615818642}
+  - key: {fileID: -82879357491875620, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 113165482}
+  - key: {fileID: -6414787536222208497, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 1610487971}
+  - key: {fileID: -6989228853331932755, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 869518866}
+  - key: {fileID: 7403451725047842224, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 702638391}
+  - key: {fileID: 2960759172246974603, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 493391403}
+  - key: {fileID: -4983657560655859467, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 843825481}
+  - key: {fileID: 1228029252955299154, guid: 4d1ff74469a676944b7d3d7889f25444, type: 2}
+    value: {fileID: 2126287490}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &35216882
@@ -8094,7 +8134,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a72a3fae16dfbdc45899b1d71c615d9a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 658d7f8839f03fb42ba34d5380b1c4ca, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -18376,8 +18416,8 @@ MonoBehaviour:
     m_Events:
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: PreTest_PostTest, Assembly-CSharp
+        - m_Target: {fileID: 2084867033}
+          m_TargetAssemblyTypeName: PreTest_PostTest2, Assembly-CSharp
           m_MethodName: DelayUpdate
           m_Mode: 1
           m_Arguments:
@@ -42737,7 +42777,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a72a3fae16dfbdc45899b1d71c615d9a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 658d7f8839f03fb42ba34d5380b1c4ca, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -45086,7 +45126,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2084867031}
-  - component: {fileID: 2084867032}
   - component: {fileID: 2084867033}
   m_Layer: 5
   m_Name: Post-Test_SceneManager
@@ -45114,72 +45153,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2084867032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2084867030}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58a51dd3d013f664d8507c13a5249b3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 4
-  Test_scenes:
-  - {fileID: 0}
-  - {fileID: 897851685}
-  - {fileID: 1667659490}
-  - {fileID: 587971639}
-  - {fileID: 1670137460}
-  - {fileID: 94906388}
-  - {fileID: 1315381697}
-  - {fileID: 762239667}
-  - {fileID: 267711034}
-  - {fileID: 380332884}
-  - {fileID: 1749629550}
-  - {fileID: 1920757621}
-  - {fileID: 1317896824}
-  - {fileID: 1813478147}
-  - {fileID: 1786593315}
-  - {fileID: 727805987}
-  - {fileID: 1731420893}
-  - {fileID: 1455312947}
-  - {fileID: 2104861552}
-  Tracking_Test:
-  - {fileID: 167230133}
-  - {fileID: 167230133}
-  - {fileID: 2052326400}
-  - {fileID: 2146483354}
-  - {fileID: 883789356}
-  - {fileID: 1043521070}
-  - {fileID: 843225613}
-  - {fileID: 1529046594}
-  - {fileID: 131224223}
-  - {fileID: 211852047}
-  - {fileID: 1614038118}
-  - {fileID: 1435064887}
-  - {fileID: 161153782}
-  - {fileID: 849474938}
-  - {fileID: 1988881054}
-  - {fileID: 1571413100}
-  - {fileID: 91431285}
-  - {fileID: 901436117}
-  progress_display: {fileID: 140632905}
-  Fill: {fileID: 1299956318}
-  scene: {fileID: 587971639}
-  pencil: {fileID: 447327273}
-  PencilMask: {fileID: 4305259199381543364, guid: ddf50a13dce616444b25eaec7e83af04, type: 3}
-  mycollider: {fileID: 1977667881}
-  button: []
-  totalTracingPoints: 29
-  scrollRects: []
-  imageList: []
-  gameObjects: []
-  playableDirector: []
-  colliderAreas: []
-  front_card: []
 --- !u!114 &2084867033
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,8 +7,9 @@ using UnityEngine.UI;
 
 public class Quarter4_Level3 : MonoBehaviour
 {
-    private static int Scene_counter = 0;
+    private static int Scene_counter = 11;
     public List<GameObject> scenes;
+    public GameObject Nxtbutton;
 
     private Vector3 pencilRaise = new Vector3(105, 120, 0);
     private Vector3 pencilWrite = new Vector3(85, 100, 0);
@@ -35,10 +36,21 @@ public class Quarter4_Level3 : MonoBehaviour
     private float incrementAmount;
     public TextMeshProUGUI text;
 
+    private static bool bgMusicPlayed = false;
+
 
     void Start()
     {
         audioManager_theme4 = FindObjectOfType<Audio_Manager>();
+
+        if (!bgMusicPlayed)
+        {
+            if (audioManager_theme4 != null)
+            {
+                audioManager_theme4.scene_bgmusic(0.084f);
+                bgMusicPlayed = true;
+            }
+        }
     }
 
     public void DelayUpdate()
@@ -51,6 +63,33 @@ public class Quarter4_Level3 : MonoBehaviour
         scenes[Scene_counter].SetActive(false);
         Scene_counter++;
         scenes[Scene_counter].SetActive(true);
+
+        if (Scene_counter == 3 || Scene_counter == 6)
+        {
+            Nxtbutton.SetActive(false);
+        }
+
+        if (Scene_counter == 13)
+        {
+            Nxtbutton.SetActive(false);
+            Scene_counter++;
+            scenes[Scene_counter].SetActive(true);
+            audioManager_theme4.assessment_bgmusic(0.5f);
+        }
+
+        if (Scene_counter == 16)
+        {
+            Scene_counter++;
+            scenes[Scene_counter].SetActive(true);
+        }
+
+        if (Scene_counter == 21)
+        {
+            audioManager_theme4.Stop_backgroundMusic2();
+            scenes[13].SetActive(false);
+            scenes[16].SetActive(false);
+            Show_Stars();
+        }
     }
 
     void Update()
@@ -221,14 +260,14 @@ public class Quarter4_Level3 : MonoBehaviour
 
     void CheckCompletion()
     {
-        if (gameobjects[2].name == "Scene 5" || gameobjects[2].name == "Scene 8")
-        {
-            if (tracedPoints.Count >= totalTracingPoints)
+        //    if (gameobjects[2].name == "Scene 5" || gameobjects[2].name == "Scene 8")
+        //    {
+        if (tracedPoints.Count >= totalTracingPoints)
             {
                 audioManager_theme4.Correct();
-                gameobjects[4].SetActive(true);
+                Nxtbutton.SetActive(true);
             }
-        }
+        //}
     }
 
     void CheckInactiveGameObjects()
@@ -236,11 +275,11 @@ public class Quarter4_Level3 : MonoBehaviour
 
         if (gameobjects[0].activeSelf && gameobjects[1].activeSelf && gameobjects[2].activeSelf && gameobjects[3].activeSelf)
         {
-            Debug.Log("gameObjects[0], gameObjects[1], and gameObjects[2] are all active.");
+            DelayUpdate();
         }
         else
         {
-            Debug.Log("not complete");
+            Debug.Log("not yet complete");
         }
     }
 
@@ -253,8 +292,10 @@ public class Quarter4_Level3 : MonoBehaviour
 
     public void Correct_click()
     {
+        increment = false;
         audioManager_theme4.Correct();
         fillCorrect();
+        DelayUpdate();
     }
 
     public void IncrementFillAmount(float amount)
@@ -270,6 +311,11 @@ public class Quarter4_Level3 : MonoBehaviour
             {
                 gameobjects[4].SetActive(false);
             }
+
+            else if (gameobjects.Count == 11)
+            {
+                gameobjects[0].SetActive(false);
+            }
         }
 
         else if (Fill.fillAmount >= 0.6666666666666667f && Fill.fillAmount < 1f)
@@ -278,6 +324,11 @@ public class Quarter4_Level3 : MonoBehaviour
             {
                 gameobjects[5].SetActive(false);
             }
+
+            else if (gameobjects.Count == 11)
+            {
+                gameobjects[1].SetActive(false);
+            }
         }
 
         else if (Mathf.Approximately(Fill.fillAmount, 1f))
@@ -285,6 +336,11 @@ public class Quarter4_Level3 : MonoBehaviour
             if (gameobjects.Count == 7)
             {
                 gameobjects[6].SetActive(false);
+            }
+
+            else if (gameobjects.Count == 11)
+            {
+                gameobjects[2].SetActive(false);
             }
         }
     }
