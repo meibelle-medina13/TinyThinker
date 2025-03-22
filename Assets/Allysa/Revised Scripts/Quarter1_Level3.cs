@@ -268,11 +268,12 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         }
     }
 
+
+
     public void WrongButton()
     {
         wrong_click++;
     }
-
 
     void Show_Stars()
     {
@@ -293,7 +294,6 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
             Image[5].SetActive(true);
             Image[6].SetActive(false);
             Image[7].SetActive(false);
-            text[1].text = "ULITIN!";
             delaytime = 4;
         }
 
@@ -301,21 +301,18 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             star_display[1].SetActive(true);
             Image[2].SetActive(false);
-            text[1].text = "SUBOK";
             delaytime = 4;
         }
 
         else if (total_stars.fillAmount >= 0.6666666666666667f && total_stars.fillAmount < 1f)
         {
             star_display[2].SetActive(true);
-            text[1].text = "MAGALING";
             delaytime = 4;
         }
 
         else if (Mathf.Approximately(total_stars.fillAmount, 1f))
         {
             star_display[3].SetActive(true);
-            text[1].text = "PERPEKTO";
             delaytime = 8;
         }
 
