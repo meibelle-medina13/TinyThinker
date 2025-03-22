@@ -353,7 +353,6 @@ public class Quarter2_Level4 : MonoBehaviour
             Gameobjects[11].SetActive(true);
             Gameobjects[12].SetActive(false);
             Gameobjects[13].SetActive(false);
-            text[1].text = "ULITIN!";
             delaytime = 4;
         }
 
@@ -361,21 +360,18 @@ public class Quarter2_Level4 : MonoBehaviour
         {
             star_display[1].SetActive(true);
             Gameobjects[8].SetActive(false);
-            text[1].text = "SUBOK";
             delaytime = 4;
         }
 
         else if (fill_bar.fillAmount >= 0.6666666666666667f && fill_bar.fillAmount < 1f)
         {
             star_display[2].SetActive(true);
-            text[1].text = "MAGALING";
             delaytime = 4;
         }
 
         else if (Mathf.Approximately(fill_bar.fillAmount, 1f))
         {
             star_display[3].SetActive(true);
-            text[1].text = "PERPEKTO";
             delaytime = 8;
         }
 
