@@ -14507,6 +14507,7 @@ Transform:
   - {fileID: 1920602682}
   - {fileID: 1155725787}
   - {fileID: 1822695885}
+  - {fileID: 1473653098}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &753516977
@@ -14591,6 +14592,7 @@ MonoBehaviour:
   SFXClips:
   - {fileID: 8300000, guid: 324742192ce1ece419992db22afed73f, type: 3}
   - {fileID: 8300000, guid: 884d09be4a051f243868a6eab3d9588e, type: 3}
+  requestsManager: {fileID: 1473653097}
   SFXSource: {fileID: 1920602683}
 --- !u!1 &754074214 stripped
 GameObject:
@@ -23229,6 +23231,8 @@ PlayableDirector:
     value: {fileID: 2106965060}
   - key: {fileID: -6049197391940217228, guid: cbfdef64c6e366f46bbb1e662c2f00f6, type: 2}
     value: {fileID: 734384486}
+  - key: {fileID: -108909668038005829, guid: cbfdef64c6e366f46bbb1e662c2f00f6, type: 2}
+    value: {fileID: 487358866}
   m_ExposedReferences:
     m_References: []
 --- !u!212 &1249780709
@@ -27723,6 +27727,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1469134053}
   m_CullTransparentMesh: 1
+--- !u!1 &1473653096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1473653098}
+  - component: {fileID: 1473653097}
+  m_Layer: 0
+  m_Name: Request Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1473653097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473653096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a652eec3b235e459b9a34bbcea8c6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1473653098
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473653096}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 753516976}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1475947617
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32728,6 +32776,8 @@ PlayableDirector:
     value: {fileID: 734384486}
   - key: {fileID: 7722208352551777277, guid: 381fe324d49d22148bd3d5cd6af44ee1, type: 2}
     value: {fileID: 1360093928}
+  - key: {fileID: 8218939564706127365, guid: 381fe324d49d22148bd3d5cd6af44ee1, type: 2}
+    value: {fileID: 487358866}
   m_ExposedReferences:
     m_References: []
 --- !u!222 &1783310873

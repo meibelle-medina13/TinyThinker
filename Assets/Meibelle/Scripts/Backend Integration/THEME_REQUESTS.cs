@@ -10,6 +10,7 @@ public class THEME_REQUEST : MonoBehaviour
     private string URL = "https://tinythinker-server.up.railway.app";
 
     public QuarterRoot json;
+    //public RewardRoot jsonReward;
 
     public IEnumerator GetQuarterStatus(string endpoint)
     {
@@ -30,4 +31,23 @@ public class THEME_REQUEST : MonoBehaviour
             }
         }
     }
+
+    //public IEnumerator GetRewards(string endpoint, int userID)
+    //{
+    //    string newURL = URL + endpoint + "?user_ID=" + userID;
+
+    //    using (UnityWebRequest www = UnityWebRequest.Get(newURL))
+    //    {
+    //        yield return www.SendWebRequest();
+
+    //        if (www.result != UnityWebRequest.Result.Success)
+    //        {
+    //            Debug.LogError(www.error);
+    //        }
+    //        else
+    //        {
+    //            jsonReward = JsonConvert.DeserializeObject<RewardRoot>(www.downloadHandler.text);
+    //        }
+    //    }
+    //}
 }

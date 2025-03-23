@@ -1,12 +1,16 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SocialPlatforms.Impl;
+using static RESPONSE_CLASSES;
 
 public class THEME1_LEVEL1_REQUESTS : MonoBehaviour
 {
     private string URL = "https://tinythinker-server.up.railway.app";
+
+    public RewardRoot json;
 
     public IEnumerator UpdateCurrentLevel(string endpoint, int next_level, int userID)
     {
@@ -59,6 +63,32 @@ public class THEME1_LEVEL1_REQUESTS : MonoBehaviour
             else
             {
                 Debug.Log("Received: " + www.downloadHandler.text);
+            }
+        }
+    }
+
+    public IEnumerator AddReward(string endpoint, int user_ID, int reward_type_ID)
+    {
+        string newURL = URL + endpoint;
+        WWWForm form = new WWWForm();
+        form.AddField("user_ID", user_ID);
+        form.AddField("reward_type_ID", reward_type_ID);
+
+        Debug.Log("Add");
+
+        using (UnityWebRequest www = UnityWebRequest.Post(newURL, form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError(www.error);
+            }
+            else
+            {
+                Debug.Log("New Reward Collected");
+                PlayerPrefs.SetString(user_ID.ToString() +"-"+ reward_type_ID.ToString(), "True");
+                Debug.Log("REWARD No.: " +PlayerPrefs.GetInt(user_ID.ToString() + "-" + reward_type_ID.ToString()));
             }
         }
     }
