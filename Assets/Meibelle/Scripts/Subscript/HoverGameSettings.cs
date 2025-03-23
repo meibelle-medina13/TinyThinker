@@ -10,6 +10,8 @@ public class HoverGameSettings : MonoBehaviour, IPointerEnterHandler, IPointerEx
     private GameObject[] animations = new GameObject[2];
     [SerializeField]
     private GameObject[] themes = new GameObject[4];
+    [SerializeField]
+    private GameObject backgroundPanel;
 
     string[] signages = { "Q1_Signage", "Q2_Signage", "Q3_Signage", "Q4_Signage" };
     string[] themeCards = { "THEME1", "THEME2", "THEME3", "THEME4" };
@@ -62,8 +64,10 @@ public class HoverGameSettings : MonoBehaviour, IPointerEnterHandler, IPointerEx
         {
             if(PlayerPrefs.HasKey("Showing"))
             {
+                backgroundPanel.SetActive(true);
                 if (PlayerPrefs.GetString("Showing") == "false")
                 {
+                    backgroundPanel.SetActive(false);
                     for (int i = 0; i < themes.Length; i++)
                     {
                         if (themes[i].activeInHierarchy)
@@ -73,6 +77,15 @@ public class HoverGameSettings : MonoBehaviour, IPointerEnterHandler, IPointerEx
                     }
                 }
             }
+            
+            //if (themeCards.Contains(gameObject.name) && gameObject.activeSelf)
+            //{
+            //    backgroundPanel.SetActive(true);
+            //}
+            ////else
+            ////{
+            ////    backgroundPanel.SetActive(false);
+            ////}
         }
     }
 }

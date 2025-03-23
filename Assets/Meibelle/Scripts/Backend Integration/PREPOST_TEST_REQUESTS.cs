@@ -28,8 +28,9 @@ public class PREPOST_TEST_REQUESTS : MonoBehaviour
                 if (theme == 4 && testType == 2)
                 {
                     Debug.Log("Received: " + www.downloadHandler.text);
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(33);
                     PlayerPrefs.SetString("PostTest Status", "Done");
+                    PlayerPrefs.SetString("User"+ userID.ToString() + "Finished Game", "True");
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(33);
                 }
                 else
                 {

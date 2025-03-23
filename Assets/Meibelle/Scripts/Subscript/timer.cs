@@ -6,11 +6,11 @@ using TMPro;
 public class timer : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
-    float time = 20;
+    float time = 7200;
 
     private void Start()
     {
-        //PlayerPrefs.DeleteKey("Time");
+        PlayerPrefs.DeleteKey("Time");
         if (PlayerPrefs.HasKey("Time"))
         {
             time = PlayerPrefs.GetFloat("Time");
@@ -18,16 +18,15 @@ public class timer : MonoBehaviour
     }
     void Update()
     {
-
         time -= Time.deltaTime;
         int hours = Mathf.FloorToInt(time / 3600);
-        int mins = Mathf.FloorToInt(time / 60);
+        int mins = Mathf.FloorToInt(time / 120);
         int secs = Mathf.FloorToInt(time % 60);
         if (timerText != null)
         {
             timerText.text = string.Format("{0:00}:{1:00}:{2:00}",hours, mins, secs);
         }
-        Debug.Log(time);
+        //Debug.Log(hours);
 
         PlayerPrefs.SetInt("Hours", hours);
         PlayerPrefs.SetInt("Mins", mins);
