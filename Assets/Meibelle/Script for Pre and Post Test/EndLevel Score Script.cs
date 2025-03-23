@@ -88,8 +88,15 @@ public class EndLevelScoreScript : MonoBehaviour
                 else if (score >= 33.33f && current_theme == 4)
                 {
                     //PlayerPrefs.SetInt("Current_level", 0);
-                    PlayerPrefs.SetString("PostTest Status", "Not yet done");
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(32);
+                    if (PlayerPrefs.HasKey("User" + userID.ToString() + "Finished Game"))
+                    {
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(33);
+                    }
+                    else
+                    {
+                        PlayerPrefs.SetString("PostTest Status", "Not yet done");
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(32);
+                    }
                 }
                 else
                 {
