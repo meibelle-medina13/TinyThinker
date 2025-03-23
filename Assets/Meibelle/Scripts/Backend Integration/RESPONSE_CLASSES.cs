@@ -73,4 +73,17 @@ public class RESPONSE_CLASSES : MonoBehaviour
         public bool success { get; set; }
         public List<QuarterData> data { get; set; }
     }
+
+    //REWARD COLLECTION
+    [Serializable]
+    public class RewardData
+    {
+        public int reward_type_ID { get; set; }
+    }
+
+    public class RewardRoot
+    {
+        public bool success { get; set; }
+        public List<RewardData> data { get; set; }
+    }
 }

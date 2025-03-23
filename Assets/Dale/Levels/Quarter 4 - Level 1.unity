@@ -15821,6 +15821,8 @@ PlayableDirector:
     value: {fileID: 945842549}
   - key: {fileID: 7722208352551777277, guid: 381fe324d49d22148bd3d5cd6af44ee1, type: 2}
     value: {fileID: 1202804504}
+  - key: {fileID: 8218939564706127365, guid: 381fe324d49d22148bd3d5cd6af44ee1, type: 2}
+    value: {fileID: 1966835165}
   m_ExposedReferences:
     m_References: []
 --- !u!222 &628855412
@@ -17149,6 +17151,7 @@ GameObject:
   - component: {fileID: 682122025}
   - component: {fileID: 682122026}
   - component: {fileID: 682122027}
+  - component: {fileID: 682122028}
   m_Layer: 0
   m_Name: BGM Source
   m_TagString: Levels_BGM
@@ -17280,6 +17283,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 682122026}
+--- !u!114 &682122028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682122024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f42a84ba2cd1934480a9a060d6a5680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &685049298
 GameObject:
   m_ObjectHideFlags: 0
@@ -18457,6 +18472,7 @@ Transform:
   - {fileID: 1920602682}
   - {fileID: 10380702}
   - {fileID: 1826924985}
+  - {fileID: 988133578}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &753516977
@@ -18545,6 +18561,7 @@ MonoBehaviour:
   - {fileID: 1530955015}
   - {fileID: 2086402192}
   - {fileID: 1697860924}
+  requestsManager: {fileID: 988133577}
 --- !u!1 &754970927
 GameObject:
   m_ObjectHideFlags: 0
@@ -23665,6 +23682,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 986768860}
   m_CullTransparentMesh: 1
+--- !u!1 &988133576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 988133578}
+  - component: {fileID: 988133577}
+  m_Layer: 0
+  m_Name: Request Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &988133577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988133576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a652eec3b235e459b9a34bbcea8c6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &988133578
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988133576}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 753516976}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &993417637
 GameObject:
   m_ObjectHideFlags: 0
@@ -33668,6 +33729,7 @@ GameObject:
   - component: {fileID: 1412190963}
   - component: {fileID: 1412190962}
   - component: {fileID: 1412190961}
+  - component: {fileID: 1412190965}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -33778,6 +33840,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1412190965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412190960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c204321b728a8f44ea2ef6ed8e8bd37f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 0}
 --- !u!1001 &1419498127
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35518,6 +35593,8 @@ PlayableDirector:
     value: {fileID: 1444975245}
   - key: {fileID: -6049197391940217228, guid: cbfdef64c6e366f46bbb1e662c2f00f6, type: 2}
     value: {fileID: 945842549}
+  - key: {fileID: -108909668038005829, guid: cbfdef64c6e366f46bbb1e662c2f00f6, type: 2}
+    value: {fileID: 1966835165}
   m_ExposedReferences:
     m_References: []
 --- !u!212 &1481072104

@@ -25,9 +25,18 @@ public class PREPOST_TEST_REQUESTS : MonoBehaviour
             }
             else
             {
-                PlayerPrefs.SetInt("Current_level", 1);
-                Debug.Log("Received: " + www.downloadHandler.text);
-                UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+                if (theme == 4 && testType == 2)
+                {
+                    Debug.Log("Received: " + www.downloadHandler.text);
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(33);
+                    PlayerPrefs.SetString("PostTest Status", "Done");
+                }
+                else
+                {
+                    PlayerPrefs.SetInt("Current_level", 1);
+                    Debug.Log("Received: " + www.downloadHandler.text);
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+                }
             }
         }
     }

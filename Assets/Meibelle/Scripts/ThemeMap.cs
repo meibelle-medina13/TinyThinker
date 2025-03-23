@@ -29,18 +29,40 @@ public class ThemeMap : MonoBehaviour
     [SerializeField] private THEME_REQUEST requestsManager;
 
     int current_theme;
+    int userID;
 
     void Start()
     {
+        
         requestsManager = FindObjectOfType<THEME_REQUEST>();
 
         current_theme = PlayerPrefs.GetInt("Current_theme");
+        userID = PlayerPrefs.GetInt("Current_user");
 
         loadingScene.SetActive(false);
 
         for (int i = 0; i < availableStickers.Length; i++)
         {
             stickerInitialPos[i] = availableStickers[i].transform.position;
+        }
+
+        for (int i = 0; i < availableStickers.Length; ++i)
+        {
+            if (PlayerPrefs.GetString(userID.ToString() + "-" + (i+1).ToString()) == "True")
+            {
+                availableStickers[i].SetActive(true);
+            }
+        }
+
+        for (int i = 0; i < positionedStickers.Length; ++i)
+        {
+            if(PlayerPrefs.GetString("Positioned" + userID.ToString() + positionedStickers[i].name) == "True")
+            {
+                positionedStickers[i].SetActive(true);
+                availableStickers[i].SetActive(false);
+                shadowStickers[i].SetActive(false);
+                usedStickers[i].SetActive(true);
+            }
         }
 
         StartCoroutine(CheckQuarterAvailability());
@@ -132,6 +154,7 @@ public class ThemeMap : MonoBehaviour
                     shadowStickers[i].SetActive(false);
                     positionedStickers[i].SetActive(true);
                     usedStickers[i].SetActive(true);
+                    PlayerPrefs.SetString("Positioned" + userID.ToString() + stickerName, "True");
                 }
                 else
                 {
@@ -140,5 +163,10 @@ public class ThemeMap : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void LogOut()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(5);
     }
 }

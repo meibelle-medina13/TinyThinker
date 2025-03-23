@@ -47,9 +47,13 @@ public class Quarter4Level2 : MonoBehaviour
   [Header("<---- SFX CLIPS ---->")]
   [SerializeField] private AudioClip[] SFXClips;
 
+  [Header("<---- REQUEST SCRIPT ---->")]
+  [SerializeField] private THEME1_LEVEL1_REQUESTS requestsManager;
+
   private int assessmentScore = 100;
   private int error = 0;
   private float score = 0;
+  private int userID, delaytime;
 
   private void Start()
   {
@@ -363,7 +367,14 @@ public class Quarter4Level2 : MonoBehaviour
 
   private void AssessResult()
   {
+
+    int theme_num = 4;
+    int level_num = 2;
+    userID = PlayerPrefs.GetInt("Current_user");
+
     score = progressBar.fillAmount * 100f;
+
+    StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
 
     float star1 = (100f / 3f);
     float star2 = (100f / 3f) * 2;
@@ -372,20 +383,45 @@ public class Quarter4Level2 : MonoBehaviour
     if (score < star1)
     {
       result[4].SetActive(true);
+      delaytime = 8;
     }
     else if (score >= star1 && score < star2)
     {
       result[1].SetActive(true);
+      delaytime = 12;
     }
     else if (score > 99.9f || score == star3)
     {
       result[0].SetActive(true);
       result[3].SetActive(true);
+      delaytime = 20;
     }
     else if (score >= star2 && score < star3)
     {
       result[0].SetActive(true);
       result[2].SetActive(true);
+      delaytime = 12;
+    }
+
+    StartCoroutine(GoToMap());
+
+    if (score > (100f / 3f))
+    {
+      StartCoroutine(requestsManager.AddReward("/reward", userID, 7));
+    }
+  }
+
+  IEnumerator GoToMap()
+  {
+    yield return new WaitForSeconds(delaytime);
+    if (score < (100f / 3f))
+    {
+      UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+    }
+    else
+    {
+      int next_level = 3;
+      StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
     }
   }
 

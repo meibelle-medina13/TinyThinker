@@ -19,13 +19,21 @@ public class EndLevelScoreScript : MonoBehaviour
             LevelScore = PlayerPrefs.GetFloat("Theme1 Score");
             theme = 1;
             level = 5;
-
+            PlayerPrefs.DeleteKey("Theme1 Score");
         }
         else if (PlayerPrefs.HasKey("Theme3 Score"))
         {
             LevelScore = PlayerPrefs.GetFloat("Theme3 Score");
             theme = 3;
             level = 3;
+            PlayerPrefs.DeleteKey("Theme3 Score");
+        }
+        else if (PlayerPrefs.HasKey("Theme4 Score"))
+        {
+            LevelScore = PlayerPrefs.GetFloat("Theme4 Score");
+            theme = 4;
+            level = 3;
+            PlayerPrefs.DeleteKey("Theme4 Score");
         }
         Debug.Log("FInal:" + LevelScore);
         userID = PlayerPrefs.GetInt("Current_user");
@@ -48,6 +56,7 @@ public class EndLevelScoreScript : MonoBehaviour
         score = LevelScore * 100;
         userID = PlayerPrefs.GetInt("Current_user");
         int current_theme = PlayerPrefs.GetInt("Current_theme");
+        Debug.Log("TESTING: " + theme + ", " + level + ", " + userID);
         byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"theme_num\": " + theme + ", \"level_num\": " + level + ", \"score\": " + score + "}");
 
         using (UnityWebRequest www = UnityWebRequest.Put("https://tinythinker-server.up.railway.app/scores", rawData))
@@ -75,6 +84,12 @@ public class EndLevelScoreScript : MonoBehaviour
                     PlayerPrefs.SetInt("Current_level", 0);
                     PlayerPrefs.SetString("PostTest Status", "Not yet done");
                     UnityEngine.SceneManagement.SceneManager.LoadScene(27);
+                }
+                else if (score >= 33.33f && current_theme == 4)
+                {
+                    //PlayerPrefs.SetInt("Current_level", 0);
+                    PlayerPrefs.SetString("PostTest Status", "Not yet done");
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(32);
                 }
                 else
                 {

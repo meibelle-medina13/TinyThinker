@@ -359,6 +359,11 @@ public class Q1_Level1 : MonoBehaviour
             result[3].SetActive(true);
         }
         StartCoroutine(GoToMap());
+
+        if (score > (100f /3f))
+        {
+            StartCoroutine(requestsManager.AddReward("/reward", userID, 1));
+        }
     }
 
     IEnumerator GoToMap()

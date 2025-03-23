@@ -245,7 +245,7 @@ public class Theme1_Map : MonoBehaviour
             {
                 UnityEngine.SceneManagement.SceneManager.LoadScene(28);
             }
-            else if (current_level == 3 && current_theme == 3)
+            else if (current_level == 3 && current_theme == 4)
             {
                 if (PlayerPrefs.HasKey("PostTest Status") && PlayerPrefs.GetString("PostTest Status") == "Not yet done")
                 {

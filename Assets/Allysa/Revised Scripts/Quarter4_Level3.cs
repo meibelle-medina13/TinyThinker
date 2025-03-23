@@ -42,6 +42,7 @@ public class Quarter4_Level3 : MonoBehaviour
     //private static bool bgMusicPlayed = false;
 
 
+
     void Start()
     {
         audioManager_theme4 = FindObjectOfType<Audio_Manager>();
@@ -492,23 +493,29 @@ public class Quarter4_Level3 : MonoBehaviour
             gameobjects[9].SetActive(false);
             gameobjects[25].SetActive(true);
             //gameobjects[26].SetActive(false);
+            PlayerPrefs.SetInt("Delay Time", 4);
         }
 
         else if (Fill.fillAmount >= 0.3333333333333333f && Fill.fillAmount < 0.6666666666666667f)
         {
             gameobjects[4].SetActive(true);
             gameobjects[9].SetActive(false);
+            PlayerPrefs.SetInt("Delay Time", 4);
         }
 
         else if (Fill.fillAmount >= 0.6666666666666667f && Fill.fillAmount < 1f)
         {
             gameobjects[5].SetActive(true);
+            PlayerPrefs.SetInt("Delay Time", 4);
         }
 
         else if (Mathf.Approximately(Fill.fillAmount, 1f))
         {
             gameobjects[6].SetActive(true);
+            PlayerPrefs.SetInt("Delay Time", 8);
         }
+
+        PlayerPrefs.SetFloat("Theme4 Score", Fill.fillAmount);
     }
 }
 
