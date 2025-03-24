@@ -105,6 +105,10 @@ public class Q3_level1 : MonoBehaviour
     [Header("<---- GAME MENU ---->")]
     [SerializeField]
     private GameObject gameMenu;
+    [SerializeField]
+    private Slider speakerVol;
+    [SerializeField]
+    private Slider audioVol;
 
     [Header("<---- REQUEST SCRIPT ---->")]
     [SerializeField]
@@ -179,6 +183,8 @@ public class Q3_level1 : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("Speaker: " + PlayerPrefs.GetFloat("SpeakerVolume"));
+        Debug.Log("Voice " + PlayerPrefs.GetFloat("AudioVolume"));
         if (scenes[1].activeSelf)
         {
             if (PlayerPrefs.GetInt("Tracing Points") == 7)
