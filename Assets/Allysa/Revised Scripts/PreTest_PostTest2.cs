@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class PreTest_PostTest2 : MonoBehaviour
@@ -8,6 +9,9 @@ public class PreTest_PostTest2 : MonoBehaviour
     public int Level;
     private Audio_Manager test_audiomanager;
     public List<GameObject> Test_scenes;
+    public List<GameObject> Test_timelines;
+    public GameObject Title_timeline;
+    public List<GameObject> Tracing_objects;
     public List<GameObject> Tracking_Test;
     public static int test_counter = 0;
     public static int Test_Score;
@@ -28,21 +32,26 @@ public class PreTest_PostTest2 : MonoBehaviour
     public int totalTracingPoints = 0;
 
     private AudioSource audioSource;
-    private static bool bgMusicPlayed = false;
+    //private static bool bgMusicPlayed = false;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         test_audiomanager = FindObjectOfType<Audio_Manager>();
 
-        if (!bgMusicPlayed)
+        if (gameObject.name == "Pre-Test_SceneManager" || gameObject.name == "Post-Test_SceneManager")
         {
-            if (test_audiomanager != null)
-            {
-                test_audiomanager.scene_bgmusic(0.5f);
-                bgMusicPlayed = true;
-            }
+            PlayerPrefs.DeleteKey("CurrentPanel");
         }
+
+        //if (!bgMusicPlayed)
+        //{
+        //    if (test_audiomanager != null)
+        //    {
+        //        test_audiomanager.scene_bgmusic(0.5f);
+        //        bgMusicPlayed = true;
+        //    }
+        //}
 
     }
 
@@ -101,7 +110,89 @@ public class PreTest_PostTest2 : MonoBehaviour
             mycollider.transform.position = worldPosition;
         }
 
-        //------
+        int index = 0;
+
+        if (gameObject.name == "Pre-Test_SceneManager" || gameObject.name == "Post-Test_SceneManager")
+        {
+
+            PlayableDirector playableDirector;
+
+            if (PlayerPrefs.HasKey("CurrentPanel"))
+            {
+                index = PlayerPrefs.GetInt("CurrentPanel");
+                Debug.Log("Panel" + PlayerPrefs.GetInt("CurrentPanel"));
+                playableDirector = Test_timelines[index].GetComponent<PlayableDirector>();
+            }
+            else
+            {
+                playableDirector = Title_timeline.GetComponent<PlayableDirector>();
+            }
+
+            if (PlayerPrefs.GetString("Paused") == "True")
+            {
+                playableDirector.Pause();
+                if (Test_scenes[index].name == "Pre-Test 1" || Test_scenes[index].name == "Post-Test 1")
+                {
+                    Tracing_objects[0].SetActive(false);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 3" || Test_scenes[index].name == "Post-Test 3")
+                {
+                    Tracing_objects[1].SetActive(false);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 5" || Test_scenes[index].name == "Post-Test 5")
+                {
+                    Tracing_objects[2].SetActive(false);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 7" || Test_scenes[index].name == "Post-Test 7")
+                {
+                    Tracing_objects[3].SetActive(false);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 9" || Test_scenes[index].name == "Post-Test 9")
+                {
+                    Tracing_objects[4].SetActive(false);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 11" || Test_scenes[index].name == "Post-Test 11")
+                {
+                    Tracing_objects[5].SetActive(false);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 12" || Test_scenes[index].name == "Post-Test 12")
+                {
+                    Tracing_objects[6].SetActive(false);
+                }
+            }
+            else if (PlayerPrefs.GetString("Paused") == "False")
+            {
+                playableDirector.Resume();
+                if (Test_scenes[index].name == "Pre-Test 1" || Test_scenes[index].name == "Post-Test 1")
+                {
+                    Tracing_objects[0].SetActive(true);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 3" || Test_scenes[index].name == "Post-Test 3")
+                {
+                    Tracing_objects[1].SetActive(true);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 5" || Test_scenes[index].name == "Post-Test 5")
+                {
+                    Tracing_objects[2].SetActive(true);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 7" || Test_scenes[index].name == "Post-Test 7")
+                {
+                    Tracing_objects[3].SetActive(true);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 9" || Test_scenes[index].name == "Post-Test 9")
+                {
+                    Tracing_objects[4].SetActive(true);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 11" || Test_scenes[index].name == "Post-Test 11")
+                {
+                    Tracing_objects[5].SetActive(true);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 12" || Test_scenes[index].name == "Post-Test 12")
+                {
+                    Tracing_objects[6].SetActive(true);
+                }
+            }
+        }
 
     }
 
@@ -169,6 +260,7 @@ public class PreTest_PostTest2 : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         Test_scenes[test_counter].SetActive(true);
+        PlayerPrefs.SetInt("CurrentPanel", test_counter);
     }
 
     public void DelayUpdate()
@@ -181,6 +273,7 @@ public class PreTest_PostTest2 : MonoBehaviour
         Test_scenes[test_counter].SetActive(false);
         test_counter++;
         Test_scenes[test_counter].SetActive(true);
+        PlayerPrefs.SetInt("CurrentPanel", test_counter);
 
         if (test_counter < (Test_scenes.Count - 1))
         {

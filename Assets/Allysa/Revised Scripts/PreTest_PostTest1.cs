@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class PreTest_PostTest1 : MonoBehaviour
@@ -8,6 +9,9 @@ public class PreTest_PostTest1 : MonoBehaviour
     public int Level;
     private Audio_Manager test_audiomanager;
     public List<GameObject> Test_scenes;
+    public List<GameObject> Test_timelines;
+    public GameObject Title_timeline;
+    public List<GameObject> Tracing_objects;
     public List<GameObject> Tracking_Test;
     public static int test_counter = 0;
     public static int Test_Score;
@@ -28,21 +32,26 @@ public class PreTest_PostTest1 : MonoBehaviour
     public int totalTracingPoints = 0;
  
     private AudioSource audioSource;
-    private static bool bgMusicPlayed = false;
+    //private static bool bgMusicPlayed = false;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         test_audiomanager = FindObjectOfType<Audio_Manager>();
 
-        if (!bgMusicPlayed)
+        if (gameObject.name == "Pre-Test_SceneManager" || gameObject.name == "Post-Test_SceneManager")
         {
-            if (test_audiomanager != null)
-            {
-                test_audiomanager.scene_bgmusic(0.5f);
-                bgMusicPlayed = true;
-            }
+            PlayerPrefs.DeleteKey("CurrentPanel");
         }
+
+        //if (!bgMusicPlayed)
+        //{
+        //    if (test_audiomanager != null)
+        //    {
+        //        test_audiomanager.scene_bgmusic(0.5f);
+        //        bgMusicPlayed = true;
+        //    }
+        //}
 
     }
 
@@ -101,10 +110,74 @@ public class PreTest_PostTest1 : MonoBehaviour
             mycollider.transform.position = worldPosition;
         }
 
-        //------
+        int index = 0;
 
+        if (gameObject.name == "Pre-Test_SceneManager" || gameObject.name == "Post-Test_SceneManager")
+        {
+
+            PlayableDirector playableDirector;
+
+            if (PlayerPrefs.HasKey("CurrentPanel"))
+            {
+                index = PlayerPrefs.GetInt("CurrentPanel");
+                Debug.Log("Panel" + PlayerPrefs.GetInt("CurrentPanel"));
+                playableDirector = Test_timelines[index].GetComponent<PlayableDirector>();
+            }
+            else
+            {
+                playableDirector = Title_timeline.GetComponent<PlayableDirector>();
+            }
+
+            if (PlayerPrefs.GetString("Paused") == "True")
+            {
+                playableDirector.Pause();
+                if (Test_scenes[index].name == "Pre-Test 1" || Test_scenes[index].name == "Post-Test 1")
+                {
+                    Tracing_objects[0].SetActive(false);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 3" || Test_scenes[index].name == "Post-Test 3")
+                {
+                    Tracing_objects[1].SetActive(false);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 5" || Test_scenes[index].name == "Post-Test 5")
+                {
+                    Tracing_objects[2].SetActive(false);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 7" || Test_scenes[index].name == "Post-Test 7")
+                {
+                    Tracing_objects[3].SetActive(false);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 9" || Test_scenes[index].name == "Post-Test 9")
+                {
+                    Tracing_objects[4].SetActive(false);
+                }
+            }
+            else if (PlayerPrefs.GetString("Paused") == "False")
+            {
+                playableDirector.Resume();
+                if (Test_scenes[index].name == "Pre-Test 1" || Test_scenes[index].name == "Post-Test 1")
+                {
+                    Tracing_objects[0].SetActive(true);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 3" || Test_scenes[index].name == "Post-Test 3")
+                {
+                    Tracing_objects[1].SetActive(true);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 5" || Test_scenes[index].name == "Post-Test 5")
+                {
+                    Tracing_objects[2].SetActive(true);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 7" || Test_scenes[index].name == "Post-Test 7")
+                {
+                    Tracing_objects[3].SetActive(true);
+                }
+                else if (Test_scenes[index].name == "Pre-Test 9" || Test_scenes[index].name == "Post-Test 9")
+                {
+                    Tracing_objects[4].SetActive(true);
+                }
+            }
+        }
     }
-
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -168,6 +241,7 @@ public class PreTest_PostTest1 : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         Test_scenes[test_counter].SetActive(true);
+        PlayerPrefs.SetInt("CurrentPanel", test_counter);
     }
 
     public void DelayUpdate()
@@ -180,6 +254,7 @@ public class PreTest_PostTest1 : MonoBehaviour
         Test_scenes[test_counter].SetActive(false);
         test_counter++;
         Test_scenes[test_counter].SetActive(true);
+        PlayerPrefs.SetInt("CurrentPanel", test_counter);
 
         if (test_counter < (Test_scenes.Count - 1))
         {
@@ -201,73 +276,5 @@ public class PreTest_PostTest1 : MonoBehaviour
         Test_Score++;
         DelayUpdate();
     }
-
-
-    //// ------------------------------------------------------------------- //
-    //int userID;
-    //public void GetTotalScore()
-    //{
-    //    Debug.Log("FInal:" + Test_Score);
-    //    userID = PlayerPrefs.GetInt("Current_user");
-    //    StartCoroutine(GoToMap());
-    //}
-
-    //// -------------------------------------------------------------------- //
-
-    //int delaytime;
-    //IEnumerator GoToMap()
-    //{
-    //    yield return new WaitForSeconds(delaytime);
-    //    StartCoroutine(UpdateCurrentLevel());
-    //}
-
-    //IEnumerator UpdateCurrentLevel()
-    //{
-    //    int current_level = 1;
-    //    byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"current_level\": " + current_level + "}");
-
-    //    if (Test_Score >= 50)
-    //    {
-    //        using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/users", rawData))
-    //        {
-    //            www.method = "PUT";
-    //            www.SetRequestHeader("Content-Type", "application/json");
-    //            yield return www.SendWebRequest();
-
-    //            if (www.result != UnityWebRequest.Result.Success)
-    //            {
-    //                Debug.LogError(www.error);
-    //            }
-    //            else
-    //            {
-    //                PlayerPrefs.SetInt("Current_level", current_level);
-    //                Debug.Log("Received: " + www.downloadHandler.text);
-    //                UnityEngine.SceneManagement.SceneManager.LoadScene(7);
-    //            }
-    //        }
-    //    }
-
-    //}
-
-    //IEnumerator UpdateCurrentScore()
-    //{
-    //    byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"theme_num\": 1, \"level_num\": 1, \"score\": " + score + "}");
-
-    //    using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:3000/scores", rawData))
-    //    {
-    //        www.method = "PUT";
-    //        www.SetRequestHeader("Content-Type", "application/json");
-    //        yield return www.SendWebRequest();
-
-    //        if (www.result != UnityWebRequest.Result.Success)
-    //        {
-    //            Debug.LogError(www.error);
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("Received: " + www.downloadHandler.text);
-    //        }
-    //    }
-    //}
 }
 

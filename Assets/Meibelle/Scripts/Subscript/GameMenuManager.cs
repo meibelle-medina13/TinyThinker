@@ -17,17 +17,16 @@ public class GameMenuManager : MonoBehaviour
 
     [Header("<---- GAME SETTINGS ---->")]
     [SerializeField]
-    private Button[] settings = new Button[3];
+    private Button generalExit;
+    [SerializeField]
+    private Slider speakerVolume;
+    [SerializeField]
+    private Slider micVolume;
+
 
     [Header("<---- GAME EXIT ---->")]
     [SerializeField]
     private Button[] exit = new Button[2];
-
-    [Header("<---- GAME OBJECT AND SPRITES ---->")]
-    [SerializeField]
-    private Button[] settingsBG = new Button[2];
-    [SerializeField]
-    private Sprite[] mute = new Sprite[4];
 
     [Header("<---- AUDIO SOURCE ---->")]
     [SerializeField]
@@ -43,8 +42,17 @@ public class GameMenuManager : MonoBehaviour
 
     void Start()
     {
-        bgMusic.volume = 0.47f;
-        voiceOver.volume = 1;
+        if (PlayerPrefs.HasKey("SpeakerVolume"))
+        {
+            LoadVolume();
+        }
+        else
+        {
+            PlayerPrefs.SetFloat("SpeakerVolume", 0.47f);
+            PlayerPrefs.SetFloat("AudioVolume", 1f);
+            LoadVolume();
+        }
+
 
         PlayerPrefs.SetString("Paused", "False");
         menu_buttons[0].onClick.AddListener(() => OpenMenuPanel(0));
@@ -56,11 +64,7 @@ public class GameMenuManager : MonoBehaviour
             paused[index].onClick.AddListener(() => PausedFunctions(index));
         }
 
-        for (int i = 0; i < settings.Length; i++)
-        {
-            int index = i;
-            settings[index].onClick.AddListener(() => SettingsFunctions(index));
-        }
+        generalExit.onClick.AddListener(() => { OpenMenuPanel(2); });
 
         for (int i = 0; i < exit.Length; i++)
         {
@@ -112,46 +116,6 @@ public class GameMenuManager : MonoBehaviour
         }
     }
 
-    private void SettingsFunctions(int index)
-    {
-        SFX.PlayOneShot(buttonClick);
-
-        if (index == 0)
-        {
-            if (bgMusic.volume != 0)
-            {
-                bgMusic.volume = 0;
-                settingsBG[index].GetComponent<Image>().sprite = mute[0];
-                settingsBG[index].interactable = false;
-            }
-            else
-            {
-                bgMusic.volume = 0.45f;
-                settingsBG[index].GetComponent<Image>().sprite = mute[2];
-                settingsBG[index].interactable = true;
-            }
-        }
-        else if (index == 1)
-        {
-            if (voiceOver.volume != 0)
-            {
-                voiceOver.volume = 0;
-                settingsBG[index].GetComponent<Image>().sprite = mute[1];
-                settingsBG[index].interactable = false;
-            }
-            else
-            {
-                voiceOver.volume = 1;
-                settingsBG[index].GetComponent<Image>().sprite = mute[3];
-                settingsBG[index].interactable = true;
-            }
-        }
-        else
-        {
-            OpenMenuPanel(2);
-        }
-    }
-
     private void ExitFunctions(int index)
     {
         SFX.PlayOneShot(buttonClick);
@@ -164,5 +128,30 @@ public class GameMenuManager : MonoBehaviour
         {
             menu_panels[2].SetActive(false);
         }
+    }
+
+    public void ChangeVolume(string type)
+    { 
+        if (type == "Speaker")
+        {
+            bgMusic.volume = speakerVolume.value;
+            PlayerPrefs.SetFloat("SpeakerVolume", speakerVolume.value);
+        }
+        else if (type == "Mic")
+        {
+            if (micVolume.value <= 0.25f)
+            {
+                micVolume.value = 0.25f;
+            }
+
+            voiceOver.volume = micVolume.value;
+            PlayerPrefs.SetFloat("AudioVolume", micVolume.value);
+        }
+    }
+
+    private void LoadVolume()
+    {
+        speakerVolume.value = PlayerPrefs.GetFloat("SpeakerVolume");
+        micVolume.value = PlayerPrefs.GetFloat("AudioVolume");
     }
 }
