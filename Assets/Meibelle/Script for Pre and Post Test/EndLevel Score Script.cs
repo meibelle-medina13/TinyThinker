@@ -21,6 +21,13 @@ public class EndLevelScoreScript : MonoBehaviour
             level = 5;
             PlayerPrefs.DeleteKey("Theme1 Score");
         }
+        else if (PlayerPrefs.HasKey("Theme2 Score"))
+        {
+          LevelScore = PlayerPrefs.GetFloat("Theme2 Score");
+          theme = 2;
+          level = 5;
+          PlayerPrefs.DeleteKey("Theme2 Score");
+        }
         else if (PlayerPrefs.HasKey("Theme3 Score"))
         {
             LevelScore = PlayerPrefs.GetFloat("Theme3 Score");
@@ -80,6 +87,12 @@ public class EndLevelScoreScript : MonoBehaviour
                         PlayerPrefs.SetInt("Current_level", 0);
                         PlayerPrefs.SetString("PostTest Status" + theme.ToString(), "Not yet done");
                         UnityEngine.SceneManagement.SceneManager.LoadScene(15);
+                    }
+                    else if (score >= 33.33f && current_theme == 2)
+                    {
+                        PlayerPrefs.SetInt("Current_level", 0);
+                        PlayerPrefs.SetString("PostTest Status" + theme.ToString(), "Not yet done");
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(22);
                     }
                     else if (score >= 33.33f && current_theme == 3)
                     {

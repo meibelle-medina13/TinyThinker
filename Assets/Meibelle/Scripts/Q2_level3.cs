@@ -1,5 +1,8 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class Q2_level3 : MonoBehaviour
@@ -32,6 +35,10 @@ public class Q2_level3 : MonoBehaviour
     [SerializeField]
     private THEME1_LEVEL1_REQUESTS requestsManager;
 
+    [Header("<---- GAME MENU ---->")]
+    [SerializeField]
+    private GameObject gameMenu;
+
     int counter, userID;
     int assessmentScore = 100;
     float score;
@@ -46,6 +53,73 @@ public class Q2_level3 : MonoBehaviour
         CheckAssessment1();
         CheckAssessment2();
         CheckAssessment3();
+    }
+
+    private void Update()
+    {
+        int index = 0;
+
+        if (gameObject.name == "THEME2_Level3 Scene Manager")
+        {
+            for (int i = 0; i < scenes.Length; i++)
+            {
+                if (scenes[i].activeSelf)
+                {
+                    index = i;
+                }
+            }
+
+            PlayableDirector playableDirector = null;
+            if (index == 12)
+            {
+                gameMenu.SetActive(false);
+            }
+            else if (index == 11)
+            {
+                if (assessment1[0].activeSelf)
+                {
+                    for (int j = 1; j < assessment1.Length; j++)
+                    {
+                        if (assessment1[j].activeSelf)
+                        {
+                            playableDirector = assessment1[j].GetComponent<PlayableDirector>();
+                            break;
+                        }
+                    }
+                }
+                else if (assessment2[0].activeSelf)
+                {
+                    playableDirector = assessment2[0].GetComponent<PlayableDirector>();
+                }
+                else if (assessment3[0].activeSelf)
+                {
+                    playableDirector = assessment3[0].GetComponent<PlayableDirector>();
+                }
+
+                if (PlayerPrefs.GetString("Paused") == "True")
+                {
+                    playableDirector.Pause();
+                }
+                else
+                {
+                    playableDirector.Resume();
+                }
+            }
+            else
+            {
+                Debug.Log("Panel" + index);
+                playableDirector = scenes[index].GetComponent<PlayableDirector>();
+
+                if (PlayerPrefs.GetString("Paused") == "True")
+                {
+                    playableDirector.Pause();
+                }
+                else
+                {
+                    playableDirector.Resume();
+                }
+            }
+        }
     }
 
     public void onContinue()
@@ -210,26 +284,31 @@ public class Q2_level3 : MonoBehaviour
         if (score < star1)
         {
             result[4].SetActive(true);
-            delaytime = 4;
+            delaytime = 8;
         }
         else if (score >= star1 && score < star2)
         {
             result[1].SetActive(true);
-            delaytime = 4;
+            delaytime = 12;
         }
         else if (score > 99.9f || score == star3)
         {
-            delaytime = 4;
+            delaytime = 18;
             result[0].SetActive(true);
             result[3].SetActive(true);
         }
         else if (score >= star2 && score < star3)
         {
-            delaytime += 8;
+            delaytime += 12;
             result[0].SetActive(true);
             result[2].SetActive(true);
         }
         StartCoroutine(GoToMap());
+
+        if (score > (100f / 3f))
+        {
+            StartCoroutine(requestsManager.AddReward("/reward", userID, 4));
+        }
     }
 
     IEnumerator GoToMap()
