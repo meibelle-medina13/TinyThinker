@@ -406,18 +406,38 @@ public class Theme1_Map : MonoBehaviour
             if (current_theme == 1)
             {
                 theme1_levels[i].SetActive(true);
+                if (i == level - 1)
+                {
+                    Transform[] children = theme1_levels[i].GetComponentsInChildren<Transform>(true);
+                    children[2].gameObject.SetActive(true);
+                }
             }
             else if (current_theme == 2)
             {
                 theme2_levels[i].SetActive(true);
+                if (i == level - 1)
+                {
+                    Transform[] children = theme2_levels[i].GetComponentsInChildren<Transform>(true);
+                    children[2].gameObject.SetActive(true);
+                }
             }
             else if (current_theme == 3)
             {
                 theme3_levels[i].SetActive(true);
+                if (i == level - 1)
+                {
+                    Transform[] children = theme3_levels[i].GetComponentsInChildren<Transform>(true);
+                    children[2].gameObject.SetActive(true);
+                }
             }
             else if (current_theme == 4)
             {
                 theme4_levels[i].SetActive(true);
+                if (i == level - 1)
+                {
+                    Transform[] children = theme4_levels[i].GetComponentsInChildren<Transform>(true);
+                    children[2].gameObject.SetActive(true);
+                }
             }
         }
     }

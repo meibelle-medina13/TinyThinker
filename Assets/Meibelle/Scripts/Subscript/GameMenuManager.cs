@@ -55,14 +55,18 @@ public class GameMenuManager : MonoBehaviour
 
 
         PlayerPrefs.SetString("Paused", "False");
-        menu_buttons[0].onClick.AddListener(() => OpenMenuPanel(0));
-        menu_buttons[1].onClick.AddListener(() => OpenMenuPanel(1));
 
-        for (int i = 0; i < paused.Length; i++)
+        if (gameObject.name != "Game Settings Manager")
         {
-            int index = i;
-            paused[index].onClick.AddListener(() => PausedFunctions(index));
+            menu_buttons[0].onClick.AddListener(() => OpenMenuPanel(0));
+            for (int i = 0; i < paused.Length; i++)
+            {
+                int index = i;
+                paused[index].onClick.AddListener(() => PausedFunctions(index));
+            }
         }
+        
+        menu_buttons[1].onClick.AddListener(() => OpenMenuPanel(1));
 
         generalExit.onClick.AddListener(() => { OpenMenuPanel(2); });
 
@@ -75,6 +79,7 @@ public class GameMenuManager : MonoBehaviour
 
     private void OpenMenuPanel(int index)
     {
+        Debug.Log("clicked");
         SFX.PlayOneShot(buttonClick);
 
         if (menu_panels[index].activeSelf)
@@ -85,13 +90,16 @@ public class GameMenuManager : MonoBehaviour
         else
         {
             PlayerPrefs.SetString("Paused", "True");
-            if (index == 0)
+            if (gameObject.name != "Game Settings Manager")
             {
-                menu_panels[1].SetActive(false);
-            }
-            else
-            {
-                menu_panels[0].SetActive(false);
+                if (index == 0)
+                {
+                    menu_panels[1].SetActive(false);
+                }
+                else
+                {
+                    menu_panels[0].SetActive(false);
+                }
             }
             menu_panels[index].SetActive(true);
         }
@@ -132,6 +140,12 @@ public class GameMenuManager : MonoBehaviour
 
     public void ChangeVolume(string type)
     { 
+        if (gameObject.name == "Game Settings Manager")
+        {
+            bgMusic = GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>();
+            Debug.Log(bgMusic.name);
+        }
+
         if (type == "Speaker")
         {
             bgMusic.volume = speakerVolume.value;
@@ -144,8 +158,12 @@ public class GameMenuManager : MonoBehaviour
                 micVolume.value = 0.25f;
             }
 
-            voiceOver.volume = micVolume.value;
+            //voiceOver.volume = micVolume.value;
             PlayerPrefs.SetFloat("AudioVolume", micVolume.value);
+            if (gameObject.name != "Game Settings Manager")
+            {
+                voiceOver.volume = micVolume.value;
+            }
         }
     }
 
@@ -153,5 +171,11 @@ public class GameMenuManager : MonoBehaviour
     {
         speakerVolume.value = PlayerPrefs.GetFloat("SpeakerVolume");
         micVolume.value = PlayerPrefs.GetFloat("AudioVolume");
+
+        bgMusic.volume = speakerVolume.value;
+        if (gameObject.name != "Game Settings Manager")
+        {
+            voiceOver.volume = micVolume.value;
+        }
     }
 }

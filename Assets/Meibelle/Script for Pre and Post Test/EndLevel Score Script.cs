@@ -45,7 +45,7 @@ public class EndLevelScoreScript : MonoBehaviour
     public IEnumerator GoToTest()
     {
         delaytime = PlayerPrefs.GetInt("Delay Time");
-
+        Debug.Log(delaytime);
         yield return new WaitForSeconds(delaytime);
         yield return StartCoroutine(UpdateCurrentScore());
     }
@@ -73,29 +73,31 @@ public class EndLevelScoreScript : MonoBehaviour
             {
                 Debug.Log("Received: " + www.downloadHandler.text);
                 Debug.Log("Theme" + current_theme);
-                if (score >= 33.33f && current_theme == 1)
+                if (!PlayerPrefs.HasKey("PostTest Status" + theme.ToString()))
                 {
-                    PlayerPrefs.SetInt("Current_level", 0);
-                    PlayerPrefs.SetString("PostTest Status", "Not yet done");
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(15);
-                }
-                else if (score >= 33.33f && current_theme == 3)
-                {
-                    PlayerPrefs.SetInt("Current_level", 0);
-                    PlayerPrefs.SetString("PostTest Status", "Not yet done");
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(27);
-                }
-                else if (score >= 33.33f && current_theme == 4)
-                {
-                    //PlayerPrefs.SetInt("Current_level", 0);
-                    if (PlayerPrefs.HasKey("User" + userID.ToString() + "Finished Game"))
+                    if (score >= 33.33f && current_theme == 1)
                     {
-                        UnityEngine.SceneManagement.SceneManager.LoadScene(33);
+                        PlayerPrefs.SetInt("Current_level", 0);
+                        PlayerPrefs.SetString("PostTest Status" + theme.ToString(), "Not yet done");
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(15);
                     }
-                    else
+                    else if (score >= 33.33f && current_theme == 3)
                     {
-                        PlayerPrefs.SetString("PostTest Status", "Not yet done");
-                        UnityEngine.SceneManagement.SceneManager.LoadScene(32);
+                        PlayerPrefs.SetInt("Current_level", 0);
+                        PlayerPrefs.SetString("PostTest Status" + theme.ToString(), "Not yet done");
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(27);
+                    }
+                    else if (score >= 33.33f && current_theme == 4)
+                    {
+                        if (PlayerPrefs.HasKey("User" + userID.ToString() + "Finished Game"))
+                        {
+                            UnityEngine.SceneManagement.SceneManager.LoadScene(33);
+                        }
+                        else
+                        {
+                            PlayerPrefs.SetString("PostTest Status" + theme.ToString(), "Not yet done");
+                            UnityEngine.SceneManagement.SceneManager.LoadScene(32);
+                        }
                     }
                 }
                 else

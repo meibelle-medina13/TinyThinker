@@ -88,6 +88,14 @@ public class SelectAccount : MonoBehaviour
         PlayerPrefs.SetInt("Current_theme", current_theme[index]);
         PlayerPrefs.SetInt("Current_level", current_level[index]);
 
+        if (current_theme[index] == 1 && current_level[index] == 0)
+        {
+            if (!PlayerPrefs.HasKey("StartGuide" + user_id[index].ToString()))
+            {
+                PlayerPrefs.SetString("StartGuide" + user_id[index].ToString(), "True");
+            }
+        }
+
         UnityEngine.SceneManagement.SceneManager.LoadScene(6);
     }
 

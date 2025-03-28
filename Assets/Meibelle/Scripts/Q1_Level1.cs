@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
+using UnityEngine.Playables;
 
 public class Q1_Level1 : MonoBehaviour
 {
@@ -47,6 +48,11 @@ public class Q1_Level1 : MonoBehaviour
     [SerializeField]
     private Sprite earnedStar;
 
+    [Header("<---- GAME MENU ---->")]
+    [SerializeField]
+    private GameObject gameMenu;
+
+
     [Header("<---- REQUEST SCRIPT ---->")]
     [SerializeField]
     private THEME1_LEVEL1_REQUESTS requestsManager;
@@ -60,6 +66,7 @@ public class Q1_Level1 : MonoBehaviour
 
     public void Start()
     {
+        PlayerPrefs.DeleteKey("CurrentPanel");
         requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
 
         userID = PlayerPrefs.GetInt("Current_user");
@@ -102,15 +109,61 @@ public class Q1_Level1 : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        PlayableDirector playableDirector;
+
+        int index = PlayerPrefs.GetInt("CurrentPanel");
+        Debug.Log(index);
+        if (!assessments[3].activeSelf)
+        {
+            if (!scenes[8].activeSelf)
+            {
+                Debug.Log(scenes[index].name);
+                if (scenes[index].name == "Scene5")
+                {
+                    GameObject scene = scenes[index].transform.Find("Scene 5.1").gameObject;
+                    playableDirector = scene.GetComponent<PlayableDirector>();
+                } 
+                else
+                {
+                    playableDirector = scenes[index].GetComponent<PlayableDirector>();
+                }
+            }
+            else
+            {
+                playableDirector = assessments[index].GetComponent<PlayableDirector>();
+            }
+
+            if (PlayerPrefs.GetString("Paused") == "True")
+            {
+                playableDirector.Pause();
+            }
+            else if (PlayerPrefs.GetString("Paused") == "False")
+            {
+                playableDirector.Resume();
+            }
+        }
+    }
+
     public void OpenPreview()
     {
         scenes[0].SetActive(true);
+        PlayerPrefs.SetInt("CurrentPanel", 0);
     }
 
     public void OnContinue(int index)
     {
         scenes[index].SetActive(false);
         scenes[index+1].SetActive(true);
+        if (index == 7)
+        {
+            PlayerPrefs.SetInt("CurrentPanel", 0);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("CurrentPanel", index + 1);
+        }
     }
 
     private void ShowConfetti(GameObject obj)
@@ -257,9 +310,11 @@ public class Q1_Level1 : MonoBehaviour
     {
         assessments[index].SetActive(false);
         assessments[index + 1].SetActive(true);
+        PlayerPrefs.SetInt("CurrentPanel", index+1);
         if (index + 1 == 3)
         {
             AssessResult();
+            gameMenu.SetActive(false);
         }
     }
 
