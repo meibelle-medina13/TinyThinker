@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.Playables;
+using System.Linq;
 
 public class Quarter2_Level4 : MonoBehaviour
 {
     private static int Scene_counter = 0;
-    private static bool bgMusicPlayed = false;
+    //private static bool bgMusicPlayed = false;
     private Vector3 pencilWrite = new Vector3(85, 100, 0);
     private Vector3 pencilState;
     private Vector3 pencilRaise = new Vector3(105, 120, 0);
@@ -29,6 +31,7 @@ public class Quarter2_Level4 : MonoBehaviour
     private static int fixedPuzzle = 0;
 
     public List<GameObject> scenes;
+    public List<GameObject> timelines;
     public List<GameObject> Gameobjects;
     public List<TextMeshProUGUI> text;
     public List<Button> clickablebuttons;
@@ -45,6 +48,14 @@ public class Quarter2_Level4 : MonoBehaviour
     [Header("<---- REQUEST SCRIPT ---->")]
     [SerializeField]
     private THEME1_LEVEL1_REQUESTS requestsManager;
+
+    [Header("<---- GAME MENU ---->")]
+    [SerializeField]
+    private GameObject gameMenu;
+
+    [Header("<---- TRACING OBJECTS ---->")]
+    [SerializeField]
+    private GameObject[] tracingObjects = new GameObject[3];
 
     void Start()
     {
@@ -65,14 +76,14 @@ public class Quarter2_Level4 : MonoBehaviour
         }
 
 
-        if (!bgMusicPlayed)
-        {
-            if (audioManager3 != null)
-            {
-                audioManager3.scene_bgmusic(0.26f);
-                bgMusicPlayed = true;
-            }
-        }
+        //if (!bgMusicPlayed)
+        //{
+        //    if (audioManager3 != null)
+        //    {
+        //        audioManager3.scene_bgmusic(0.26f);
+        //        bgMusicPlayed = true;
+        //    }
+        //}
 
         if (text[0] != null)
         {
@@ -137,6 +148,131 @@ public class Quarter2_Level4 : MonoBehaviour
         else if (Mathf.Approximately(fill_bar.fillAmount, 1f))
         {
             Gameobjects[7].SetActive(false);
+        }
+
+        int index = 0;
+
+        int[] noTimelines = { 1, 3, 5, 11, 13 };
+
+        if (gameObject.name == "Theme 2- Level 4 Scene Manager")
+        {
+            for (int i = 0; i < scenes.Count; i++)
+            {
+                if (scenes[i].activeSelf)
+                {
+                    index = i;
+                    if (index != 8)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            Debug.Log("Panel" + index);
+
+            if (index != 16 && !noTimelines.Contains(index))
+            {
+                PlayableDirector playableDirector;
+                if (index == 2)
+                {
+                    index -= 1;
+                }
+                else if (index == 4)
+                {
+                    index -= 2;
+                }
+                else if (index == 6 || index == 7)
+                {
+                    index -= 3;
+                }
+                else if (index == 8)
+                {
+                    index = 9;
+                }
+
+                Debug.Log("Panel" + index);
+                if (scenes[index].name == "Assessment 1")
+                {
+                    index = 9;
+                }
+                else if (scenes[index].name == "zoom out assessment 1")
+                {
+                    index = 5;
+                }
+                else if (scenes[index].name == "zoom out assessment 2")
+                {
+                    index = 6;
+                }
+                else if (scenes[index].name == "Assessment 4")
+                {
+                    index = 7;
+                }
+                else if (scenes[index].name == "Assessment 5")
+                {
+                    index = 8;
+                }
+
+                playableDirector = timelines[index].GetComponent<PlayableDirector>();
+
+                if (PlayerPrefs.GetString("Paused") == "True")
+                {
+                    playableDirector.Pause();
+                    if (scenes[14].activeSelf)
+                    {
+                        tracingObjects[3].SetActive(false);
+                    }
+                }
+                else
+                {
+                    playableDirector.Resume();
+                    if (scenes[14].activeSelf)
+                    {
+                        tracingObjects[3].SetActive(true);
+                    }
+                }
+            }
+            else
+            {
+                if (index == 1)
+                {
+                    if (PlayerPrefs.GetString("Paused") == "True")
+                    {
+                        tracingObjects[0].SetActive(false);
+                    }
+                    else
+                    {
+                        tracingObjects[0].SetActive(true);
+                    }
+                }
+                else if (index == 3)
+                {
+                    if (PlayerPrefs.GetString("Paused") == "True")
+                    {
+                        tracingObjects[1].SetActive(false);
+                    }
+                    else
+                    {
+                        tracingObjects[1].SetActive(true);
+                    }
+                }
+                else if (index == 5)
+                {
+                    if (PlayerPrefs.GetString("Paused") == "True")
+                    {
+                        tracingObjects[2].SetActive(false);
+                    }
+                    else
+                    {
+                        tracingObjects[2].SetActive(true);
+                    }
+                }
+                else if (index == 16)
+                {
+                    gameMenu.SetActive(false);
+                }
+            }
+
+
         }
     }
 
@@ -208,7 +344,7 @@ public class Quarter2_Level4 : MonoBehaviour
 
         if (Scene_counter == 7)
         {
-            audioManager3.assessment_bgmusic(0.5f);
+            //audioManager3.assessment_bgmusic(0.5f);
             NextScene_Button.gameObject.SetActive(false);
         }
 
@@ -216,7 +352,7 @@ public class Quarter2_Level4 : MonoBehaviour
         {
             Scene_counter++;
             scenes[Scene_counter].SetActive(true);
-            audioManager3.Repeat_Instruction(0);
+            //audioManager3.Repeat_Instruction(0);
         }
 
         else if (Scene_counter == 10)
@@ -227,12 +363,12 @@ public class Quarter2_Level4 : MonoBehaviour
         else if (Scene_counter == 15)
         {
             NextScene_Button.gameObject.SetActive(false);
-            audioManager3.Repeat_Instruction(4);
+            //audioManager3.Repeat_Instruction(4);
         }
 
         else if (Scene_counter == 16)
         {
-            audioManager3.Stop_backgroundMusic2();
+            //audioManager3.Stop_backgroundMusic2();
             Show_Stars();
         }
     }
@@ -353,26 +489,26 @@ public class Quarter2_Level4 : MonoBehaviour
             Gameobjects[11].SetActive(true);
             Gameobjects[12].SetActive(false);
             Gameobjects[13].SetActive(false);
-            delaytime = 4;
+            delaytime = 8;
         }
 
         else if (fill_bar.fillAmount >= 0.3333333333333333f && fill_bar.fillAmount < 0.6666666666666667f)
         {
             star_display[1].SetActive(true);
             Gameobjects[8].SetActive(false);
-            delaytime = 4;
+            delaytime = 12;
         }
 
         else if (fill_bar.fillAmount >= 0.6666666666666667f && fill_bar.fillAmount < 1f)
         {
             star_display[2].SetActive(true);
-            delaytime = 4;
+            delaytime = 12;
         }
 
         else if (Mathf.Approximately(fill_bar.fillAmount, 1f))
         {
             star_display[3].SetActive(true);
-            delaytime = 8;
+            delaytime = 12;
         }
 
         StartCoroutine(GoToMap(score, userID, delaytime));

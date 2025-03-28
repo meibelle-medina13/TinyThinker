@@ -725,6 +725,8 @@ MonoBehaviour:
   score: 25
   error: 8
   confetti: {fileID: 878584603}
+  SFX: {fileID: 1915661756}
+  wrong: {fileID: 8300000, guid: 324742192ce1ece419992db22afed73f, type: 3}
 --- !u!120 &72448829
 LineRenderer:
   serializedVersion: 2
@@ -3089,6 +3091,8 @@ MonoBehaviour:
   - {fileID: 53954336}
   - {fileID: 116169588}
   confetti: {fileID: 1700780339}
+  characters: {fileID: 1548006043}
+  things: {fileID: 166061999}
   assessment3Buttons:
   - {fileID: 1225335630}
   - {fileID: 799991570}
@@ -3118,6 +3122,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 324742192ce1ece419992db22afed73f, type: 3}
   - {fileID: 8300000, guid: 884d09be4a051f243868a6eab3d9588e, type: 3}
   requestsManager: {fileID: 1383676702}
+  gameMenu: {fileID: 2066992631}
 --- !u!4 &364066924
 Transform:
   m_ObjectHideFlags: 0
@@ -4333,6 +4338,8 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: -8342309466420078038, guid: a8e86e84f1f64194c95c15e5560aac46, type: 2}
     value: {fileID: 0}
+  - key: {fileID: 2267679091444194728, guid: 8616d95e9353bbe4eb3fec828d318de6, type: 2}
+    value: {fileID: 1386255910}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &569095926
@@ -5762,7 +5769,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &753574319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6457,6 +6464,8 @@ MonoBehaviour:
   score: 25
   error: 8
   confetti: {fileID: 878584603}
+  SFX: {fileID: 1915661756}
+  wrong: {fileID: 8300000, guid: 324742192ce1ece419992db22afed73f, type: 3}
 --- !u!120 &795795935
 LineRenderer:
   serializedVersion: 2
@@ -8030,6 +8039,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 997483220}
+  - component: {fileID: 997483221}
   m_Layer: 5
   m_Name: 3.3 Instruction
   m_TagString: Untagged
@@ -8056,6 +8066,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!320 &997483221
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997483219}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: fecb4ccec9ac27341af886b4f76e87a6, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 4145462176499290912, guid: fecb4ccec9ac27341af886b4f76e87a6, type: 2}
+    value: {fileID: 1386255910}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &1000189385
 GameObject:
   m_ObjectHideFlags: 0
@@ -8823,6 +8852,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1034684168}
+  - component: {fileID: 1034684169}
   m_Layer: 5
   m_Name: 3.2 Instruction
   m_TagString: Untagged
@@ -8849,6 +8879,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!320 &1034684169
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034684167}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 9a308c3930ab88d408ab8e26bf8d5d0d, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -5627132575452672279, guid: 9a308c3930ab88d408ab8e26bf8d5d0d, type: 2}
+    value: {fileID: 1386255910}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &1039849481
 GameObject:
   m_ObjectHideFlags: 0
@@ -8860,6 +8909,7 @@ GameObject:
   - component: {fileID: 1039849482}
   - component: {fileID: 1039849484}
   - component: {fileID: 1039849483}
+  - component: {fileID: 1039849485}
   m_Layer: 5
   m_Name: Assessment2
   m_TagString: Untagged
@@ -8929,6 +8979,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1039849481}
   m_CullTransparentMesh: 1
+--- !u!320 &1039849485
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039849481}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: d17ecbccef2f9e34d824d6b62fb2cd8f, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -6096859101557550649, guid: d17ecbccef2f9e34d824d6b62fb2cd8f, type: 2}
+    value: {fileID: 1386255910}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &1055105929
 GameObject:
   m_ObjectHideFlags: 0
@@ -11973,6 +12042,8 @@ MonoBehaviour:
   score: 25
   error: 8
   confetti: {fileID: 878584603}
+  SFX: {fileID: 1915661756}
+  wrong: {fileID: 8300000, guid: 324742192ce1ece419992db22afed73f, type: 3}
 --- !u!120 &1405328245
 LineRenderer:
   serializedVersion: 2
@@ -13697,6 +13768,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1700921644}
+  - component: {fileID: 1700921645}
   m_Layer: 5
   m_Name: 3.1 Instruction
   m_TagString: Untagged
@@ -13723,6 +13795,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!320 &1700921645
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700921643}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 69c5d07f929eb564990eb827dceea6f2, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 3028998493494332764, guid: 69c5d07f929eb564990eb827dceea6f2, type: 2}
+    value: {fileID: 1386255910}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &1722098792
 GameObject:
   m_ObjectHideFlags: 0
@@ -16393,6 +16484,8 @@ MonoBehaviour:
   score: 25
   error: 8
   confetti: {fileID: 878584603}
+  SFX: {fileID: 1915661756}
+  wrong: {fileID: 8300000, guid: 324742192ce1ece419992db22afed73f, type: 3}
 --- !u!120 &1975370488
 LineRenderer:
   serializedVersion: 2

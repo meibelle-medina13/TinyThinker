@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
@@ -24,6 +26,10 @@ public class Q2_Level1 : MonoBehaviour
     Vector3[] optionInitialPos = new Vector3[4];
     [SerializeField]
     private GameObject confetti;
+
+    [Header("<---- ASSESSMENT2 GAMEOBJECTS ---->")]
+    [SerializeField] private GameObject characters;
+    [SerializeField] private GameObject things;
 
     [Header("<---- ASSESSMENT3 GAMEOBJECTS ---->")]
     [SerializeField]
@@ -54,6 +60,10 @@ public class Q2_Level1 : MonoBehaviour
     [Header("<---- REQUEST SCRIPT ---->")]
     [SerializeField]
     private THEME1_LEVEL1_REQUESTS requestsManager;
+
+    [Header("<---- GAME MENU ---->")]
+    [SerializeField]
+    private GameObject gameMenu;
 
     int assess1 = 100;
     int assess2 = 100;
@@ -118,6 +128,82 @@ public class Q2_Level1 : MonoBehaviour
         }
         PlayerPrefs.DeleteKey("MatchingType Score");
 
+        int index = 0;
+
+        if (gameObject.name == "Q2_Level1 Scene Manager")
+        {
+            for (int i = 0; i < scenes.Length; i++)
+            {
+                if (scenes[i].activeSelf)
+                {
+                    index = i;
+                }
+            }
+
+            PlayableDirector playableDirector = null;
+            if (index == 8)
+            {
+                if (assessments[index-8].activeSelf)
+                {
+                    playableDirector = assessments[index - 8].GetComponent<PlayableDirector>();
+                }
+                else if (assessments[index-7].activeSelf)
+                {
+                    playableDirector = assessments[index - 7].GetComponent<PlayableDirector>();
+                }
+                else if (assessments[index - 6].activeSelf)
+                {
+                    for (int j = 0; j < assessment3Instructions.Length; j++)
+                    {
+                        if (assessment3Instructions[j].activeSelf)
+                        {
+                            playableDirector = assessment3Instructions[j].GetComponent<PlayableDirector>();
+                            break;
+                        }
+                    }
+                }
+
+                if (assessments[3].activeSelf)
+                {
+                    gameMenu.SetActive(false);
+                }
+                else
+                {
+                    if (PlayerPrefs.GetString("Paused") == "True")
+                    {
+                        playableDirector.Pause();
+                        if (assessments[1].activeSelf)
+                        {
+                            characters.SetActive(false);
+                            things.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+                        playableDirector.Resume();
+                        if (assessments[1].activeSelf)
+                        {
+                            characters.SetActive(true);
+                            things.SetActive(true);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Panel" + index);
+                playableDirector = scenes[index].GetComponent<PlayableDirector>();
+
+                if (PlayerPrefs.GetString("Paused") == "True")
+                {
+                    playableDirector.Pause();
+                }
+                else
+                {
+                    playableDirector.Resume();
+                }
+            }
+        }
     }
 
     public void OpenPreview()
@@ -324,22 +410,22 @@ public class Q2_Level1 : MonoBehaviour
         if (score < star1)
         {
             result[4].SetActive(true);
-            delaytime = 4;
+            delaytime = 7;
         }
         else if (score >= star1 && score < star2)
         {
             result[1].SetActive(true);
-            delaytime = 4;
+            delaytime = 6;
         }
         else if (score >= star2 && score < star3)
         {
-            delaytime = 4;
+            delaytime = 6;
             result[0].SetActive(true);
             result[2].SetActive(true);
         }
         else
         {
-            delaytime += 8;
+            delaytime += 13;
             result[0].SetActive(true);
             result[3].SetActive(true);
         }

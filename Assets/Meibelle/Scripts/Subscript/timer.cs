@@ -10,7 +10,7 @@ public class timer : MonoBehaviour
 
     private void Start()
     {
-        PlayerPrefs.DeleteKey("Time");
+        //PlayerPrefs.DeleteKey("Time");
         if (PlayerPrefs.HasKey("Time"))
         {
             time = PlayerPrefs.GetFloat("Time");
