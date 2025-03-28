@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class ThemeMap : MonoBehaviour
@@ -20,10 +23,20 @@ public class ThemeMap : MonoBehaviour
     [SerializeField] private GameObject[] usedStickers = new GameObject[8];
     Vector3[] stickerInitialPos = new Vector3[8];
 
+    [Header("<---- CURRENT THEME LOCATIONS ---->")]
+    [SerializeField] private GameObject[] locations = new GameObject[4];
+
     [Header("<---- THEME BUTTONS AND LOCK ---->")]
     [SerializeField] private GameObject[] buttons = new GameObject[4];
     [SerializeField] private Sprite lockButton;
     [SerializeField] private Sprite selectButton;
+
+    [Header("<---- THEME BUTTONS AND LOCK ---->")]
+    [SerializeField] private GameObject settings;
+
+    [Header("<---- GUIDE GAMEOBJECTS ---->")]
+    [SerializeField] private GameObject background;
+    [SerializeField] private GameObject guideGameObject;
 
     [Header("<---- REQUEST SCRIPT ---->")]
     [SerializeField] private THEME_REQUEST requestsManager;
@@ -33,12 +46,18 @@ public class ThemeMap : MonoBehaviour
 
     void Start()
     {
-        
-        requestsManager = FindObjectOfType<THEME_REQUEST>();
-
         current_theme = PlayerPrefs.GetInt("Current_theme");
         userID = PlayerPrefs.GetInt("Current_user");
+        locations[current_theme - 1].SetActive(true);
 
+        if (PlayerPrefs.HasKey("StartGuide"+userID.ToString()) && PlayerPrefs.GetString("StartGuide" + userID.ToString()) == "True")
+        {
+            guideGameObject.SetActive(true);
+            background.GetComponent<PlayableDirector>().enabled = true;
+            locations[current_theme - 1].SetActive(false);
+        }
+
+        requestsManager = FindObjectOfType<THEME_REQUEST>();
         loadingScene.SetActive(false);
 
         for (int i = 0; i < availableStickers.Length; i++)
@@ -66,6 +85,32 @@ public class ThemeMap : MonoBehaviour
         }
 
         StartCoroutine(CheckQuarterAvailability());
+    }
+
+    private void Update()
+    {
+        if (PlayerPrefs.GetString("Showing") == "true" || PlayerPrefs.GetString("Paused") == "True")
+        {
+            locations[current_theme - 1].SetActive(false);
+        }
+        else
+        {
+            locations[current_theme - 1].SetActive(true);
+        }
+
+        if (PlayerPrefs.HasKey("StartGuide" + userID.ToString()) && PlayerPrefs.GetString("StartGuide" + userID.ToString()) == "True")
+        {
+            guideGameObject.SetActive(true);
+            background.GetComponent<PlayableDirector>().enabled = true;
+            PlayableDirector playableDirector = background.GetComponent<PlayableDirector>();
+            if (playableDirector.state == PlayState.Paused)
+            {
+                guideGameObject.SetActive(false);
+                background.GetComponent<PlayableDirector>().enabled = false;
+                locations[current_theme - 1].SetActive(true);
+                PlayerPrefs.SetString("StartGuide" + userID.ToString(), "False");
+            }
+        }
     }
 
     IEnumerator CheckQuarterAvailability()
@@ -106,6 +151,7 @@ public class ThemeMap : MonoBehaviour
 
     IEnumerator Loading()
     {
+        locations[current_theme - 1].SetActive(false);
         AsyncOperation asyncOperation;
         asyncOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(7);
 
@@ -124,12 +170,14 @@ public class ThemeMap : MonoBehaviour
             treasure.GetComponent<Image>().sprite = openTreasure;
             shadowStickerPlacement.SetActive(true);
             stickerContainer.SetActive(true);
+            settings.SetActive(false);
         }
         else
         {
             treasure.GetComponent<Image>().sprite = closeTreasure;
             shadowStickerPlacement.SetActive(false);
             stickerContainer.SetActive(false);
+            settings.SetActive(true);
         }
     }
 

@@ -45,6 +45,12 @@ public class Q2_Level1 : MonoBehaviour
     [SerializeField]
     private Sprite earnedStar;
 
+    [Header("<---- SOUND EFFECTS ---->")]
+    [SerializeField]
+    private AudioSource SFX;
+    [SerializeField]
+    private AudioClip[] audioClips = new AudioClip[2];
+
     [Header("<---- REQUEST SCRIPT ---->")]
     [SerializeField]
     private THEME1_LEVEL1_REQUESTS requestsManager;
@@ -94,12 +100,19 @@ public class Q2_Level1 : MonoBehaviour
         }
     }
 
+    private void PlaySFX(int index)
+    {
+        SFX.clip = audioClips[index];
+        SFX.Play();
+    }
+
     private void Update()
     {
         if (PlayerPrefs.HasKey("MatchingType Score"))
         {
             int Matchingscore = PlayerPrefs.GetInt("MatchingType Score");
             error = 25 - Matchingscore;
+            PlaySFX(1);
             MoveProgress(error, 2);
             Debug.Log(Matchingscore);
         }
@@ -147,18 +160,20 @@ public class Q2_Level1 : MonoBehaviour
         {
             member.transform.position = assessment1Destination[index].transform.position;
             StartCoroutine(AfterDragDrop());
+            PlaySFX(1);
             MoveProgress(error, 1);
         }
         else
         {
             member.transform.position = optionInitialPos[index];
             error += 8;
+            PlaySFX(0);
         }
     }
 
     IEnumerator AfterDragDrop()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
         int positionedMembers = 0;
 
         for (int i = 0; i < assessment1Option.Length; i++)
@@ -185,10 +200,13 @@ public class Q2_Level1 : MonoBehaviour
                 button.interactable = false;
                 assessment3Instructions[0].SetActive(false);
                 assessment3Instructions[1].SetActive(true);
+                MoveProgress(error, 3);
+                PlaySFX(1);
             }
             else
             {
                 error += 6;
+                PlaySFX(0);
             }
         }
         else if (assessment3Instructions[1].activeSelf)
@@ -198,10 +216,13 @@ public class Q2_Level1 : MonoBehaviour
                 button.interactable = false;
                 assessment3Instructions[1].SetActive(false);
                 assessment3Instructions[2].SetActive(true);
+                MoveProgress(error, 3);
+                PlaySFX(1);
             }
             else
             {
                 error += 6;
+                PlaySFX(0);
             }
         }
         else
@@ -210,13 +231,15 @@ public class Q2_Level1 : MonoBehaviour
             {
                 button.interactable = false;
                 assess3confetti.SetActive(true);
+                MoveProgress(error, 3);
+                PlaySFX(1);
             }
             else
             {
                 error += 6;
+                PlaySFX(0);
             }
         }
-        MoveProgress(error, 3);
     }
 
     private void MoveProgress(int totalError, int assessNum)

@@ -14,6 +14,14 @@ public class AudioManager : MonoBehaviour
 
         if (audio != null)
         {
+            //if (PlayerPrefs.HasKey("SpeakerVolume") && audioSource != null)
+            //{
+            //    audioSource.volume = PlayerPrefs.GetFloat("SpeakerVolume");
+            //}
+            //else
+            //{
+            //    audioSource.volume = 1.0f;
+            //}
             audioSource.clip = audio;
             audioSource.Play();
         }

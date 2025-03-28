@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 using System.Text.RegularExpressions;
 using UnityEngine.Networking;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.Playables;
+using Unity.VisualScripting;
 
 public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -16,10 +18,16 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
   [SerializeField] private AudioSource LevelAudioSource;
   [SerializeField] private AudioClip LevelBGM;
 
+  [Header("<---- GAME MENU ---->")]
+  [SerializeField] private GameObject gameMenu;
+
+  [Header("<---- TRACING OBJECTS ---->")]
+  [SerializeField] private GameObject tracingObject;
+
   void Start()
   {
     Panels[0].SetActive(true);
-    PlayBGM(LevelAudioSource, LevelBGM);
+    //PlayBGM(LevelAudioSource, LevelBGM);
   }
 
 
@@ -64,26 +72,34 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     Panels[0].SetActive(!Panels[0].activeInHierarchy);
     Result.SetActive(!Result.activeInHierarchy);
 
+    Debug.Log("Result: " + a1_Points + a2_Points + a3_Points);
+
+    if (a1_Points == 100 && a2_Points == 99.99999f && a3_Points == 100)
+    {
+      starCount = 3;
+    }
+
     if (starCount == 0)
     {
       ZeroStar.SetActive(true);
+      PlayerPrefs.SetInt("Delay Time", 7);
     }
     else if (starCount == 1)
     {
       OneStar.SetActive(true);
-      PlayerPrefs.SetInt("Delay Time", 4);
+      PlayerPrefs.SetInt("Delay Time", 8);
     }
     else if (starCount == 2)
     {
       TwoStars.SetActive(true);
-        PlayerPrefs.SetInt("Delay Time", 4);
+      PlayerPrefs.SetInt("Delay Time", 8);
     }
     else if (starCount == 3)
     {
       ThreeStars.SetActive(true);
-        PlayerPrefs.SetInt("Delay Time", 4);
+      PlayerPrefs.SetInt("Delay Time", 14);
     }
-
+    ProgressBar.SetActive(false);
   }
   // -------------------------------------------------- //
 
@@ -130,6 +146,85 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       Pencil.transform.position = worldPosition + pencilState;
       Collider.transform.position = worldPosition;
     }
+
+    int index = 0;
+
+    if (gameObject.name == "Scene Manager")
+    {
+      for (int i = 0; i < Panels.Length; i++)
+      {
+        if (Panels[i].activeSelf)
+        {
+          index = i;
+        }
+      }
+
+      if (index != 16)
+      {
+        PlayableDirector playableDirector;
+
+        Debug.Log("Panel" + index);
+        playableDirector = Panels[index].GetComponent<PlayableDirector>();
+
+        if (PlayerPrefs.GetString("Paused") == "True")
+        {
+          if (index == 14)
+          {
+            tracingObject.SetActive(false);
+          }
+          playableDirector.Pause();
+        }
+        else
+        {
+          playableDirector.Resume();
+          if (index == 14)
+          {
+            tracingObject.SetActive(true);
+          }
+        }
+      }
+      else
+      {
+        gameMenu.SetActive(false);
+      }
+
+      if (a1_Points == 100 && a2_Points == 99.99999f && a3_Points == 100)
+      {
+        totalProgressFill = 1f;
+        PlayerPrefs.SetFloat("Theme1 Score", totalProgressFill);
+      }
+      else
+      {
+        PlayerPrefs.SetFloat("Theme1 Score", totalProgressFill);
+      }
+
+    }
+    //else if (gameObject.transform.parent.name == "Assessment2" && gameObject.activeSelf)
+    //{
+    //  PlayableDirector playableDirector = gameObject.transform.parent.GetComponent<PlayableDirector>();
+    //  if (PlayerPrefs.GetString("Paused") == "True")
+    //  {
+    //    playableDirector.Pause();
+    //    tracingObject.SetActive(false);
+    //  }
+    //  else
+    //  {
+    //    playableDirector.Resume();
+    //    tracingObject.SetActive(true);
+    //  }
+    //}
+    //else if (gameObject.transform.parent.name == "Assessment3" && gameObject.activeSelf)
+    //{
+    //  PlayableDirector playableDirector = gameObject.transform.parent.GetComponent<PlayableDirector>();
+    //  if (PlayerPrefs.GetString("Paused") == "True")
+    //  {
+    //    playableDirector.Pause();
+    //  }
+    //  else
+    //  {
+    //    playableDirector.Resume();
+    //  }
+    //}
   }
 
 
@@ -244,7 +339,11 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
       a2_ProgressFill = (a2_Points / 100f) * starFillMultiplier; // not 100
 
-      if (a2_TracingPoints == tracedPoints.Count) TogglePanel();
+      if (a2_TracingPoints == tracedPoints.Count)
+      {
+        a2_ProgressFill += 0.000001f;
+        TogglePanel();
+      }
     }
     else if (Panels[0].transform.name == "Assessment3")
     {
@@ -254,7 +353,11 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       a3_ProgressFill = (a3_Points / 100f) * starFillMultiplier;
       a3_VacantSlots--;
 
-      if (a3_VacantSlots == 0) ToggleResult();
+      if (a3_VacantSlots == 0)
+      {
+        a3_ProgressFill += 0.000001f;
+        ToggleResult();
+      }
     }
     OnProgress();
   }
@@ -286,8 +389,14 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
   private void OnProgress()
   {
     totalProgressFill = a1_ProgressFill + a2_ProgressFill + a3_ProgressFill;
+    Debug.Log("FILL: " + a1_Points + a2_Points + a3_Points);
 
     ProgressBarMask.fillAmount = totalProgressFill;
+
+    if (a1_ProgressFill == 0.33333f && a2_ProgressFill == 0.333331f && a3_ProgressFill == 0.333331f)
+    {
+      totalProgressFill = 1f;
+    }
 
     if (totalProgressFill == 1f)
     {
@@ -311,19 +420,18 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       Debug.Log("Stars: " + starCount);
     }
     // ------------------------------------------------------------------------------------------------ //
-    PlayerPrefs.SetFloat("Theme1 Score", totalProgressFill);
-    }
+  }
   // -------------------------------------------------- //
 
 
   // PLAYING BGM AND SFX
   // -------------------------------------------------- //
-  public void PlayBGM(AudioSource audioSource, AudioClip BGM)
-  {
-    if (audioSource == null && BGM == null) return;
-    audioSource.clip = BGM;
-    audioSource.Play();
-  }
+  //public void PlayBGM(AudioSource audioSource, AudioClip BGM)
+  //{
+  //  if (audioSource == null && BGM == null) return;
+  //  audioSource.clip = BGM;
+  //  audioSource.Play();
+  //}
 
   public void PlaySFX(AudioSource audioSource, AudioClip SFX)
   {

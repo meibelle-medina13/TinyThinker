@@ -48,6 +48,7 @@ public class THEME1_LEVEL1_REQUESTS : MonoBehaviour
     public IEnumerator UpdateCurrentScore(string endpoint, float score, int userID, int theme_num, int level_num)
     {
         string newURL = URL + endpoint;
+
         byte[] rawData = System.Text.Encoding.UTF8.GetBytes("{\"userID\": " + userID + ", \"theme_num\": " + theme_num + ", \"level_num\": " + level_num + ", \"score\": " + score + "}");
 
         using (UnityWebRequest www = UnityWebRequest.Put(newURL, rawData))

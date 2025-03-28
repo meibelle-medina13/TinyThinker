@@ -23,6 +23,10 @@ public class Continuous_BGM : MonoBehaviour
             else if (levels_BGM.Length == 0)
             {
                 DontDestroyOnLoad(this.gameObject);
+                if (PlayerPrefs.HasKey("SpeakerVolume"))
+                {
+                    this.gameObject.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("SpeakerVolume");
+                }
             }
         }
     }

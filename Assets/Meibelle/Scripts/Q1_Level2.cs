@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
+using System.Reflection;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class Q1_Level2 : MonoBehaviour
@@ -30,6 +33,8 @@ public class Q1_Level2 : MonoBehaviour
     [SerializeField]
     private Button treasureBox;
     [SerializeField]
+    private GameObject tracingObject;
+    [SerializeField]
     private GameObject[] assessment2 = new GameObject[4];
     Vector3[] keyInitialPos = new Vector3[3];
     [SerializeField]
@@ -50,6 +55,10 @@ public class Q1_Level2 : MonoBehaviour
     private Image[] stars = new Image[3];
     [SerializeField]
     private Sprite earnedStar;
+
+    [Header("<---- GAME MENU ---->")]
+    [SerializeField]
+    private GameObject gameMenu;
 
     [Header("<---- REQUEST SCRIPT ---->")]
     [SerializeField]
@@ -105,15 +114,74 @@ public class Q1_Level2 : MonoBehaviour
             button.onClick.AddListener(() => CheckAssessment3(balloon));
         }
     }
+
+    private void Update()
+    {
+        PlayableDirector playableDirector;
+
+        int index = PlayerPrefs.GetInt("CurrentPanel");
+        Debug.Log(index);
+        if (!assessments[3].activeSelf)
+        {
+            if (!scenes[10].activeSelf)
+            {
+                Debug.Log(scenes[index].name);
+                playableDirector = scenes[index].GetComponent<PlayableDirector>();
+                //if (scenes[index].name == "Scene5")
+                //{
+                //    GameObject scene = scenes[index].transform.Find("Scene 5.1").gameObject;
+                //    playableDirector = scene.GetComponent<PlayableDirector>();
+                //}
+                //else
+                //{
+                //    playableDirector = scenes[index].GetComponent<PlayableDirector>();
+                //}
+            }
+            else
+            {
+                playableDirector = assessments[index].GetComponent<PlayableDirector>();
+            }
+
+            if (PlayerPrefs.GetString("Paused") == "True")
+            {
+                playableDirector.Pause();
+                if (tracingpanel.activeSelf)
+                {
+                    tracingObject.SetActive(false);
+                }
+            }
+            else if (PlayerPrefs.GetString("Paused") == "False")
+            {
+                playableDirector.Resume();
+                if (tracingpanel.activeSelf)
+                {
+                    tracingObject.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            gameMenu.SetActive(false);
+        }
+    }
     public void OpenPreview()
     {
         scenes[0].SetActive(true);
+        PlayerPrefs.SetInt("CurrentPanel", 0);
     }
 
     public void OnContinue(int index)
     {
         scenes[index].SetActive(false);
         scenes[index + 1].SetActive(true);
+        if (index == 9)
+        {
+            PlayerPrefs.SetInt("CurrentPanel", 0);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("CurrentPanel", index + 1);
+        }
     }
 
     private void CheckExercise1(Button letter)
@@ -172,6 +240,7 @@ public class Q1_Level2 : MonoBehaviour
     {
         assessments[0].SetActive(false);
         assessments[1].SetActive(true);
+        PlayerPrefs.SetInt("CurrentPanel", 1);
         MoveProgress(error, 1);
     }
 
@@ -213,6 +282,7 @@ public class Q1_Level2 : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         assessments[1].SetActive(false);
         assessments[2].SetActive(true);
+        PlayerPrefs.SetInt("CurrentPanel", 2);
     }
 
     private void CheckAssessment3(GameObject balloon)
