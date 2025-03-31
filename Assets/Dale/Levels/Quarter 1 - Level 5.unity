@@ -4355,7 +4355,7 @@ GameObject:
   - component: {fileID: 498782398}
   - component: {fileID: 498782397}
   m_Layer: 0
-  m_Name: BGM Source
+  m_Name: Audio Manager
   m_TagString: Levels_BGM
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4893,7 +4893,7 @@ PlayableDirector:
   - key: {fileID: -447707985796188106, guid: 71439985f5b616a45a86c77c29d70b79, type: 2}
     value: {fileID: 412571151}
   - key: {fileID: 8490705330036664756, guid: 71439985f5b616a45a86c77c29d70b79, type: 2}
-    value: {fileID: 1485782610}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &529748201
@@ -6403,6 +6403,7 @@ GameObject:
   - component: {fileID: 639764905}
   - component: {fileID: 639764904}
   - component: {fileID: 639764903}
+  - component: {fileID: 639764907}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -6511,6 +6512,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &639764907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639764902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c204321b728a8f44ea2ef6ed8e8bd37f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 0}
 --- !u!1 &649894818
 GameObject:
   m_ObjectHideFlags: 0
@@ -7929,7 +7943,7 @@ PlayableDirector:
   - key: {fileID: 7632345446797734814, guid: 72925418043cc4b4f8a161feee50f70a, type: 2}
     value: {fileID: 330688374}
   - key: {fileID: -8348354391214992003, guid: 72925418043cc4b4f8a161feee50f70a, type: 2}
-    value: {fileID: 1485782610}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &753100415
@@ -8209,7 +8223,7 @@ PlayableDirector:
   - key: {fileID: 6331546602417011182, guid: 5fd9efa325516c94786ad7e0500b4afb, type: 2}
     value: {fileID: 267979292}
   - key: {fileID: 111624277390264047, guid: 5fd9efa325516c94786ad7e0500b4afb, type: 2}
-    value: {fileID: 1485782610}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &782117019
@@ -15175,65 +15189,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480877996}
   m_CullTransparentMesh: 1
---- !u!1 &1485782610
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1485782611}
-  - component: {fileID: 1485782612}
-  m_Layer: 5
-  m_Name: sticker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &1485782611
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1485782610}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1759305194}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!320 &1485782612
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1485782610}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 4bd9205aa0ebf9e48b69c52ac6b0b30b, type: 2}
-  m_InitialState: 1
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: -2780132196936369856, guid: 4bd9205aa0ebf9e48b69c52ac6b0b30b, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: 3203271069420032723, guid: 4bd9205aa0ebf9e48b69c52ac6b0b30b, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: -9027391653223352971, guid: 4bd9205aa0ebf9e48b69c52ac6b0b30b, type: 2}
-    value: {fileID: 0}
-  m_ExposedReferences:
-    m_References: []
 --- !u!1 &1501586551
 GameObject:
   m_ObjectHideFlags: 0
@@ -15460,7 +15415,7 @@ GameObject:
   - component: {fileID: 1511967017}
   m_Layer: 0
   m_Name: Scene Manager
-  m_TagString: Levels_BGM
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18660,7 +18615,6 @@ RectTransform:
   - {fileID: 529748199}
   - {fileID: 782117017}
   - {fileID: 753100413}
-  - {fileID: 1485782611}
   m_Father: {fileID: 639764906}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

@@ -9,10 +9,12 @@ public class EndLevelScoreScript : MonoBehaviour
     int userID, delaytime;
     float LevelScore;
     int theme, level;
+    THEME1_LEVEL1_REQUESTS requestsManager;
 
 
     private void Awake()
     {
+        userID = PlayerPrefs.GetInt("Current_user");
         //Level5Score = PlayerPrefs.GetFloat("Level5 Score");
         if (PlayerPrefs.HasKey("Theme1 Score"))
         {
@@ -44,6 +46,7 @@ public class EndLevelScoreScript : MonoBehaviour
         }
         Debug.Log("FInal:" + LevelScore);
         userID = PlayerPrefs.GetInt("Current_user");
+
         StartCoroutine(GoToTest());
     }
 
@@ -54,7 +57,15 @@ public class EndLevelScoreScript : MonoBehaviour
         delaytime = PlayerPrefs.GetInt("Delay Time");
         Debug.Log(delaytime);
         yield return new WaitForSeconds(delaytime);
-        yield return StartCoroutine(UpdateCurrentScore());
+
+        if (PlayerPrefs.GetFloat("Time") > 0)
+        {
+            yield return StartCoroutine(UpdateCurrentScore());
+        }
+        else
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+        }
     }
 
     float score;
@@ -80,24 +91,24 @@ public class EndLevelScoreScript : MonoBehaviour
             {
                 Debug.Log("Received: " + www.downloadHandler.text);
                 Debug.Log("Theme" + current_theme);
-                if (!PlayerPrefs.HasKey("PostTest Status" + theme.ToString()))
+                if (!PlayerPrefs.HasKey(userID.ToString() + "PostTest Status" + theme.ToString()) && PlayerPrefs.GetFloat("Time") > 0)
                 {
                     if (score >= 33.33f && current_theme == 1)
                     {
                         PlayerPrefs.SetInt("Current_level", 0);
-                        PlayerPrefs.SetString("PostTest Status" + theme.ToString(), "Not yet done");
+                        PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
                         UnityEngine.SceneManagement.SceneManager.LoadScene(15);
                     }
                     else if (score >= 33.33f && current_theme == 2)
                     {
                         PlayerPrefs.SetInt("Current_level", 0);
-                        PlayerPrefs.SetString("PostTest Status" + theme.ToString(), "Not yet done");
+                        PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
                         UnityEngine.SceneManagement.SceneManager.LoadScene(22);
                     }
                     else if (score >= 33.33f && current_theme == 3)
                     {
                         PlayerPrefs.SetInt("Current_level", 0);
-                        PlayerPrefs.SetString("PostTest Status" + theme.ToString(), "Not yet done");
+                        PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
                         UnityEngine.SceneManagement.SceneManager.LoadScene(27);
                     }
                     else if (score >= 33.33f && current_theme == 4)
@@ -108,7 +119,7 @@ public class EndLevelScoreScript : MonoBehaviour
                         }
                         else
                         {
-                            PlayerPrefs.SetString("PostTest Status" + theme.ToString(), "Not yet done");
+                            PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
                             UnityEngine.SceneManagement.SceneManager.LoadScene(32);
                         }
                     }

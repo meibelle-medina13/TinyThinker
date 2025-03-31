@@ -199,13 +199,6 @@ public class Quarter2Level5 : MonoBehaviour
     Panels[0].SetActive(!Panels[0].activeInHierarchy);
     Result.SetActive(!Result.activeInHierarchy);
 
-    //Debug.Log("Result: " + a1_Points + a2_Points + a3_Points);
-
-    //if (a1_Points == 100 && a2_Points == 99.99999f && a3_Points == 100)
-    //{
-    //  starCount = 3;
-    //}
-
     if (starCount == 0)
     {
       ZeroStar.SetActive(true);

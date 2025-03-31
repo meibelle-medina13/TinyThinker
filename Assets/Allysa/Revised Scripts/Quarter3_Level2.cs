@@ -1149,7 +1149,11 @@ public class Quarter3_Level2 : MonoBehaviour
         int theme_num = 3;
         int level_num = 2;
         int delaytime = 0;
-        StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+
+        if (PlayerPrefs.GetFloat("Time") > 0)
+        {
+            StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+        }
 
         if (imageList[3].fillAmount < 0.3333333333333333f)
         {
@@ -1159,29 +1163,34 @@ public class Quarter3_Level2 : MonoBehaviour
             gameobjects[24].SetActive(false);
             gameobjects[25].SetActive(true);
             gameobjects[26].SetActive(false);
-            delaytime = 4;
+            delaytime = 8;
         }
 
         else if (imageList[3].fillAmount >= 0.3333333333333333f && imageList[3].fillAmount < 0.6666666666666667f)
         {
             gameobjects[19].SetActive(true);
             gameobjects[24].SetActive(false);
-            delaytime = 4;
+            delaytime = 12;
         }
 
         else if (imageList[3].fillAmount >= 0.6666666666666667f && imageList[3].fillAmount < 1f)
         {
             gameobjects[20].SetActive(true);
-            delaytime = 4;
+            delaytime = 12;
         }
 
         else if (Mathf.Approximately(imageList[3].fillAmount, 1f))
         {
             gameobjects[21].SetActive(true);
-            delaytime = 8;
+            delaytime = 12;
         }
 
         StartCoroutine(GoToMap(score, userID, delaytime));
+
+        if (score > (100f / 3f))
+        {
+            StartCoroutine(requestsManager.AddReward("/reward", userID, 6));
+        }
     }
 
     IEnumerator GoToMap(float score, int userID, int delaytime)
@@ -1193,8 +1202,15 @@ public class Quarter3_Level2 : MonoBehaviour
         }
         else
         {
-            int next_level = 3;
-            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+            if (PlayerPrefs.GetFloat("Time") > 0)
+            {
+                int next_level = 3;
+                StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+            }
+            else
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+            }
         }
     }
 }
