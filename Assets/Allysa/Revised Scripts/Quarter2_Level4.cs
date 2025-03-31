@@ -271,8 +271,6 @@ public class Quarter2_Level4 : MonoBehaviour
                     gameMenu.SetActive(false);
                 }
             }
-
-
         }
     }
 
@@ -321,6 +319,7 @@ public class Quarter2_Level4 : MonoBehaviour
             IncrementFillAmount(0.05f);
         }
 
+        progressFillChecker();
         UpdateScene();
     }
 
@@ -441,6 +440,7 @@ public class Quarter2_Level4 : MonoBehaviour
             frame_3 = 0;
         }
 
+        progressFillChecker();
     }
 
     public void CorrectButton()
@@ -461,12 +461,32 @@ public class Quarter2_Level4 : MonoBehaviour
         }
 
         Wrong_Click = 0;
+        progressFillChecker();
         Invoke("UpdateScene", 2);
     }
 
     public void WrongButton()
     {
         Wrong_Click++;
+    }
+
+
+    private void progressFillChecker()
+    {
+        if (fill_bar.fillAmount >= 0.3333333333333333f && fill_bar.fillAmount < 0.6666666666666667f)
+        {
+            Gameobjects[5].SetActive(false);
+        }
+
+        else if (fill_bar.fillAmount >= 0.6666666666666667f && fill_bar.fillAmount < 1f)
+        {
+            Gameobjects[6].SetActive(false);
+        }
+
+        else if (Mathf.Approximately(fill_bar.fillAmount, 1f))
+        {
+            Gameobjects[7].SetActive(false);
+        }
     }
 
     void Show_Stars()
@@ -483,19 +503,17 @@ public class Quarter2_Level4 : MonoBehaviour
         if (fill_bar.fillAmount < 0.3333333333333333f)
         {
             star_display[0].SetActive(true);
-            Gameobjects[8].SetActive(false);
-            Gameobjects[9].SetActive(false);
-            Gameobjects[10].SetActive(true);
-            Gameobjects[11].SetActive(true);
-            Gameobjects[12].SetActive(false);
-            Gameobjects[13].SetActive(false);
+            Gameobjects[0].SetActive(false);
+            Gameobjects[1].SetActive(false);
+            Gameobjects[2].SetActive(false);
+            Gameobjects[3].SetActive(false);
             delaytime = 8;
         }
 
         else if (fill_bar.fillAmount >= 0.3333333333333333f && fill_bar.fillAmount < 0.6666666666666667f)
         {
             star_display[1].SetActive(true);
-            Gameobjects[8].SetActive(false);
+            Gameobjects[0].SetActive(false);
             delaytime = 12;
         }
 
