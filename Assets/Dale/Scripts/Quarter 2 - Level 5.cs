@@ -37,9 +37,38 @@ public class Quarter2Level5 : MonoBehaviour
   private Vector3 pencilRaise2 = new Vector3(105, 120, 0);
   private Vector3 pencilWrite2 = new Vector3(85, 100, 0);
 
+  public GameObject Pencil3;
+  public GameObject PencilMask3;
+  public GameObject Collider3;
+  private Vector3 pencilState3;
+  private Vector3 pencilRaise3 = new Vector3(105, 120, 0);
+  private Vector3 pencilWrite3 = new Vector3(85, 100, 0);
+
   void Update()
   {
-    if (GetActivePanel() == "Assessment2")
+    if (GetActivePanel() == "Scene7")
+    {
+      Vector3 screenPosition = Input.mousePosition;
+      screenPosition.z = Camera.main.nearClipPlane + 1;
+      Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
+
+      if (Input.GetMouseButton(0))
+      {
+        Collider3.GetComponent<CircleCollider2D>().enabled = true;
+        pencilState3 = pencilWrite3;
+
+        GameObject pencilMask = Instantiate(PencilMask3, worldPosition, Quaternion.identity);
+        pencilMask.transform.SetParent(Panels[7].transform);
+      }
+      else
+      {
+        Collider3.GetComponent<CircleCollider2D>().enabled = false;
+        pencilState3 = pencilRaise3;
+      }
+      Pencil3.transform.position = worldPosition + pencilState3;
+      Collider3.transform.position = worldPosition;
+    }
+    else if (GetActivePanel() == "Assessment2")
     {
       Vector3 screenPosition = Input.mousePosition;
       screenPosition.z = Camera.main.nearClipPlane + 1;
@@ -100,7 +129,7 @@ public class Quarter2Level5 : MonoBehaviour
 
       if (index != 18 && index != 16 && index != 17)
       {
-        Debug.Log("Panel" + index);
+        //Debug.Log("Panel" + index);
 
         playableDirector = Panels[index].GetComponent<PlayableDirector>();
 
@@ -274,6 +303,7 @@ public class Quarter2Level5 : MonoBehaviour
 
   HashSet<string> tracedPoints1 = new HashSet<string>();
   HashSet<string> tracedPoints2 = new HashSet<string>();
+  HashSet<string> tracedPoints3 = new HashSet<string>();
 
   void OnTriggerEnter2D(Collider2D collider)
   {
@@ -363,10 +393,11 @@ public class Quarter2Level5 : MonoBehaviour
     {
       if (a3_TracingPoints == tracedPoints2.Count)
       {
-        a3_Points += (assessment3 / a3_TracingPoints) + 0.00001f; // ensures 100 score
+        a3_Points += (assessment3 / a3_TracingPoints);
         Debug.Log("A3: " + a3_Points);
 
-        a3_ProgressFill = (a3_Points / 100f) * starFillMultiplier;
+        a3_ProgressFill = ((a3_Points / 100f) * starFillMultiplier) + 0.0000099f; // ensure 100 score
+        OnProgress();
         ToggleResult();
       }
       else
@@ -375,8 +406,9 @@ public class Quarter2Level5 : MonoBehaviour
         Debug.Log("A3: " + a3_Points);
 
         a3_ProgressFill = (a3_Points / 100f) * starFillMultiplier;
+        OnProgress();
       }
-      OnProgress();
+      
     }
   }
 
