@@ -13,6 +13,8 @@ public class Theme1_Map : MonoBehaviour
     private GameObject[] theme2_levels = new GameObject[10];
     [SerializeField]
     private GameObject[] theme3_levels = new GameObject[10];
+    [SerializeField]
+    private GameObject[] theme4_levels = new GameObject[10];
 
     [Header("<---- SOUNDS AND PROFILE PANEL ---->")]
     [SerializeField]
@@ -24,7 +26,7 @@ public class Theme1_Map : MonoBehaviour
 
     [Header("<---- THEMES ---->")]
     [SerializeField]
-    private GameObject[] themes_map = new GameObject[3];
+    private GameObject[] themes_map = new GameObject[4];
 
     [Header("<---- BUTTONS ---->")]
     [SerializeField]
@@ -90,8 +92,6 @@ public class Theme1_Map : MonoBehaviour
     private Button settingsButton;
     [SerializeField]
     private Button cancel;
-    //[SerializeField]
-    //private Button editName;
 
     [Header("<---- LOADING PANEL ---->")]
     [SerializeField]
@@ -178,7 +178,7 @@ public class Theme1_Map : MonoBehaviour
             }
             else if (current_level == 5 && current_theme == 1)
             {
-                if (PlayerPrefs.HasKey("PostTest Status") && PlayerPrefs.GetString("PostTest Status") == "Not yet done")
+                if (PlayerPrefs.HasKey(user_id.ToString() + "PostTest Status1") && PlayerPrefs.GetString(user_id.ToString() + "PostTest Status1") == "Not yet done")
                 {
                     UnityEngine.SceneManagement.SceneManager.LoadScene(15);
                 }
@@ -201,9 +201,9 @@ public class Theme1_Map : MonoBehaviour
             }
             else if (current_level == 5 && current_theme == 2)
             {
-                if (PlayerPrefs.HasKey("PostTest Status") && PlayerPrefs.GetString("PostTest Status") == "Not yet done")
+                if (PlayerPrefs.HasKey(user_id.ToString() + "PostTest Status2") && PlayerPrefs.GetString(user_id.ToString() + "PostTest Status2") == "Not yet done")
                 {
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(15);
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(22);
                 }
             }
 
@@ -224,7 +224,7 @@ public class Theme1_Map : MonoBehaviour
             }
             else if (current_level == 3 && current_theme == 3)
             {
-                if (PlayerPrefs.HasKey("PostTest Status") && PlayerPrefs.GetString("PostTest Status") == "Not yet done")
+                if (PlayerPrefs.HasKey(user_id.ToString() + "PostTest Status3") && PlayerPrefs.GetString(user_id.ToString() + "PostTest Status3") == "Not yet done")
                 {
                     UnityEngine.SceneManagement.SceneManager.LoadScene(27);
                 }
@@ -233,6 +233,29 @@ public class Theme1_Map : MonoBehaviour
             for (int i = 0; i < theme3_levels.Length; i++)
             {
                 Button level = theme3_levels[i].GetComponent<Button>();
+                int levelnum = i + 1;
+                level.onClick.AddListener(() => EnterGameLevel(levelnum, theme));
+            }
+        }
+        else if (selected_theme == 4)
+        {
+            Debug.Log(current_level);
+            theme = 4;
+            if (current_level == 0 && current_theme == 4)
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(28);
+            }
+            else if (current_level == 3 && current_theme == 4)
+            {
+                if (PlayerPrefs.HasKey(user_id.ToString() + "PostTest Status4") && PlayerPrefs.GetString(user_id.ToString() + "PostTest Status4") == "Not yet done")
+                {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(32);
+                }
+            }
+
+            for (int i = 0; i < theme4_levels.Length; i++)
+            {
+                Button level = theme4_levels[i].GetComponent<Button>();
                 int levelnum = i + 1;
                 level.onClick.AddListener(() => EnterGameLevel(levelnum, theme));
             }
@@ -383,14 +406,38 @@ public class Theme1_Map : MonoBehaviour
             if (current_theme == 1)
             {
                 theme1_levels[i].SetActive(true);
+                if (i == level - 1)
+                {
+                    Transform[] children = theme1_levels[i].GetComponentsInChildren<Transform>(true);
+                    children[2].gameObject.SetActive(true);
+                }
             }
             else if (current_theme == 2)
             {
                 theme2_levels[i].SetActive(true);
+                if (i == level - 1)
+                {
+                    Transform[] children = theme2_levels[i].GetComponentsInChildren<Transform>(true);
+                    children[2].gameObject.SetActive(true);
+                }
             }
             else if (current_theme == 3)
             {
                 theme3_levels[i].SetActive(true);
+                if (i == level - 1)
+                {
+                    Transform[] children = theme3_levels[i].GetComponentsInChildren<Transform>(true);
+                    children[2].gameObject.SetActive(true);
+                }
+            }
+            else if (current_theme == 4)
+            {
+                theme4_levels[i].SetActive(true);
+                if (i == level - 1)
+                {
+                    Transform[] children = theme4_levels[i].GetComponentsInChildren<Transform>(true);
+                    children[2].gameObject.SetActive(true);
+                }
             }
         }
     }
@@ -409,6 +456,10 @@ public class Theme1_Map : MonoBehaviour
         else if (theme == 3)
         {
             indexFiller = 23;
+        }
+        else if (theme == 4)
+        {
+            indexFiller = 28;
         }
         Debug.Log(indexFiller);
         //UnityEngine.SceneManagement.SceneManager.LoadScene(level + indexFiller);

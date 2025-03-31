@@ -22,12 +22,15 @@ public class ScoreScript : MonoBehaviour
         Test_Score = PlayerPrefs.GetInt("Test Score");
         Debug.Log("FInal:" + Test_Score);
         userID = PlayerPrefs.GetInt("Current_user");
-        //StartCoroutine(requestsManager.updateTestScore("/test_score", userID, theme, testType, Test_Score));
 
         if (testType == 1)
         {
             StartCoroutine(requestsManager.updateTestScore("/test_score", userID, theme, testType, Test_Score));
             StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", 1, userID));
+        }
+        else if (testType == 2 && theme == 5)
+        {
+            StartCoroutine(requestsManager.updateTestScore("/test_score", userID, theme-1, testType, Test_Score));
         }
         else if (testType == 2)
         {

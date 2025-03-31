@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class Q2_level2 : MonoBehaviour
@@ -12,6 +15,8 @@ public class Q2_level2 : MonoBehaviour
     private GameObject[] scenes = new GameObject[8];
     [SerializeField]
     private GameObject[] assessment = new GameObject[4];
+    [SerializeField] private GameObject tracingO;
+    [SerializeField] private GameObject tracingU;
 
     [Header("<---- ASSESSMENT1 GAMEOBJECTS ---->")]
     [SerializeField]
@@ -54,6 +59,10 @@ public class Q2_level2 : MonoBehaviour
     [Header("<---- REQUEST SCRIPT ---->")]
     [SerializeField]
     private THEME1_LEVEL1_REQUESTS requestsManager;
+
+    [Header("<---- GAME MENU ---->")]
+    [SerializeField]
+    private GameObject gameMenu;
 
     private int objectCounter;
     private int Oo_num_of_tracing_points = 38;
@@ -99,6 +108,82 @@ public class Q2_level2 : MonoBehaviour
             {
                 Uconfetti.SetActive(true);
             } 
+        }
+
+        int index = 0;
+
+        if (gameObject.name == "Theme2_Level2 Scene Manager")
+        {
+            for (int i = 0; i < scenes.Length; i++)
+            {
+                if (scenes[i].activeSelf)
+                {
+                    index = i;
+                }
+            }
+
+            PlayableDirector playableDirector = null;
+            if (index == 7)
+            {
+                if (assessment[index - 7].activeSelf)
+                {
+                    playableDirector = assessment[index - 7].GetComponent<PlayableDirector>();
+                }
+                else if (assessment[index - 6].activeSelf)
+                {
+                    playableDirector = assessment[index - 6].GetComponent<PlayableDirector>();
+                }
+                else if (assessment[index - 5].activeSelf)
+                {
+                    playableDirector = assessment[index - 5].GetComponent<PlayableDirector>();
+                }
+
+                if (assessment[3].activeSelf)
+                {
+                    gameMenu.SetActive(false);
+                }
+                else
+                {
+                    if (PlayerPrefs.GetString("Paused") == "True")
+                    {
+                        playableDirector.Pause();
+                    }
+                    else
+                    {
+                        playableDirector.Resume();
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Panel" + index);
+                playableDirector = scenes[index].GetComponent<PlayableDirector>();
+
+                if (PlayerPrefs.GetString("Paused") == "True")
+                {
+                    playableDirector.Pause();
+                    if (index == 1)
+                    {
+                        tracingO.SetActive(false);
+                    }
+                    else if (index == 4)
+                    {
+                        tracingU.SetActive(false);
+                    }
+                }
+                else
+                {
+                    playableDirector.Resume();
+                    if (index == 1)
+                    {
+                        tracingO.SetActive(true);
+                    }
+                    else if (index == 4)
+                    {
+                        tracingU.SetActive(true);
+                    }
+                }
+            }
         }
     }
 
@@ -333,7 +418,6 @@ public class Q2_level2 : MonoBehaviour
         yield return new WaitForSeconds(1f);
         assessment[2].SetActive(false);
         assessment[3].SetActive(true);
-        
     }
 
     private void MoveProgress(int totalError, int assessNum)
@@ -390,7 +474,11 @@ public class Q2_level2 : MonoBehaviour
     {
         int theme_num = 2;
         int level_num = 2;
-        StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+
+        if (PlayerPrefs.GetFloat("Time") > 0)
+        {
+            StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+        }
 
         float star1 = (100f / 3f);
         float star2 = (100f / 3f) * 2;
@@ -399,22 +487,22 @@ public class Q2_level2 : MonoBehaviour
         if (score < star1)
         {
             result[4].SetActive(true);
-            delaytime = 4;
+            delaytime = 8;
         }
         else if (score >= star1 && score < star2)
         {
             result[1].SetActive(true);
-            delaytime = 4;
+            delaytime = 12;
         }
         else if (score >= star2 && score < star3)
         {
-            delaytime = 4;
+            delaytime = 12;
             result[0].SetActive(true);
             result[2].SetActive(true);
         }
         else
         {
-            delaytime += 8;
+            delaytime += 18;
             result[0].SetActive(true);
             result[3].SetActive(true);
 
@@ -423,6 +511,11 @@ public class Q2_level2 : MonoBehaviour
             stars[2].sprite = earnedStar;
         }
         StartCoroutine(GoToMap());
+
+        if (score > (100f / 3f))
+        {
+            StartCoroutine(requestsManager.AddReward("/reward", userID, 3));
+        }
     }
 
     IEnumerator GoToMap()
@@ -435,9 +528,15 @@ public class Q2_level2 : MonoBehaviour
         }
         else
         {
-            Debug.Log("SAVE");
-            int next_level = 3;
-            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+            if (PlayerPrefs.GetFloat("Time") > 0)
+            {
+                int next_level = 3;
+                StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+            }
+            else
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+            }
         }
     }
 }

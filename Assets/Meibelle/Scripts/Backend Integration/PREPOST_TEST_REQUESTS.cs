@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -25,9 +26,19 @@ public class PREPOST_TEST_REQUESTS : MonoBehaviour
             }
             else
             {
-                PlayerPrefs.SetInt("Current_level", 1);
-                Debug.Log("Received: " + www.downloadHandler.text);
-                UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+                if (theme == 4 && testType == 2)
+                {
+                    Debug.Log("Received: " + www.downloadHandler.text);
+                    PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Done");
+                    PlayerPrefs.SetString("User"+ userID.ToString() + "Finished Game", "True");
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(33);
+                }
+                else
+                {
+                    PlayerPrefs.SetInt("Current_level", 1);
+                    Debug.Log("Received: " + www.downloadHandler.text);
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+                }
             }
         }
     }
@@ -52,7 +63,7 @@ public class PREPOST_TEST_REQUESTS : MonoBehaviour
                 UnityEngine.SceneManagement.SceneManager.LoadScene(6);
                 PlayerPrefs.SetInt("Current_theme", theme_num);
                 Debug.Log("Received: " + www.downloadHandler.text);
-                PlayerPrefs.SetString("PostTest Status", "Done");
+                PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + (theme_num-1).ToString(), "Done");
             }
         }
     }
@@ -84,7 +95,10 @@ public class PREPOST_TEST_REQUESTS : MonoBehaviour
             {
                 PlayerPrefs.SetInt("Current_level", next_level);
                 Debug.Log("Received: " + www.downloadHandler.text);
-                UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+                if (next_level > 0)
+                {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+                }
             }
         }
     }

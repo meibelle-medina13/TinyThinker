@@ -7,11 +7,12 @@ using System;
 using System.Reflection;
 using System.Collections;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.Playables;
 
 public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     private static int counter = 0;
-    private static bool bgMusicPlayed = false;
+    //private static bool bgMusicPlayed = false;
     
     //DRAG
     private static int placedObjects = 0;
@@ -39,10 +40,16 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
     public Button nextScene_Button;
     
     public List<GameObject> scenes;
+    public List<GameObject> timelines;
     public List<TextMeshProUGUI> text;
     public List<Button> clickableButtons;
     public List<GameObject> Image;
     public List<GameObject> star_display;
+
+    [Header("<---- GAME MENU ---->")]
+    [SerializeField]
+    private GameObject gameMenu;
+
 
     [Header("<---- REQUEST SCRIPT ---->")]
     [SerializeField]
@@ -55,14 +62,14 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         originalPosition = transform.position;
         audioManager = FindObjectOfType<Audio_Manager>();
 
-        if (!bgMusicPlayed)
-        {
-            if (audioManager != null)
-            {
-                audioManager.scene_bgmusic(0.5f); 
-                bgMusicPlayed = true; 
-            } 
-        } 
+        //if (!bgMusicPlayed)
+        //{
+        //    if (audioManager != null)
+        //    {
+        //        audioManager.scene_bgmusic(0.5f); 
+        //        bgMusicPlayed = true; 
+        //    } 
+        //} 
 
         if (text[0] != null)
         {
@@ -115,6 +122,56 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         else if (Mathf.Approximately(total_stars.fillAmount, 1f))
         {
             Image[9].SetActive(false);
+        }
+
+        int index = 0;
+
+        if (gameObject.name == "Level3 Scene Manager")
+        {
+            for (int i = 0; i < scenes.Count; i++)
+            {
+                if (scenes[i].activeSelf)
+                {
+                    index = i;
+                    if (index != 7)
+                    {
+                        Debug.Log(index);
+                        break;
+                    }
+                }
+            }
+
+            if (index != 11)
+            {
+                PlayableDirector playableDirector;
+
+                if (scenes[index].name == "Scene 7")
+                {
+                    index -= 2;
+                }
+                else if (index >= 8)
+                {
+                    index -= 3;
+                }
+            
+                Debug.Log("Panel" + index);
+                playableDirector = timelines[index].GetComponent<PlayableDirector>();
+
+                if (PlayerPrefs.GetString("Paused") == "True")
+                {
+                    playableDirector.Pause();
+                }
+                else
+                {
+                    playableDirector.Resume();
+                }
+            }
+            else
+            {
+                gameMenu.SetActive(false);
+            }
+
+
         }
     }
 
@@ -177,7 +234,9 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         counter++;
         scenes[counter].SetActive(true);
 
-       if (counter == 6)
+        PlayerPrefs.SetInt("CurrentPanel", counter);
+
+        if (counter == 6)
         {
             Image[0].SetActive(false);
             CancelInvoke("UpdateScene");
@@ -189,21 +248,21 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
             counter++;
             scenes[counter].SetActive(true);
             nextScene_Button.gameObject.SetActive(false);
-            audioManager.assessment_bgmusic(0.5f);
-            audioManager.Repeat_Instruction(instruction_count);
+            //audioManager.assessment_bgmusic(0.5f);
+            //audioManager.Repeat_Instruction(instruction_count);
             instruction_count++;
         }
 
         else if (counter == 9 || counter == 10)
         {
             wrong_click = 0;
-            audioManager.Repeat_Instruction(instruction_count);
+            //audioManager.Repeat_Instruction(instruction_count);
             instruction_count++;
         }
 
         else if (counter == 11)
         {
-            audioManager.Stop_backgroundMusic2();
+            //audioManager.Stop_backgroundMusic2();
             // ------------------------------------------------------------------- //
             Show_Stars();
         }
@@ -268,11 +327,12 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         }
     }
 
+
+
     public void WrongButton()
     {
         wrong_click++;
     }
-
 
     void Show_Stars()
     {
@@ -282,7 +342,11 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         int theme_num = 1;
         int level_num = 3;
         int delaytime = 0;
-        StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+
+        if (PlayerPrefs.GetFloat("Time") > 0)
+        {
+            StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+        }
 
         if (total_stars.fillAmount < 0.3333333333333333f)
         {
@@ -293,30 +357,26 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
             Image[5].SetActive(true);
             Image[6].SetActive(false);
             Image[7].SetActive(false);
-            text[1].text = "ULITIN!";
-            delaytime = 4;
+            delaytime = 8;
         }
 
         else if (total_stars.fillAmount >= 0.3333333333333333f && total_stars.fillAmount < 0.6666666666666667f)
         {
             star_display[1].SetActive(true);
             Image[2].SetActive(false);
-            text[1].text = "SUBOK";
-            delaytime = 4;
+            delaytime = 12;
         }
 
         else if (total_stars.fillAmount >= 0.6666666666666667f && total_stars.fillAmount < 1f)
         {
             star_display[2].SetActive(true);
-            text[1].text = "MAGALING";
-            delaytime = 4;
+            delaytime = 12;
         }
 
         else if (Mathf.Approximately(total_stars.fillAmount, 1f))
         {
             star_display[3].SetActive(true);
-            text[1].text = "PERPEKTO";
-            delaytime = 8;
+            delaytime = 12;
         }
 
         StartCoroutine(GoToMap(score, userID, delaytime));
@@ -331,10 +391,15 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         }
         else
         {
-            int next_level = 4;
-            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+            if (PlayerPrefs.GetFloat("Time") > 0)
+            {
+                int next_level = 4;
+                StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+            }
+            else
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+            }
         }
     }
 }
-
-

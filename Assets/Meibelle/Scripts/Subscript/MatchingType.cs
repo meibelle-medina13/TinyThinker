@@ -22,6 +22,11 @@ public class MatchingType : MonoBehaviour
     [SerializeField]
     private GameObject confetti;
 
+    [SerializeField]
+    private AudioSource SFX;
+    [SerializeField]
+    private AudioClip wrong;
+
     private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -82,6 +87,8 @@ public class MatchingType : MonoBehaviour
                 {
                     score = 0;
                 }
+                SFX.clip = wrong;
+                SFX.Play();
                 Debug.Log(gameObject.name);
             }
             else

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class Quarter2Level5 : MonoBehaviour
@@ -8,6 +10,12 @@ public class Quarter2Level5 : MonoBehaviour
   // SWITCHING PANELS
   // -------------------------------------------------- //
   public GameObject[] Panels;
+
+  [Header("<---- GAME MENU ---->")]
+  [SerializeField] private GameObject gameMenu;
+
+  [Header("<---- TRACING OBJECTS ---->")]
+  [SerializeField] private GameObject[] tracingObject;
 
   void Start()
   {
@@ -75,6 +83,72 @@ public class Quarter2Level5 : MonoBehaviour
       Pencil2.transform.position = worldPosition + pencilState2;
       Collider2.transform.position = worldPosition;
     }
+
+    int index = 0;
+
+    if (gameObject.name == "Scene Manager")
+    {
+      for (int i = 0; i < Panels.Length; i++)
+      {
+        if (Panels[i].activeSelf)
+        {
+          index = i;
+        }
+      }
+
+      PlayableDirector playableDirector;
+
+      if (index != 18 && index != 16 && index != 17)
+      {
+        Debug.Log("Panel" + index);
+
+        playableDirector = Panels[index].GetComponent<PlayableDirector>();
+
+        if (PlayerPrefs.GetString("Paused") == "True")
+        {
+          playableDirector.Pause();
+        }
+        else
+        {
+          playableDirector.Resume();
+        }
+      }
+      else
+      {
+        if (index == 18)
+        {
+          PlayerPrefs.SetFloat("Theme2 Score", totalProgressFill);
+          gameMenu.SetActive(false);
+        }
+        else
+        {
+          if (PlayerPrefs.GetString("Paused") == "True")
+          {
+            if (index == 16)
+            {
+              tracingObject[0].SetActive(false);
+            }
+            else if (index == 17)
+            {
+              tracingObject[1].SetActive(false);
+            }
+          }
+          else
+          {
+            if (index == 16)
+            {
+              tracingObject[0].SetActive(true);
+            }
+            else if (index == 17)
+            {
+              tracingObject[1].SetActive(true);
+            }
+          }
+        }
+        
+      }
+
+    }
   }
 
 
@@ -122,7 +196,30 @@ public class Quarter2Level5 : MonoBehaviour
 
   private void ToggleResult()
   {
+    Panels[0].SetActive(!Panels[0].activeInHierarchy);
+    Result.SetActive(!Result.activeInHierarchy);
 
+    if (starCount == 0)
+    {
+      ZeroStar.SetActive(true);
+      PlayerPrefs.SetInt("Delay Time", 7);
+    }
+    else if (starCount == 1)
+    {
+      OneStar.SetActive(true);
+      PlayerPrefs.SetInt("Delay Time", 8);
+    }
+    else if (starCount == 2)
+    {
+      TwoStars.SetActive(true);
+      PlayerPrefs.SetInt("Delay Time", 8);
+    }
+    else if (starCount == 3)
+    {
+      ThreeStars.SetActive(true);
+      PlayerPrefs.SetInt("Delay Time", 14);
+    }
+    ProgressBar.SetActive(false);
   }
   // -------------------------------------------------- //
 
@@ -134,6 +231,7 @@ public class Quarter2Level5 : MonoBehaviour
     if (GetActivePanel() == "Assessment1.1")
     {
       Debug.Log("Correct");
+      
       AddPoints();
     }
     else if (GetActivePanel() == "Assessment1.2")
@@ -269,7 +367,7 @@ public class Quarter2Level5 : MonoBehaviour
         Debug.Log("A3: " + a3_Points);
 
         a3_ProgressFill = (a3_Points / 100f) * starFillMultiplier;
-        TogglePanel();
+        ToggleResult();
       }
       else
       {

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
@@ -25,6 +27,10 @@ public class Q2_Level1 : MonoBehaviour
     [SerializeField]
     private GameObject confetti;
 
+    [Header("<---- ASSESSMENT2 GAMEOBJECTS ---->")]
+    [SerializeField] private GameObject characters;
+    [SerializeField] private GameObject things;
+
     [Header("<---- ASSESSMENT3 GAMEOBJECTS ---->")]
     [SerializeField]
     private Button[] assessment3Buttons = new Button[6];
@@ -45,9 +51,19 @@ public class Q2_Level1 : MonoBehaviour
     [SerializeField]
     private Sprite earnedStar;
 
+    [Header("<---- SOUND EFFECTS ---->")]
+    [SerializeField]
+    private AudioSource SFX;
+    [SerializeField]
+    private AudioClip[] audioClips = new AudioClip[2];
+
     [Header("<---- REQUEST SCRIPT ---->")]
     [SerializeField]
     private THEME1_LEVEL1_REQUESTS requestsManager;
+
+    [Header("<---- GAME MENU ---->")]
+    [SerializeField]
+    private GameObject gameMenu;
 
     int assess1 = 100;
     int assess2 = 100;
@@ -94,17 +110,100 @@ public class Q2_Level1 : MonoBehaviour
         }
     }
 
+    private void PlaySFX(int index)
+    {
+        SFX.clip = audioClips[index];
+        SFX.Play();
+    }
+
     private void Update()
     {
         if (PlayerPrefs.HasKey("MatchingType Score"))
         {
             int Matchingscore = PlayerPrefs.GetInt("MatchingType Score");
             error = 25 - Matchingscore;
+            PlaySFX(1);
             MoveProgress(error, 2);
             Debug.Log(Matchingscore);
         }
         PlayerPrefs.DeleteKey("MatchingType Score");
 
+        int index = 0;
+
+        if (gameObject.name == "Q2_Level1 Scene Manager")
+        {
+            for (int i = 0; i < scenes.Length; i++)
+            {
+                if (scenes[i].activeSelf)
+                {
+                    index = i;
+                }
+            }
+
+            PlayableDirector playableDirector = null;
+            if (index == 8)
+            {
+                if (assessments[index-8].activeSelf)
+                {
+                    playableDirector = assessments[index - 8].GetComponent<PlayableDirector>();
+                }
+                else if (assessments[index-7].activeSelf)
+                {
+                    playableDirector = assessments[index - 7].GetComponent<PlayableDirector>();
+                }
+                else if (assessments[index - 6].activeSelf)
+                {
+                    for (int j = 0; j < assessment3Instructions.Length; j++)
+                    {
+                        if (assessment3Instructions[j].activeSelf)
+                        {
+                            playableDirector = assessment3Instructions[j].GetComponent<PlayableDirector>();
+                            break;
+                        }
+                    }
+                }
+
+                if (assessments[3].activeSelf)
+                {
+                    gameMenu.SetActive(false);
+                }
+                else
+                {
+                    if (PlayerPrefs.GetString("Paused") == "True")
+                    {
+                        playableDirector.Pause();
+                        if (assessments[1].activeSelf)
+                        {
+                            characters.SetActive(false);
+                            things.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+                        playableDirector.Resume();
+                        if (assessments[1].activeSelf)
+                        {
+                            characters.SetActive(true);
+                            things.SetActive(true);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Panel" + index);
+                playableDirector = scenes[index].GetComponent<PlayableDirector>();
+
+                if (PlayerPrefs.GetString("Paused") == "True")
+                {
+                    playableDirector.Pause();
+                }
+                else
+                {
+                    playableDirector.Resume();
+                }
+            }
+        }
     }
 
     public void OpenPreview()
@@ -147,18 +246,20 @@ public class Q2_Level1 : MonoBehaviour
         {
             member.transform.position = assessment1Destination[index].transform.position;
             StartCoroutine(AfterDragDrop());
+            PlaySFX(1);
             MoveProgress(error, 1);
         }
         else
         {
             member.transform.position = optionInitialPos[index];
             error += 8;
+            PlaySFX(0);
         }
     }
 
     IEnumerator AfterDragDrop()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
         int positionedMembers = 0;
 
         for (int i = 0; i < assessment1Option.Length; i++)
@@ -185,10 +286,13 @@ public class Q2_Level1 : MonoBehaviour
                 button.interactable = false;
                 assessment3Instructions[0].SetActive(false);
                 assessment3Instructions[1].SetActive(true);
+                MoveProgress(error, 3);
+                PlaySFX(1);
             }
             else
             {
                 error += 6;
+                PlaySFX(0);
             }
         }
         else if (assessment3Instructions[1].activeSelf)
@@ -198,10 +302,13 @@ public class Q2_Level1 : MonoBehaviour
                 button.interactable = false;
                 assessment3Instructions[1].SetActive(false);
                 assessment3Instructions[2].SetActive(true);
+                MoveProgress(error, 3);
+                PlaySFX(1);
             }
             else
             {
                 error += 6;
+                PlaySFX(0);
             }
         }
         else
@@ -210,13 +317,15 @@ public class Q2_Level1 : MonoBehaviour
             {
                 button.interactable = false;
                 assess3confetti.SetActive(true);
+                MoveProgress(error, 3);
+                PlaySFX(1);
             }
             else
             {
                 error += 6;
+                PlaySFX(0);
             }
         }
-        MoveProgress(error, 3);
     }
 
     private void MoveProgress(int totalError, int assessNum)
@@ -292,7 +401,11 @@ public class Q2_Level1 : MonoBehaviour
     {
         int theme_num = 2;
         int level_num = 1;
-        StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+
+        if (PlayerPrefs.GetFloat("Time") > 0)
+        {
+            StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+        }
 
         float star1 = (100f / 3f);
         float star2 = (100f / 3f) * 2;
@@ -301,22 +414,22 @@ public class Q2_Level1 : MonoBehaviour
         if (score < star1)
         {
             result[4].SetActive(true);
-            delaytime = 4;
+            delaytime = 7;
         }
         else if (score >= star1 && score < star2)
         {
             result[1].SetActive(true);
-            delaytime = 4;
+            delaytime = 6;
         }
         else if (score >= star2 && score < star3)
         {
-            delaytime = 4;
+            delaytime = 6;
             result[0].SetActive(true);
             result[2].SetActive(true);
         }
         else
         {
-            delaytime += 8;
+            delaytime += 13;
             result[0].SetActive(true);
             result[3].SetActive(true);
         }
@@ -332,8 +445,15 @@ public class Q2_Level1 : MonoBehaviour
         }
         else
         {
-            int next_level = 2;
-            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+            if (PlayerPrefs.GetFloat("Time") > 0)
+            {
+                int next_level = 2;
+                StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+            }
+            else
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+            }
         }
     }
 }

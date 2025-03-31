@@ -18,11 +18,15 @@ public class Continuous_BGM : MonoBehaviour
         {
             if (levels_BGM.Length == 1)
             {
-                Destroy(BGM[0]);
+                if (BGM.Length >= 1) Destroy(BGM[0]);
             }
             else if (levels_BGM.Length == 0)
             {
                 DontDestroyOnLoad(this.gameObject);
+                if (PlayerPrefs.HasKey("SpeakerVolume"))
+                {
+                    this.gameObject.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("SpeakerVolume");
+                }
             }
         }
     }
