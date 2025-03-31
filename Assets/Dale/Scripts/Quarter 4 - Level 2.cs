@@ -374,7 +374,10 @@ public class Quarter4Level2 : MonoBehaviour
 
     score = progressBar.fillAmount * 100f;
 
-    StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+    if (PlayerPrefs.GetFloat("Time") > 0)
+    {
+      StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+    }
 
     float star1 = (100f / 3f);
     float star2 = (100f / 3f) * 2;
@@ -407,7 +410,7 @@ public class Quarter4Level2 : MonoBehaviour
 
     if (score > (100f / 3f))
     {
-      StartCoroutine(requestsManager.AddReward("/reward", userID, 7));
+      StartCoroutine(requestsManager.AddReward("/reward", userID, 8));
     }
   }
 
@@ -420,8 +423,15 @@ public class Quarter4Level2 : MonoBehaviour
     }
     else
     {
-      int next_level = 3;
-      StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+      if (PlayerPrefs.GetFloat("Time") > 0)
+      {
+        int next_level = 3;
+        StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+      }
+      else
+      {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+      }
     }
   }
 
