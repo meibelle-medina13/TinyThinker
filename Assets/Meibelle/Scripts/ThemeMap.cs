@@ -151,13 +151,13 @@ public class ThemeMap : MonoBehaviour
 
     IEnumerator Loading()
     {
-        locations[current_theme - 1].SetActive(false);
         AsyncOperation asyncOperation;
         asyncOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(7);
 
         while (!asyncOperation.isDone)
         {
             loadingScene.SetActive(true);
+            locations[current_theme - 1].SetActive(false);
             yield return null;
         }
     }

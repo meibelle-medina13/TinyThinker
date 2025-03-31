@@ -498,7 +498,11 @@ public class Quarter2_Level4 : MonoBehaviour
         int theme_num = 2;
         int level_num = 4;
         int delaytime = 0;
-        StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+
+        if (PlayerPrefs.GetFloat("Time") > 0)
+        {
+            StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+        }
 
         if (fill_bar.fillAmount < 0.3333333333333333f)
         {
@@ -541,8 +545,15 @@ public class Quarter2_Level4 : MonoBehaviour
         }
         else
         {
-            int next_level = 5;
-            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+            if (PlayerPrefs.GetFloat("Time") > 0)
+            {
+                int next_level = 5;
+                StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+            }
+            else
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+            }
         }
     }
 }

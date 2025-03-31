@@ -100,6 +100,16 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       PlayerPrefs.SetInt("Delay Time", 14);
     }
     ProgressBar.SetActive(false);
+
+    if (a1_Points == 100 && a2_Points == 99.99999f && a3_Points == 100)
+    {
+      totalProgressFill = 1f;
+      PlayerPrefs.SetFloat("Theme1 Score", totalProgressFill);
+    }
+    else
+    {
+      PlayerPrefs.SetFloat("Theme1 Score", totalProgressFill);
+    }
   }
   // -------------------------------------------------- //
 
@@ -186,16 +196,6 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       else
       {
         gameMenu.SetActive(false);
-      }
-
-      if (a1_Points == 100 && a2_Points == 99.99999f && a3_Points == 100)
-      {
-        totalProgressFill = 1f;
-        PlayerPrefs.SetFloat("Theme1 Score", totalProgressFill);
-      }
-      else
-      {
-        PlayerPrefs.SetFloat("Theme1 Score", totalProgressFill);
       }
 
     }

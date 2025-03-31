@@ -178,7 +178,7 @@ public class Theme1_Map : MonoBehaviour
             }
             else if (current_level == 5 && current_theme == 1)
             {
-                if (PlayerPrefs.HasKey("PostTest Status1") && PlayerPrefs.GetString("PostTest Status1") == "Not yet done")
+                if (PlayerPrefs.HasKey(user_id.ToString() + "PostTest Status1") && PlayerPrefs.GetString(user_id.ToString() + "PostTest Status1") == "Not yet done")
                 {
                     UnityEngine.SceneManagement.SceneManager.LoadScene(15);
                 }
@@ -201,7 +201,7 @@ public class Theme1_Map : MonoBehaviour
             }
             else if (current_level == 5 && current_theme == 2)
             {
-                if (PlayerPrefs.HasKey("PostTest Status2") && PlayerPrefs.GetString("PostTest Status2") == "Not yet done")
+                if (PlayerPrefs.HasKey(user_id.ToString() + "PostTest Status2") && PlayerPrefs.GetString(user_id.ToString() + "PostTest Status2") == "Not yet done")
                 {
                     UnityEngine.SceneManagement.SceneManager.LoadScene(22);
                 }
@@ -224,7 +224,7 @@ public class Theme1_Map : MonoBehaviour
             }
             else if (current_level == 3 && current_theme == 3)
             {
-                if (PlayerPrefs.HasKey("PostTest Status3") && PlayerPrefs.GetString("PostTest Status3") == "Not yet done")
+                if (PlayerPrefs.HasKey(user_id.ToString() + "PostTest Status3") && PlayerPrefs.GetString(user_id.ToString() + "PostTest Status3") == "Not yet done")
                 {
                     UnityEngine.SceneManagement.SceneManager.LoadScene(27);
                 }
@@ -247,7 +247,7 @@ public class Theme1_Map : MonoBehaviour
             }
             else if (current_level == 3 && current_theme == 4)
             {
-                if (PlayerPrefs.HasKey("PostTest Status4") && PlayerPrefs.GetString("PostTest Status4") == "Not yet done")
+                if (PlayerPrefs.HasKey(user_id.ToString() + "PostTest Status4") && PlayerPrefs.GetString(user_id.ToString() + "PostTest Status4") == "Not yet done")
                 {
                     UnityEngine.SceneManagement.SceneManager.LoadScene(32);
                 }

@@ -424,6 +424,11 @@ public class Q3_level1 : MonoBehaviour
             audioSource.PlayOneShot(audioClip[3]);
             StartCoroutine(OpenAssessment2(0));
         }
+        else
+        {
+            assess1_colliders[0].SetActive(true);
+            assess1_colliders[1].SetActive(true);
+        }
     }
 
     IEnumerator OpenAssessment2(int current)
@@ -606,7 +611,10 @@ public class Q3_level1 : MonoBehaviour
         int level_num = 1;
         userID = PlayerPrefs.GetInt("Current_user");
 
-        StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+        if (PlayerPrefs.GetFloat("Time") > 0)
+        {
+            StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+        }
 
         float star1 = (100f / 3f);
         float star2 = (100f / 3f) * 2;
@@ -615,26 +623,31 @@ public class Q3_level1 : MonoBehaviour
         if (score < star1)
         {
             result[4].SetActive(true);
-            delaytime = 4;
+            delaytime = 8;
         }
         else if (score >= star1 && score < star2)
         {
             result[1].SetActive(true);
-            delaytime = 4;
+            delaytime = 12;
         }
         else if (score > 99.9f || score == star3)
         {
-            delaytime = 8;
+            delaytime = 18;
             result[0].SetActive(true);
             result[3].SetActive(true);
         }
         else if (score >= star2 && score < star3)
         {
-            delaytime = 4;
+            delaytime = 12;
             result[0].SetActive(true);
             result[2].SetActive(true);
         }
         StartCoroutine(GoToMap());
+
+        if (score > (100f / 3f))
+        {
+            StartCoroutine(requestsManager.AddReward("/reward", userID, 5));
+        }
     }
 
     IEnumerator GoToMap()
@@ -646,8 +659,16 @@ public class Q3_level1 : MonoBehaviour
         }
         else
         {
-            int next_level = 2;
-            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+
+            if (PlayerPrefs.GetFloat("Time") > 0)
+            {
+                int next_level = 2;
+                StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+            }
+            else
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+            }
         }
     }
 }

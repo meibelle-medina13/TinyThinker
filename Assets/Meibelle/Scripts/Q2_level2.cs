@@ -474,7 +474,11 @@ public class Q2_level2 : MonoBehaviour
     {
         int theme_num = 2;
         int level_num = 2;
-        StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+
+        if (PlayerPrefs.GetFloat("Time") > 0)
+        {
+            StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+        }
 
         float star1 = (100f / 3f);
         float star2 = (100f / 3f) * 2;
@@ -524,9 +528,15 @@ public class Q2_level2 : MonoBehaviour
         }
         else
         {
-            Debug.Log("SAVE");
-            int next_level = 3;
-            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+            if (PlayerPrefs.GetFloat("Time") > 0)
+            {
+                int next_level = 3;
+                StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+            }
+            else
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+            }
         }
     }
 }
