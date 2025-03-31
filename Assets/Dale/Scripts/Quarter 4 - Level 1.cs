@@ -418,8 +418,10 @@ public class Quarter4Level1 : MonoBehaviour
 
     score = progressBar.fillAmount * 100f;
 
-    StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
-
+    if (PlayerPrefs.GetFloat("Time") > 0)
+    {
+      StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
+    }
 
     float star1 = (100f / 3f);
     float star2 = (100f / 3f) * 2;
@@ -458,10 +460,6 @@ public class Quarter4Level1 : MonoBehaviour
 
   IEnumerator GoToMap()
   {
-    if (PlayerPrefs.HasKey("Time"))
-    {
-      
-    }
     yield return new WaitForSeconds(delaytime);
     if (score < (100f / 3f))
     {
@@ -469,8 +467,15 @@ public class Quarter4Level1 : MonoBehaviour
     }
     else
     {
-      int next_level = 2;
-      StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+      if (PlayerPrefs.GetFloat("Time") > 0)
+      {
+        int next_level = 2;
+        StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
+      }
+      else
+      {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+      }
     }
   }
 

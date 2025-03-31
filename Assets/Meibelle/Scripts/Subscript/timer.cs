@@ -9,7 +9,7 @@ public class timer : MonoBehaviour
     float time = 7200;
     //float time = 10;
 
-    private void Start()
+  private void Start()
     {
         PlayerPrefs.DeleteKey("Time");
         if (PlayerPrefs.HasKey("Time"))
