@@ -478,13 +478,19 @@ public class Quarter2Level5 : MonoBehaviour
   // PLAYING BGM AND SFX
   // -------------------------------------------------- //
   [SerializeField] public AudioSource audioSource;
-  [SerializeField] public AudioClip button, correct, wrong;
+  [SerializeField] public AudioClip button, correct, wrong, maglinis, maglaro, matulog, linis, hugas, kumpuni;
 
   public void PlaySFX(string sfx)
   {
     if (sfx == "button") audioSource.PlayOneShot(button);
     else if (sfx == "correct") audioSource.PlayOneShot(correct);
     else if (sfx == "wrong") audioSource.PlayOneShot(wrong);
+    else if (sfx == "maglinis") audioSource.PlayOneShot(maglinis);
+    else if (sfx == "maglaro") audioSource.PlayOneShot(maglaro);
+    else if (sfx == "matulog") audioSource.PlayOneShot(matulog);
+    else if (sfx == "linis") audioSource.PlayOneShot(linis);
+    else if (sfx == "hugas") audioSource.PlayOneShot(hugas);
+    else if (sfx == "kumpuni") audioSource.PlayOneShot(kumpuni);
   }
   // -------------------------------------------------- //
 }
