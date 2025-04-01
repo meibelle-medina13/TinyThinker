@@ -93,6 +93,7 @@ public class SelectAccount : MonoBehaviour
             if (!PlayerPrefs.HasKey("StartGuide" + user_id[index].ToString()))
             {
                 PlayerPrefs.SetString("StartGuide" + user_id[index].ToString(), "True");
+                PlayerPrefs.SetFloat(user_id[index].ToString() + "Time", 7200);
             }
         }
 

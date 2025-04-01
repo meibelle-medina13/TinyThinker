@@ -91,23 +91,20 @@ public class EndLevelScoreScript : MonoBehaviour
             {
                 Debug.Log("Received: " + www.downloadHandler.text);
                 Debug.Log("Theme" + current_theme);
-                if (!PlayerPrefs.HasKey(userID.ToString() + "PostTest Status" + theme.ToString()) && PlayerPrefs.GetFloat("Time") > 0)
+                if (!PlayerPrefs.HasKey(userID.ToString() + "PostTest Status" + theme.ToString()) && PlayerPrefs.GetFloat(userID.ToString() + "Time") > 0)
                 {
                     if (score >= 33.33f && current_theme == 1)
                     {
-                        PlayerPrefs.SetInt("Current_level", 0);
                         PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
                         UnityEngine.SceneManagement.SceneManager.LoadScene(15);
                     }
                     else if (score >= 33.33f && current_theme == 2)
                     {
-                        PlayerPrefs.SetInt("Current_level", 0);
                         PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
                         UnityEngine.SceneManagement.SceneManager.LoadScene(22);
                     }
                     else if (score >= 33.33f && current_theme == 3)
                     {
-                        PlayerPrefs.SetInt("Current_level", 0);
                         PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
                         UnityEngine.SceneManagement.SceneManager.LoadScene(27);
                     }

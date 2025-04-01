@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class Quarter1_Level4 : MonoBehaviour
 {
@@ -36,6 +37,11 @@ public class Quarter1_Level4 : MonoBehaviour
 
     void Start()
     {
+        if (gameObject.name == "Level4 Scene Manager")
+        {
+            scene_counter = 0;
+        }
+        Debug.Log(scene_counter);
         requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
 
         audioManager2 = FindObjectOfType<Audio_Manager>();
