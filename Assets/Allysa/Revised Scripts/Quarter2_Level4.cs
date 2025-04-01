@@ -507,17 +507,17 @@ public class Quarter2_Level4 : MonoBehaviour
         if (fill_bar.fillAmount < 0.3333333333333333f)
         {
             star_display[0].SetActive(true);
-            Gameobjects[0].SetActive(false);
-            Gameobjects[1].SetActive(false);
-            Gameobjects[2].SetActive(false);
-            Gameobjects[3].SetActive(false);
+            Gameobjects[8].SetActive(false);
+            Gameobjects[9].SetActive(false);
+            Gameobjects[10].SetActive(false);
+            Gameobjects[11].SetActive(false);
             delaytime = 8;
         }
 
         else if (fill_bar.fillAmount >= 0.3333333333333333f && fill_bar.fillAmount < 0.6666666666666667f)
         {
             star_display[1].SetActive(true);
-            Gameobjects[0].SetActive(false);
+            Gameobjects[8].SetActive(false);
             delaytime = 12;
         }
 
