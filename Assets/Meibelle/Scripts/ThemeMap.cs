@@ -47,6 +47,7 @@ public class ThemeMap : MonoBehaviour
 
     void Start()
     {
+        userID = PlayerPrefs.GetInt("Current_user");
         currentDate = DateTime.Now;
         string dateString = currentDate.ToString("yyyy-MM-dd");
 
@@ -54,13 +55,12 @@ public class ThemeMap : MonoBehaviour
 
         if (PlayerPrefs.GetString("Current Date") != dateString)
         {
-            PlayerPrefs.SetFloat("Time", 7200);
+            PlayerPrefs.SetFloat(userID.ToString() + "Time", 7200);
             PlayerPrefs.SetString("Current Date", dateString);
             Debug.Log("Current Date"+ dateString);
         }
 
         current_theme = PlayerPrefs.GetInt("Current_theme");
-        userID = PlayerPrefs.GetInt("Current_user");
         locations[current_theme - 1].SetActive(true);
 
         if (PlayerPrefs.HasKey("StartGuide"+userID.ToString()) && PlayerPrefs.GetString("StartGuide" + userID.ToString()) == "True")

@@ -59,6 +59,11 @@ public class Quarter2_Level4 : MonoBehaviour
 
     void Start()
     {
+        if (gameObject.name == "Theme 2- Level 4 Scene Manager")
+        {
+            Scene_counter = 0;
+        }
+
         requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
 
         audioManager3 = FindObjectOfType<Audio_Manager>();

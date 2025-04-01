@@ -79,6 +79,8 @@ public class PreTest_PostTest3 : MonoBehaviour
 
         if (gameObject.name == "Pre-Test_SceneManager" || gameObject.name == "Post-Test_SceneManager")
         {
+            test_counter = 0;
+            Test_Score = 0;
             PlayerPrefs.DeleteKey("CurrentPanel");
         }
 

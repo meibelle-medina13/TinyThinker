@@ -57,7 +57,6 @@ public class SETUP_REQUESTS : MonoBehaviour
                 DateTime date = DateTime.Now;
                 string dateString = date.ToString("yyyy-MM-dd");
                 PlayerPrefs.SetString("Current Date", "2025-03-31");
-                PlayerPrefs.SetFloat("Time", 7200);
                 UnityEngine.SceneManagement.SceneManager.LoadScene(5);
             }
         }
