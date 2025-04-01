@@ -11051,8 +11051,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1141587354}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -15.999939, y: -14}
   m_SizeDelta: {x: 76.44, y: -1.3112}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -13539,8 +13539,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -520.2169, y: -299.8379}
-  m_SizeDelta: {x: 1040.4338, y: 599.67584}
+  m_AnchoredPosition: {x: -525, y: -292}
+  m_SizeDelta: {x: 1075.0809, y: 599.6759}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &795628904
 MonoBehaviour:
@@ -14197,6 +14197,7 @@ GameObject:
   - component: {fileID: 875161956}
   - component: {fileID: 875161955}
   - component: {fileID: 875161954}
+  - component: {fileID: 875161959}
   m_Layer: 5
   m_Name: 'Canvas '
   m_TagString: Untagged
@@ -14304,6 +14305,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &875161959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875161953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c204321b728a8f44ea2ef6ed8e8bd37f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 0}
 --- !u!1 &877000946
 GameObject:
   m_ObjectHideFlags: 0
@@ -25222,8 +25236,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -520.2169, y: -299.8379}
-  m_SizeDelta: {x: 1040.4338, y: 599.67584}
+  m_AnchoredPosition: {x: -525, y: -292}
+  m_SizeDelta: {x: 1075.0809, y: 599.6759}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1426612452
 MonoBehaviour:
@@ -28967,8 +28981,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -520.2169, y: -299.8379}
-  m_SizeDelta: {x: 1040.4338, y: 599.67584}
+  m_AnchoredPosition: {x: -525, y: -292}
+  m_SizeDelta: {x: 1075.0809, y: 599.6759}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1653182721
 MonoBehaviour:
@@ -32125,7 +32139,7 @@ GameObject:
   - component: {fileID: 1827109533}
   m_Layer: 5
   m_Name: Audio Manager
-  m_TagString: Levels_BGM
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36834,7 +36848,7 @@ RectTransform:
   m_Father: {fileID: 104542012}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -8.344299, y: -6.5443993}
   m_SizeDelta: {x: -9.1477, y: 1.8632}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -38063,6 +38077,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 946859584}
+  Test_timelines: []
+  Title_timeline: {fileID: 0}
+  Tracing_objects: []
   Tracking_Test:
   - {fileID: 1127612287}
   - {fileID: 1127612287}
@@ -38530,7 +38547,7 @@ GameObject:
   - component: {fileID: 2127011770}
   m_Layer: 5
   m_Name: BGM Source
-  m_TagString: Untagged
+  m_TagString: Levels_BGM
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

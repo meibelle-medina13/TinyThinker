@@ -113,20 +113,23 @@ public class EndLevelScoreScript : MonoBehaviour
                     }
                     else if (score >= 33.33f && current_theme == 4)
                     {
-                        if (PlayerPrefs.HasKey("User" + userID.ToString() + "Finished Game"))
-                        {
-                            UnityEngine.SceneManagement.SceneManager.LoadScene(33);
-                        }
-                        else
-                        {
-                            PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
-                            UnityEngine.SceneManagement.SceneManager.LoadScene(32);
-                        }
+                        PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(32);
                     }
                 }
                 else
                 {
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+                    if (score >= 33.33f && theme == 4)
+                    {
+                        if (PlayerPrefs.HasKey("User" + userID.ToString() + "Finished Game"))
+                        {
+                            UnityEngine.SceneManagement.SceneManager.LoadScene(33);
+                        }
+                    }
+                    else
+                    {
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+                    }
                 }
             }
         }
