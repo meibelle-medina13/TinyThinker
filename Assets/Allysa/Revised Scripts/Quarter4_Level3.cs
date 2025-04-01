@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
@@ -484,38 +485,36 @@ public class Quarter4_Level3 : MonoBehaviour
     void Show_Stars()
     {
         Debug.Log(this.gameObject);
-
+        PlayerPrefs.SetFloat("Theme4 Score", Fill.fillAmount);
         if (Fill.fillAmount < 0.3333333333333333f)
         {
+            PlayerPrefs.SetInt("Delay Time", 8);
             gameobjects[3].SetActive(true);
             gameobjects[7].SetActive(false);
             gameobjects[8].SetActive(false);
             gameobjects[9].SetActive(false);
             gameobjects[25].SetActive(true);
             //gameobjects[26].SetActive(false);
-            PlayerPrefs.SetInt("Delay Time", 4);
         }
 
         else if (Fill.fillAmount >= 0.3333333333333333f && Fill.fillAmount < 0.6666666666666667f)
         {
+            PlayerPrefs.SetInt("Delay Time", 8);
             gameobjects[4].SetActive(true);
             gameobjects[9].SetActive(false);
-            PlayerPrefs.SetInt("Delay Time", 4);
         }
 
         else if (Fill.fillAmount >= 0.6666666666666667f && Fill.fillAmount < 1f)
         {
+            PlayerPrefs.SetInt("Delay Time", 8);
             gameobjects[5].SetActive(true);
-            PlayerPrefs.SetInt("Delay Time", 4);
         }
 
         else if (Mathf.Approximately(Fill.fillAmount, 1f))
         {
+            PlayerPrefs.SetInt("Delay Time", 15);
             gameobjects[6].SetActive(true);
-            PlayerPrefs.SetInt("Delay Time", 8);
         }
-
-        PlayerPrefs.SetFloat("Theme4 Score", Fill.fillAmount);
     }
 }
 

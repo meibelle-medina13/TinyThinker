@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using static RESPONSE_CLASSES;
 using UnityEngine.Networking;
+using System;
 
 public class SETUP_REQUESTS : MonoBehaviour
 {
@@ -53,6 +54,10 @@ public class SETUP_REQUESTS : MonoBehaviour
             else
             {
                 Debug.Log("New added user");
+                DateTime date = DateTime.Now;
+                string dateString = date.ToString("yyyy-MM-dd");
+                PlayerPrefs.SetString("Current Date", "2025-03-31");
+                PlayerPrefs.SetFloat("Time", 7200);
                 UnityEngine.SceneManagement.SceneManager.LoadScene(5);
             }
         }
