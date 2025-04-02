@@ -513,7 +513,7 @@ public class Quarter2_Level4 : MonoBehaviour
         int level_num = 4;
         int delaytime = 0;
 
-        if (PlayerPrefs.GetFloat("Time") > 0)
+        if (PlayerPrefs.GetFloat(userID.ToString() + "Time") > 0)
         {
             StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
         }
