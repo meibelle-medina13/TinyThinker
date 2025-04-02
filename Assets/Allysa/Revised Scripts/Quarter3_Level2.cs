@@ -45,6 +45,24 @@ public class Quarter3_Level2 : MonoBehaviour
     private static int wrong_Click = 1;
     private static int object_count = 0;
 
+    //------------------- 
+    public List<GameObject> hammer;
+    private Transform objectTransform;
+    private Vector3 originalPosition;
+    public List<GameObject> gameobjects;
+    public GameObject hammerTip;
+    private int count_nail = 0;
+    public Button rotateButton;
+
+    ////rotation -----------------
+    private float rotationAngle = 90f;
+    private int angleCounter = 0;
+    private static int correctPuzzle = 0;
+    public List<GameObject> runningWater;
+    public GameObject CorrectImage;
+    public int CorrectAngle = 2;
+
+
     private Audio_Manager audioManager4;
     private AudioSource audioSource;
     private static bool isPlayed = false;
@@ -55,6 +73,7 @@ public class Quarter3_Level2 : MonoBehaviour
     private float fillamount;
 
     public GameObject tracingPath;
+    [SerializeField] private PlayableDirector playableDirector;
     public GameObject gameMenu;
 
     [Header("<---- REQUEST SCRIPT ---->")]
@@ -414,9 +433,6 @@ public class Quarter3_Level2 : MonoBehaviour
 
             else if (CompareTag("hammer"))
             {
-                var animator = GetComponent<Animator>();
-                animator.SetBool("martilyo", false);
-
                 hammer[0].SetActive(true);
                 hammer[1].SetActive(false);
                 hammerState = initialPosition;
@@ -459,7 +475,6 @@ public class Quarter3_Level2 : MonoBehaviour
                     {
                         if (area.CompareTag("treatment"))
                         {
-                            //Debug.Log("button touched the collider on drop: " + area.name);
                             objectAnimation[0].enabled = true;
                             button[0].gameObject.SetActive(true);
                             playableDirector.stopped += Delay2seconds;
@@ -508,7 +523,6 @@ public class Quarter3_Level2 : MonoBehaviour
                 else
                 {
                     button[2].transform.position = worldPosition + treatmentItemsState;
-                    //button[2].gameObject.SetActive(false);
                     Collider2D[] Colliders = Physics2D.OverlapPointAll(button[2].transform.position);
 
                     foreach (Collider2D area in Colliders)
@@ -542,30 +556,30 @@ public class Quarter3_Level2 : MonoBehaviour
                 {
                     if (collider.CompareTag("nail"))
                     {
-                        //Debug.Log("Hammer tip touched the nail on drop: " + collider.name);
+                        Debug.Log("Hammer tip touched the nail on drop: " + collider.name);
 
                         if (collider.name == "nail4")
                         {
-                            objectAnimation[1].SetBool("martilyo", true);
-                            StartCoroutine(HandleNailHit(0));
+                            playableDirector.time = 4.45f;
+                            playableDirector.Play();
                             colliderAreas[0].gameObject.SetActive(false);
                         }
                         else if (collider.name == "nail3")
                         {
-                            objectAnimation[1].SetBool("martilyo", true);
-                            StartCoroutine(HandleNailHit(1));
+                            playableDirector.time = 9.4167;
+                            playableDirector.Play();
                             colliderAreas[1].gameObject.SetActive(false);
                         }
                         else if (collider.name == "nail2")
                         {
-                            objectAnimation[1].SetBool("martilyo", true);
-                            StartCoroutine(HandleNailHit(3));
+                            playableDirector.time = 20.2167;
+                            playableDirector.Play();
                             colliderAreas[2].gameObject.SetActive(false);
                         }
                         else
                         {
-                            objectAnimation[1].SetBool("martilyo", true);
-                            StartCoroutine(HandleNailHit(2));
+                            playableDirector.time = 14.3333;
+                            playableDirector.Play();
                             colliderAreas[3].gameObject.SetActive(false);
                         }
                         break;
@@ -634,24 +648,6 @@ public class Quarter3_Level2 : MonoBehaviour
         {
             isFlipping = false;
         }
-
-        //if (imageList.Count == 3)
-        // {
-        //     if (imageList[3].fillAmount >= 0.3333333333333333f && imageList[3].fillAmount < 0.6666666666666667f)
-        //     {
-        //         gameobjects[15].SetActive(false);
-        //     }
-
-        //     else if (imageList[3].fillAmount >= 0.6666666666666667f && imageList[3].fillAmount < 1f)
-        //     {
-        //         gameobjects[16].SetActive(false);
-        //     }
-
-        //     else if (Mathf.Approximately(imageList[3].fillAmount, 1f))
-        //     {
-        //         gameobjects[17].SetActive(false);
-        //     }
-        //}
 
         if (imageList.Count > 3)
         {
@@ -864,23 +860,6 @@ public class Quarter3_Level2 : MonoBehaviour
         Debug.Log(disinpect_step);
     }
 
-    private IEnumerator HandleNailHit(int index)
-    {
-        AnimatorStateInfo stateInfo = objectAnimation[1].GetCurrentAnimatorStateInfo(0);
-        float clipLength = stateInfo.length;
-
-        for (int i = 0; i != 2; i++)
-        {
-            yield return new WaitForSeconds(clipLength);
-            audioManager4.SoundEffect(4);
-        }
-
-        objectAnimation[1].SetBool("martilyo", false);
-        gameobjects[index].gameObject.SetActive(true);
-        count_nail++;
-        StartCoroutine(CheckNailCountWithDelay());
-    }
-
     void check_cards()
     {
         StartCoroutine(FlipBackCards());
@@ -997,27 +976,6 @@ public class Quarter3_Level2 : MonoBehaviour
         isFlipping = false;
     }
 
-
-    //------------------- 
-    public List<GameObject> hammer;
-    private Transform objectTransform;
-    private Vector3 originalPosition;
-    public List<GameObject> gameobjects;
-    public GameObject hammerTip;
-    private int count_nail = 0;
-    public Button rotateButton;
-
-    ////rotation -----------------
-    private float rotationAngle = 90f;
-    private int angleCounter = 0;
-    private static int correctPuzzle = 0;
-    public List<GameObject> runningWater;
-    public GameObject CorrectImage;
-    public int CorrectAngle = 2;
-    //private int currentIndex = 0;
-    //[SerializeField] private List<PlayableDirector> playableDirector2;
-    [SerializeField] private PlayableDirector playableDirector;
-
     public void Rotate()
     {
         transform.Rotate(0f, 0f, rotationAngle);
@@ -1133,6 +1091,18 @@ public class Quarter3_Level2 : MonoBehaviour
                 audioSource1.enabled = true;
             }
         }
+    }
+
+    public void stop_timeline()
+    {
+        playableDirector.Stop();
+    }
+
+    public void nail_down(int index)
+    {
+        gameobjects[index].gameObject.SetActive(true);
+        count_nail++;
+        StartCoroutine(CheckNailCountWithDelay());
     }
 
     public void DelayUpdate()
