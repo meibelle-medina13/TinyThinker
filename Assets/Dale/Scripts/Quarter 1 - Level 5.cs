@@ -69,38 +69,6 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
   private void ToggleResult()
   {
-    Panels[0].SetActive(!Panels[0].activeInHierarchy);
-    Result.SetActive(!Result.activeInHierarchy);
-
-    Debug.Log("Result: " + a1_Points + a2_Points + a3_Points);
-
-    if (a1_Points == 100 && a2_Points == 99.99999f && a3_Points == 100)
-    {
-      starCount = 3;
-    }
-
-    if (starCount == 0)
-    {
-      ZeroStar.SetActive(true);
-      PlayerPrefs.SetInt("Delay Time", 7);
-    }
-    else if (starCount == 1)
-    {
-      OneStar.SetActive(true);
-      PlayerPrefs.SetInt("Delay Time", 8);
-    }
-    else if (starCount == 2)
-    {
-      TwoStars.SetActive(true);
-      PlayerPrefs.SetInt("Delay Time", 8);
-    }
-    else if (starCount == 3)
-    {
-      ThreeStars.SetActive(true);
-      PlayerPrefs.SetInt("Delay Time", 14);
-    }
-    ProgressBar.SetActive(false);
-
     if (a1_Points == 100 && a2_Points == 99.99999f && a3_Points == 100)
     {
       totalProgressFill = 1f;
@@ -109,6 +77,42 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     else
     {
       PlayerPrefs.SetFloat("Theme1 Score", totalProgressFill);
+    }
+
+    if (PlayerPrefs.HasKey("Theme1 Score"))
+    {
+      Panels[0].SetActive(!Panels[0].activeInHierarchy);
+      Result.SetActive(!Result.activeInHierarchy);
+
+      Debug.Log("Result: " + a1_Points + a2_Points + a3_Points);
+
+      if (a1_Points == 100 && a2_Points == 99.99999f && a3_Points == 100)
+      {
+        starCount = 3;
+      }
+
+      if (starCount == 0)
+      {
+        ZeroStar.SetActive(true);
+        PlayerPrefs.SetInt("Delay Time", 7);
+      }
+      else if (starCount == 1)
+      {
+        OneStar.SetActive(true);
+        PlayerPrefs.SetInt("Delay Time", 8);
+      }
+      else if (starCount == 2)
+      {
+        TwoStars.SetActive(true);
+        PlayerPrefs.SetInt("Delay Time", 8);
+      }
+      else if (starCount == 3)
+      {
+        ThreeStars.SetActive(true);
+        PlayerPrefs.SetInt("Delay Time", 14);
+      }
+      ProgressBar.SetActive(false);
+
     }
   }
   // -------------------------------------------------- //
