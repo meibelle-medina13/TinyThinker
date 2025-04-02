@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
@@ -47,6 +48,7 @@ public class ThemeMap : MonoBehaviour
 
     void Start()
     {
+        PlayerPrefs.DeleteKey(1.ToString() + "PostTest Status" + 4.ToString());
         userID = PlayerPrefs.GetInt("Current_user");
         currentDate = DateTime.Now;
         string dateString = currentDate.ToString("yyyy-MM-dd");
