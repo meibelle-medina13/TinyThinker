@@ -4527,6 +4527,7 @@ GameObject:
   - component: {fileID: 289162608}
   - component: {fileID: 289162610}
   - component: {fileID: 289162609}
+  - component: {fileID: 289162611}
   m_Layer: 5
   m_Name: Achievement Board
   m_TagString: Untagged
@@ -4602,6 +4603,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289162607}
   m_CullTransparentMesh: 1
+--- !u!114 &289162611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289162607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f708d5f89d1802a48be665aa5a977db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newAudio: {fileID: 0}
+  currentGObject: {fileID: 289162607}
 --- !u!1 &289419505
 GameObject:
   m_ObjectHideFlags: 0
@@ -9788,7 +9803,7 @@ GameObject:
   - component: {fileID: 640951315}
   m_Layer: 5
   m_Name: Scene8
-  m_TagString: attached audio source
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

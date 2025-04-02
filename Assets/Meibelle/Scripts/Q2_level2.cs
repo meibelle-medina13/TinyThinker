@@ -528,7 +528,7 @@ public class Q2_level2 : MonoBehaviour
         }
         else
         {
-            if (PlayerPrefs.GetFloat("Time") > 0)
+            if (PlayerPrefs.GetFloat(userID.ToString() + "Time") > 0)
             {
                 int next_level = 3;
                 StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
