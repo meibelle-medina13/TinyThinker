@@ -57,6 +57,11 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
 
     void Start()
     {
+        if (gameObject.name == "Level3 Scene Manager")
+        {
+            counter = 0;
+        }
+        Debug.Log(counter);
         requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
 
         originalPosition = transform.position;
@@ -364,13 +369,13 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             star_display[1].SetActive(true);
             Image[2].SetActive(false);
-            delaytime = 12;
+            delaytime = 10;
         }
 
         else if (total_stars.fillAmount >= 0.6666666666666667f && total_stars.fillAmount < 1f)
         {
             star_display[2].SetActive(true);
-            delaytime = 12;
+            delaytime = 10;
         }
 
         else if (Mathf.Approximately(total_stars.fillAmount, 1f))

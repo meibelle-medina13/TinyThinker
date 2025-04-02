@@ -753,10 +753,6 @@ MonoBehaviour:
   - {fileID: 1339166860}
   scrollRects: []
   imageList: []
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -775,7 +771,11 @@ MonoBehaviour:
   - {fileID: 1888551300}
   CorrectImage: {fileID: 685380993}
   CorrectAngle: 1
+  text: []
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 1795396776}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!95 &55467863
 Animator:
   serializedVersion: 5
@@ -1494,6 +1494,7 @@ GameObject:
   - component: {fileID: 88649112}
   - component: {fileID: 88649114}
   - component: {fileID: 88649113}
+  - component: {fileID: 88649115}
   m_Layer: 5
   m_Name: nail_down1
   m_TagString: Untagged
@@ -1558,6 +1559,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 88649111}
   m_CullTransparentMesh: 1
+--- !u!95 &88649115
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88649111}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &102628610
 GameObject:
   m_ObjectHideFlags: 0
@@ -1836,7 +1858,7 @@ MonoBehaviour:
   - {fileID: 366849662}
   objectAnimation:
   - {fileID: 1815743618}
-  - {fileID: 1565821622}
+  - {fileID: 0}
   button:
   - {fileID: 553904616}
   - {fileID: 553833485}
@@ -1853,11 +1875,6 @@ MonoBehaviour:
   - {fileID: 60671388}
   - {fileID: 1741532752}
   - {fileID: 298208469}
-  text:
-  - {fileID: 0}
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -1870,7 +1887,12 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 267731616}
   CorrectAngle: 2
+  text:
+  - {fileID: 0}
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 819939911}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!95 &106846750
 Animator:
   serializedVersion: 5
@@ -3711,7 +3733,7 @@ MonoBehaviour:
   - {fileID: 366849662}
   objectAnimation:
   - {fileID: 1815743618}
-  - {fileID: 1565821622}
+  - {fileID: 0}
   button:
   - {fileID: 553904616}
   - {fileID: 553833485}
@@ -3728,11 +3750,6 @@ MonoBehaviour:
   - {fileID: 60671388}
   - {fileID: 1741532752}
   - {fileID: 298208469}
-  text:
-  - {fileID: 0}
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -3745,7 +3762,12 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 267731616}
   CorrectAngle: 2
+  text:
+  - {fileID: 0}
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 819939911}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!95 &233671227
 Animator:
   serializedVersion: 5
@@ -5208,10 +5230,6 @@ MonoBehaviour:
   - {fileID: 1339166860}
   scrollRects: []
   imageList: []
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer: []
   gameobjects: []
   hammerTip: {fileID: 0}
@@ -5219,7 +5237,11 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 0}
   CorrectAngle: 2
+  text: []
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 0}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!1 &322526507
 GameObject:
   m_ObjectHideFlags: 0
@@ -5593,7 +5615,7 @@ MonoBehaviour:
   - {fileID: 366849662}
   objectAnimation:
   - {fileID: 1815743618}
-  - {fileID: 1565821622}
+  - {fileID: 0}
   button:
   - {fileID: 553904616}
   - {fileID: 553833485}
@@ -5610,11 +5632,6 @@ MonoBehaviour:
   - {fileID: 60671388}
   - {fileID: 1741532752}
   - {fileID: 298208469}
-  text:
-  - {fileID: 0}
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -5627,7 +5644,12 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 267731616}
   CorrectAngle: 2
+  text:
+  - {fileID: 0}
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 819939911}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!95 &344096875
 Animator:
   serializedVersion: 5
@@ -6030,10 +6052,6 @@ MonoBehaviour:
   - {fileID: 1339166860}
   scrollRects: []
   imageList: []
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -6052,7 +6070,11 @@ MonoBehaviour:
   - {fileID: 1888551300}
   CorrectImage: {fileID: 267731616}
   CorrectAngle: 1
+  text: []
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 1795396776}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!95 &354171378
 Animator:
   serializedVersion: 5
@@ -7285,10 +7307,6 @@ MonoBehaviour:
   - {fileID: 60671388}
   - {fileID: 1741532752}
   - {fileID: 298208469}
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer: []
   gameobjects:
   - {fileID: 88649111}
@@ -7308,7 +7326,11 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 0}
   CorrectAngle: 0
+  text: []
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 647533137}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!50 &471311281
 Rigidbody2D:
   serializedVersion: 4
@@ -7937,7 +7959,7 @@ MonoBehaviour:
   - {fileID: 366849662}
   objectAnimation:
   - {fileID: 1815743618}
-  - {fileID: 1565821622}
+  - {fileID: 0}
   button:
   - {fileID: 553904616}
   - {fileID: 553833485}
@@ -7954,11 +7976,6 @@ MonoBehaviour:
   - {fileID: 60671388}
   - {fileID: 1741532752}
   - {fileID: 298208469}
-  text:
-  - {fileID: 0}
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -7971,7 +7988,12 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 267731616}
   CorrectAngle: 2
+  text:
+  - {fileID: 0}
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 819939911}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!95 &553833489
 Animator:
   serializedVersion: 5
@@ -8172,7 +8194,7 @@ MonoBehaviour:
   - {fileID: 366849662}
   objectAnimation:
   - {fileID: 1815743618}
-  - {fileID: 1565821622}
+  - {fileID: 0}
   button:
   - {fileID: 553904616}
   - {fileID: 553833485}
@@ -8189,11 +8211,6 @@ MonoBehaviour:
   - {fileID: 60671388}
   - {fileID: 1741532752}
   - {fileID: 298208469}
-  text:
-  - {fileID: 0}
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -8206,7 +8223,12 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 267731616}
   CorrectAngle: 2
+  text:
+  - {fileID: 0}
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 819939911}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!95 &553904620
 Animator:
   serializedVersion: 5
@@ -9000,7 +9022,7 @@ MonoBehaviour:
   - {fileID: 366849662}
   objectAnimation:
   - {fileID: 1815743618}
-  - {fileID: 1565821622}
+  - {fileID: 0}
   - {fileID: 600618610}
   button:
   - {fileID: 1815743614}
@@ -9009,10 +9031,6 @@ MonoBehaviour:
   - {fileID: 1339166860}
   scrollRects: []
   imageList: []
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 0}
   - {fileID: 0}
@@ -9029,7 +9047,11 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 0}
   CorrectAngle: 0
+  text: []
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 1012177911}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!95 &600618610
 Animator:
   serializedVersion: 5
@@ -9763,7 +9785,6 @@ GameObject:
   - component: {fileID: 640951312}
   - component: {fileID: 640951314}
   - component: {fileID: 640951313}
-  - component: {fileID: 640951316}
   - component: {fileID: 640951315}
   m_Layer: 5
   m_Name: Scene8
@@ -9863,15 +9884,11 @@ MonoBehaviour:
   - {fileID: 366849662}
   objectAnimation:
   - {fileID: 1815743618}
-  - {fileID: 1565821622}
+  - {fileID: 0}
   button:
   - {fileID: 1339166860}
   scrollRects: []
   imageList: []
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -9886,103 +9903,11 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 0}
   CorrectAngle: 2
-  playableDirector: {fileID: 0}
---- !u!82 &640951316
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 640951311}
-  m_Enabled: 0
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 77b23d41848235e4a904a11af011d0a2, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  text: []
+  tracingPath: {fileID: 0}
+  playableDirector: {fileID: 2057202950}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!1 &647533135
 GameObject:
   m_ObjectHideFlags: 0
@@ -10565,6 +10490,7 @@ GameObject:
   - component: {fileID: 668984163}
   - component: {fileID: 668984165}
   - component: {fileID: 668984164}
+  - component: {fileID: 668984166}
   m_Layer: 5
   m_Name: nail_down4
   m_TagString: Untagged
@@ -10629,6 +10555,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 668984162}
   m_CullTransparentMesh: 1
+--- !u!95 &668984166
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668984162}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &683071336
 GameObject:
   m_ObjectHideFlags: 0
@@ -12416,6 +12363,7 @@ GameObject:
   - component: {fileID: 795516469}
   - component: {fileID: 795516471}
   - component: {fileID: 795516470}
+  - component: {fileID: 795516472}
   m_Layer: 5
   m_Name: nail_down3
   m_TagString: Untagged
@@ -12480,6 +12428,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 795516468}
   m_CullTransparentMesh: 1
+--- !u!95 &795516472
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795516468}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &801145221
 GameObject:
   m_ObjectHideFlags: 0
@@ -13861,7 +13830,7 @@ MonoBehaviour:
   - {fileID: 366849662}
   objectAnimation:
   - {fileID: 1815743618}
-  - {fileID: 1565821622}
+  - {fileID: 0}
   button:
   - {fileID: 1997090862}
   - {fileID: 1339166860}
@@ -13875,11 +13844,6 @@ MonoBehaviour:
   - {fileID: 60671388}
   - {fileID: 1741532752}
   - {fileID: 298208469}
-  text:
-  - {fileID: 0}
-  tracingPath: {fileID: 366259217}
-  gameMenu: {fileID: 652032191}
-  requestsManager: {fileID: 1347630950}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -13916,7 +13880,12 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 267731616}
   CorrectAngle: 2
+  text:
+  - {fileID: 0}
+  tracingPath: {fileID: 366259217}
   playableDirector: {fileID: 819939911}
+  gameMenu: {fileID: 652032191}
+  requestsManager: {fileID: 1347630950}
 --- !u!1 &878147853
 GameObject:
   m_ObjectHideFlags: 0
@@ -16170,7 +16139,7 @@ MonoBehaviour:
   - {fileID: 366849662}
   objectAnimation:
   - {fileID: 1815743618}
-  - {fileID: 1565821622}
+  - {fileID: 0}
   button:
   - {fileID: 553904616}
   - {fileID: 553833485}
@@ -16187,11 +16156,6 @@ MonoBehaviour:
   - {fileID: 60671388}
   - {fileID: 1741532752}
   - {fileID: 298208469}
-  text:
-  - {fileID: 0}
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -16204,7 +16168,12 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 267731616}
   CorrectAngle: 2
+  text:
+  - {fileID: 0}
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 819939911}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!95 &1079984669
 Animator:
   serializedVersion: 5
@@ -16236,6 +16205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1080403374}
   - component: {fileID: 1080403373}
+  - component: {fileID: 1080403375}
   m_Layer: 0
   m_Name: Voice Source
   m_TagString: Untagged
@@ -16354,6 +16324,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1080403375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080403372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 3c9ad5b0d0ea3ef478c5230e2bdd0790, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 640951315}
+          m_TargetAssemblyTypeName: Quarter3_Level2, Assembly-CSharp
+          m_MethodName: stop_timeline
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1091661175
 GameObject:
   m_ObjectHideFlags: 0
@@ -16636,10 +16636,6 @@ MonoBehaviour:
   - {fileID: 1339166860}
   scrollRects: []
   imageList: []
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer: []
   gameobjects: []
   hammerTip: {fileID: 0}
@@ -16647,7 +16643,11 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 0}
   CorrectAngle: 2
+  text: []
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 0}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!1 &1100293429
 GameObject:
   m_ObjectHideFlags: 0
@@ -17365,7 +17365,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1181601548}
   - component: {fileID: 1181601550}
-  - component: {fileID: 1181601551}
   - component: {fileID: 1181601552}
   m_Layer: 5
   m_Name: nail2
@@ -17438,69 +17437,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 42.52863, y: 36.62279}
   m_EdgeRadius: 0
---- !u!114 &1181601551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1181601547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6778ee3c3f9e39f49a2b48e9b769d158, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scenes:
-  - {fileID: 1335545085}
-  - {fileID: 1588256735}
-  - {fileID: 1745322123}
-  - {fileID: 1099072308}
-  - {fileID: 2007713736}
-  - {fileID: 322496566}
-  - {fileID: 1091661175}
-  - {fileID: 640951311}
-  - {fileID: 1846491834}
-  - {fileID: 1403675661}
-  - {fileID: 683071336}
-  - {fileID: 1389055176}
-  - {fileID: 1793430489}
-  - {fileID: 1843053304}
-  - {fileID: 1486452080}
-  - {fileID: 1619310856}
-  - {fileID: 289162607}
-  front_card: []
-  colliderAreas:
-  - {fileID: 1390057607}
-  - {fileID: 2143406406}
-  - {fileID: 1181601550}
-  - {fileID: 1298235952}
-  - {fileID: 366849662}
-  objectAnimation:
-  - {fileID: 1815743618}
-  - {fileID: 1565821622}
-  button:
-  - {fileID: 1339166860}
-  scrollRects: []
-  imageList: []
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
-  hammer:
-  - {fileID: 1565821615}
-  - {fileID: 2142439084}
-  gameobjects:
-  - {fileID: 88649111}
-  - {fileID: 1797765775}
-  - {fileID: 795516468}
-  - {fileID: 668984162}
-  - {fileID: 1784949972}
-  hammerTip: {fileID: 1769564364}
-  rotateButton: {fileID: 0}
-  runningWater: []
-  CorrectImage: {fileID: 0}
-  CorrectAngle: 2
-  playableDirector: {fileID: 0}
 --- !u!95 &1181601552
 Animator:
   serializedVersion: 5
@@ -19319,7 +19255,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1298235950}
   - component: {fileID: 1298235952}
-  - component: {fileID: 1298235953}
   - component: {fileID: 1298235954}
   m_Layer: 5
   m_Name: nail1
@@ -19379,7 +19314,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 441.41113, y: 122.80087}
+  m_Offset: {x: 439.24042, y: 144.50812}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -19390,71 +19325,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 45.979614, y: 40.543694}
+  m_Size: {x: 50.321045, y: 57.9095}
   m_EdgeRadius: 0
---- !u!114 &1298235953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298235949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6778ee3c3f9e39f49a2b48e9b769d158, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scenes:
-  - {fileID: 1335545085}
-  - {fileID: 1588256735}
-  - {fileID: 1745322123}
-  - {fileID: 1099072308}
-  - {fileID: 2007713736}
-  - {fileID: 322496566}
-  - {fileID: 1091661175}
-  - {fileID: 640951311}
-  - {fileID: 1846491834}
-  - {fileID: 1403675661}
-  - {fileID: 683071336}
-  - {fileID: 1389055176}
-  - {fileID: 1793430489}
-  - {fileID: 1843053304}
-  - {fileID: 1486452080}
-  - {fileID: 1619310856}
-  - {fileID: 289162607}
-  front_card: []
-  colliderAreas:
-  - {fileID: 1390057607}
-  - {fileID: 2143406406}
-  - {fileID: 1181601550}
-  - {fileID: 1298235952}
-  - {fileID: 366849662}
-  objectAnimation:
-  - {fileID: 1815743618}
-  - {fileID: 1565821622}
-  button:
-  - {fileID: 1339166860}
-  scrollRects: []
-  imageList: []
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
-  hammer:
-  - {fileID: 1565821615}
-  - {fileID: 2142439084}
-  gameobjects:
-  - {fileID: 88649111}
-  - {fileID: 1797765775}
-  - {fileID: 795516468}
-  - {fileID: 668984162}
-  - {fileID: 1784949972}
-  hammerTip: {fileID: 1769564364}
-  rotateButton: {fileID: 0}
-  runningWater: []
-  CorrectImage: {fileID: 0}
-  CorrectAngle: 2
-  playableDirector: {fileID: 0}
 --- !u!95 &1298235954
 Animator:
   serializedVersion: 5
@@ -20417,7 +20289,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1390057605}
   - component: {fileID: 1390057607}
-  - component: {fileID: 1390057608}
   - component: {fileID: 1390057609}
   m_Layer: 5
   m_Name: nail4
@@ -20490,69 +20361,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 34.57199, y: 34.65901}
   m_EdgeRadius: 0
---- !u!114 &1390057608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1390057604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6778ee3c3f9e39f49a2b48e9b769d158, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scenes:
-  - {fileID: 1335545085}
-  - {fileID: 1588256735}
-  - {fileID: 1745322123}
-  - {fileID: 1099072308}
-  - {fileID: 2007713736}
-  - {fileID: 322496566}
-  - {fileID: 1091661175}
-  - {fileID: 640951311}
-  - {fileID: 1846491834}
-  - {fileID: 1403675661}
-  - {fileID: 683071336}
-  - {fileID: 1389055176}
-  - {fileID: 1793430489}
-  - {fileID: 1843053304}
-  - {fileID: 1486452080}
-  - {fileID: 1619310856}
-  - {fileID: 289162607}
-  front_card: []
-  colliderAreas:
-  - {fileID: 1390057607}
-  - {fileID: 2143406406}
-  - {fileID: 1181601550}
-  - {fileID: 1298235952}
-  - {fileID: 366849662}
-  objectAnimation:
-  - {fileID: 1815743618}
-  - {fileID: 1565821622}
-  button:
-  - {fileID: 1339166860}
-  scrollRects: []
-  imageList: []
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
-  hammer:
-  - {fileID: 1565821615}
-  - {fileID: 2142439084}
-  gameobjects:
-  - {fileID: 88649111}
-  - {fileID: 1797765775}
-  - {fileID: 795516468}
-  - {fileID: 668984162}
-  - {fileID: 1784949972}
-  hammerTip: {fileID: 1769564364}
-  rotateButton: {fileID: 0}
-  runningWater: []
-  CorrectImage: {fileID: 0}
-  CorrectAngle: 2
-  playableDirector: {fileID: 0}
 --- !u!95 &1390057609
 Animator:
   serializedVersion: 5
@@ -20933,10 +20741,6 @@ MonoBehaviour:
   - {fileID: 60671388}
   - {fileID: 1741532752}
   - {fileID: 298208469}
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer: []
   gameobjects:
   - {fileID: 1037285054}
@@ -20945,7 +20749,11 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 0}
   CorrectAngle: 2
+  text: []
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 0}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!82 &1403675666
 AudioSource:
   m_ObjectHideFlags: 0
@@ -21800,7 +21608,7 @@ MonoBehaviour:
   - {fileID: 366849662}
   objectAnimation:
   - {fileID: 1815743618}
-  - {fileID: 1565821622}
+  - {fileID: 0}
   button:
   - {fileID: 1815743614}
   - {fileID: 600618606}
@@ -21808,10 +21616,6 @@ MonoBehaviour:
   - {fileID: 1339166860}
   scrollRects: []
   imageList: []
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 0}
   - {fileID: 0}
@@ -21828,7 +21632,11 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 0}
   CorrectAngle: 0
+  text: []
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 0}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!95 &1442268300
 Animator:
   serializedVersion: 5
@@ -22000,6 +21808,8 @@ PlayableDirector:
     value: {fileID: 309792190}
   - key: {fileID: -3638922468490312169, guid: 9022aa26c967b344d8b707957a791852, type: 2}
     value: {fileID: 366276802}
+  - key: {fileID: 8981304040141512478, guid: 9022aa26c967b344d8b707957a791852, type: 2}
+    value: {fileID: 1908724812}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &1455941127
@@ -22742,7 +22552,7 @@ MonoBehaviour:
   - {fileID: 366849662}
   objectAnimation:
   - {fileID: 1815743618}
-  - {fileID: 1565821622}
+  - {fileID: 0}
   button:
   - {fileID: 553904616}
   - {fileID: 553833485}
@@ -22759,11 +22569,6 @@ MonoBehaviour:
   - {fileID: 60671388}
   - {fileID: 1741532752}
   - {fileID: 298208469}
-  text:
-  - {fileID: 0}
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -22776,7 +22581,12 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 267731616}
   CorrectAngle: 2
+  text:
+  - {fileID: 0}
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 2141930430}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!82 &1486452083
 AudioSource:
   m_ObjectHideFlags: 0
@@ -24055,8 +23865,9 @@ GameObject:
   - component: {fileID: 1565821617}
   - component: {fileID: 1565821620}
   - component: {fileID: 1565821621}
-  - component: {fileID: 1565821622}
   - component: {fileID: 1565821624}
+  - component: {fileID: 1565821626}
+  - component: {fileID: 1565821625}
   m_Layer: 5
   m_Name: martilyoinSlantAngle
   m_TagString: hammer
@@ -24071,17 +23882,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565821615}
-  m_LocalRotation: {x: 0, y: 0, z: -0.21939501, w: 0.9756361}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1769564365}
   m_Father: {fileID: 640951312}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 359.7066}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -502, y: -206}
   m_SizeDelta: {x: 196.4755, y: 229.2121}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1565821617
@@ -24148,7 +23959,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a1902f4742401a94484795becbb2b23e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ccef82352f2e7dc479432f5ee2f39cb5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -24204,15 +24015,11 @@ MonoBehaviour:
   - {fileID: 366849662}
   objectAnimation:
   - {fileID: 1815743618}
-  - {fileID: 1565821622}
+  - {fileID: 0}
   button:
   - {fileID: 1339166860}
   scrollRects: []
   imageList: []
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -24227,7 +24034,11 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 0}
   CorrectAngle: 2
-  playableDirector: {fileID: 0}
+  text: []
+  tracingPath: {fileID: 0}
+  playableDirector: {fileID: 2057202950}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!50 &1565821621
 Rigidbody2D:
   serializedVersion: 4
@@ -24255,27 +24066,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!95 &1565821622
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1565821615}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7a7d62bf76dfbbd48aa0848403ae920d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!223 &1565821624
 Canvas:
   m_ObjectHideFlags: 0
@@ -24299,6 +24089,132 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!114 &1565821625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565821615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 3c9ad5b0d0ea3ef478c5230e2bdd0790, type: 2}
+    - {fileID: 11400000, guid: 9ae1e42bdbcaf6b418950ddfbf8860ef, type: 2}
+    - {fileID: 11400000, guid: f3561718667306745ad8d764d9af53ee, type: 2}
+    - {fileID: 11400000, guid: 83d598bf4726d1647a222ca87b4def03, type: 2}
+    - {fileID: 11400000, guid: 84a485cfbee72e54296108e666ad6777, type: 2}
+    - {fileID: 11400000, guid: 717dfc84a10c53c4386981c8574116ab, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 640951315}
+          m_TargetAssemblyTypeName: Quarter3_Level2, Assembly-CSharp
+          m_MethodName: stop_timeline
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 3
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: Quarter3_Level2, Assembly-CSharp
+          m_MethodName: nail_down
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 640951315}
+          m_TargetAssemblyTypeName: Quarter3_Level2, Assembly-CSharp
+          m_MethodName: nail_down
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 640951315}
+          m_TargetAssemblyTypeName: Quarter3_Level2, Assembly-CSharp
+          m_MethodName: nail_down
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 640951315}
+          m_TargetAssemblyTypeName: Quarter3_Level2, Assembly-CSharp
+          m_MethodName: nail_down
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 2
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 640951315}
+          m_TargetAssemblyTypeName: Quarter3_Level2, Assembly-CSharp
+          m_MethodName: nail_down
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 3
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!95 &1565821626
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565821615}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1570355235
 GameObject:
   m_ObjectHideFlags: 0
@@ -27814,6 +27730,7 @@ GameObject:
   - component: {fileID: 1797765776}
   - component: {fileID: 1797765778}
   - component: {fileID: 1797765777}
+  - component: {fileID: 1797765779}
   m_Layer: 5
   m_Name: nail_down2
   m_TagString: Untagged
@@ -27878,6 +27795,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1797765775}
   m_CullTransparentMesh: 1
+--- !u!95 &1797765779
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797765775}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1801704251
 GameObject:
   m_ObjectHideFlags: 0
@@ -28155,7 +28093,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1815743615}
   m_OnClick:
     m_PersistentCalls:
@@ -28237,7 +28175,7 @@ MonoBehaviour:
   - {fileID: 366849662}
   objectAnimation:
   - {fileID: 1815743618}
-  - {fileID: 1565821622}
+  - {fileID: 0}
   - {fileID: 600618610}
   button:
   - {fileID: 1815743614}
@@ -28246,10 +28184,6 @@ MonoBehaviour:
   - {fileID: 1339166860}
   scrollRects: []
   imageList: []
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 0}
   - {fileID: 0}
@@ -28266,7 +28200,11 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 0}
   CorrectAngle: 0
+  text: []
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 1121830608}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!95 &1815743618
 Animator:
   serializedVersion: 5
@@ -28349,10 +28287,6 @@ MonoBehaviour:
   - {fileID: 60671388}
   - {fileID: 1741532752}
   - {fileID: 298208469}
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer: []
   gameobjects:
   - {fileID: 2003085552}
@@ -28363,7 +28297,11 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 0}
   CorrectAngle: 0
+  text: []
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 0}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!1 &1845414938
 GameObject:
   m_ObjectHideFlags: 0
@@ -30982,8 +30920,11 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: 6565161160598952916, guid: 07d17d8c311314144ace29ef28413c85, type: 2}
     value: {fileID: 1080403373}
+  - key: {fileID: -7202280117108313033, guid: 07d17d8c311314144ace29ef28413c85, type: 2}
+    value: {fileID: 1565821626}
   m_ExposedReferences:
-    m_References: []
+    m_References:
+    - 429f90726f1a99847aa6372d66a7a06a: {fileID: 640951311}
 --- !u!1 &2065418579
 GameObject:
   m_ObjectHideFlags: 0
@@ -31472,10 +31413,6 @@ MonoBehaviour:
   - {fileID: 1339166860}
   scrollRects: []
   imageList: []
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -31494,7 +31431,11 @@ MonoBehaviour:
   - {fileID: 1888551300}
   CorrectImage: {fileID: 8149456}
   CorrectAngle: 2
+  text: []
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 1795396776}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!95 &2084464844
 Animator:
   serializedVersion: 5
@@ -32632,7 +32573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2142439085
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32772,15 +32713,11 @@ MonoBehaviour:
   - {fileID: 366849662}
   objectAnimation:
   - {fileID: 1815743618}
-  - {fileID: 1565821622}
+  - {fileID: 0}
   button:
   - {fileID: 1339166860}
   scrollRects: []
   imageList: []
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
   hammer:
   - {fileID: 1565821615}
   - {fileID: 2142439084}
@@ -32795,7 +32732,11 @@ MonoBehaviour:
   runningWater: []
   CorrectImage: {fileID: 0}
   CorrectAngle: 2
+  text: []
+  tracingPath: {fileID: 0}
   playableDirector: {fileID: 0}
+  gameMenu: {fileID: 0}
+  requestsManager: {fileID: 0}
 --- !u!95 &2142439093
 Animator:
   serializedVersion: 5
@@ -32827,7 +32768,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2143406404}
   - component: {fileID: 2143406406}
-  - component: {fileID: 2143406407}
   - component: {fileID: 2143406408}
   m_Layer: 5
   m_Name: nail3
@@ -32900,69 +32840,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 34.27383, y: 38.88229}
   m_EdgeRadius: 0
---- !u!114 &2143406407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2143406403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6778ee3c3f9e39f49a2b48e9b769d158, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scenes:
-  - {fileID: 1335545085}
-  - {fileID: 1588256735}
-  - {fileID: 1745322123}
-  - {fileID: 1099072308}
-  - {fileID: 2007713736}
-  - {fileID: 322496566}
-  - {fileID: 1091661175}
-  - {fileID: 640951311}
-  - {fileID: 1846491834}
-  - {fileID: 1403675661}
-  - {fileID: 683071336}
-  - {fileID: 1389055176}
-  - {fileID: 1793430489}
-  - {fileID: 1843053304}
-  - {fileID: 1486452080}
-  - {fileID: 1619310856}
-  - {fileID: 289162607}
-  front_card: []
-  colliderAreas:
-  - {fileID: 1390057607}
-  - {fileID: 2143406406}
-  - {fileID: 1181601550}
-  - {fileID: 1298235952}
-  - {fileID: 366849662}
-  objectAnimation:
-  - {fileID: 1815743618}
-  - {fileID: 1565821622}
-  button:
-  - {fileID: 1339166860}
-  scrollRects: []
-  imageList: []
-  text: []
-  tracingPath: {fileID: 0}
-  gameMenu: {fileID: 0}
-  requestsManager: {fileID: 0}
-  hammer:
-  - {fileID: 1565821615}
-  - {fileID: 2142439084}
-  gameobjects:
-  - {fileID: 88649111}
-  - {fileID: 1797765775}
-  - {fileID: 795516468}
-  - {fileID: 668984162}
-  - {fileID: 1784949972}
-  hammerTip: {fileID: 1769564364}
-  rotateButton: {fileID: 0}
-  runningWater: []
-  CorrectImage: {fileID: 0}
-  CorrectAngle: 2
-  playableDirector: {fileID: 0}
 --- !u!95 &2143406408
 Animator:
   serializedVersion: 5

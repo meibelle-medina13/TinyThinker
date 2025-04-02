@@ -9,38 +9,34 @@ public class timer : MonoBehaviour
     public TextMeshProUGUI timerText;
     float time = 0;
     int mins = 0;
+    int userID;
     //float time = 10;
 
   private void Start()
     {
-        if (PlayerPrefs.HasKey("Time"))
+        userID = PlayerPrefs.GetInt("Current_user");
+        if (PlayerPrefs.HasKey(userID.ToString() + "Time"))
         {
-            time = PlayerPrefs.GetFloat("Time");
+            time = PlayerPrefs.GetFloat(userID.ToString() + "Time");
+        }
+        else
+        {
+            PlayerPrefs.SetFloat(userID.ToString() + "Time", 7200);
+            time = 7200;
         }
     }
     void Update()
     {
         time -= Time.deltaTime;
         int hours = Mathf.FloorToInt(time / 3600);
-        if (hours >= 1)
-        {
-            mins = Mathf.FloorToInt(time / 120);
-        }
-        else
-        {
-            mins = Mathf.FloorToInt(time / 60);
-        }
-
+        mins = Mathf.FloorToInt((time % 3600) / 60);
         int secs = Mathf.FloorToInt(time % 60);
         if (timerText != null)
         {
             timerText.text = string.Format("{0:00}:{1:00}:{2:00}",hours, mins, secs);
         }
 
-        PlayerPrefs.SetInt("Hours", hours);
-        PlayerPrefs.SetInt("Mins", mins);
-        PlayerPrefs.SetInt("Secs", secs);
-        PlayerPrefs.SetFloat("Time", time);
+        PlayerPrefs.SetFloat(userID.ToString() + "Time", time);
         
         if (time <= 0)
         {
@@ -49,7 +45,7 @@ public class timer : MonoBehaviour
             {
                 timerText.text = string.Format("{0:00}:{1:00}:{2:00}", 0, 0, 0);
             }
-            PlayerPrefs.SetFloat("Time", time);
+            PlayerPrefs.SetFloat(userID.ToString() + "Time", time);
         }
     }
 }

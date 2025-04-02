@@ -46,6 +46,10 @@ public class Quarter4_Level3 : MonoBehaviour
 
     void Start()
     {
+        if (gameObject.name == "Scene Manager")
+        {
+            Scene_counter = 0;
+        }
         audioManager_theme4 = FindObjectOfType<Audio_Manager>();
 
         //if (!bgMusicPlayed)
