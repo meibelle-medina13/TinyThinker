@@ -19,6 +19,11 @@ public class timer : MonoBehaviour
         {
             time = PlayerPrefs.GetFloat(userID.ToString() + "Time");
         }
+        else
+        {
+            PlayerPrefs.SetFloat(userID.ToString() + "Time", 7200);
+            time = 7200;
+        }
     }
     void Update()
     {

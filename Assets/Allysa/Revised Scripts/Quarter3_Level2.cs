@@ -730,11 +730,14 @@ public class Quarter3_Level2 : MonoBehaviour
                 }
                 else if (PlayerPrefs.GetString("Paused") == "False")
                 {
-                    PanelPlayableDirector.Resume();
-                    PlayerPrefs.DeleteKey("Paused");
-                    if (index == 10)
+                    if (index != 16)
                     {
-                        tracingPath.SetActive(true);
+                        PanelPlayableDirector.Resume();
+                        PlayerPrefs.DeleteKey("Paused");
+                        if (index == 10)
+                        {
+                            tracingPath.SetActive(true);
+                        }
                     }
                 }
             }
@@ -1156,7 +1159,7 @@ public class Quarter3_Level2 : MonoBehaviour
         else if (Mathf.Approximately(imageList[3].fillAmount, 1f))
         {
             gameobjects[21].SetActive(true);
-            delaytime = 12;
+            delaytime = 15;
         }
 
         StartCoroutine(GoToMap(score, userID, delaytime));
