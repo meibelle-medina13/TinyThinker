@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 public class Quarter3Level3 : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -22,6 +23,7 @@ public class Quarter3Level3 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
   void Start()
   {
     Panels[0].SetActive(true);
+    //Debug.Log(PlayerPrefs.GetFloat(24.ToString() + "Time") > 0);
   }
 
 

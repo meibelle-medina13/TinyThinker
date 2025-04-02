@@ -33,6 +33,11 @@ public class PREPOST_TEST_REQUESTS : MonoBehaviour
                     PlayerPrefs.SetString("User"+ userID.ToString() + "Finished Game", "True");
                     UnityEngine.SceneManagement.SceneManager.LoadScene(33);
                 }
+                else if (testType == 2)
+                {
+                    Debug.Log("Received: " + www.downloadHandler.text);
+                    PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Done");
+                }
                 else
                 {
                     PlayerPrefs.SetInt("Current_level", 1);
