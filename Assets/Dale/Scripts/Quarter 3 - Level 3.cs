@@ -237,27 +237,31 @@ public class Quarter3Level3 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
   private void ToggleResult()
   {
     PlayerPrefs.SetFloat("Theme3 Score", totalProgressFill);
-    Result.SetActive(true);
 
-    if (starCount == 0)
+    if (PlayerPrefs.HasKey("Theme3 Score"))
     {
-      PlayerPrefs.SetInt("Delay Time", 7);
-      ZeroStar.SetActive(true);
-    }
-    else if (starCount == 1)
-    {
-      PlayerPrefs.SetInt("Delay Time", 12);
-      OneStar.SetActive(true);
-    }
-    else if (starCount == 2)
-    {
-      PlayerPrefs.SetInt("Delay Time", 12);
-      TwoStars.SetActive(true);
-    }
-    else if (starCount == 3)
-    {
-      PlayerPrefs.SetInt("Delay Time", 16);
-      ThreeStars.SetActive(true);
+      Result.SetActive(true);
+
+      if (starCount == 0)
+      {
+        PlayerPrefs.SetInt("Delay Time", 7);
+        ZeroStar.SetActive(true);
+      }
+      else if (starCount == 1)
+      {
+        PlayerPrefs.SetInt("Delay Time", 12);
+        OneStar.SetActive(true);
+      }
+      else if (starCount == 2)
+      {
+        PlayerPrefs.SetInt("Delay Time", 12);
+        TwoStars.SetActive(true);
+      }
+      else if (starCount == 3)
+      {
+        PlayerPrefs.SetInt("Delay Time", 16);
+        ThreeStars.SetActive(true);
+      }
     }
     
   }

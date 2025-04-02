@@ -146,7 +146,6 @@ public class Quarter2Level5 : MonoBehaviour
       {
         if (index == 18)
         {
-          PlayerPrefs.SetFloat("Theme2 Score", totalProgressFill);
           gameMenu.SetActive(false);
         }
         else
@@ -225,30 +224,35 @@ public class Quarter2Level5 : MonoBehaviour
 
   private void ToggleResult()
   {
-    Panels[0].SetActive(!Panels[0].activeInHierarchy);
-    Result.SetActive(!Result.activeInHierarchy);
+    PlayerPrefs.SetFloat("Theme2 Score", totalProgressFill);
 
-    if (starCount == 0)
+    if (PlayerPrefs.HasKey("Theme2 Score"))
     {
-      ZeroStar.SetActive(true);
-      PlayerPrefs.SetInt("Delay Time", 7);
+      Panels[0].SetActive(!Panels[0].activeInHierarchy);
+      Result.SetActive(!Result.activeInHierarchy);
+
+      if (starCount == 0)
+      {
+        ZeroStar.SetActive(true);
+        PlayerPrefs.SetInt("Delay Time", 7);
+      }
+      else if (starCount == 1)
+      {
+        OneStar.SetActive(true);
+        PlayerPrefs.SetInt("Delay Time", 8);
+      }
+      else if (starCount == 2)
+      {
+        TwoStars.SetActive(true);
+        PlayerPrefs.SetInt("Delay Time", 8);
+      }
+      else if (starCount == 3)
+      {
+        ThreeStars.SetActive(true);
+        PlayerPrefs.SetInt("Delay Time", 14);
+      }
+      ProgressBar.SetActive(false);
     }
-    else if (starCount == 1)
-    {
-      OneStar.SetActive(true);
-      PlayerPrefs.SetInt("Delay Time", 8);
-    }
-    else if (starCount == 2)
-    {
-      TwoStars.SetActive(true);
-      PlayerPrefs.SetInt("Delay Time", 8);
-    }
-    else if (starCount == 3)
-    {
-      ThreeStars.SetActive(true);
-      PlayerPrefs.SetInt("Delay Time", 14);
-    }
-    ProgressBar.SetActive(false);
   }
   // -------------------------------------------------- //
 
