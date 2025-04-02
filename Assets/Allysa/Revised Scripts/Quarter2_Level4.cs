@@ -550,7 +550,7 @@ public class Quarter2_Level4 : MonoBehaviour
         }
         else
         {
-            if (PlayerPrefs.GetFloat("Time") > 0)
+            if (PlayerPrefs.GetFloat(userID.ToString() + "Time") > 0)
             {
                 int next_level = 5;
                 StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));

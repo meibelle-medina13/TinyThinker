@@ -58,7 +58,7 @@ public class EndLevelScoreScript : MonoBehaviour
         Debug.Log(delaytime);
         yield return new WaitForSeconds(delaytime);
 
-        if (PlayerPrefs.GetFloat("Time") > 0)
+        if (PlayerPrefs.GetFloat(userID.ToString() + "Time") > 0)
         {
             yield return StartCoroutine(UpdateCurrentScore());
         }

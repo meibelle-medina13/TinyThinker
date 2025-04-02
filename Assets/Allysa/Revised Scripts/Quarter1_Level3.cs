@@ -396,7 +396,7 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         }
         else
         {
-            if (PlayerPrefs.GetFloat("Time") > 0)
+            if (PlayerPrefs.GetFloat(userID.ToString() + "Time") > 0)
             {
                 int next_level = 4;
                 StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));

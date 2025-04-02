@@ -65,7 +65,6 @@ public class Quarter3_Level2 : MonoBehaviour
 
     private Audio_Manager audioManager4;
     private AudioSource audioSource;
-    private static bool isPlayed = false;
     //[SerializeField] private List<AudioClip> audios;
 
     public List<TextMeshProUGUI> text;
@@ -86,7 +85,7 @@ public class Quarter3_Level2 : MonoBehaviour
     {
         if (gameObject.name == "Scene Manager")
         {
-            Counter = 0;
+            Scene_counter = 0;
         }
         requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
 
@@ -344,12 +343,6 @@ public class Quarter3_Level2 : MonoBehaviour
                     button[0].interactable = true;
                     button[1].interactable = true;
                     button[2].interactable = true;
-                }
-
-                else if (this.gameObject.name == "Scene8" && !isPlayed)
-                {
-                    hammer[1].gameObject.SetActive(true);
-                    isPlayed = true;
                 }
 
                 else if (this.gameObject.name == "Scene10")
@@ -730,14 +723,11 @@ public class Quarter3_Level2 : MonoBehaviour
                 }
                 else if (PlayerPrefs.GetString("Paused") == "False")
                 {
-                    if (index != 16)
+                    PanelPlayableDirector.Resume();
+                    PlayerPrefs.DeleteKey("Paused");
+                    if (index == 10)
                     {
-                        PanelPlayableDirector.Resume();
-                        PlayerPrefs.DeleteKey("Paused");
-                        if (index == 10)
-                        {
-                            tracingPath.SetActive(true);
-                        }
+                        tracingPath.SetActive(true);
                     }
                 }
             }
@@ -1179,7 +1169,7 @@ public class Quarter3_Level2 : MonoBehaviour
         }
         else
         {
-            if (PlayerPrefs.GetFloat("Time") > 0)
+            if (PlayerPrefs.GetFloat(userID.ToString() + "Time") > 0)
             {
                 int next_level = 3;
                 StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", next_level, userID));
