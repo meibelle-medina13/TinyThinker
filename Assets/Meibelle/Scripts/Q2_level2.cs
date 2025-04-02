@@ -475,7 +475,7 @@ public class Q2_level2 : MonoBehaviour
         int theme_num = 2;
         int level_num = 2;
 
-        if (PlayerPrefs.GetFloat("Time") > 0)
+        if (PlayerPrefs.GetFloat(userID.ToString() + "Time") > 0)
         {
             StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
         }

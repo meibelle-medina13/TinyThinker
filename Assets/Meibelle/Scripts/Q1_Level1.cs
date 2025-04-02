@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
 using UnityEngine.Playables;
+using UnityEngine.EventSystems;
 
 public class Q1_Level1 : MonoBehaviour
 {
@@ -63,6 +64,7 @@ public class Q1_Level1 : MonoBehaviour
     private int error;
     private int userID;
     private float score;
+    int positionedCandles;
 
     public void Start()
     {
@@ -193,7 +195,13 @@ public class Q1_Level1 : MonoBehaviour
                 if (Distance < 150)
                 {
                     candle.transform.position = new Vector3(positions[index - 1], 398.80f, 0.00f);
-                    StartCoroutine(AfterDragDrop());
+                    positionedCandles += 1;
+
+                    if (positionedCandles == 4)
+                    {
+                        exercise2[0].SetActive(false);
+                        exercise2[1].SetActive(true);
+                    }
                 }
                 else
                 {
@@ -201,26 +209,6 @@ public class Q1_Level1 : MonoBehaviour
                 }
                 break;
             }
-        }
-    }
-
-    IEnumerator AfterDragDrop()
-    {
-        yield return new WaitForSeconds(1.5f);
-        int positionedCandles = 0;
-
-        for (int i = 3; i < exercise2.Length; i++)
-        {
-            if (exercise2[i].transform.position != candlesInitialPos[i - 3])
-            {
-                positionedCandles++;
-            }
-        }
-
-        if (positionedCandles == 4)
-        {
-            exercise2[0].SetActive(false);
-            exercise2[1].SetActive(true);
         }
     }
 
@@ -261,6 +249,7 @@ public class Q1_Level1 : MonoBehaviour
         if (assessment1Text[i].color != Color.black && assessment1Text[i].text == word)
         {
             assessment1Text[i].color = Color.black;
+            EventSystem.current.SetSelectedGameObject(null);
             if (i < 2)
             {
                 Assessment1ShuffledLetters(i + 1);
@@ -385,7 +374,7 @@ public class Q1_Level1 : MonoBehaviour
     {
         int theme_num = 1;
         int level_num = 1;
-        if (PlayerPrefs.GetFloat("Time") > 0)
+        if (PlayerPrefs.GetFloat(userID.ToString() + "Time") > 0)
         {
             StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
         }
