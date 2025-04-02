@@ -4855,7 +4855,7 @@ GameObject:
   - component: {fileID: 307984787}
   - component: {fileID: 307984786}
   - component: {fileID: 307984785}
-  - component: {fileID: 307984784}
+  - component: {fileID: 307984788}
   m_Layer: 5
   m_Name: quin
   m_TagString: Untagged
@@ -4863,27 +4863,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &307984784
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 307984783}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9d81577b19b2ad447991ebb85ff591c3, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &307984785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4904,7 +4883,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6ee95775889bcd64091b6b33c00ed98d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eba0302048d78e2448a2f53394c2963f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4938,9 +4917,30 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -435, y: 68}
+  m_AnchoredPosition: {x: -431.3, y: 69}
   m_SizeDelta: {x: 114.5726, y: 100.8892}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.49999997}
+--- !u!95 &307984788
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307984783}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &309792188
 GameObject:
   m_ObjectHideFlags: 0
@@ -7241,6 +7241,8 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: 5235043906166960413, guid: dce6156a1bde2ca41a54a1739e233702, type: 2}
     value: {fileID: 1080403373}
+  - key: {fileID: 8317929551531388862, guid: dce6156a1bde2ca41a54a1739e233702, type: 2}
+    value: {fileID: 307984788}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &471311278
@@ -9975,7 +9977,7 @@ PlayableDirector:
   m_InitialTime: 0
   m_SceneBindings:
   - key: {fileID: 4353106042586373899, guid: af3696831a5f28c4aa669c9f57b39b30, type: 2}
-    value: {fileID: 307984784}
+    value: {fileID: 0}
   - key: {fileID: -4478010932962885840, guid: af3696831a5f28c4aa669c9f57b39b30, type: 2}
     value: {fileID: 661899350}
   - key: {fileID: -2507378666089133744, guid: af3696831a5f28c4aa669c9f57b39b30, type: 2}
