@@ -140,21 +140,6 @@ public class Quarter2_Level4 : MonoBehaviour
             Gameobjects[3].transform.position = worldPosition;
         }
 
-        if (fill_bar.fillAmount >= 0.3333333333333333f && fill_bar.fillAmount < 0.6666666666666667f)
-        {
-            Gameobjects[5].SetActive(false);
-        }
-
-        else if (fill_bar.fillAmount >= 0.6666666666666667f && fill_bar.fillAmount < 1f)
-        {
-            Gameobjects[6].SetActive(false);
-        }
-
-        else if (Mathf.Approximately(fill_bar.fillAmount, 1f))
-        {
-            Gameobjects[7].SetActive(false);
-        }
-
         int index = 0;
 
         int[] noTimelines = { 1, 3, 5, 11, 13 };
@@ -480,17 +465,41 @@ public class Quarter2_Level4 : MonoBehaviour
     {
         if (fill_bar.fillAmount >= 0.3333333333333333f && fill_bar.fillAmount < 0.6666666666666667f)
         {
-            Gameobjects[5].SetActive(false);
+            if (Gameobjects.Count == 8)
+            {
+                Gameobjects[5].SetActive(false);
+            }
+
+            else if (Gameobjects.Count == 12)
+            {
+                Gameobjects[9].SetActive(false);
+            }
         }
 
         else if (fill_bar.fillAmount >= 0.6666666666666667f && fill_bar.fillAmount < 1f)
         {
-            Gameobjects[6].SetActive(false);
+            if (Gameobjects.Count == 8)
+            {
+                Gameobjects[6].SetActive(false);
+            }
+
+            else if (Gameobjects.Count == 12)
+            {
+                Gameobjects[10].SetActive(false);
+            }
         }
 
         else if (Mathf.Approximately(fill_bar.fillAmount, 1f))
         {
-            Gameobjects[7].SetActive(false);
+            if (Gameobjects.Count == 8)
+            {
+                Gameobjects[7].SetActive(false);
+            }
+
+            else if (Gameobjects.Count == 12)
+            {
+                Gameobjects[11].SetActive(false);
+            }
         }
     }
 
