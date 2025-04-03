@@ -174,16 +174,16 @@ public class PreTest_PostTest3 : MonoBehaviour
                     {
 
                         playableDirector[1].time = 15.65f;
-                        playableDirector[1].Play();
+                            playableDirector[1].Play();
                     }
 
                     else if (area.CompareTag("Draggable") && area.name == "plant2 collider")
                     {
                         Test_Score++;
                         playableDirector[1].time = 5.4f;
-                        playableDirector[1].Play();
+                            playableDirector[1].Play();
                     }
-                    
+
                 }
             }
         }
@@ -775,6 +775,10 @@ public class PreTest_PostTest3 : MonoBehaviour
         }
     }
  
+    public void Stop_timeline()
+    {
+        playableDirector[1].Stop();
+    }
 
 
     //// ------------------------------------------------------------------- //
