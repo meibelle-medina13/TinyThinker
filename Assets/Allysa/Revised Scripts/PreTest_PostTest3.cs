@@ -666,8 +666,47 @@ public class PreTest_PostTest3 : MonoBehaviour
 
     public void CorrectObject()
     {
+        if (this.gameObject.name == "Teddy Bear")
+        {
+            gameObjects[5].SetActive(true);
+        }
+
+        else if (this.gameObject.name == "treasure chest")
+        {
+            gameObjects[6].SetActive(true);
+        }
+
+        else if (this.gameObject.name == "Clock")
+        {
+            gameObjects[8].SetActive(true);
+        }
+
+        else if (this.gameObject.name == "atis")
+        {
+            gameObjects[10].SetActive(true);
+        }
+
+        else if (this.gameObject.name == "crayon")
+        {
+            gameObjects[11].SetActive(true);
+        }
+
+        else if (this.gameObject.name == "cone")
+        {
+            gameObjects[9].SetActive(true);
+        }
+
+        else if (this.gameObject.name == "pencil")
+        {
+            gameObjects[4].SetActive(true);
+        }
+
+        else if (this.gameObject.name == "paper")
+        {
+            gameObjects[7].SetActive(true);
+        }
+
         Test_Score++;
-        this.gameObject.SetActive(false);
         objectCounter++;
         ObjectCount();
         Debug.Log(objectCounter);
@@ -675,7 +714,46 @@ public class PreTest_PostTest3 : MonoBehaviour
 
     public void WrongObject()
     {
-        this.gameObject.SetActive(false);
+        if (this.gameObject.name == "Teddy Bear")
+        {
+            gameObjects[5].SetActive(true);
+        }
+
+        else if (this.gameObject.name == "treasure chest")
+        {
+            gameObjects[6].SetActive(true);
+        }
+
+        else if (this.gameObject.name == "Clock")
+        {
+            gameObjects[8].SetActive(true);
+        }
+
+        else if (this.gameObject.name == "atis")
+        {
+            gameObjects[10].SetActive(true);
+        }
+
+        else if (this.gameObject.name == "crayon")
+        {
+            gameObjects[11].SetActive(true);
+        }
+
+        else if (this.gameObject.name == "cone")
+        {
+            gameObjects[9].SetActive(true);
+        }
+
+        else if (this.gameObject.name == "pencil")
+        {
+            gameObjects[4].SetActive(true);
+        }
+
+        else if (this.gameObject.name == "paper")
+        {
+            gameObjects[7].SetActive(true);
+        }
+
         objectCounter++;
         ObjectCount();
         Debug.Log(objectCounter);

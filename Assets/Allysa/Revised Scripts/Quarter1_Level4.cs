@@ -202,11 +202,6 @@ public class Quarter1_Level4 : MonoBehaviour
         }
     }
 
-    public void activate_padlockButton()
-    {
-        clickableButtons[6].gameObject.SetActive(true);
-    }
-
     public void CorrectButton(Button ClickedButton)
     {
         if (ClickedButton.name == "clap_2")
