@@ -48,7 +48,6 @@ public class ThemeMap : MonoBehaviour
 
     void Start()
     {
-        PlayerPrefs.DeleteKey(1.ToString() + "PostTest Status" + 4.ToString());
         userID = PlayerPrefs.GetInt("Current_user");
         currentDate = DateTime.Now;
         string dateString = currentDate.ToString("yyyy-MM-dd");
