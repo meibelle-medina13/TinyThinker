@@ -349,6 +349,7 @@ public class Quarter4_Level3 : MonoBehaviour
             }
             else
             {
+                PlayerPrefs.SetFloat("Theme4 Score", Fill.fillAmount);
                 gameMenu.SetActive(false);
             }
         }
@@ -489,7 +490,7 @@ public class Quarter4_Level3 : MonoBehaviour
     void Show_Stars()
     {
         Debug.Log(this.gameObject);
-        PlayerPrefs.SetFloat("Theme4 Score", Fill.fillAmount);
+        
         if (Fill.fillAmount < 0.3333333333333333f)
         {
             PlayerPrefs.SetInt("Delay Time", 8);

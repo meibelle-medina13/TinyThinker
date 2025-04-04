@@ -130,7 +130,8 @@ public class GameMenuManager : MonoBehaviour
 
         if (index == 0)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(5);
+            //UnityEngine.SceneManagement.SceneManager.LoadScene(5);
+            Application.Quit();
         }
         else
         {

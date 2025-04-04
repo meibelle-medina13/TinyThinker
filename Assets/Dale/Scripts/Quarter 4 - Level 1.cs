@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SocialPlatforms.Impl;
@@ -418,7 +417,7 @@ public class Quarter4Level1 : MonoBehaviour
 
     score = progressBar.fillAmount * 100f;
 
-    if (PlayerPrefs.GetFloat("Time") > 0)
+    if (PlayerPrefs.GetFloat(userID.ToString() + "Time") > 0)
     {
       StartCoroutine(requestsManager.UpdateCurrentScore("/scores", score, userID, theme_num, level_num));
     }
