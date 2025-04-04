@@ -86,7 +86,14 @@ public class Quarter3_Level2 : MonoBehaviour
         if (gameObject.name == "Scene Manager")
         {
             Scene_counter = 0;
+            flipCount = 0;
+            total_matched = 0;
+            wrong_Click = 1;
+            object_count = 0;
+            disinpect_step = 0;
+            correctPuzzle = 0;
         }
+
         requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
 
         audioManager4 = FindObjectOfType<Audio_Manager>();
