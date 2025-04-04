@@ -54,7 +54,8 @@ public class SelectAccount : MonoBehaviour
             if (avatars[i].name == avatar_filename[0])
             {
                 user.GetComponentInChildren<SpriteRenderer>().sprite = account_container[i];
-                user.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<Canvas>().GetComponentInChildren<SpriteRenderer>().sprite = avatars[i];
+                Debug.Log(user.transform.Find("Container").Find("Profile"));
+                user.transform.Find("Container").Find("Profile").gameObject.GetComponentInChildren<SpriteRenderer>().sprite = avatars[i];
                 user.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<TMP_Text>().text = username[0].ToUpper();
                 user.GetComponent<Button>().onClick.AddListener(() => LogIn(0));
             }
@@ -66,15 +67,13 @@ public class SelectAccount : MonoBehaviour
             Clone.transform.position = new Vector3(394f, y, 0f);
             Clone.transform.SetParent(parentGameObject.transform);
             int index = i;
-
+            Debug.Log(avatars.Length);
             for (int j = 0; j < avatars.Length; j++)
             {
                 if (avatars[j].name == avatar_filename[i])
                 {
                     Clone.GetComponentInChildren<SpriteRenderer>().sprite = account_container[j];
-                    Clone.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<Canvas>().GetComponentInChildren<SpriteRenderer>().sprite = avatars[j];
-                    Clone.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<Canvas>().GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(39, 32, 33);
-                    Clone.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<Canvas>().GetComponentInChildren<SpriteRenderer>().transform.localPosition = new Vector3(-495, -350, 90);
+                    Clone.transform.Find("Container").Find("Profile").gameObject.GetComponentInChildren<SpriteRenderer>().sprite = avatars[j];
                     Clone.GetComponentInChildren<SpriteRenderer>().GetComponentInChildren<TMP_Text>().text = username[i].ToUpper();
                     Clone.GetComponent<Button>().onClick.AddListener(() => LogIn(index));
                 }
