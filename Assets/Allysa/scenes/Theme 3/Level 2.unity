@@ -4856,6 +4856,7 @@ GameObject:
   - component: {fileID: 307984786}
   - component: {fileID: 307984785}
   - component: {fileID: 307984788}
+  - component: {fileID: 307984789}
   m_Layer: 5
   m_Name: quin
   m_TagString: Untagged
@@ -4941,6 +4942,29 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!223 &307984789
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307984783}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 2
+  m_TargetDisplay: 0
 --- !u!1 &309792188
 GameObject:
   m_ObjectHideFlags: 0
@@ -9977,7 +10001,7 @@ PlayableDirector:
   m_InitialTime: 0
   m_SceneBindings:
   - key: {fileID: 4353106042586373899, guid: af3696831a5f28c4aa669c9f57b39b30, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 307984788}
   - key: {fileID: -4478010932962885840, guid: af3696831a5f28c4aa669c9f57b39b30, type: 2}
     value: {fileID: 661899350}
   - key: {fileID: -2507378666089133744, guid: af3696831a5f28c4aa669c9f57b39b30, type: 2}
@@ -10411,6 +10435,7 @@ GameObject:
   - component: {fileID: 661899352}
   - component: {fileID: 661899351}
   - component: {fileID: 661899350}
+  - component: {fileID: 661899354}
   m_Layer: 5
   m_Name: Policeman
   m_TagString: Untagged
@@ -10496,6 +10521,29 @@ RectTransform:
   m_AnchoredPosition: {x: -368, y: 98}
   m_SizeDelta: {x: 89.9785, y: 162.7982}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &661899354
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661899349}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 2
+  m_TargetDisplay: 0
 --- !u!1 &668984162
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ using UnityEngine.Playables;
 using UnityEngine.UI;
 public class Quarter3_Level2 : MonoBehaviour
 {
-    private static int Scene_counter = 0;
+    private static int Scene_counter = 14;
     public List<GameObject> scenes;
     private float rotationSpeed = 300f;
     private bool isFlipping = false;
@@ -65,6 +65,7 @@ public class Quarter3_Level2 : MonoBehaviour
 
     private Audio_Manager audioManager4;
     private AudioSource audioSource;
+    static bool audioEnabled;
     //[SerializeField] private List<AudioClip> audios;
 
     public List<TextMeshProUGUI> text;
@@ -92,6 +93,7 @@ public class Quarter3_Level2 : MonoBehaviour
             object_count = 0;
             disinpect_step = 0;
             correctPuzzle = 0;
+            audioEnabled = false;
         }
 
         requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
@@ -322,7 +324,7 @@ public class Quarter3_Level2 : MonoBehaviour
         }
     }
 
-    static bool audioEnabled = false;
+    
 
     private void Update()
     {
@@ -359,7 +361,7 @@ public class Quarter3_Level2 : MonoBehaviour
 
                 else if (this.gameObject.name == "Assessment 2" && audioSource.enabled && !audioEnabled)
                 {
-                    AfterTimeline();
+                    Invoke("AfterTimeline", 1f);
                     audioEnabled = true;
                 }
             }
@@ -631,8 +633,19 @@ public class Quarter3_Level2 : MonoBehaviour
                     total_matched++; 
                     Debug.Log("matched!");
                     Debug.Log(total_matched);
-                    audioManager4.Invoke("Correct", 1);
-                    StartCoroutine(DelayedIncrementFillAmount());
+                    audioManager4.Correct();
+
+                    if (wrong_Click > 0)
+                    {
+                        float fillamount = 0.1111111111111111f / wrong_Click;
+                        IncrementFillAmount(fillamount);
+                        wrong_Click = 0;
+                    }
+                    else
+                    {
+                        IncrementFillAmount(0.1111111111111111f);
+                    }
+
                     Invoke("matchedChecker", 2f);
                     break;
 
@@ -761,7 +774,7 @@ public class Quarter3_Level2 : MonoBehaviour
     {
         if (total_matched == 3)
         { 
-            UpdateScene();
+            Invoke("UpdateScene", 1f);
         }
     }
 
@@ -1053,22 +1066,6 @@ public class Quarter3_Level2 : MonoBehaviour
         imageList[3].fillAmount = Mathf.Clamp01(imageList[3].fillAmount + amount);
     }
 
-    private IEnumerator DelayedIncrementFillAmount()
-    {
-        yield return new WaitForSeconds(1f);
-        Debug.Log("wrongs: " + wrong_Click);
-
-        if (wrong_Click > 0)
-        {
-            float fillamount = 0.1111111111111111f / wrong_Click;
-            IncrementFillAmount(fillamount);
-            wrong_Click = 0;
-        }
-        else
-        {
-            IncrementFillAmount(0.1111111111111111f);
-        }
-    }
 
     public void AfterTimeline()
     {
