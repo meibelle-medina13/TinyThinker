@@ -75,8 +75,6 @@ public class THEME1_LEVEL1_REQUESTS : MonoBehaviour
         form.AddField("user_ID", user_ID);
         form.AddField("reward_type_ID", reward_type_ID);
 
-        Debug.Log("Add");
-
         using (UnityWebRequest www = UnityWebRequest.Post(newURL, form))
         {
             yield return www.SendWebRequest();

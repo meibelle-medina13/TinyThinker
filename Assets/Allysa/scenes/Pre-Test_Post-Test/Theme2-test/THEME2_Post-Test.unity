@@ -17279,8 +17279,8 @@ MonoBehaviour:
     m_Events:
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1194994795}
-          m_TargetAssemblyTypeName: PreTest_PostTest1, Assembly-CSharp
+        - m_Target: {fileID: 1194994796}
+          m_TargetAssemblyTypeName: PreTest_PostTest2, Assembly-CSharp
           m_MethodName: TitleUpdateScene
           m_Mode: 1
           m_Arguments:
@@ -29767,6 +29767,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1194994794}
   - component: {fileID: 1194994795}
+  - component: {fileID: 1194994796}
   m_Layer: 5
   m_Name: Post-test Title
   m_TagString: Untagged
@@ -29843,6 +29844,94 @@ MonoBehaviour:
   - {fileID: 0}
   progress_display: {fileID: 140632905}
   Fill: {fileID: 0}
+  scene: {fileID: 0}
+  pencil: {fileID: 0}
+  PencilMask: {fileID: 0}
+  mycollider: {fileID: 0}
+  totalTracingPoints: 0
+--- !u!114 &1194994796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194994793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f180b6806ee62e8499187aa34c6a9388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 0
+  Test_scenes:
+  - {fileID: 889008618}
+  - {fileID: 897851685}
+  - {fileID: 1667659490}
+  - {fileID: 587971639}
+  - {fileID: 1670137460}
+  - {fileID: 94906388}
+  - {fileID: 1315381697}
+  - {fileID: 762239667}
+  - {fileID: 267711034}
+  - {fileID: 380332884}
+  - {fileID: 1749629550}
+  - {fileID: 1920757621}
+  - {fileID: 1317896824}
+  - {fileID: 1813478147}
+  - {fileID: 1786593315}
+  - {fileID: 727805987}
+  - {fileID: 1731420893}
+  - {fileID: 1455312947}
+  - {fileID: 2104861552}
+  Test_timelines:
+  - {fileID: 16161128}
+  - {fileID: 987123141}
+  - {fileID: 694186711}
+  - {fileID: 1184136061}
+  - {fileID: 878597174}
+  - {fileID: 623402580}
+  - {fileID: 1485629200}
+  - {fileID: 96305199}
+  - {fileID: 198950059}
+  - {fileID: 1219922858}
+  - {fileID: 1034304586}
+  - {fileID: 2121264040}
+  - {fileID: 284996397}
+  - {fileID: 2032789727}
+  - {fileID: 812892115}
+  - {fileID: 1905863500}
+  - {fileID: 1497330946}
+  - {fileID: 384541836}
+  - {fileID: 927575586}
+  Title_timeline: {fileID: 1180894956}
+  Tracing_objects:
+  - {fileID: 1690797630}
+  - {fileID: 1596427540}
+  - {fileID: 1713796031}
+  - {fileID: 96481977}
+  - {fileID: 419007764}
+  - {fileID: 1352443436}
+  - {fileID: 83636304}
+  Tracking_Test:
+  - {fileID: 167230133}
+  - {fileID: 167230133}
+  - {fileID: 2052326400}
+  - {fileID: 2146483354}
+  - {fileID: 883789356}
+  - {fileID: 1043521070}
+  - {fileID: 843225613}
+  - {fileID: 1529046594}
+  - {fileID: 131224223}
+  - {fileID: 211852047}
+  - {fileID: 1614038118}
+  - {fileID: 1435064887}
+  - {fileID: 161153782}
+  - {fileID: 849474938}
+  - {fileID: 1988881054}
+  - {fileID: 1571413100}
+  - {fileID: 91431285}
+  - {fileID: 901436117}
+  progress_display: {fileID: 140632905}
+  Fill: {fileID: 1299956318}
   scene: {fileID: 0}
   pencil: {fileID: 0}
   PencilMask: {fileID: 0}
