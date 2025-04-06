@@ -52,8 +52,6 @@ public class ThemeMap : MonoBehaviour
         currentDate = DateTime.Now;
         string dateString = currentDate.ToString("yyyy-MM-dd");
 
-        Debug.Log(dateString);
-
         if (PlayerPrefs.GetString("Current Date") != dateString)
         {
             PlayerPrefs.SetFloat(userID.ToString() + "Time", 7200);
@@ -97,7 +95,7 @@ public class ThemeMap : MonoBehaviour
                 usedStickers[i].SetActive(true);
             }
         }
-
+        StartCoroutine(CheckRewards());
         StartCoroutine(CheckQuarterAvailability());
     }
 
@@ -123,6 +121,21 @@ public class ThemeMap : MonoBehaviour
                 background.GetComponent<PlayableDirector>().enabled = false;
                 locations[current_theme - 1].SetActive(true);
                 PlayerPrefs.SetString("StartGuide" + userID.ToString(), "False");
+            }
+        }
+    }
+
+    IEnumerator CheckRewards()
+    {
+        yield return StartCoroutine(requestsManager.GetRewards("/reward", userID));
+
+        if (requestsManager.jsonReward != null)
+        {
+            for (int i = 0; i < requestsManager.jsonReward.data.Count; i++)
+            {
+                int reward_type_ID = requestsManager.jsonReward.data[i].reward_type_ID;
+                PlayerPrefs.SetString(userID.ToString() + "-" + reward_type_ID.ToString(), "True");
+                availableStickers[reward_type_ID-1].SetActive(true);
             }
         }
     }

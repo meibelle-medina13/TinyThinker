@@ -95,11 +95,14 @@ public class EditProfile : MonoBehaviour
         string[] letterArray = avatar_filename.Split('_');
         gender = letterArray[0];
 
+        Debug.Log(letterArray[0]);
+
         StoreOriginalProfile();
 
         if (gender == "female")
         {
             avatarOptions[0].SetActive(true);
+            avatarOptions[1].SetActive(false);
 
             foreach (Button avatar in femaleOptions)
             {
@@ -109,6 +112,7 @@ public class EditProfile : MonoBehaviour
         else if (gender == "male")
         {
             avatarOptions[1].SetActive(true);
+            avatarOptions[0].SetActive(false);
 
             foreach (Button avatar in maleOptions)
             {
@@ -218,7 +222,6 @@ public class EditProfile : MonoBehaviour
         fullProfileContainer.sprite = fullProfile_containerSprites[spriteIndex];
 
         newAvatar_filename = fullAvatar.sprite.name.Replace("-", "_");
-        Debug.Log("new filename:     " + newAvatar_filename);
     }
 
     IEnumerator SaveAllChanges()

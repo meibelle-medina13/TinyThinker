@@ -67,7 +67,6 @@ public class SelectAccount : MonoBehaviour
             Clone.transform.position = new Vector3(394f, y, 0f);
             Clone.transform.SetParent(parentGameObject.transform);
             int index = i;
-            Debug.Log(avatars.Length);
             for (int j = 0; j < avatars.Length; j++)
             {
                 if (avatars[j].name == avatar_filename[i])
