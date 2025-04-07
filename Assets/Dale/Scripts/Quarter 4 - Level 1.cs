@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.Timeline;
@@ -77,6 +78,12 @@ public class Quarter4Level1 : MonoBehaviour
 
   public void ToggleNextPanel()
   {
+    if (EventSystem.current.currentSelectedGameObject != null)
+    {
+      Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+      selectedButton.enabled = false;
+    }
+
     for (int i = 0; i < Panels.Length; i++)
     {
       if (Panels[i].activeInHierarchy && (i + 1) < Panels.Length)
@@ -281,6 +288,12 @@ public class Quarter4Level1 : MonoBehaviour
       string answer = selectedButton.name.Split(' ')[0];
       if (answer == "boat")
       {
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+          Button selected = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+          selected.enabled = false;
+        }
+        selectedButton.interactable = false;
         MoveProgress(error, 2);
         PlaySFX(SFXClips[1]);
         Invoke(nameof(ToggleNextPanel), 1.5f);
@@ -299,6 +312,7 @@ public class Quarter4Level1 : MonoBehaviour
         if (group2.Contains(children[i].name))
         {
           correct = true;
+          selectedButton.interactable = false;
         }
         else
         {
@@ -308,6 +322,12 @@ public class Quarter4Level1 : MonoBehaviour
           break;
         }
       }
+      if (EventSystem.current.currentSelectedGameObject != null)
+      {
+        Button selected = EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Button>();
+        selected.enabled = false;
+      }
+
       if (correct == true)
       {
         Invoke(nameof(ToggleNextPanel), 1.5f);
