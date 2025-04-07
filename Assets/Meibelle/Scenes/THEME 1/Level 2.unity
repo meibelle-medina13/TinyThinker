@@ -8756,6 +8756,7 @@ GameObject:
   - component: {fileID: 955859549}
   - component: {fileID: 955859552}
   - component: {fileID: 955859551}
+  - component: {fileID: 955859553}
   m_Layer: 5
   m_Name: Tracing Panel
   m_TagString: Untagged
@@ -8865,6 +8866,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 955859548}
   m_CullTransparentMesh: 1
+--- !u!320 &955859553
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955859548}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 347761c0c9d255b4abfc947f17194679, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -1024426480378634001, guid: 347761c0c9d255b4abfc947f17194679, type: 2}
+    value: {fileID: 412245981}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &957702856
 GameObject:
   m_ObjectHideFlags: 0
