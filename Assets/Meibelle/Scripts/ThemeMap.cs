@@ -60,7 +60,14 @@ public class ThemeMap : MonoBehaviour
         }
 
         current_theme = PlayerPrefs.GetInt("Current_theme");
-        locations[current_theme - 1].SetActive(true);
+        if (current_theme < 5)
+        {
+            locations[current_theme - 1].SetActive(true);
+        }
+        else
+        {
+            locations[3].SetActive(true);
+        }
 
         if (PlayerPrefs.HasKey("StartGuide"+userID.ToString()) && PlayerPrefs.GetString("StartGuide" + userID.ToString()) == "True")
         {
@@ -103,11 +110,25 @@ public class ThemeMap : MonoBehaviour
     {
         if (PlayerPrefs.GetString("Showing") == "true" || PlayerPrefs.GetString("Paused") == "True")
         {
-            locations[current_theme - 1].SetActive(false);
+            if (current_theme < 5)
+            {
+                locations[current_theme - 1].SetActive(false);
+            }
+            else
+            {
+                locations[3].SetActive(false);
+            }
         }
         else
         {
-            locations[current_theme - 1].SetActive(true);
+            if (current_theme < 5)
+            {
+                locations[current_theme - 1].SetActive(true);
+            }
+            else
+            {
+                locations[3].SetActive(true);
+            }
         }
 
         if (PlayerPrefs.HasKey("StartGuide" + userID.ToString()) && PlayerPrefs.GetString("StartGuide" + userID.ToString()) == "True")
@@ -184,7 +205,14 @@ public class ThemeMap : MonoBehaviour
         while (!asyncOperation.isDone)
         {
             loadingScene.SetActive(true);
-            locations[current_theme - 1].SetActive(false);
+            if (current_theme < 5)
+            {
+                locations[current_theme - 1].SetActive(false);
+            }
+            else
+            {
+                locations[3].SetActive(false);
+            }
             yield return null;
         }
     }
