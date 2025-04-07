@@ -52,8 +52,6 @@ public class ThemeMap : MonoBehaviour
         currentDate = DateTime.Now;
         string dateString = currentDate.ToString("yyyy-MM-dd");
 
-        Debug.Log(dateString);
-
         if (PlayerPrefs.GetString("Current Date") != dateString)
         {
             PlayerPrefs.SetFloat(userID.ToString() + "Time", 7200);
@@ -62,7 +60,14 @@ public class ThemeMap : MonoBehaviour
         }
 
         current_theme = PlayerPrefs.GetInt("Current_theme");
-        locations[current_theme - 1].SetActive(true);
+        if (current_theme < 5)
+        {
+            locations[current_theme - 1].SetActive(true);
+        }
+        else
+        {
+            locations[3].SetActive(true);
+        }
 
         if (PlayerPrefs.HasKey("StartGuide"+userID.ToString()) && PlayerPrefs.GetString("StartGuide" + userID.ToString()) == "True")
         {
@@ -97,7 +102,7 @@ public class ThemeMap : MonoBehaviour
                 usedStickers[i].SetActive(true);
             }
         }
-
+        StartCoroutine(CheckRewards());
         StartCoroutine(CheckQuarterAvailability());
     }
 
@@ -105,11 +110,25 @@ public class ThemeMap : MonoBehaviour
     {
         if (PlayerPrefs.GetString("Showing") == "true" || PlayerPrefs.GetString("Paused") == "True")
         {
-            locations[current_theme - 1].SetActive(false);
+            if (current_theme < 5)
+            {
+                locations[current_theme - 1].SetActive(false);
+            }
+            else
+            {
+                locations[3].SetActive(false);
+            }
         }
         else
         {
-            locations[current_theme - 1].SetActive(true);
+            if (current_theme < 5)
+            {
+                locations[current_theme - 1].SetActive(true);
+            }
+            else
+            {
+                locations[3].SetActive(true);
+            }
         }
 
         if (PlayerPrefs.HasKey("StartGuide" + userID.ToString()) && PlayerPrefs.GetString("StartGuide" + userID.ToString()) == "True")
@@ -123,6 +142,21 @@ public class ThemeMap : MonoBehaviour
                 background.GetComponent<PlayableDirector>().enabled = false;
                 locations[current_theme - 1].SetActive(true);
                 PlayerPrefs.SetString("StartGuide" + userID.ToString(), "False");
+            }
+        }
+    }
+
+    IEnumerator CheckRewards()
+    {
+        yield return StartCoroutine(requestsManager.GetRewards("/reward", userID));
+
+        if (requestsManager.jsonReward != null)
+        {
+            for (int i = 0; i < requestsManager.jsonReward.data.Count; i++)
+            {
+                int reward_type_ID = requestsManager.jsonReward.data[i].reward_type_ID;
+                PlayerPrefs.SetString(userID.ToString() + "-" + reward_type_ID.ToString(), "True");
+                availableStickers[reward_type_ID-1].SetActive(true);
             }
         }
     }
@@ -171,7 +205,14 @@ public class ThemeMap : MonoBehaviour
         while (!asyncOperation.isDone)
         {
             loadingScene.SetActive(true);
-            locations[current_theme - 1].SetActive(false);
+            if (current_theme < 5)
+            {
+                locations[current_theme - 1].SetActive(false);
+            }
+            else
+            {
+                locations[3].SetActive(false);
+            }
             yield return null;
         }
     }
