@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
@@ -124,6 +125,12 @@ public class Q2_level3 : MonoBehaviour
 
     public void onContinue()
     {
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+            selectedButton.enabled = false;
+        }
+
         if (counter <= 11)
         {
             scenes[counter].SetActive(false);
@@ -179,6 +186,12 @@ public class Q2_level3 : MonoBehaviour
         }
         else if(name == "good" && gameObject.name == "group2")
         {
+            if (EventSystem.current.currentSelectedGameObject != null)
+            {
+                Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+                selectedButton.enabled = false;
+            }
+
             MoveProgress(error, 3);
             StartCoroutine(ShowResult());
         }

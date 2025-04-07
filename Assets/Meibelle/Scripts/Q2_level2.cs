@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.TextCore.Text;
@@ -189,7 +190,11 @@ public class Q2_level2 : MonoBehaviour
 
     private void OnContinue(int index)
     {
-        print(index);
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+            selectedButton.enabled = false;
+        }
         scenes[index].SetActive(false);
         scenes[index+1].SetActive(true);
     }
@@ -237,6 +242,12 @@ public class Q2_level2 : MonoBehaviour
                 assessment2[1].SetActive(true);
                 MoveProgress(error, 2);
             }
+
+            if (EventSystem.current.currentSelectedGameObject != null)
+            {
+                Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+                selectedButton.enabled = false;
+            }
         }
         else if ((group.name == "group2") && name[0] == criteria)
         {
@@ -250,6 +261,12 @@ public class Q2_level2 : MonoBehaviour
             {
                 assessment2[2].SetActive(true);
                 MoveProgress(error, 2);
+            }
+
+            if (EventSystem.current.currentSelectedGameObject != null)
+            {
+                Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+                selectedButton.enabled = false;
             }
         }
         else if ((group.name == "group3") && name[0] == criteria)
@@ -265,6 +282,12 @@ public class Q2_level2 : MonoBehaviour
                 assessment[1].SetActive(false);
                 assessment[2].SetActive(true);
                 MoveProgress(error, 2);
+            }
+
+            if (EventSystem.current.currentSelectedGameObject != null)
+            {
+                Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+                selectedButton.enabled = false;
             }
         }
         else
