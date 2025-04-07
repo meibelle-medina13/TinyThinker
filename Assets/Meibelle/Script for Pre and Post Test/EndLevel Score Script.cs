@@ -91,37 +91,51 @@ public class EndLevelScoreScript : MonoBehaviour
             {
                 Debug.Log("Received: " + www.downloadHandler.text);
                 Debug.Log("Theme" + current_theme);
-                if (!PlayerPrefs.HasKey(userID.ToString() + "PostTest Status" + theme.ToString()) && PlayerPrefs.GetFloat(userID.ToString() + "Time") > 0)
+                if (theme == current_theme)
                 {
-                    if (score >= 33.33f && current_theme == 1)
+                    if (!PlayerPrefs.HasKey(userID.ToString() + "PostTest Status" + theme.ToString()) && PlayerPrefs.GetFloat(userID.ToString() + "Time") > 0)
                     {
-                        PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
-                        UnityEngine.SceneManagement.SceneManager.LoadScene(15);
+                        if (score >= 33.33f && current_theme == 1)
+                        {
+                            PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
+                            UnityEngine.SceneManagement.SceneManager.LoadScene(15);
+                        }
+                        else if (score >= 33.33f && current_theme == 2)
+                        {
+                            PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
+                            UnityEngine.SceneManagement.SceneManager.LoadScene(22);
+                        }
+                        else if (score >= 33.33f && current_theme == 3)
+                        {
+                            PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
+                            UnityEngine.SceneManagement.SceneManager.LoadScene(27);
+                        }
+                        else if (score >= 33.33f && current_theme == 4)
+                        {
+                            PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
+                            UnityEngine.SceneManagement.SceneManager.LoadScene(32);
+                        }
                     }
-                    else if (score >= 33.33f && current_theme == 2)
+                    else
                     {
-                        PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
-                        UnityEngine.SceneManagement.SceneManager.LoadScene(22);
+                        if (score >= 33.33f && theme == 4)
+                        {
+                            if (PlayerPrefs.HasKey("User" + userID.ToString() + "Finished Game"))
+                            {
+                                UnityEngine.SceneManagement.SceneManager.LoadScene(33);
+                            }
+                        }
+                        else
+                        {
+                            UnityEngine.SceneManagement.SceneManager.LoadScene(7);
+                        }
                     }
-                    else if (score >= 33.33f && current_theme == 3)
-                    {
-                        PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
-                        UnityEngine.SceneManagement.SceneManager.LoadScene(27);
-                    }
-                    else if (score >= 33.33f && current_theme == 4)
-                    {
-                        PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + theme.ToString(), "Not yet done");
-                        UnityEngine.SceneManagement.SceneManager.LoadScene(32);
-                    }
-                }
+                } 
                 else
                 {
-                    if (score >= 33.33f && theme == 4)
+                    if (theme == 4)
                     {
-                        if (PlayerPrefs.HasKey("User" + userID.ToString() + "Finished Game"))
-                        {
-                            UnityEngine.SceneManagement.SceneManager.LoadScene(33);
-                        }
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(33);
                     }
                     else
                     {

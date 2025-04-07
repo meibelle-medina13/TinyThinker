@@ -396,6 +396,10 @@ public class Theme1_Map : MonoBehaviour
             {
                 theme3_levels[i].SetActive(true);
             }
+            else if (selected_theme == 4 && i < 3)
+            {
+                theme4_levels[i].SetActive(true);
+            }
         }
     }
 
