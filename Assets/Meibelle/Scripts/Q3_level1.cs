@@ -6,6 +6,7 @@ using System;
 using UnityEngine.TextCore.Text;
 using UnityEngine.Playables;
 using System.Reflection;
+using UnityEngine.EventSystems;
 
 public class Q3_level1 : MonoBehaviour
 {
@@ -266,6 +267,12 @@ public class Q3_level1 : MonoBehaviour
 
     public void OnContinue(int index)
     {
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+            selectedButton.enabled = false;
+        }
+
         scenes[index].SetActive(false);
         scenes[index + 1].SetActive(true);
         if (index == 8)
