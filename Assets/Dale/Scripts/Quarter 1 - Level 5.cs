@@ -33,6 +33,11 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
   public void TogglePanel()
   {
+    if (EventSystem.current.currentSelectedGameObject != null)
+    {
+        Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+        selectedButton.enabled = false;
+    }
     for (int i = 0; i < Panels.Length; i++)
     {
       if (Panels[i].activeInHierarchy && (i + 1) < Panels.Length)
@@ -346,7 +351,7 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
       if (a2_TracingPoints == tracedPoints.Count)
       {
         a2_ProgressFill += 0.000001f;
-        TogglePanel();
+        //TogglePanel();
       }
     }
     else if (Panels[0].transform.name == "Assessment3")
