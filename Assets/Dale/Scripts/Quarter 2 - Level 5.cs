@@ -222,7 +222,7 @@ public class Quarter2Level5 : MonoBehaviour
   public GameObject ThreeStars;
   static int starCount;
 
-  private void ToggleResult()
+  public void ToggleResult()
   {
     PlayerPrefs.SetFloat("Theme2 Score", totalProgressFill);
 
@@ -308,9 +308,24 @@ public class Quarter2Level5 : MonoBehaviour
   HashSet<string> tracedPoints1 = new HashSet<string>();
   HashSet<string> tracedPoints2 = new HashSet<string>();
   HashSet<string> tracedPoints3 = new HashSet<string>();
+  public GameObject nextButton;
 
   void OnTriggerEnter2D(Collider2D collider)
   {
+    if (GetActivePanel() == "Scene7" && collider.CompareTag("Tracing Point") && !tracedPoints3.Contains(collider.gameObject.name))
+    {
+      Debug.Log(collider.gameObject.name);
+      tracedPoints3.Add(collider.gameObject.name);
+
+      if (tracedPoints3.Count == 39)
+      {
+        nextButton.SetActive(true);
+      }
+      else
+      {
+        nextButton.SetActive(false);
+      }
+    }
     if (GetActivePanel() == "Assessment2" && collider.CompareTag("Tracing Point") && !tracedPoints1.Contains(collider.gameObject.name))
     {
       Debug.Log(collider.gameObject.name);
@@ -382,7 +397,7 @@ public class Quarter2Level5 : MonoBehaviour
         Debug.Log("A2: " + a2_Points);
 
         a2_ProgressFill = (a2_Points / 100f) * starFillMultiplier;
-        TogglePanel();
+        //TogglePanel();
       }
       else
       {
@@ -402,7 +417,7 @@ public class Quarter2Level5 : MonoBehaviour
 
         a3_ProgressFill = ((a3_Points / 100f) * starFillMultiplier) + 0.0000099f; // ensure 100 score
         OnProgress();
-        ToggleResult();
+        //ToggleResult();
       }
       else
       {

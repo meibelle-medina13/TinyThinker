@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
@@ -213,17 +214,32 @@ public class Q2_Level1 : MonoBehaviour
 
     public void OnContinue(int index)
     {
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+            selectedButton.enabled = false;
+        }
         scenes[index].SetActive(false);
         scenes[index + 1].SetActive(true);
     }
 
     private void ShowConfetti()
     {
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+            selectedButton.enabled = false;
+        }
         exercise1[3].SetActive(true);
     }
 
     public void NextAssessment(int index)
     {
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+            selectedButton.enabled = false;
+        }
         assessments[index].SetActive(false);
         assessments[index + 1].SetActive(true);
         if (index == 2)
