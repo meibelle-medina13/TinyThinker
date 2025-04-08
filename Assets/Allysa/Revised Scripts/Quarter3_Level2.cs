@@ -8,6 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
+
 public class Quarter3_Level2 : MonoBehaviour
 {
     private static int Scene_counter = 0;
@@ -371,7 +372,7 @@ public class Quarter3_Level2 : MonoBehaviour
 
                 else if (this.gameObject.name == "Assessment 2" && audioSource.enabled && !audioEnabled)
                 {
-                    Invoke("AfterTimeline", 1f);
+                    AfterTimeline();
                     audioEnabled = true;
                 }
             }
@@ -622,8 +623,13 @@ public class Quarter3_Level2 : MonoBehaviour
 
         bool matched = false;
 
-        if (flipCount == 2)
+        if (flipCount == 2 )
         {
+            if (CompareTag("Flipcard"))
+            {
+                DisableInteractable_Button();
+            }
+
             foreach (var card in flippedCards)
             {
                 bool card1Exist = flippedCards.Any(card => card.Item1.name == "card1");
@@ -656,7 +662,7 @@ public class Quarter3_Level2 : MonoBehaviour
                         IncrementFillAmount(0.1111111111111111f);
                     }
 
-                    Invoke("matchedChecker", 2f);
+                    Invoke("matchedChecker", 0.5f);
                     break;
 
                 }
@@ -798,6 +804,11 @@ public class Quarter3_Level2 : MonoBehaviour
         if (total_matched == 3)
         { 
             Invoke("UpdateScene", 1f);
+        }
+
+        if (CompareTag("Flipcard"))
+        {
+            Enable_Interactivity();
         }
     }
 
@@ -1127,6 +1138,23 @@ public class Quarter3_Level2 : MonoBehaviour
     {
         Invoke("UpdateScene", 1f);
     }
+
+    public void Enable_Interactivity()
+    {
+        foreach (Button clickable_object in button)
+        {
+            clickable_object.interactable = true;
+        }
+    }
+
+    public void DisableInteractable_Button()
+    {
+        foreach (Button clickable_object in button)
+        {
+            clickable_object.interactable = false;
+        }
+    }
+
     void Show_Stars()
     {
         Debug.Log(this.gameObject);
