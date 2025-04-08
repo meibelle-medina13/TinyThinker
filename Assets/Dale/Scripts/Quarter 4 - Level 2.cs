@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 using UnityEngine.UI;
@@ -61,6 +62,12 @@ public class Quarter4Level2 : MonoBehaviour
 
   public void ToggleNextPanel()
   {
+    if (EventSystem.current.currentSelectedGameObject != null)
+    {
+      Button selected = EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Button>();
+      selected.enabled = false;
+    }
+
     assessmentScore = 100;
     for (int i = 0; i < Panels.Length; i++)
     {

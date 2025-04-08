@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 
@@ -172,6 +173,12 @@ public class Q1_Level2 : MonoBehaviour
 
     public void OnContinue(int index)
     {
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+            selectedButton.enabled = false;
+        }
+
         scenes[index].SetActive(false);
         scenes[index + 1].SetActive(true);
         if (index == 9)
@@ -186,6 +193,12 @@ public class Q1_Level2 : MonoBehaviour
 
     private void CheckExercise1(Button letter)
     {
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+            selectedButton.enabled = false;
+        }
+
         string text = letter.name;
         if (text != "next-button")
         {
@@ -226,6 +239,7 @@ public class Q1_Level2 : MonoBehaviour
         string text = number.name;
         if (text == "1")
         {
+            
             OnContinue(8);
         }
     }
@@ -289,6 +303,11 @@ public class Q1_Level2 : MonoBehaviour
     {
         if (balloon.name == "1")
         {
+            foreach (GameObject ballonNum in ballons)
+            {
+                Button button = ballonNum.GetComponentInChildren<Button>();
+                button.enabled = false;
+            }
             balloon.SetActive(false);
             sticker.SetActive(true);
             MoveProgress(error, 3);

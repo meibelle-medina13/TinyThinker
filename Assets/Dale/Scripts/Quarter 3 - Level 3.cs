@@ -177,6 +177,12 @@ public class Quarter3Level3 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
   public void TogglePanel()
   {
+    if (EventSystem.current.currentSelectedGameObject != null)
+    {
+      Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+      selectedButton.enabled = false;
+    }
+
     for (int i = 0; i < Panels.Length; i++)
     {
       if (Panels[i].activeInHierarchy && (i + 1) < Panels.Length)

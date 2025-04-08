@@ -156,6 +156,12 @@ public class Q1_Level1 : MonoBehaviour
 
     public void OnContinue(int index)
     {
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+            selectedButton.enabled = false;
+        }
+
         scenes[index].SetActive(false);
         scenes[index+1].SetActive(true);
         if (index == 7)
@@ -170,6 +176,11 @@ public class Q1_Level1 : MonoBehaviour
 
     private void ShowConfetti(GameObject obj)
     {
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+            selectedButton.enabled = false;
+        }
         obj.SetActive(true);
     }
 
@@ -258,6 +269,10 @@ public class Q1_Level1 : MonoBehaviour
             else
             {
                 MoveProgress(error, 1);
+                for (int j = 0; j < assessment1Button.Length; j++)
+                {
+                    assessment1Button[j].enabled = false;
+                }
                 ShowConfetti(assessmentConfetti[0]);
             }
         }
@@ -273,6 +288,10 @@ public class Q1_Level1 : MonoBehaviour
         if (word == "nametag")
         {
             MoveProgress(error, 2);
+            for (int j = 0; j < assessment2Button.Length; j++)
+            {
+                assessment2Button[j].enabled = false;
+            }
             ShowConfetti(assessmentConfetti[1]);
         }
         else
@@ -287,6 +306,10 @@ public class Q1_Level1 : MonoBehaviour
         if (word == "four")
         {
             MoveProgress(error, 3);
+            for (int j = 0; j < assessment3Button.Length; j++)
+            {
+                assessment3Button[j].enabled = false;
+            }
             ShowConfetti(assessmentConfetti[2]);
         }
         else
