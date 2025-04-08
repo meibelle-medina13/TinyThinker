@@ -701,12 +701,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f5a7add32962f4fa21084556c6fd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  total_stars: {fileID: 25112421}
-  correctAnswerArea: {fileID: 40954483}
-  CorrectImage: {fileID: 1580427097}
-  rotateButton: {fileID: 57148267}
-  CorrectAngle: 2
-  nextScene_Button: {fileID: 1054216563}
   scenes:
   - {fileID: 150230946}
   - {fileID: 497216111}
@@ -742,6 +736,7 @@ MonoBehaviour:
   - {fileID: 1498428753}
   - {fileID: 767559995}
   - {fileID: 1261690645}
+  NextButtons: []
   Image:
   - {fileID: 1852080168}
   - {fileID: 1738918264}
@@ -758,6 +753,12 @@ MonoBehaviour:
   - {fileID: 1755454578}
   - {fileID: 1260653676}
   - {fileID: 177748013}
+  total_stars: {fileID: 25112421}
+  correctAnswerArea: {fileID: 40954483}
+  CorrectImage: {fileID: 1580427097}
+  rotateButton: {fileID: 57148267}
+  CorrectAngle: 2
+  nextScene_Button: {fileID: 1054216563}
   gameMenu: {fileID: 0}
   requestsManager: {fileID: 0}
 --- !u!1 &93343344
@@ -905,12 +906,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f5a7add32962f4fa21084556c6fd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  total_stars: {fileID: 25112421}
-  correctAnswerArea: {fileID: 40954483}
-  CorrectImage: {fileID: 0}
-  rotateButton: {fileID: 0}
-  CorrectAngle: 2
-  nextScene_Button: {fileID: 1054216563}
   scenes:
   - {fileID: 150230946}
   - {fileID: 497216111}
@@ -951,9 +946,15 @@ MonoBehaviour:
   - {fileID: 583233641}
   - {fileID: 970935807}
   - {fileID: 1760755270}
-  - {fileID: 1498428753}
   - {fileID: 767559995}
+  - {fileID: 1498428753}
   - {fileID: 1261690645}
+  - {fileID: 657520562}
+  - {fileID: 1935437596}
+  - {fileID: 404779444}
+  NextButtons:
+  - {fileID: 1054216563}
+  - {fileID: 923368963}
   Image:
   - {fileID: 1852080168}
   - {fileID: 1738918264}
@@ -970,6 +971,12 @@ MonoBehaviour:
   - {fileID: 1755454578}
   - {fileID: 1260653676}
   - {fileID: 177748013}
+  total_stars: {fileID: 25112421}
+  correctAnswerArea: {fileID: 40954483}
+  CorrectImage: {fileID: 0}
+  rotateButton: {fileID: 0}
+  CorrectAngle: 2
+  nextScene_Button: {fileID: 1054216563}
   gameMenu: {fileID: 559342743}
   requestsManager: {fileID: 1170261716}
 --- !u!1 &98636496
@@ -2525,12 +2532,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f5a7add32962f4fa21084556c6fd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  total_stars: {fileID: 25112421}
-  correctAnswerArea: {fileID: 40954483}
-  CorrectImage: {fileID: 730887078}
-  rotateButton: {fileID: 309441800}
-  CorrectAngle: 2
-  nextScene_Button: {fileID: 1054216563}
   scenes:
   - {fileID: 150230946}
   - {fileID: 497216111}
@@ -2566,6 +2567,9 @@ MonoBehaviour:
   - {fileID: 1498428753}
   - {fileID: 767559995}
   - {fileID: 1261690645}
+  NextButtons:
+  - {fileID: 1054216563}
+  - {fileID: 923368963}
   Image:
   - {fileID: 1852080168}
   - {fileID: 1738918264}
@@ -2582,6 +2586,12 @@ MonoBehaviour:
   - {fileID: 1755454578}
   - {fileID: 1260653676}
   - {fileID: 177748013}
+  total_stars: {fileID: 25112421}
+  correctAnswerArea: {fileID: 40954483}
+  CorrectImage: {fileID: 730887078}
+  rotateButton: {fileID: 309441800}
+  CorrectAngle: 2
+  nextScene_Button: {fileID: 1054216563}
   gameMenu: {fileID: 0}
   requestsManager: {fileID: 0}
 --- !u!1 &314760174
@@ -4559,7 +4569,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 583233642}
   m_OnClick:
     m_PersistentCalls:
@@ -4887,6 +4897,7 @@ GameObject:
   - component: {fileID: 657509386}
   - component: {fileID: 657509387}
   - component: {fileID: 657509388}
+  - component: {fileID: 657509389}
   m_Layer: 5
   m_Name: Lily_assessment
   m_TagString: Untagged
@@ -5085,6 +5096,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &657509389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657509380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 3c9ad5b0d0ea3ef478c5230e2bdd0790, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 95111658}
+          m_TargetAssemblyTypeName: Quarter1_Level3, Assembly-CSharp
+          m_MethodName: Interactable_Button
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &657520560
 GameObject:
   m_ObjectHideFlags: 0
@@ -5538,12 +5579,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f5a7add32962f4fa21084556c6fd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  total_stars: {fileID: 25112421}
-  correctAnswerArea: {fileID: 40954483}
-  CorrectImage: {fileID: 1083914030}
-  rotateButton: {fileID: 705588727}
-  CorrectAngle: 3
-  nextScene_Button: {fileID: 1054216563}
   scenes:
   - {fileID: 150230946}
   - {fileID: 497216111}
@@ -5579,6 +5614,9 @@ MonoBehaviour:
   - {fileID: 1498428753}
   - {fileID: 767559995}
   - {fileID: 1261690645}
+  NextButtons:
+  - {fileID: 1054216563}
+  - {fileID: 923368963}
   Image:
   - {fileID: 1852080168}
   - {fileID: 1738918264}
@@ -5595,6 +5633,12 @@ MonoBehaviour:
   - {fileID: 1755454578}
   - {fileID: 1260653676}
   - {fileID: 177748013}
+  total_stars: {fileID: 25112421}
+  correctAnswerArea: {fileID: 40954483}
+  CorrectImage: {fileID: 1083914030}
+  rotateButton: {fileID: 705588727}
+  CorrectAngle: 3
+  nextScene_Button: {fileID: 1054216563}
   gameMenu: {fileID: 0}
   requestsManager: {fileID: 0}
 --- !u!1 &714911791
@@ -6052,7 +6096,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -6066,7 +6110,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 767559996}
   m_OnClick:
     m_PersistentCalls:
@@ -6549,12 +6593,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f5a7add32962f4fa21084556c6fd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  total_stars: {fileID: 25112421}
-  correctAnswerArea: {fileID: 40954483}
-  CorrectImage: {fileID: 1915275731}
-  rotateButton: {fileID: 800016326}
-  CorrectAngle: 2
-  nextScene_Button: {fileID: 1054216563}
   scenes:
   - {fileID: 150230946}
   - {fileID: 497216111}
@@ -6590,6 +6628,9 @@ MonoBehaviour:
   - {fileID: 1498428753}
   - {fileID: 767559995}
   - {fileID: 1261690645}
+  NextButtons:
+  - {fileID: 1054216563}
+  - {fileID: 923368963}
   Image:
   - {fileID: 1852080168}
   - {fileID: 1738918264}
@@ -6606,6 +6647,12 @@ MonoBehaviour:
   - {fileID: 1755454578}
   - {fileID: 1260653676}
   - {fileID: 177748013}
+  total_stars: {fileID: 25112421}
+  correctAnswerArea: {fileID: 40954483}
+  CorrectImage: {fileID: 1915275731}
+  rotateButton: {fileID: 800016326}
+  CorrectAngle: 2
+  nextScene_Button: {fileID: 1054216563}
   gameMenu: {fileID: 0}
   requestsManager: {fileID: 0}
 --- !u!1 &805134777
@@ -6741,12 +6788,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f5a7add32962f4fa21084556c6fd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  total_stars: {fileID: 25112421}
-  correctAnswerArea: {fileID: 40954483}
-  CorrectImage: {fileID: 192097174}
-  rotateButton: {fileID: 805134779}
-  CorrectAngle: 1
-  nextScene_Button: {fileID: 1054216563}
   scenes:
   - {fileID: 150230946}
   - {fileID: 497216111}
@@ -6782,6 +6823,7 @@ MonoBehaviour:
   - {fileID: 1498428753}
   - {fileID: 767559995}
   - {fileID: 1261690645}
+  NextButtons: []
   Image:
   - {fileID: 1852080168}
   - {fileID: 1738918264}
@@ -6798,6 +6840,12 @@ MonoBehaviour:
   - {fileID: 1755454578}
   - {fileID: 1260653676}
   - {fileID: 177748013}
+  total_stars: {fileID: 25112421}
+  correctAnswerArea: {fileID: 40954483}
+  CorrectImage: {fileID: 192097174}
+  rotateButton: {fileID: 805134779}
+  CorrectAngle: 1
+  nextScene_Button: {fileID: 1054216563}
   gameMenu: {fileID: 0}
   requestsManager: {fileID: 0}
 --- !u!1 &812576821
@@ -7531,12 +7579,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f5a7add32962f4fa21084556c6fd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  total_stars: {fileID: 25112421}
-  correctAnswerArea: {fileID: 40954483}
-  CorrectImage: {fileID: 1641298492}
-  rotateButton: {fileID: 868953889}
-  CorrectAngle: 2
-  nextScene_Button: {fileID: 1054216563}
   scenes:
   - {fileID: 150230946}
   - {fileID: 497216111}
@@ -7572,6 +7614,7 @@ MonoBehaviour:
   - {fileID: 1498428753}
   - {fileID: 767559995}
   - {fileID: 1261690645}
+  NextButtons: []
   Image:
   - {fileID: 1852080168}
   - {fileID: 1738918264}
@@ -7588,6 +7631,12 @@ MonoBehaviour:
   - {fileID: 1755454578}
   - {fileID: 1260653676}
   - {fileID: 177748013}
+  total_stars: {fileID: 25112421}
+  correctAnswerArea: {fileID: 40954483}
+  CorrectImage: {fileID: 1641298492}
+  rotateButton: {fileID: 868953889}
+  CorrectAngle: 2
+  nextScene_Button: {fileID: 1054216563}
   gameMenu: {fileID: 0}
   requestsManager: {fileID: 0}
 --- !u!1 &873127699
@@ -7781,12 +7830,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f5a7add32962f4fa21084556c6fd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  total_stars: {fileID: 25112421}
-  correctAnswerArea: {fileID: 657509380}
-  CorrectImage: {fileID: 1580427097}
-  rotateButton: {fileID: 57148267}
-  CorrectAngle: 2
-  nextScene_Button: {fileID: 1054216563}
   scenes:
   - {fileID: 150230946}
   - {fileID: 497216111}
@@ -7822,6 +7865,7 @@ MonoBehaviour:
   - {fileID: 1498428753}
   - {fileID: 767559995}
   - {fileID: 1261690645}
+  NextButtons: []
   Image:
   - {fileID: 1852080168}
   - {fileID: 1738918264}
@@ -7838,6 +7882,12 @@ MonoBehaviour:
   - {fileID: 1755454578}
   - {fileID: 1260653676}
   - {fileID: 177748013}
+  total_stars: {fileID: 25112421}
+  correctAnswerArea: {fileID: 657509380}
+  CorrectImage: {fileID: 1580427097}
+  rotateButton: {fileID: 57148267}
+  CorrectAngle: 2
+  nextScene_Button: {fileID: 1054216563}
   gameMenu: {fileID: 0}
   requestsManager: {fileID: 0}
 --- !u!114 &896891514
@@ -7879,7 +7929,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 896891515}
   m_OnClick:
     m_PersistentCalls:
@@ -8827,7 +8877,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 970935808}
   m_OnClick:
     m_PersistentCalls:
@@ -9768,12 +9818,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f5a7add32962f4fa21084556c6fd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  total_stars: {fileID: 25112421}
-  correctAnswerArea: {fileID: 40954483}
-  CorrectImage: {fileID: 1469562914}
-  rotateButton: {fileID: 1048207542}
-  CorrectAngle: 3
-  nextScene_Button: {fileID: 1054216563}
   scenes:
   - {fileID: 150230946}
   - {fileID: 497216111}
@@ -9809,6 +9853,7 @@ MonoBehaviour:
   - {fileID: 1498428753}
   - {fileID: 767559995}
   - {fileID: 1261690645}
+  NextButtons: []
   Image:
   - {fileID: 1852080168}
   - {fileID: 1738918264}
@@ -9825,6 +9870,12 @@ MonoBehaviour:
   - {fileID: 1755454578}
   - {fileID: 1260653676}
   - {fileID: 177748013}
+  total_stars: {fileID: 25112421}
+  correctAnswerArea: {fileID: 40954483}
+  CorrectImage: {fileID: 1469562914}
+  rotateButton: {fileID: 1048207542}
+  CorrectAngle: 3
+  nextScene_Button: {fileID: 1054216563}
   gameMenu: {fileID: 0}
   requestsManager: {fileID: 0}
 --- !u!1 &1052012959
@@ -10044,7 +10095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12080,6 +12131,7 @@ GameObject:
   - component: {fileID: 1261690646}
   - component: {fileID: 1261690645}
   - component: {fileID: 1261690648}
+  - component: {fileID: 1261690649}
   m_Layer: 5
   m_Name: audio_I
   m_TagString: Untagged
@@ -12132,7 +12184,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -12146,7 +12198,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1261690646}
   m_OnClick:
     m_PersistentCalls:
@@ -12234,6 +12286,36 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1261690649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261690643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 3c9ad5b0d0ea3ef478c5230e2bdd0790, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 95111658}
+          m_TargetAssemblyTypeName: Quarter1_Level3, Assembly-CSharp
+          m_MethodName: Interactable_Button
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1269903700
 GameObject:
   m_ObjectHideFlags: 0
@@ -12895,12 +12977,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f5a7add32962f4fa21084556c6fd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  total_stars: {fileID: 25112421}
-  correctAnswerArea: {fileID: 925994004}
-  CorrectImage: {fileID: 0}
-  rotateButton: {fileID: 57148267}
-  CorrectAngle: 2
-  nextScene_Button: {fileID: 1054216563}
   scenes:
   - {fileID: 150230946}
   - {fileID: 497216111}
@@ -12936,6 +13012,7 @@ MonoBehaviour:
   - {fileID: 1498428753}
   - {fileID: 767559995}
   - {fileID: 1261690645}
+  NextButtons: []
   Image:
   - {fileID: 1852080168}
   - {fileID: 1738918264}
@@ -12952,6 +13029,12 @@ MonoBehaviour:
   - {fileID: 1755454578}
   - {fileID: 1260653676}
   - {fileID: 177748013}
+  total_stars: {fileID: 25112421}
+  correctAnswerArea: {fileID: 925994004}
+  CorrectImage: {fileID: 0}
+  rotateButton: {fileID: 57148267}
+  CorrectAngle: 2
+  nextScene_Button: {fileID: 1054216563}
   gameMenu: {fileID: 0}
   requestsManager: {fileID: 0}
 --- !u!114 &1323343337
@@ -12993,7 +13076,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1323343338}
   m_OnClick:
     m_PersistentCalls:
@@ -13731,12 +13814,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f5a7add32962f4fa21084556c6fd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  total_stars: {fileID: 25112421}
-  correctAnswerArea: {fileID: 40954483}
-  CorrectImage: {fileID: 1835964669}
-  rotateButton: {fileID: 1435039706}
-  CorrectAngle: 2
-  nextScene_Button: {fileID: 1054216563}
   scenes:
   - {fileID: 150230946}
   - {fileID: 497216111}
@@ -13772,6 +13849,9 @@ MonoBehaviour:
   - {fileID: 1498428753}
   - {fileID: 767559995}
   - {fileID: 1261690645}
+  NextButtons:
+  - {fileID: 1054216563}
+  - {fileID: 923368963}
   Image:
   - {fileID: 1852080168}
   - {fileID: 1738918264}
@@ -13788,6 +13868,12 @@ MonoBehaviour:
   - {fileID: 1755454578}
   - {fileID: 1260653676}
   - {fileID: 177748013}
+  total_stars: {fileID: 25112421}
+  correctAnswerArea: {fileID: 40954483}
+  CorrectImage: {fileID: 1835964669}
+  rotateButton: {fileID: 1435039706}
+  CorrectAngle: 2
+  nextScene_Button: {fileID: 1054216563}
   gameMenu: {fileID: 0}
   requestsManager: {fileID: 0}
 --- !u!1 &1440642314
@@ -14710,7 +14796,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -14724,7 +14810,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1498428754}
   m_OnClick:
     m_PersistentCalls:
@@ -17078,7 +17164,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1760755271}
   m_OnClick:
     m_PersistentCalls:
@@ -19163,6 +19249,7 @@ GameObject:
   - component: {fileID: 1911997234}
   - component: {fileID: 1911997236}
   - component: {fileID: 1911997237}
+  - component: {fileID: 1911997238}
   m_Layer: 5
   m_Name: Lily_assessment (1)
   m_TagString: Untagged
@@ -19316,6 +19403,51 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1911997238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911997230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 3c9ad5b0d0ea3ef478c5230e2bdd0790, type: 2}
+    - {fileID: 11400000, guid: 9ae1e42bdbcaf6b418950ddfbf8860ef, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 95111658}
+          m_TargetAssemblyTypeName: Quarter1_Level3, Assembly-CSharp
+          m_MethodName: DisableInteractable_Button
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 95111658}
+          m_TargetAssemblyTypeName: Quarter1_Level3, Assembly-CSharp
+          m_MethodName: Interactable_Button
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1915275731
 GameObject:
   m_ObjectHideFlags: 0
@@ -20802,7 +20934,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2042897529}
   m_OnClick:
     m_PersistentCalls:
@@ -20857,12 +20989,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f5a7add32962f4fa21084556c6fd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  total_stars: {fileID: 25112421}
-  correctAnswerArea: {fileID: 40954483}
-  CorrectImage: {fileID: 1580427097}
-  rotateButton: {fileID: 57148267}
-  CorrectAngle: 2
-  nextScene_Button: {fileID: 1054216563}
   scenes:
   - {fileID: 150230946}
   - {fileID: 497216111}
@@ -20898,6 +21024,7 @@ MonoBehaviour:
   - {fileID: 1498428753}
   - {fileID: 767559995}
   - {fileID: 1261690645}
+  NextButtons: []
   Image:
   - {fileID: 1852080168}
   - {fileID: 1738918264}
@@ -20914,6 +21041,12 @@ MonoBehaviour:
   - {fileID: 1755454578}
   - {fileID: 1260653676}
   - {fileID: 177748013}
+  total_stars: {fileID: 25112421}
+  correctAnswerArea: {fileID: 40954483}
+  CorrectImage: {fileID: 1580427097}
+  rotateButton: {fileID: 57148267}
+  CorrectAngle: 2
+  nextScene_Button: {fileID: 1054216563}
   gameMenu: {fileID: 0}
   requestsManager: {fileID: 0}
 --- !u!1 &2045893641

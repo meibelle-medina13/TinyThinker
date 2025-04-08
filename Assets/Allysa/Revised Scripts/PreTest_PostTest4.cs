@@ -351,6 +351,12 @@ public class PreTest_PostTest4 : MonoBehaviour
     {
         float percentage = (float)score / totalTracingPoints * 100;
         GetScore(percentage);
+
+        foreach (Button clickable_object in button)
+        {
+            clickable_object.interactable = false;
+        }
+
         DelayUpdate();
         //Debug.Log("points: " + test_counter);
     }
@@ -467,6 +473,11 @@ public class PreTest_PostTest4 : MonoBehaviour
 
     public void Add_Point()
     {
+        foreach (Button clickable_object in button)
+        {
+            clickable_object.interactable = false;
+        }
+
         Test_Score++;
         Debug.Log("Score: " + Test_Score);
         DelayUpdate();
@@ -526,6 +537,14 @@ public class PreTest_PostTest4 : MonoBehaviour
         foreach (Button button in button)
         {
             button.interactable = true;
+        }
+    }
+
+    public void DisableInteractable_Button()
+    {
+        foreach (Button clickable_object in button)
+        {
+            clickable_object.interactable = false;
         }
     }
 }
