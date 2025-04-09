@@ -62,6 +62,9 @@ public class Quarter2_Level4 : MonoBehaviour
         if (gameObject.name == "Theme 2- Level 4 Scene Manager")
         {
             Scene_counter = 0;
+            frame_2 = 0;
+            frame_3 = 0;
+            fixedPuzzle = 0;
         }
 
         requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
