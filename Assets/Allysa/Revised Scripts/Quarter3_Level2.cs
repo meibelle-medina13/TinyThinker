@@ -8,9 +8,10 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
+
 public class Quarter3_Level2 : MonoBehaviour
 {
-    private static int Scene_counter = 14;
+    private static int Scene_counter = 0;
     public List<GameObject> scenes;
     private float rotationSpeed = 300f;
     private bool isFlipping = false;
@@ -34,7 +35,6 @@ public class Quarter3_Level2 : MonoBehaviour
     private Vector3 pencilRaise = new Vector3(125, 140, 0);
     private HashSet<string> tracedPoints = new HashSet<string>();
     private int score = 0;
-    private int totalTracingPoints = 29;
 
     public ScrollRect[] scrollRects;
     public Dictionary<int, string> visibleImageNames = new Dictionary<int, string>();
@@ -133,6 +133,7 @@ public class Quarter3_Level2 : MonoBehaviour
 
     public void UpdateScene()
     {
+        Debug.Log("count:" + Counter);
         scenes[Scene_counter].SetActive(false);
         Scene_counter++;
         scenes[Scene_counter].SetActive(true);
@@ -328,6 +329,23 @@ public class Quarter3_Level2 : MonoBehaviour
 
     private void Update()
     {
+        if (this.gameObject.name == "Scene Manager")
+        {
+            Image NextbuttonImageComponent = button[1].GetComponent<Image>();
+            Color color = NextbuttonImageComponent.color;
+
+            if (color.a != 1f)
+            {
+                button[1].interactable = false;
+            }
+
+            else
+            {
+                button[1].interactable = true;
+            }
+            
+        }
+
         if (CompareTag("attached audio source"))
         {
             if (this.gameObject.name == "Assessment 2")
@@ -347,13 +365,6 @@ public class Quarter3_Level2 : MonoBehaviour
                     button[0].interactable = true;
                 }
 
-                else if (this.gameObject.name == "Scene6")
-                {
-                    button[0].interactable = true;
-                    button[1].interactable = true;
-                    button[2].interactable = true;
-                }
-
                 else if (this.gameObject.name == "Scene10")
                 {
                     gameobjects[0].SetActive(true);
@@ -361,7 +372,7 @@ public class Quarter3_Level2 : MonoBehaviour
 
                 else if (this.gameObject.name == "Assessment 2" && audioSource.enabled && !audioEnabled)
                 {
-                    Invoke("AfterTimeline", 1f);
+                    AfterTimeline();
                     audioEnabled = true;
                 }
             }
@@ -612,8 +623,13 @@ public class Quarter3_Level2 : MonoBehaviour
 
         bool matched = false;
 
-        if (flipCount == 2)
+        if (flipCount == 2 )
         {
+            if (CompareTag("Flipcard"))
+            {
+                DisableInteractable_Button();
+            }
+
             foreach (var card in flippedCards)
             {
                 bool card1Exist = flippedCards.Any(card => card.Item1.name == "card1");
@@ -646,7 +662,7 @@ public class Quarter3_Level2 : MonoBehaviour
                         IncrementFillAmount(0.1111111111111111f);
                     }
 
-                    Invoke("matchedChecker", 2f);
+                    Invoke("matchedChecker", 0.5f);
                     break;
 
                 }
@@ -758,7 +774,20 @@ public class Quarter3_Level2 : MonoBehaviour
         }
     }
 
-    void Delay2seconds(PlayableDirector director)
+    public void Interactable_Button()
+    {
+        if (CompareTag("attached audio source"))
+        {
+            if (this.gameObject.name == "Scene6")
+            {
+                button[0].interactable = true;
+                button[1].interactable = true;
+                button[2].interactable = true;
+            }
+        }
+    }
+
+     void Delay2seconds(PlayableDirector director)
     {
         Invoke("HandleSwipeAnimation", 0.2f);
     }
@@ -775,6 +804,11 @@ public class Quarter3_Level2 : MonoBehaviour
         if (total_matched == 3)
         { 
             Invoke("UpdateScene", 1f);
+        }
+
+        if (CompareTag("Flipcard"))
+        {
+            Enable_Interactivity();
         }
     }
 
@@ -806,29 +840,22 @@ public class Quarter3_Level2 : MonoBehaviour
                 score++;
                 Debug.Log("points: " + score);
 
-                if (other.gameObject.name == "dot1 (31)" && score >= 30)
+                if (other.gameObject.name == "dot1 (31)" && score >= 28)
                 {
-                    CheckCompletion();
+                    Debug.Log("done!");
+                    gameobjects[11].SetActive(true);
+                    playableDirector.time = 0;
+                    playableDirector.Play();
                     audioManager4.Correct();
                 }
 
-                else if (other.gameObject.name == "dot1 (45)" && score >= 30)
+                else if (other.gameObject.name == "dot1 (45)" && score >= 28)
                 {
                     audioManager4.Wrong();
+                    tracedPoints.Clear();
                     wrong = true;
                 }
             }
-        }
-    }
-
-    void CheckCompletion()
-    {
-        if (tracedPoints.Count >= totalTracingPoints)
-        {
-            Debug.Log("done!");
-            gameobjects[11].SetActive(true);
-            playableDirector.time = 0;
-            playableDirector.Play();
         }
     }
 
@@ -1039,6 +1066,7 @@ public class Quarter3_Level2 : MonoBehaviour
     public void Correct_object(Button obj)
     {
         obj.gameObject.SetActive(false);
+        obj.interactable = false;
         object_count++;
 
         if (wrong_Click > 0)
@@ -1110,6 +1138,23 @@ public class Quarter3_Level2 : MonoBehaviour
     {
         Invoke("UpdateScene", 1f);
     }
+
+    public void Enable_Interactivity()
+    {
+        foreach (Button clickable_object in button)
+        {
+            clickable_object.interactable = true;
+        }
+    }
+
+    public void DisableInteractable_Button()
+    {
+        foreach (Button clickable_object in button)
+        {
+            clickable_object.interactable = false;
+        }
+    }
+
     void Show_Stars()
     {
         Debug.Log(this.gameObject);

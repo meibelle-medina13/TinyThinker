@@ -11,7 +11,7 @@ public class Quarter4_Level3 : MonoBehaviour
 {
     private static int Scene_counter = 0;
     public List<GameObject> scenes;
-    public GameObject Nxtbutton;
+    public Button Nxtbutton;
 
     private Vector3 pencilRaise = new Vector3(105, 120, 0);
     private Vector3 pencilWrite = new Vector3(85, 100, 0);
@@ -75,12 +75,12 @@ public class Quarter4_Level3 : MonoBehaviour
 
         if (Scene_counter == 3 || Scene_counter == 6)
         {
-            Nxtbutton.SetActive(false);
+            Nxtbutton.gameObject.SetActive(false);
         }
 
         if (Scene_counter == 13)
         {
-            Nxtbutton.SetActive(false);
+            Nxtbutton.gameObject.SetActive(false);
             Scene_counter++;
             scenes[Scene_counter].SetActive(true);
             //audioManager_theme4.assessment_bgmusic(0.5f);
@@ -103,6 +103,22 @@ public class Quarter4_Level3 : MonoBehaviour
 
     void Update()
     {
+        if (Nxtbutton != null)
+        {
+            Image NextbuttonImageComponent = Nxtbutton.GetComponent<Image>();
+            Color color = NextbuttonImageComponent.color;
+
+            if (color.a != 1f)
+            {
+                Nxtbutton.interactable = false;
+            }
+
+            else
+            {
+                Nxtbutton.interactable = true;
+            }
+        }
+
         Vector3 screenPosition = Input.mousePosition;
         screenPosition.z = Camera.main.nearClipPlane + 1;
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
@@ -371,7 +387,7 @@ public class Quarter4_Level3 : MonoBehaviour
         if (tracedPoints.Count >= totalTracingPoints)
             {
                 audioManager_theme4.Correct();
-                Nxtbutton.SetActive(true);
+                Nxtbutton.gameObject.SetActive(true);
             }
         //}
     }
