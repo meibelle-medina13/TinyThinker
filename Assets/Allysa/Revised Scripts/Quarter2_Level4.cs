@@ -104,6 +104,19 @@ public class Quarter2_Level4 : MonoBehaviour
 
     void Update()
     {
+        Image NextbuttonImageComponent = NextScene_Button.GetComponent<Image>();
+        Color color = NextbuttonImageComponent.color;
+
+        if (color.a != 1f)
+        {
+            NextScene_Button.interactable = false;
+        }
+
+        else
+        {
+            NextScene_Button.interactable = true;
+        }
+
         if (Scene_counter == 0 || Scene_counter == 2 || Scene_counter == 4)
         {
             NextScene_Button.gameObject.SetActive(false);
@@ -261,6 +274,22 @@ public class Quarter2_Level4 : MonoBehaviour
                     gameMenu.SetActive(false);
                 }
             }
+        }
+    }
+
+    public void Interactable_Button()
+    {
+        foreach (Button clickable_object in clickablebuttons)
+        {
+            clickable_object.interactable = true;
+        }
+    }
+
+    public void DisableInteractable_Button()
+    {
+        foreach (Button clickable_object in clickablebuttons)
+        {
+            clickable_object.interactable = false;
         }
     }
 
@@ -451,6 +480,7 @@ public class Quarter2_Level4 : MonoBehaviour
         }
 
         Wrong_Click = 0;
+        DisableInteractable_Button();
         progressFillChecker();
         Invoke("UpdateScene", 2);
     }

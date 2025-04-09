@@ -13,6 +13,7 @@ public class PreTest_PostTest2 : MonoBehaviour
     public GameObject Title_timeline;
     public List<GameObject> Tracing_objects;
     public List<GameObject> Tracking_Test;
+    public List<Button> Buttons;
     public static int test_counter = 0;
     public static int Test_Score;
     //public int Level;
@@ -214,6 +215,12 @@ public class PreTest_PostTest2 : MonoBehaviour
     {
         float percentage = (float)score / totalTracingPoints * 100;
         GetScore(percentage);
+        
+        foreach (Button clickable_object in Buttons)
+        {
+            clickable_object.interactable = false;
+        }
+
         DelayUpdate();
         //Debug.Log("points: " + test_counter);
     }
@@ -294,10 +301,30 @@ public class PreTest_PostTest2 : MonoBehaviour
 
     public void Add_Point()
     {
+        foreach (Button clickable_object in Buttons)
+        {
+            clickable_object.interactable = false;
+        }
+
         Test_Score++;
         DelayUpdate();
     }
 
+    public void DisableInteractable_Button()
+    {
+        foreach (Button clickable_object in Buttons)
+        {
+            clickable_object.interactable = false;
+        }
+    }
+
+    public void EnableInteractable_Button()
+    {
+        foreach (Button clickable_object in Buttons)
+        {
+            clickable_object.interactable = true;
+        }
+    }
 
     //// ------------------------------------------------------------------- //
     //int userID;

@@ -374,7 +374,11 @@ MonoBehaviour:
   mycollider: {fileID: 14442692}
   setting_colliders: []
   attachedobject: []
-  button: []
+  button:
+  - {fileID: 1729137347}
+  - {fileID: 1293989202}
+  - {fileID: 1386963333}
+  - {fileID: 1707074674}
   totalTracingPoints: 48
 --- !u!1 &17292609
 GameObject:
@@ -1994,6 +1998,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1179349588}
+        m_TargetAssemblyTypeName: PreTest_PostTest4, Assembly-CSharp
+        m_MethodName: DisableInteractable_Button
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &112328035
 GameObject:
   m_ObjectHideFlags: 0
@@ -3068,6 +3084,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1179349588}
+        m_TargetAssemblyTypeName: PreTest_PostTest4, Assembly-CSharp
+        m_MethodName: DisableInteractable_Button
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &139528867
 GameObject:
   m_ObjectHideFlags: 0
@@ -3793,6 +3821,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1827109534}
         m_TargetAssemblyTypeName: Audio_Manager, Assembly-CSharp
         m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1179349588}
+        m_TargetAssemblyTypeName: PreTest_PostTest4, Assembly-CSharp
+        m_MethodName: DisableInteractable_Button
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15917,6 +15957,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1179349588}
+        m_TargetAssemblyTypeName: PreTest_PostTest4, Assembly-CSharp
+        m_MethodName: DisableInteractable_Button
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &888605405
 GameObject:
   m_ObjectHideFlags: 0
@@ -17615,6 +17667,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1827109534}
         m_TargetAssemblyTypeName: Audio_Manager, Assembly-CSharp
         m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1179349588}
+        m_TargetAssemblyTypeName: PreTest_PostTest4, Assembly-CSharp
+        m_MethodName: DisableInteractable_Button
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20699,6 +20763,10 @@ MonoBehaviour:
   - {fileID: 1412690609}
   - {fileID: 1665442275}
   - {fileID: 1244787974}
+  - {fileID: 1729137347}
+  - {fileID: 1293989202}
+  - {fileID: 1386963333}
+  - {fileID: 1707074674}
   totalTracingPoints: 0
 --- !u!1 &1180801096
 GameObject:
@@ -24525,7 +24593,22 @@ MonoBehaviour:
   m_Events:
     m_Signals:
     - {fileID: 11400000, guid: 3c9ad5b0d0ea3ef478c5230e2bdd0790, type: 2}
+    - {fileID: 11400000, guid: 9ae1e42bdbcaf6b418950ddfbf8860ef, type: 2}
     m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1179349588}
+          m_TargetAssemblyTypeName: PreTest_PostTest4, Assembly-CSharp
+          m_MethodName: DisableInteractable_Button
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1179349588}
@@ -24697,6 +24780,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1827109534}
         m_TargetAssemblyTypeName: Audio_Manager, Assembly-CSharp
         m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1179349588}
+        m_TargetAssemblyTypeName: PreTest_PostTest4, Assembly-CSharp
+        m_MethodName: DisableInteractable_Button
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -30756,6 +30851,7 @@ GameObject:
   - component: {fileID: 1588274884}
   - component: {fileID: 1588274883}
   - component: {fileID: 1588274882}
+  - component: {fileID: 1588274886}
   m_Layer: 5
   m_Name: baka
   m_TagString: Untagged
@@ -30897,6 +30993,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1588274880}
   m_CullTransparentMesh: 1
+--- !u!114 &1588274886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588274880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 3c9ad5b0d0ea3ef478c5230e2bdd0790, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1179349588}
+          m_TargetAssemblyTypeName: PreTest_PostTest4, Assembly-CSharp
+          m_MethodName: EnableButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1590329656
 GameObject:
   m_ObjectHideFlags: 0
@@ -32517,6 +32643,7 @@ GameObject:
   - component: {fileID: 1651767852}
   - component: {fileID: 1651767851}
   - component: {fileID: 1651767850}
+  - component: {fileID: 1651767854}
   m_Layer: 5
   m_Name: baka
   m_TagString: Untagged
@@ -32658,6 +32785,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1651767848}
   m_CullTransparentMesh: 1
+--- !u!114 &1651767854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651767848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 3c9ad5b0d0ea3ef478c5230e2bdd0790, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1179349588}
+          m_TargetAssemblyTypeName: PreTest_PostTest4, Assembly-CSharp
+          m_MethodName: EnableButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1663488910
 GameObject:
   m_ObjectHideFlags: 0
@@ -33393,6 +33550,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1827109534}
         m_TargetAssemblyTypeName: Audio_Manager, Assembly-CSharp
         m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1179349588}
+        m_TargetAssemblyTypeName: PreTest_PostTest4, Assembly-CSharp
+        m_MethodName: DisableInteractable_Button
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -35095,6 +35264,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1179349588}
+        m_TargetAssemblyTypeName: PreTest_PostTest4, Assembly-CSharp
+        m_MethodName: DisableInteractable_Button
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1792976134
 GameObject:
   m_ObjectHideFlags: 0
@@ -35770,6 +35951,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1827109534}
         m_TargetAssemblyTypeName: Audio_Manager, Assembly-CSharp
         m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1179349588}
+        m_TargetAssemblyTypeName: PreTest_PostTest4, Assembly-CSharp
+        m_MethodName: DisableInteractable_Button
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -37484,6 +37677,7 @@ GameObject:
   - component: {fileID: 1877721010}
   - component: {fileID: 1877721009}
   - component: {fileID: 1877721008}
+  - component: {fileID: 1877721012}
   m_Layer: 5
   m_Name: baka
   m_TagString: Untagged
@@ -37625,6 +37819,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877721006}
   m_CullTransparentMesh: 1
+--- !u!114 &1877721012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877721006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 3c9ad5b0d0ea3ef478c5230e2bdd0790, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1179349588}
+          m_TargetAssemblyTypeName: PreTest_PostTest4, Assembly-CSharp
+          m_MethodName: EnableButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1877723642
 GameObject:
   m_ObjectHideFlags: 0
@@ -40215,6 +40439,7 @@ GameObject:
   - component: {fileID: 1988494509}
   - component: {fileID: 1988494507}
   - component: {fileID: 1988494508}
+  - component: {fileID: 1988494512}
   m_Layer: 5
   m_Name: baka
   m_TagString: Untagged
@@ -40356,6 +40581,36 @@ RectTransform:
   m_AnchoredPosition: {x: -51, y: -3}
   m_SizeDelta: {x: 589.988, y: 567.5714}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1988494512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988494506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 9ae1e42bdbcaf6b418950ddfbf8860ef, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1179349588}
+          m_TargetAssemblyTypeName: PreTest_PostTest4, Assembly-CSharp
+          m_MethodName: EnableButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1989411132
 GameObject:
   m_ObjectHideFlags: 0
@@ -42075,7 +42330,11 @@ MonoBehaviour:
   mycollider: {fileID: 2090243789}
   setting_colliders: []
   attachedobject: []
-  button: []
+  button:
+  - {fileID: 1729137347}
+  - {fileID: 1293989202}
+  - {fileID: 1386963333}
+  - {fileID: 1707074674}
   totalTracingPoints: 0
 --- !u!95 &2090243795
 Animator:
@@ -42401,7 +42660,11 @@ MonoBehaviour:
   mycollider: {fileID: 2099452531}
   setting_colliders: []
   attachedobject: []
-  button: []
+  button:
+  - {fileID: 1729137347}
+  - {fileID: 1293989202}
+  - {fileID: 1386963333}
+  - {fileID: 1707074674}
   totalTracingPoints: 34
 --- !u!1 &2108608454
 GameObject:

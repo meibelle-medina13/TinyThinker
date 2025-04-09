@@ -65,6 +65,19 @@ public class Quarter1_Level4 : MonoBehaviour
 
     void Update()
     {
+        Image NextbuttonImageComponent = NextScene_Button.GetComponent<Image>();
+        Color color = NextbuttonImageComponent.color;
+
+        if (color.a != 1f)
+        {
+            NextScene_Button.interactable = false;
+        }
+
+        else
+        {
+            NextScene_Button.interactable = true;
+        }
+
         if (scene_counter == 7)
         {
             text[1].fontMaterial.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.40f);

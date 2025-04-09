@@ -10,7 +10,7 @@ using UnityEngine.Playables;
 using UnityEngine.UI;
 public class Quarter3_Level2 : MonoBehaviour
 {
-    private static int Scene_counter = 14;
+    private static int Scene_counter = 0;
     public List<GameObject> scenes;
     private float rotationSpeed = 300f;
     private bool isFlipping = false;
@@ -34,7 +34,6 @@ public class Quarter3_Level2 : MonoBehaviour
     private Vector3 pencilRaise = new Vector3(125, 140, 0);
     private HashSet<string> tracedPoints = new HashSet<string>();
     private int score = 0;
-    private int totalTracingPoints = 29;
 
     public ScrollRect[] scrollRects;
     public Dictionary<int, string> visibleImageNames = new Dictionary<int, string>();
@@ -133,6 +132,7 @@ public class Quarter3_Level2 : MonoBehaviour
 
     public void UpdateScene()
     {
+        Debug.Log("count:" + Counter);
         scenes[Scene_counter].SetActive(false);
         Scene_counter++;
         scenes[Scene_counter].SetActive(true);
@@ -328,6 +328,23 @@ public class Quarter3_Level2 : MonoBehaviour
 
     private void Update()
     {
+        if (this.gameObject.name == "Scene Manager")
+        {
+            Image NextbuttonImageComponent = button[1].GetComponent<Image>();
+            Color color = NextbuttonImageComponent.color;
+
+            if (color.a != 1f)
+            {
+                button[1].interactable = false;
+            }
+
+            else
+            {
+                button[1].interactable = true;
+            }
+            
+        }
+
         if (CompareTag("attached audio source"))
         {
             if (this.gameObject.name == "Assessment 2")
@@ -345,13 +362,6 @@ public class Quarter3_Level2 : MonoBehaviour
                 if (this.gameObject.name == "Scene4")
                 {
                     button[0].interactable = true;
-                }
-
-                else if (this.gameObject.name == "Scene6")
-                {
-                    button[0].interactable = true;
-                    button[1].interactable = true;
-                    button[2].interactable = true;
                 }
 
                 else if (this.gameObject.name == "Scene10")
@@ -758,7 +768,20 @@ public class Quarter3_Level2 : MonoBehaviour
         }
     }
 
-    void Delay2seconds(PlayableDirector director)
+    public void Interactable_Button()
+    {
+        if (CompareTag("attached audio source"))
+        {
+            if (this.gameObject.name == "Scene6")
+            {
+                button[0].interactable = true;
+                button[1].interactable = true;
+                button[2].interactable = true;
+            }
+        }
+    }
+
+     void Delay2seconds(PlayableDirector director)
     {
         Invoke("HandleSwipeAnimation", 0.2f);
     }
@@ -806,29 +829,22 @@ public class Quarter3_Level2 : MonoBehaviour
                 score++;
                 Debug.Log("points: " + score);
 
-                if (other.gameObject.name == "dot1 (31)" && score >= 30)
+                if (other.gameObject.name == "dot1 (31)" && score >= 28)
                 {
-                    CheckCompletion();
+                    Debug.Log("done!");
+                    gameobjects[11].SetActive(true);
+                    playableDirector.time = 0;
+                    playableDirector.Play();
                     audioManager4.Correct();
                 }
 
-                else if (other.gameObject.name == "dot1 (45)" && score >= 30)
+                else if (other.gameObject.name == "dot1 (45)" && score >= 28)
                 {
                     audioManager4.Wrong();
+                    tracedPoints.Clear();
                     wrong = true;
                 }
             }
-        }
-    }
-
-    void CheckCompletion()
-    {
-        if (tracedPoints.Count >= totalTracingPoints)
-        {
-            Debug.Log("done!");
-            gameobjects[11].SetActive(true);
-            playableDirector.time = 0;
-            playableDirector.Play();
         }
     }
 
@@ -1039,6 +1055,7 @@ public class Quarter3_Level2 : MonoBehaviour
     public void Correct_object(Button obj)
     {
         obj.gameObject.SetActive(false);
+        obj.interactable = false;
         object_count++;
 
         if (wrong_Click > 0)

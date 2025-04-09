@@ -11,7 +11,9 @@ using System.Linq;
 using UnityEngine.Playables;
 using System;
 using System.Reflection;
-
+using UnityEngine.UI;
+using System.Net;
+using UnityEngine.UI;
 
 public class PreTest_PostTest3 : MonoBehaviour
 {
@@ -110,8 +112,6 @@ public class PreTest_PostTest3 : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(Level);
-
         if (test_counter > 0 && test_counter < (Test_scenes.Count - 1))
         {
             progress_display.SetActive(true);
@@ -328,13 +328,13 @@ public class PreTest_PostTest3 : MonoBehaviour
                 score++;
                 Debug.Log("points: " + score);
 
-                if (other.gameObject.name == "dot1 (31)" && score >= 32)
+                if (other.gameObject.name == "dot1 (31)" && score >= 30)
                 {
                     Test_Score++;
                     DelayUpdate();
                 }
 
-                else if (other.gameObject.name == "dot1 (45)" && score >= 30)
+                else if (other.gameObject.name == "dot1 (45)" && score >= 28)
                 {
                     DelayUpdate();
                 }
@@ -353,6 +353,12 @@ public class PreTest_PostTest3 : MonoBehaviour
     {
         float percentage = (float)score / totalTracingPoints * 100;
         GetScore(percentage);
+
+        foreach (Button clickable_object in button)
+        {
+            clickable_object.interactable = false;
+        }
+
         DelayUpdate();
         //Debug.Log("points: " + test_counter);
     }
@@ -432,12 +438,23 @@ public class PreTest_PostTest3 : MonoBehaviour
     }
 
     public void Add_Point()
-    { 
+    {
+        foreach (Button clickable_object in button)
+        {
+            clickable_object.interactable = false;
+        }
+
         Test_Score ++;
         DelayUpdate();
     }
 
-
+    public void DisableInteractable_Button()
+    {
+        foreach (Button clickable_object in button)
+        {
+            clickable_object.interactable = false;
+        }
+    }
 
 
     ////
@@ -487,6 +504,7 @@ public class PreTest_PostTest3 : MonoBehaviour
                 Debug.Log("counter: " + Counter);
                 Test_Score++;
                 playableDirector[0].Play();
+                button[0].interactable = false;
                 button[0].gameObject.SetActive(false);
                 Debug.Log("score: " + Test_Score);
             }
@@ -509,6 +527,7 @@ public class PreTest_PostTest3 : MonoBehaviour
                 Debug.Log("counter: " + Counter);
                 Test_Score++;
                 playableDirector[0].Play();
+                button[0].interactable = false;
                 button[0].gameObject.SetActive(false);
                 Debug.Log("score: " + Test_Score);
             }
@@ -532,6 +551,7 @@ public class PreTest_PostTest3 : MonoBehaviour
             }
             else
             {
+                button[0].interactable = false;
                 DelayUpdate();
             }
         }
@@ -541,25 +561,24 @@ public class PreTest_PostTest3 : MonoBehaviour
     {
         playableDirector[index].Pause();
         Debug.Log(playableDirector[index].name);
+        button[0].gameObject.SetActive(true);
+        button[0].interactable = true;
 
         if (playableDirector[index].name == "Pre-test 3.1" || playableDirector[index].name == "Post-test 3.1")
         {
             if (Counter == 1)
             {
                 gameObjects[3].SetActive(false);
-                button[0].gameObject.SetActive(true);
             }
 
             else if (Counter == 2)
             {
                 gameObjects[1].SetActive(false);
-                button[0].gameObject.SetActive(true);
             }
 
             else 
             {
                 gameObjects[2].SetActive(false);
-                button[0].gameObject.SetActive(true);
             }
         }
     }
@@ -666,7 +685,10 @@ public class PreTest_PostTest3 : MonoBehaviour
 
     public void CorrectObject()
     {
-        if (this.gameObject.name == "Teddy Bear")
+        Button CorrectButton_object = this.GetComponent<Button>();
+        CorrectButton_object.interactable = false;
+
+        if (this.name == "Teddy Bear")
         {
             gameObjects[5].SetActive(true);
         }
@@ -714,6 +736,9 @@ public class PreTest_PostTest3 : MonoBehaviour
 
     public void WrongObject()
     {
+        Button WrongButton_object = this.GetComponent<Button>();
+        WrongButton_object.interactable = false;
+         
         if (this.gameObject.name == "Teddy Bear")
         {
             gameObjects[5].SetActive(true);

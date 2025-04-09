@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Collections;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.Playables;
+//using UnityEngine.UI;
 
 public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
 {
@@ -31,21 +32,21 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
     private static int instruction_count = 1;
     
     private Audio_Manager audioManager;
+   
+    public List<GameObject> scenes;
+    public List<GameObject> timelines;
+    public List<TextMeshProUGUI> text;
+    public List<Button> clickableButtons;
+    public List<Button> NextButtons;
+    public List<GameObject> Image;
+    public List<GameObject> star_display;
     
     public Image total_stars;
     public GameObject correctAnswerArea;
     public GameObject CorrectImage;
     public Button rotateButton;
     public int CorrectAngle = 2;
-    public Button nextScene_Button;
     
-    public List<GameObject> scenes;
-    public List<GameObject> timelines;
-    public List<TextMeshProUGUI> text;
-    public List<Button> clickableButtons;
-    public List<GameObject> Image;
-    public List<GameObject> star_display;
-
     [Header("<---- GAME MENU ---->")]
     [SerializeField]
     private GameObject gameMenu;
@@ -67,15 +68,6 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         originalPosition = transform.position;
         audioManager = FindObjectOfType<Audio_Manager>();
 
-        //if (!bgMusicPlayed)
-        //{
-        //    if (audioManager != null)
-        //    {
-        //        audioManager.scene_bgmusic(0.5f); 
-        //        bgMusicPlayed = true; 
-        //    } 
-        //} 
-
         if (text[0] != null)
         {
             text[0].fontMaterial.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.3f);
@@ -95,10 +87,25 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
 
     void Update()
     {
+        foreach (Button next_obj in NextButtons)
+        {
+            Image NextbuttonImageComponent = next_obj.GetComponent<Image>();
+            Color color = NextbuttonImageComponent.color;
+
+            if (color.a != 1f)
+            {
+                next_obj.interactable = false;
+            }
+
+            else
+            {
+                next_obj.interactable = true;
+            }
+        }
 
         if (counter == 3|| counter == 9)
         {
-            nextScene_Button.gameObject.SetActive(false);
+            NextButtons[0].gameObject.SetActive(false);
         }
 
         else if (counter == 11)
@@ -180,6 +187,21 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         }
     }
 
+    public void Interactable_Button()
+    {
+        foreach (Button clickable_object in clickableButtons)
+        {
+            clickable_object.interactable = true;
+        }
+    }
+
+    public void DisableInteractable_Button()
+    {
+        foreach (Button clickable_object in clickableButtons)
+        {
+            clickable_object.interactable = false;
+        }
+    }
     public void OnDrag(PointerEventData eventData)
     {
         if (CompareTag("Draggable")) 
@@ -245,14 +267,14 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             Image[0].SetActive(false);
             CancelInvoke("UpdateScene");
-            nextScene_Button.gameObject.SetActive(true);
+            NextButtons[0].gameObject.SetActive(true);
         }
 
         else if (counter == 7)
         {
             counter++;
             scenes[counter].SetActive(true);
-            nextScene_Button.gameObject.SetActive(false);
+            NextButtons[0].gameObject.SetActive(false);
             //audioManager.assessment_bgmusic(0.5f);
             //audioManager.Repeat_Instruction(instruction_count);
             instruction_count++;
@@ -316,9 +338,15 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
             Image[1].gameObject.SetActive(true);
             Invoke("UpdateScene", 2);
         }
+
         else
         {
             Invoke("UpdateScene", 2);
+        }
+
+        foreach (Button clickable_object in clickableButtons)
+        {
+            clickable_object.interactable = false;
         }
 
         if (wrong_click >= 1)
@@ -341,7 +369,7 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
 
     void Show_Stars()
     {
-        nextScene_Button.gameObject.SetActive(false);
+        NextButtons[0].gameObject.SetActive(false);
         float score = total_stars.fillAmount * 100;
         int userID = PlayerPrefs.GetInt("Current_user");
         int theme_num = 1;
