@@ -49,6 +49,9 @@ public class Quarter4_Level3 : MonoBehaviour
         if (gameObject.name == "Scene Manager")
         {
             Scene_counter = 0;
+            wrongAnswer = 0;
+            increment = false;
+            increment_wrongAnswer = false;
         }
         audioManager_theme4 = FindObjectOfType<Audio_Manager>();
 

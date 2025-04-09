@@ -214,8 +214,21 @@ public class Quarter1_Level4 : MonoBehaviour
         }
     }
 
+    public void Interactable_Button()
+    {
+        foreach (Button clickable_object in clickableButtons)
+        {
+            clickable_object.interactable = true;
+        }
+    }
+
     public void CorrectButton(Button ClickedButton)
     {
+        foreach (Button clickable_object in clickableButtons)
+        {
+            clickable_object.interactable = false;
+        }
+
         if (ClickedButton.name == "clap_2")
         {
             Invoke("UpdateScene", 2);
@@ -246,6 +259,7 @@ public class Quarter1_Level4 : MonoBehaviour
             Invoke("UpdateScene", 2);
         }
     }
+
     public void WrongButton()
     {
         Wrong_click++;

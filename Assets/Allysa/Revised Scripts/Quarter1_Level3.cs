@@ -61,6 +61,11 @@ public class Quarter1_Level3 : MonoBehaviour, IDragHandler, IEndDragHandler
         if (gameObject.name == "Level3 Scene Manager")
         {
             counter = 0;
+            placedObjects = 0;
+            placed_wrong = 0;
+            correctPuzzle = 0;
+            fixedPuzzle = 0;
+            instruction_count = 1;
         }
         Debug.Log(counter);
         requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
