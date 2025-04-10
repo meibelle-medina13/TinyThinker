@@ -2698,6 +2698,7 @@ GameObject:
   - component: {fileID: 254242615}
   - component: {fileID: 254242614}
   - component: {fileID: 254242617}
+  - component: {fileID: 254242618}
   m_Layer: 5
   m_Name: doorknob_button
   m_TagString: Untagged
@@ -2851,6 +2852,36 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &254242618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254242611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 3c9ad5b0d0ea3ef478c5230e2bdd0790, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1677446415}
+          m_TargetAssemblyTypeName: Quarter1_Level4, Assembly-CSharp
+          m_MethodName: Interactable_Button
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &287888832
 GameObject:
   m_ObjectHideFlags: 0
@@ -15505,6 +15536,8 @@ MonoBehaviour:
   - {fileID: 6648085}
   - {fileID: 1817819114}
   - {fileID: 254242614}
+  - {fileID: 743317643}
+  - {fileID: 1045381827}
   Image:
   - {fileID: 156792688}
   - {fileID: 2079579039}
@@ -17509,6 +17542,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Audio_Manager, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1822009746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17607,7 +17652,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1677446415}
           m_TargetAssemblyTypeName: Quarter1_Level4, Assembly-CSharp
-          m_MethodName: UpdateSceneWithDelay
+          m_MethodName: Interactable_Button
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
