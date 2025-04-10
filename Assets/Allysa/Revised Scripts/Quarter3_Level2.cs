@@ -221,6 +221,8 @@ public class Quarter3_Level2 : MonoBehaviour
                 Counter++;
                 Debug.Log("counter: " + Counter);
                 audioManager4.Correct();
+                button[0].interactable = false;
+                button[0].gameObject.SetActive(false);
                 Invoke("PlaySoundEffect", 0.2f);
 
 
@@ -255,6 +257,8 @@ public class Quarter3_Level2 : MonoBehaviour
             {
                 Counter++;
                 Debug.Log("counter: " + Counter);
+                button[0].interactable = false;
+                button[0].gameObject.SetActive(false);
                 audioManager4.Correct();
                 Invoke("PlaySoundEffect", 0.2f);
                 if (wrong_Click > 0)
@@ -285,6 +289,8 @@ public class Quarter3_Level2 : MonoBehaviour
                        visibleImageNames.ContainsKey(2) && visibleImageNames[2] == "police station")
             {
                 audioManager4.Correct();
+                button[0].interactable = false;
+                button[0].gameObject.SetActive(false);
                 Invoke("PlaySoundEffect", 0.2f);
                 if (wrong_Click > 0)
                 {
@@ -819,6 +825,7 @@ public class Quarter3_Level2 : MonoBehaviour
             playableDirector.Play(); 
             isPaused = false;
             button[0].gameObject.SetActive(false);
+            button[0].interactable = true;
         }
     }
 

@@ -53,6 +53,7 @@ public class PreTest_PostTest4 : MonoBehaviour
         {
             test_counter = 0;
             Test_Score = 0;
+            increment = false;
             PlayerPrefs.DeleteKey("CurrentPanel");
         }
     }

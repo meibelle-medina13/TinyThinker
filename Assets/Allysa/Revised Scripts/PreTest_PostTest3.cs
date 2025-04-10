@@ -83,6 +83,10 @@ public class PreTest_PostTest3 : MonoBehaviour
         {
             test_counter = 0;
             Test_Score = 0;
+            flipCount = 0;
+            total_faceCard = 0;
+            flippedCards.Clear();
+            objectCounter = 0;
             PlayerPrefs.DeleteKey("CurrentPanel");
         }
 
@@ -319,6 +323,7 @@ public class PreTest_PostTest3 : MonoBehaviour
         }
     }
 
+    bool done_tracing = false;
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Tracing Point") && !tracedPoints.Contains(other.gameObject.name))
@@ -331,12 +336,24 @@ public class PreTest_PostTest3 : MonoBehaviour
                 if (other.gameObject.name == "dot1 (31)" && score >= 30)
                 {
                     Test_Score++;
-                    DelayUpdate();
+
+                    if (!done_tracing)
+                    {
+                        DelayUpdate();
+                        done_tracing = true;
+
+                    }
+
                 }
 
                 else if (other.gameObject.name == "dot1 (45)" && score >= 28)
                 {
-                    DelayUpdate();
+                    if (!done_tracing)
+                    {
+                        DelayUpdate();
+                        done_tracing = true;
+
+                    }
                 }
             }
 
