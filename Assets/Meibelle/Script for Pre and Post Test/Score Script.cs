@@ -28,10 +28,12 @@ public class ScoreScript : MonoBehaviour
             StartCoroutine(requestsManager.updateTestScore("/test_score", userID, theme, testType, Test_Score));
             StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", 1, userID));
         }
-        //else if (testType == 2 && theme == 5)
-        //{
-        //    StartCoroutine(requestsManager.updateTestScore("/test_score", userID, theme-1, testType, Test_Score));
-        //}
+        else if (testType == 2 && theme == 5)
+        {
+            StartCoroutine(requestsManager.UpdateCurrentLevel("/users/updateLevel", 0, userID));
+            StartCoroutine(requestsManager.UpdateCurrentTheme("/users/updateTheme", userID, theme));
+            StartCoroutine(requestsManager.updateTestScore("/test_score", userID, theme-1, testType, Test_Score));
+        }
         else if (testType == 2)
         {
             StartCoroutine(requestsManager.updateTestScore("/test_score", userID, theme-1, testType, Test_Score));
