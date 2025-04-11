@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 50337099}
   - component: {fileID: 50337098}
   - component: {fileID: 50337102}
+  - component: {fileID: 50337103}
   m_Layer: 5
   m_Name: Title_Canvas
   m_TagString: Untagged
@@ -345,6 +346,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!320 &50337103
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50337097}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 7032be64772be0342b6bc3190f0e6a9e, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -1294859456647021949, guid: 7032be64772be0342b6bc3190f0e6a9e, type: 2}
+    value: {fileID: 668627089}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &154142028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2616,4 +2636,3 @@ SceneRoots:
   - {fileID: 805084921}
   - {fileID: 154142030}
   - {fileID: 1210576530}
-  - {fileID: 154142030}

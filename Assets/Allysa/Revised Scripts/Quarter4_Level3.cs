@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
@@ -106,19 +104,23 @@ public class Quarter4_Level3 : MonoBehaviour
 
     void Update()
     {
-        if (Nxtbutton != null)
+        if (!scenes[13].activeSelf && !scenes[21].activeSelf)
         {
-            Image NextbuttonImageComponent = Nxtbutton.GetComponent<Image>();
-            Color color = NextbuttonImageComponent.color;
-
-            if (color.a != 1f)
+            Debug.Log("wowo");
+            if (Nxtbutton != null)
             {
-                Nxtbutton.interactable = false;
-            }
+                Image NextbuttonImageComponent = Nxtbutton.GetComponent<Image>();
+                Color color = NextbuttonImageComponent.color;
 
-            else
-            {
-                Nxtbutton.interactable = true;
+                if (color.a != 1f)
+                {
+                    Nxtbutton.interactable = false;
+                }
+
+                else
+                {
+                    Nxtbutton.interactable = true;
+                }
             }
         }
 

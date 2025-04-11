@@ -69,7 +69,10 @@ public class PREPOST_TEST_REQUESTS : MonoBehaviour
                 PlayerPrefs.SetInt("Current_theme", theme_num);
                 Debug.Log("Received: " + www.downloadHandler.text);
                 PlayerPrefs.SetString(userID.ToString() + "PostTest Status" + (theme_num-1).ToString(), "Done");
-                UnityEngine.SceneManagement.SceneManager.LoadScene(6);
+                if (theme_num != 5)
+                {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(6);
+                }
             }
         }
     }
