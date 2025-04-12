@@ -102,7 +102,6 @@ public class Quarter4_Level3 : MonoBehaviour
         }
     }
 
-    bool execute_nextButton = true;
     void Update()
     {
         if (!scenes[13].activeSelf && !scenes[21].activeSelf)
