@@ -23,7 +23,22 @@ public class Quarter3Level3 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
   void Start()
   {
     Panels[0].SetActive(true);
-    //Debug.Log(PlayerPrefs.GetFloat(24.ToString() + "Time") > 0);
+    if (gameObject.name == "Scene Manager")
+    {
+      a1_ProgressFill = 0;
+      a1_Points = 0;
+      a1_PlayerScore = 0;
+      a1_PlayerMistakes = 0;
+
+      a2_ProgressFill = 0;
+      a2_Points = 0;
+      a2_PlayerScore = 0;
+
+      a3_ProgressFill = 0;
+      a3_Points = 0;
+      a3_PlayerScore = 0;
+      a3_PlayerMistakes = 0;
+    }
   }
 
 
@@ -1016,6 +1031,7 @@ public class Quarter3Level3 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
   public Image ProgressBarMask;
   public Sprite EarnedStar;
+  public Sprite UnearnedStar;
   public Image[] UnearnedStarImages;
 
   static float totalProgressFill;
@@ -1038,14 +1054,24 @@ public class Quarter3Level3 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     {
       UnearnedStarImages[0].sprite = EarnedStar;
       UnearnedStarImages[1].sprite = EarnedStar;
+      UnearnedStarImages[2].sprite = UnearnedStar;
       starCount = 2;
       Debug.Log("Stars: " + starCount);
     }
     else if (totalProgressFill >= .33333f && totalProgressFill < .66666f)
     {
       UnearnedStarImages[0].sprite = EarnedStar;
+      UnearnedStarImages[1].sprite = UnearnedStar;
+      UnearnedStarImages[2].sprite = UnearnedStar;
+
       starCount = 1;
       Debug.Log("Stars: " + starCount);
+    }
+    else if (totalProgressFill < .33333f)
+    {
+      UnearnedStarImages[0].sprite = UnearnedStar;
+      UnearnedStarImages[1].sprite = UnearnedStar;
+      UnearnedStarImages[2].sprite = UnearnedStar;
     }
     //PlayerPrefs.SetFloat("Theme3 Score", totalProgressFill);
   }

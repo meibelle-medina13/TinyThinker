@@ -52,12 +52,24 @@ public class ThemeMap : MonoBehaviour
         currentDate = DateTime.Now;
         string dateString = currentDate.ToString("yyyy-MM-dd");
 
-        if (PlayerPrefs.GetString("Current Date") != dateString)
+        if (PlayerPrefs.HasKey(userID.ToString() + "Current Date"))
         {
-            PlayerPrefs.SetFloat(userID.ToString() + "Time", 7200);
-            PlayerPrefs.SetString("Current Date", dateString);
-            Debug.Log("Current Date"+ dateString);
+            Debug.Log("existing");
+            if ("2025-04-13" != dateString)
+            {
+                Debug.Log("Not match");
+                PlayerPrefs.SetFloat(userID.ToString() + "Time", 7200);
+                PlayerPrefs.SetString(userID.ToString() + "Current Date", dateString);
+                Debug.Log(userID.ToString() + "Current Date" + dateString);
+            }
+            Debug.Log(PlayerPrefs.GetFloat(userID.ToString() + "Time"));
         }
+        else
+        {
+            PlayerPrefs.SetString(userID.ToString() + "Current Date", dateString);
+            PlayerPrefs.SetFloat(userID.ToString() + "Time", 7200);
+        }
+
 
         current_theme = PlayerPrefs.GetInt("Current_theme");
         if (current_theme < 5)

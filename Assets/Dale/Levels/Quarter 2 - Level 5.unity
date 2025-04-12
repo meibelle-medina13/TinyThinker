@@ -2108,6 +2108,7 @@ GameObject:
   - component: {fileID: 88135407}
   - component: {fileID: 88135406}
   - component: {fileID: 88135405}
+  - component: {fileID: 88135408}
   m_Layer: 5
   m_Name: 0 Star
   m_TagString: Untagged
@@ -2163,6 +2164,8 @@ PlayableDirector:
     value: {fileID: 124594771}
   - key: {fileID: 4449275496367679245, guid: b7764853f4e00d84bbd549923a02c2b3, type: 2}
     value: {fileID: 40479184}
+  - key: {fileID: -4803031551013830540, guid: b7764853f4e00d84bbd549923a02c2b3, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &88135406
@@ -2203,6 +2206,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 88135403}
   m_CullTransparentMesh: 1
+--- !u!114 &88135408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88135403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84fe2a448e929614aa0e978471fad201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &102985061
 GameObject:
   m_ObjectHideFlags: 0
@@ -15977,12 +15992,12 @@ MonoBehaviour:
   button: {fileID: 8300000, guid: 14bb93da4a86cbd489bde1268d7ee801, type: 3}
   correct: {fileID: 8300000, guid: 687d0aa25b9e0544cb0cade1f5b64338, type: 3}
   wrong: {fileID: 8300000, guid: e56099cf0e565094ea3ea8fce106af91, type: 3}
-  maglinis: {fileID: 8300000, guid: 62e7e0b9e0a50aa4c821bea1ca903817, type: 3}
-  maglaro: {fileID: 8300000, guid: 9f7b580901acad742adfb71092c308da, type: 3}
-  matulog: {fileID: 8300000, guid: cd8dc787e149da649879645f82d304ce, type: 3}
-  linis: {fileID: 8300000, guid: 6b37d0659c9c40f499704599dad36368, type: 3}
-  hugas: {fileID: 8300000, guid: 3158d8f01cca3da4ea1cb7a5d82456d9, type: 3}
-  kumpuni: {fileID: 8300000, guid: 4b4098b89462669488a4a4da22bcf515, type: 3}
+  maglinis: {fileID: 8300000, guid: 16a565dd316f56340a787cba017dbbd8, type: 3}
+  maglaro: {fileID: 8300000, guid: 958056fbc8521ac40aefc0ec8e57a913, type: 3}
+  matulog: {fileID: 8300000, guid: 53c0f50a81240fb408b695fbf1fcf216, type: 3}
+  linis: {fileID: 8300000, guid: 4aded7aec7537eb4bb2e483fee100eb9, type: 3}
+  hugas: {fileID: 8300000, guid: 49862c5b085d36841b1c8835de3e1864, type: 3}
+  kumpuni: {fileID: 8300000, guid: cd1d7ce31e1568a408cd724c844494a1, type: 3}
 --- !u!1 &884013645
 GameObject:
   m_ObjectHideFlags: 0
@@ -21551,7 +21566,6 @@ GameObject:
   - component: {fileID: 1209266491}
   - component: {fileID: 1209266495}
   - component: {fileID: 1209266494}
-  - component: {fileID: 1209266493}
   - component: {fileID: 1209266492}
   m_Layer: 5
   m_Name: Result (1)
@@ -21597,18 +21611,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newAudio: {fileID: 0}
   currentGObject: {fileID: 1209266490}
---- !u!114 &1209266493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1209266490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84fe2a448e929614aa0e978471fad201, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1209266494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21910,6 +21912,7 @@ GameObject:
   - component: {fileID: 1218773089}
   - component: {fileID: 1218773088}
   - component: {fileID: 1218773087}
+  - component: {fileID: 1218773090}
   m_Layer: 5
   m_Name: 2 Stars
   m_TagString: Untagged
@@ -21966,6 +21969,8 @@ PlayableDirector:
     value: {fileID: 643936770}
   - key: {fileID: 111624277390264047, guid: 5fd9efa325516c94786ad7e0500b4afb, type: 2}
     value: {fileID: 0}
+  - key: {fileID: -8810916489873038781, guid: 5fd9efa325516c94786ad7e0500b4afb, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &1218773088
@@ -22006,6 +22011,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1218773085}
   m_CullTransparentMesh: 1
+--- !u!114 &1218773090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218773085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84fe2a448e929614aa0e978471fad201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1229155611
 GameObject:
   m_ObjectHideFlags: 0
@@ -26422,6 +26439,7 @@ GameObject:
   - component: {fileID: 1495405796}
   - component: {fileID: 1495405795}
   - component: {fileID: 1495405794}
+  - component: {fileID: 1495405797}
   m_Layer: 5
   m_Name: 3 Stars
   m_TagString: Untagged
@@ -26532,6 +26550,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1495405792}
   m_CullTransparentMesh: 1
+--- !u!114 &1495405797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495405792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84fe2a448e929614aa0e978471fad201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1500572888 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1105670812160199466, guid: 0003e52f1c77b9447a317c374f978395, type: 3}
@@ -27308,6 +27338,7 @@ GameObject:
   - component: {fileID: 1576290841}
   - component: {fileID: 1576290840}
   - component: {fileID: 1576290839}
+  - component: {fileID: 1576290842}
   m_Layer: 5
   m_Name: 1 Star
   m_TagString: Untagged
@@ -27402,6 +27433,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576290837}
   m_CullTransparentMesh: 1
+--- !u!114 &1576290842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576290837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84fe2a448e929614aa0e978471fad201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1578086782
 GameObject:
   m_ObjectHideFlags: 0

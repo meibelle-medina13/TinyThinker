@@ -13263,7 +13263,6 @@ GameObject:
   - component: {fileID: 862154794}
   - component: {fileID: 862154797}
   - component: {fileID: 862154796}
-  - component: {fileID: 862154795}
   m_Layer: 5
   m_Name: mr-marley
   m_TagString: Untagged
@@ -13394,18 +13393,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &862154795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 862154789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a18517e6b736fef46ba7ce809e0e97ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &862154796
 Rigidbody2D:
   serializedVersion: 4
@@ -17455,6 +17442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1067581070}
   - component: {fileID: 1067581071}
+  - component: {fileID: 1067581072}
   m_Layer: 5
   m_Name: backyard_collider
   m_TagString: Untagged
@@ -17526,6 +17514,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 200, y: 160}
   m_EdgeRadius: 0
+--- !u!114 &1067581072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067581069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a18517e6b736fef46ba7ce809e0e97ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1068466598
 GameObject:
   m_ObjectHideFlags: 0
@@ -18206,7 +18206,6 @@ GameObject:
   - component: {fileID: 1126346281}
   - component: {fileID: 1126346285}
   - component: {fileID: 1126346284}
-  - component: {fileID: 1126346283}
   m_Layer: 5
   m_Name: mrs-loti
   m_TagString: Untagged
@@ -18337,18 +18336,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1126346283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1126346277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a18517e6b736fef46ba7ce809e0e97ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &1126346284
 Rigidbody2D:
   serializedVersion: 4
@@ -27964,6 +27951,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1711224472}
   - component: {fileID: 1711224473}
+  - component: {fileID: 1711224474}
   m_Layer: 5
   m_Name: garden_collider
   m_TagString: Untagged
@@ -28035,6 +28023,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 200, y: 160}
   m_EdgeRadius: 0
+--- !u!114 &1711224474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711224471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a18517e6b736fef46ba7ce809e0e97ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1720217221
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro.Examples;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -26,7 +27,14 @@ public class OnTrigger : MonoBehaviour
         else
         {
             PlayerPrefs.SetString("Collider", collision.gameObject.name);
+            PlayerPrefs.SetString("Trigger", gameObject.name);
             Debug.Log("COLLIDEEE"+ collision.gameObject.name);
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        PlayerPrefs.SetString("Collider", "");
+        PlayerPrefs.SetString("Trigger", "");
     }
 }
