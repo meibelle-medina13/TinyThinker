@@ -162,91 +162,6 @@ public class Quarter4Level2 : MonoBehaviour
 
       }
     }
-    else if (currentPanel.name == "Assessment1")
-    {
-      if (PlayerPrefs.HasKey("Collider"))
-      {
-        for (int i = 0; i < apples.Length; i++)
-        {
-          if (!apples[i].activeSelf)
-          {
-            apples[i].SetActive(true);
-            break;
-          }
-        }
-        int counter = int.Parse(appleCount.GetComponent<TextMeshProUGUI>().text);
-        appleCount.GetComponent<TextMeshProUGUI>().text = (counter + 1).ToString();
-        if (counter + 1 <= 10)
-        {
-          MoveProgress(error, 1);
-          PlaySFX(SFXClips[1]);
-        }
-        else
-        {
-          progressBar.fillAmount -= (3.3333333f/100f);
-          PlaySFX(SFXClips[0]);
-        }
-        PlayerPrefs.DeleteKey("Collider");
-      }
-    }
-    else if (currentPanel.name == "Assessment2")
-    {
-      if (PlayerPrefs.HasKey("Collider"))
-      {
-        string collider = PlayerPrefs.GetString("Collider");
-        string[] trigger = PlayerPrefs.GetString("Trigger").Split(' ');
-        string basketName = trigger[2];
-
-        if (collider == basketName)
-        {
-          Debug.Log("Correct");
-          MoveProgress(error, 2);
-          PlaySFX(SFXClips[1]);
-          if (basketName == "apple")
-          {
-            for (int i = 0; i < apples2.Length; i++)
-            {
-              if (!apples2[i].activeSelf)
-              {
-                apples2[i].SetActive(true);
-                break;
-              }
-            }
-          }
-          else if (basketName == "banana")
-          {
-            for (int i = 0; i < bananas.Length; i++)
-            {
-              if (!bananas[i].activeSelf)
-              {
-                bananas[i].SetActive(true);
-                break;
-              }
-            }
-          }
-          if (basketName == "tamarind")
-          {
-            for (int i = 0; i < tamarinds.Length; i++)
-            {
-              if (!tamarinds[i].activeSelf)
-              {
-                tamarinds[i].SetActive(true);
-                break;
-              }
-            }
-          }
-        }
-        else
-        {
-          Debug.Log("Wrong");
-          assessmentScore -= 10;
-          PlaySFX(SFXClips[0]);
-        }
-
-        PlayerPrefs.DeleteKey("Collider");
-        PlayerPrefs.DeleteKey("Trigger");
-      }
-    }
     else if (currentPanel.name == "Assessment3")
     {
       if (PlayerPrefs.HasKey("Tracing Points"))
@@ -335,6 +250,123 @@ public class Quarter4Level2 : MonoBehaviour
   {
     obj.transform.position = Input.mousePosition;
     obj.transform.localPosition = new Vector3(obj.transform.localPosition.x, obj.transform.localPosition.y, 0f);
+  }
+
+  public void DropObject(GameObject obj)
+  {
+    if (!obj.GetComponent<BoxCollider2D>().enabled)
+    {
+      if (obj.name == "seeds")
+      {
+        obj.transform.localPosition = new Vector3(0, 0, 0);
+      }
+      else if (obj.name == "shovel")
+      {
+        obj.transform.localPosition = new Vector3(0, 230, 0);
+      }
+      else if (obj.name == "watering can")
+      {
+        obj.transform.localPosition = new Vector3(0, -230, 0);
+      }
+    }
+    else
+    {
+      Debug.Log(GetActivePanel().name);
+      if (PlayerPrefs.GetString("Collider") == "fruit basket")
+      {
+        obj.SetActive(false);
+        for (int i = 0; i < apples.Length; i++)
+        {
+          if (!apples[i].activeSelf)
+          {
+            apples[i].SetActive(true);
+            break;
+          }
+        }
+        int counter = int.Parse(appleCount.GetComponent<TextMeshProUGUI>().text);
+        appleCount.GetComponent<TextMeshProUGUI>().text = (counter + 1).ToString();
+        if (counter + 1 <= 10)
+        {
+          MoveProgress(error, 1);
+          PlaySFX(SFXClips[1]);
+        }
+        else
+        {
+          progressBar.fillAmount -= (3.3333333f / 100f);
+          PlaySFX(SFXClips[0]);
+        }
+        PlayerPrefs.DeleteKey("Collider");
+      }
+      else if (PlayerPrefs.GetString("Collider") == "basket - apple" && obj.name == "apple")
+      {
+        obj.SetActive(false);
+        for (int i = 0; i < apples2.Length; i++)
+        {
+          if (!apples2[i].activeSelf)
+          {
+            apples2[i].SetActive(true);
+            break;
+          }
+        }
+        MoveProgress(error, 2);
+        PlaySFX(SFXClips[1]);
+      }
+      else if (PlayerPrefs.GetString("Collider") == "basket - apple" && obj.name != "apple")
+      {
+        Debug.Log("Wrong");
+        obj.SetActive(false);
+        assessmentScore -= 10;
+        PlaySFX(SFXClips[0]);
+        PlayerPrefs.DeleteKey("Collider");
+        PlayerPrefs.DeleteKey("Trigger");
+      }
+      else if (PlayerPrefs.GetString("Collider") == "basket - banana" && obj.name == "banana")
+      {
+        obj.SetActive(false);
+        for (int i = 0; i < bananas.Length; i++)
+        {
+          if (!bananas[i].activeSelf)
+          {
+            bananas[i].SetActive(true);
+            break;
+          }
+        }
+        MoveProgress(error, 2);
+        PlaySFX(SFXClips[1]);
+      }
+      else if (PlayerPrefs.GetString("Collider") == "basket - banana" && obj.name != "banana")
+      {
+        Debug.Log("Wrong");
+        obj.SetActive(false);
+        assessmentScore -= 10;
+        PlaySFX(SFXClips[0]);
+        PlayerPrefs.DeleteKey("Collider");
+        PlayerPrefs.DeleteKey("Trigger");
+      }
+      else if (PlayerPrefs.GetString("Collider") == "basket - tamarind" && obj.name == "tamarind")
+      {
+        obj.SetActive(false);
+        for (int i = 0; i < tamarinds.Length; i++)
+        {
+          if (!tamarinds[i].activeSelf)
+          {
+            tamarinds[i].SetActive(true);
+            break;
+          }
+        }
+        MoveProgress(error, 2);
+        PlaySFX(SFXClips[1]);
+      }
+      else if (PlayerPrefs.GetString("Collider") == "basket - tamarind" && obj.name != "tamarind")
+      {
+        Debug.Log("Wrong");
+        obj.SetActive(false);
+        assessmentScore -= 10;
+        PlaySFX(SFXClips[0]);
+        PlayerPrefs.DeleteKey("Collider");
+        PlayerPrefs.DeleteKey("Trigger");
+      }
+    }
   }
 
   private void MoveProgress(int totalError, int assessNum)

@@ -27,7 +27,20 @@ public class Quarter1Level5 : MonoBehaviour, IPointerDownHandler, IPointerUpHand
   void Start()
   {
     Panels[0].SetActive(true);
-    //PlayBGM(LevelAudioSource, LevelBGM);
+    if (gameObject.name == "Scene Manager")
+    {
+      a1_ProgressFill = 0;
+      a1_Points = 0;
+      a1_VacantSlots = 4f;
+
+      a2_ProgressFill = 0;
+      a2_Points = 0;
+      a2_TracingPoints = 28f;
+
+      a3_ProgressFill = 0;
+      a3_Points = 0;
+      a3_VacantSlots = 4f;
+    }
   }
 
 

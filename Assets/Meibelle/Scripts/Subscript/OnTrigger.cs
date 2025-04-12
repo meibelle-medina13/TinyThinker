@@ -26,7 +26,7 @@ public class OnTrigger : MonoBehaviour
         else
         {
             PlayerPrefs.SetString("Collider", collision.gameObject.name);
-            Debug.Log("COLLIDEEE");
+            Debug.Log("COLLIDEEE"+ collision.gameObject.name);
         }
     }
 }

@@ -66,7 +66,7 @@ public class MatchingType : MonoBehaviour
 
             RaycastHit2D hit = Physics2D.Raycast(destination, Vector2.zero);
 
-            if (hit.collider != null && hit.collider.gameObject.name == gameObject.name)
+            if (hit.collider != null && hit.collider.gameObject.name == gameObject.name + " Thing")
             {
                 if (!isMatched)
                 {
@@ -79,7 +79,11 @@ public class MatchingType : MonoBehaviour
                     PlayerPrefs.SetInt("MatchingType Items", items - 1);
                 }
             }
-            else if (hit.collider != null && hit.collider.gameObject.name != gameObject.name)
+            else if (hit.collider != null && hit.collider.gameObject.name == gameObject.name)
+            {
+                lineRenderer.positionCount = 0;
+            }
+            else if (hit.collider != null && hit.collider.gameObject.name != gameObject.name + " Thing")
             {
                 lineRenderer.positionCount = 0;
                 score -= error;
@@ -91,6 +95,7 @@ public class MatchingType : MonoBehaviour
                 SFX.Play();
                 Debug.Log(gameObject.name);
             }
+
             else
             {
                 lineRenderer.positionCount = 0;
