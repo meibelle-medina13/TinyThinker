@@ -119,7 +119,7 @@ public class EditProfile : MonoBehaviour
                 avatar.onClick.AddListener(() => SelectAvatar(avatar));
             }
         }
-
+        editName.gameObject.SetActive(true);
         cancelButton.onClick.AddListener(() => RetainOldProfile());
         editAvatar.onClick.AddListener(() => AvatarChoicesPopup());
         editName.onClick.AddListener(() => EditName());
@@ -151,27 +151,11 @@ public class EditProfile : MonoBehaviour
 
     private void EditName()
     {
-        if (nameField.GetComponent<TMP_InputField>().interactable)
-        {
-            nameField.GetComponent<TMP_InputField>().interactable = false;
-            nameContainer.sprite = prevNameContainer;
-            username = nameField.GetComponent<TMP_InputField>().text;
-
-            if ((string.IsNullOrEmpty(newAvatar_filename) || newAvatar_filename == oldAvatar) && (string.IsNullOrEmpty(username) || username == oldUsername))
-            {
-                saveButton.interactable = false;
-            }
-            else
-            {
-                saveButton.interactable = true;
-            }
-        }
-        else
-        {
-            prevNameContainer = nameContainer.sprite;
-            nameField.GetComponent<TMP_InputField>().interactable = true;
-            nameContainer.sprite = editNameContainer;
-        }
+        editName.gameObject.SetActive(false);
+        prevNameContainer = nameContainer.sprite;
+        nameField.GetComponent<TMP_InputField>().interactable = true;
+        nameContainer.sprite = editNameContainer;
+        saveButton.interactable = true;
     }
 
     private void StoreOriginalProfile()
@@ -227,6 +211,7 @@ public class EditProfile : MonoBehaviour
     IEnumerator SaveAllChanges()
     {
         int userID = PlayerPrefs.GetInt("Current_user");
+        username = nameField.GetComponent<TMP_InputField>().text;
         if (string.IsNullOrEmpty(username))
         {
             username = oldUsername;
