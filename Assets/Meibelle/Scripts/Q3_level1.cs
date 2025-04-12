@@ -365,7 +365,7 @@ public class Q3_level1 : MonoBehaviour
         int index = int.Parse(leaf.name.Substring(10, 1));
         if (Distance <= 250)
         {
-            leaf.transform.position = Input.mousePosition;
+            leaf.SetActive(false);
             leafCounter++;
 
             if (leafCounter == 6)
@@ -391,10 +391,10 @@ public class Q3_level1 : MonoBehaviour
 
     public void DropCharacter(GameObject character)
     {
-        string colliderName = PlayerPrefs.GetString("Collider");
+        string colliderName = PlayerPrefs.GetString("Trigger");
+        Debug.Log(colliderName);
         if (character.name == "mr-marley" && colliderName == "garden_collider")
         {
-            PlayerPrefs.SetString("Collider", "");
             timelines[0].SetActive(true);
             MoveProgress(error, 1);
             characterCounter++;
@@ -402,7 +402,6 @@ public class Q3_level1 : MonoBehaviour
         }
         else if (character.name == "mrs-loti" && colliderName == "backyard_collider")
         {
-            PlayerPrefs.SetString("Collider", "");
             timelines[1].SetActive(true);
             MoveProgress(error, 1);
             characterCounter++;
@@ -410,19 +409,28 @@ public class Q3_level1 : MonoBehaviour
         }
         else
         {
+            if (colliderName.Length > 0)
+            {
+                if (character.name == "mr-marley" && colliderName != "garden_collider")
+                {
+                    error += 50;
+                    audioSource.PlayOneShot(audioClip[2]);
+                }
+                else if (character.name == "mrs-loti" && colliderName != "backyard_collider")
+                {
+                    error += 50;
+                    audioSource.PlayOneShot(audioClip[2]);
+                }
+            }
+
             if (character.name == "mr-marley")
             {
                 character.transform.position = charInitialPos[0];
-                error += 50;
-                assess1_colliders[0].SetActive(true);
             }
-            else
+            else if (character.name == "mrs-loti")
             {
                 character.transform.position = charInitialPos[1];
-                error += 50;
-                assess1_colliders[1].SetActive(true);
             }
-            audioSource.PlayOneShot(audioClip[2]);
         }
 
         if (characterCounter == 2)
@@ -431,11 +439,7 @@ public class Q3_level1 : MonoBehaviour
             audioSource.PlayOneShot(audioClip[3]);
             StartCoroutine(OpenAssessment2(0));
         }
-        else
-        {
-            assess1_colliders[0].SetActive(true);
-            assess1_colliders[1].SetActive(true);
-        }
+        PlayerPrefs.SetString("Trigger", "");
     }
 
     IEnumerator OpenAssessment2(int current)

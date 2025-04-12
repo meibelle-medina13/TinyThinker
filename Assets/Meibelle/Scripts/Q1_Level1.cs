@@ -58,6 +58,11 @@ public class Q1_Level1 : MonoBehaviour
     [SerializeField]
     private THEME1_LEVEL1_REQUESTS requestsManager;
 
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip audioClip;
+
     private int assess1 = 100;
     private int assess2 = 100;
     private int assess3 = 100;
@@ -205,8 +210,15 @@ public class Q1_Level1 : MonoBehaviour
                 index = i;
                 if (Distance < 150)
                 {
+                    audioSource.PlayOneShot(audioClip);
                     candle.transform.position = new Vector3(positions[index - 1], 398.80f, 0.00f);
                     positionedCandles += 1;
+                    
+                    if (candle.TryGetComponent<EventTrigger>(out var trigger))
+                    {
+                        trigger.triggers.RemoveAll(e => e.eventID == EventTriggerType.Drag);
+                    }
+        
 
                     if (positionedCandles == 4)
                     {

@@ -251,23 +251,23 @@ public class Quarter2Level5 : MonoBehaviour
 
       if (starCount == 0)
       {
-        ZeroStar.SetActive(true);
         PlayerPrefs.SetInt("Delay Time", 7);
+        ZeroStar.SetActive(true);
       }
       else if (starCount == 1)
       {
-        OneStar.SetActive(true);
         PlayerPrefs.SetInt("Delay Time", 8);
+        OneStar.SetActive(true);
       }
       else if (starCount == 2)
       {
-        TwoStars.SetActive(true);
         PlayerPrefs.SetInt("Delay Time", 8);
+        TwoStars.SetActive(true);
       }
       else if (starCount == 3)
       {
-        ThreeStars.SetActive(true);
         PlayerPrefs.SetInt("Delay Time", 14);
+        ThreeStars.SetActive(true);
       }
       ProgressBar.SetActive(false);
     }
