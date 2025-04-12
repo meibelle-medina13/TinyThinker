@@ -65,6 +65,11 @@ public class Q1_Level2 : MonoBehaviour
     [SerializeField]
     private THEME1_LEVEL1_REQUESTS requestsManager;
 
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip audioClip;
+
     private int num_of_tracing_points = 39;
     private int assess1 = 100;
     private int assess2 = 100;
@@ -266,13 +271,14 @@ public class Q1_Level2 : MonoBehaviour
     public void DropKey(GameObject key)
     {
         float Distance = Vector3.Distance(key.transform.position, assessment2[3].transform.position);
-        
-        if (key.name == "key-a" && Distance < 150)
+
+        if (key.name == "key-a" && Distance < 200)
         {
             key.transform.Rotate(0, 0, -96);
-            key.transform.position = new Vector3(850, 197, 0);
+            key.transform.localPosition = new Vector3(167, -238, -90);
             MoveProgress(error, 2);
             StartCoroutine(DelayAssessment3());
+            audioSource.PlayOneShot(audioClip);
         }
         else if (key.name == "key-a")
         {
