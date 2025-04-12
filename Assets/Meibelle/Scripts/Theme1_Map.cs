@@ -344,6 +344,14 @@ public class Theme1_Map : MonoBehaviour
         {
             if (avatar_filename == avatar[i].name)
             {
+                if (current_theme == 5)
+                {
+                    theme_progress.GetComponentInChildren<TMP_Text>().text = "Tema " + 4 + ": " + "Antas " + 3;
+                }
+                else
+                {
+                    theme_progress.GetComponentInChildren<TMP_Text>().text = "Tema " + current_theme + ": " + "Antas " + current_level;
+                }
                 PlayerPrefs.SetString("Avatar", avatar[i].name);
                 color_index = i;
                 profile_container.GetComponent<Image>().sprite = avatar_container[i];
@@ -351,7 +359,6 @@ public class Theme1_Map : MonoBehaviour
                 profile.GetComponent<Button>().onClick.AddListener(() => ShowPopUpPanel("profile"));
                 username.GetComponent<Image>().sprite = username_container[i];
                 username.GetComponentInChildren<TMP_Text>().text = user.FirstCharacterToUpper();
-                theme_progress.GetComponentInChildren<TMP_Text>().text = "Tema " + current_theme + ": " + "Antas " + current_level;
                 profileDetails[5].GetComponent<Image>().sprite = fullAvatar[i];
                 profileDetails[9].GetComponent<Image>().sprite = name_container[i];
                 profileDetails[6].GetComponent<Image>().sprite = fullAvatar_container[i];

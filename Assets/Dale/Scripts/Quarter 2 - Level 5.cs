@@ -17,9 +17,27 @@ public class Quarter2Level5 : MonoBehaviour
   [Header("<---- TRACING OBJECTS ---->")]
   [SerializeField] private GameObject[] tracingObject;
 
+
   void Start()
   {
     Panels[0].SetActive(true);
+    if (gameObject.name == "Scene Manager")
+    {
+      a1_1_ProgressFill = 0;
+      a1_1_Points = 0;
+      a1_1_Mistakes = 0;
+      a1_2_ProgressFill = 0;
+      a1_2_Points = 0;
+      a1_2_Mistakes = 0;
+      a2_ProgressFill = 0;
+      a2_Points = 0;
+      a2_TracingPoints = 39f;
+
+      assessment3 = 100f;
+      a3_ProgressFill = 0;
+      a3_Points = 0;
+      a3_TracingPoints = 22f;
+    }
   }
 
 
