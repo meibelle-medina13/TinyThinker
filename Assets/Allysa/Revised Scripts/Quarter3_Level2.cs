@@ -94,6 +94,7 @@ public class Quarter3_Level2 : MonoBehaviour
             disinpect_step = 0;
             correctPuzzle = 0;
             audioEnabled = false;
+            button[2].interactable = false;
         }
 
         requestsManager = FindObjectOfType<THEME1_LEVEL1_REQUESTS>();
@@ -331,8 +332,6 @@ public class Quarter3_Level2 : MonoBehaviour
         }
     }
 
-    
-
     private void Update()
     {
         if (this.gameObject.name == "Scene Manager")
@@ -456,10 +455,14 @@ public class Quarter3_Level2 : MonoBehaviour
 
             else if (CompareTag("hammer"))
             {
-                hammer[0].SetActive(true);
-                hammer[1].SetActive(false);
-                hammerState = initialPosition;
-                hammer[0].transform.position = worldPosition + hammerState;
+                if (playableDirector.state != PlayState.Playing)
+                {
+                    button[1].interactable = true;
+                    hammer[0].SetActive(true);
+                    hammer[1].SetActive(false);
+                    hammerState = initialPosition;
+                    hammer[0].transform.position = worldPosition + hammerState;
+                }
             }
 
             else if (CompareTag("pencil"))
