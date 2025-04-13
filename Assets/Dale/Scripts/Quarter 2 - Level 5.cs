@@ -476,6 +476,7 @@ public class Quarter2Level5 : MonoBehaviour
 
   public Image ProgressBarMask;
   public Sprite EarnedStar;
+  public Sprite UnearnedStar;
   public Image[] UnearnedStarImages;
 
   static float totalProgressFill;
@@ -498,14 +499,23 @@ public class Quarter2Level5 : MonoBehaviour
     {
       UnearnedStarImages[0].sprite = EarnedStar;
       UnearnedStarImages[1].sprite = EarnedStar;
+      UnearnedStarImages[2].sprite = UnearnedStar;
       starCount = 2;
       Debug.Log("Stars: " + starCount);
     }
     else if (totalProgressFill >= .33333f && totalProgressFill < .66666f)
     {
       UnearnedStarImages[0].sprite = EarnedStar;
+      UnearnedStarImages[1].sprite = UnearnedStar;
+      UnearnedStarImages[2].sprite = UnearnedStar;
       starCount = 1;
       Debug.Log("Stars: " + starCount);
+    }
+    else if (totalProgressFill < .33333f)
+    {
+      UnearnedStarImages[0].sprite = UnearnedStar;
+      UnearnedStarImages[1].sprite = UnearnedStar;
+      UnearnedStarImages[2].sprite = UnearnedStar;
     }
   }
   // ------------------------------------------------------------------------------------------------ //
