@@ -35,9 +35,8 @@ public class PreTest_PostTest3 : MonoBehaviour
     public GameObject PencilMask;
     public GameObject mycollider;
     private Vector3 pencilState;
-    private Vector3 pencilRaise = new Vector3(125, 140, 0);
-    private Vector3 pencilWrite = new Vector3(105, 120, 0);
-
+    private Vector3 pencilRaise = new Vector3(105, 120, 0);
+    private Vector3 pencilWrite = new Vector3(85, 100, 0);
 
     private Vector3 initialPosition = new Vector3(0, 0, 0);
     private Vector3 gameObjectState;
