@@ -29,10 +29,9 @@ public class Quarter3_Level2 : MonoBehaviour
     public List<Button> button;
     private static int disinpect_step = 0;
 
-
-    private Vector3 pencilWrite = new Vector3(105, 120, 0);
+    private Vector3 pencilRaise = new Vector3(105, 120, 0);
+    private Vector3 pencilWrite = new Vector3(85, 100, 0);
     private Vector3 pencilState;
-    private Vector3 pencilRaise = new Vector3(125, 140, 0);
     private HashSet<string> tracedPoints = new HashSet<string>();
     private int score = 0;
 
