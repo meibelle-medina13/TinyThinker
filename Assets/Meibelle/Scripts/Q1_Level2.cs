@@ -69,6 +69,8 @@ public class Q1_Level2 : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField]
     private AudioClip audioClip;
+    [SerializeField]
+    private AudioClip wrong;
 
     private int num_of_tracing_points = 39;
     private int assess1 = 100;
@@ -282,17 +284,27 @@ public class Q1_Level2 : MonoBehaviour
         }
         else if (key.name == "key-a")
         {
-            error += 50;
+            //error += 50;
             key.transform.position = keyInitialPos[0];
+        }
+        else if (key.name == "key-e" && Distance < 200)
+        {
+            error += 50;
+            key.transform.position = keyInitialPos[1];
+            audioSource.PlayOneShot(wrong);
+        }
+        else if (key.name == "key-h" && Distance < 200)
+        {
+            error += 50;
+            key.transform.position = keyInitialPos[2];
+            audioSource.PlayOneShot(wrong);
         }
         else if (key.name == "key-e")
         {
-            error += 50;
             key.transform.position = keyInitialPos[1];
         }
         else if (key.name == "key-h")
         {
-            error += 50;
             key.transform.position = keyInitialPos[2];
         }
     }
