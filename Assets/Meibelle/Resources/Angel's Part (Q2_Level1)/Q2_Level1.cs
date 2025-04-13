@@ -256,20 +256,59 @@ public class Q2_Level1 : MonoBehaviour
     public void DropMember(GameObject member)
     {
         int index = System.Array.IndexOf(assessment1Option, member);
-        float Distance = Vector3.Distance(member.transform.position, assessment1Destination[index].transform.position);
-        Debug.Log(Distance);
-        if (Distance < 100)
+        Debug.Log(assessment1Option[index].name);
+        for (int i = 0; i < assessment1Destination.Length; i++)
         {
-            member.transform.position = assessment1Destination[index].transform.position;
-            StartCoroutine(AfterDragDrop());
-            PlaySFX(1);
-            MoveProgress(error, 1);
-        }
-        else
-        {
-            member.transform.position = optionInitialPos[index];
-            error += 8;
-            PlaySFX(0);
+            //Debug.Log(assessment1Destination[i].name);
+            float Distance = Vector3.Distance(member.transform.position, assessment1Destination[i].transform.position);
+            //Debug.Log(Distance);
+            if (Distance < 100)
+            {
+                if (assessment1Option[index].name == assessment1Option[i].name)
+                {
+                    Debug.Log(assessment1Option[index].name + " " + assessment1Option[i].name);
+                    member.SetActive(false);
+                    Color bearColor = assessment1Destination[i].GetComponent<Image>().color;
+                    bearColor.a = 1f;
+                    assessment1Destination[i].GetComponent<Image>().color = bearColor;
+                    StartCoroutine(AfterDragDrop());
+                    PlaySFX(1);
+                    MoveProgress(error, 1);
+                    break;
+                }
+                else
+                {
+                    member.transform.position = optionInitialPos[index];
+                    error += 8;
+                    PlaySFX(0);
+                    break;
+                }
+            }
+            else if (Distance >= 100 && i == assessment1Destination.Length - 1)
+            {
+                member.transform.position = optionInitialPos[index];
+            }
+            //else
+            //{
+            //    member.transform.position = optionInitialPos[index];
+            //}
+            //if (member.name == assessment1Option[i].name && Distance < 100)
+            //{
+            //    member.transform.position = assessment1Destination[i].transform.position;
+            //    StartCoroutine(AfterDragDrop());
+            //    PlaySFX(1);
+            //    MoveProgress(error, 1);
+            //}
+            //else if (member.name != assessment1Option[i].name && Distance < 100)
+            //{
+            //    member.transform.position = optionInitialPos[index];
+            //    error += 8;
+            //    PlaySFX(0);
+            //}
+            //else
+            //{
+            //    member.transform.position = optionInitialPos[index];
+            //}
         }
     }
 
@@ -280,7 +319,7 @@ public class Q2_Level1 : MonoBehaviour
 
         for (int i = 0; i < assessment1Option.Length; i++)
         {
-            if (assessment1Option[i].transform.position == assessment1Destination[i].transform.position)
+            if (!assessment1Option[i].activeSelf)
             {
                 positionedMembers++;
             }
